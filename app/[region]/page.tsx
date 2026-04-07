@@ -258,7 +258,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               <Link
                 key={idx}
                 href={`/${region}/destination/${card.slug}`}
-                className="relative w-[160px] h-[230px] lg:w-[160px] lg:h-[230px] shrink-0 rounded-[12px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block"
+                className="relative w-[140px] md:w-[180px] lg:w-[220px] h-[180px] md:h-[220px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block rounded-2xl"
               >
                 <img src={card.image} alt={card.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/10 to-black/90 pointer-events-none" />
