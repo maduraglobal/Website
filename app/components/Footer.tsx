@@ -86,7 +86,7 @@ const FooterColumn = ({ title, links }: { title: string; links: { label: string;
 
 export default function Footer() {
   const params = useParams();
-  const currentRegion = (params?.region as string) || "in";
+  const currentRegion = (params?.region as string) || "en-in";
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");

@@ -26,14 +26,14 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Extract region from pathname (e.g. /in/tours -> 'in')
-  const currentRegionCode = (pathname?.split('/')[1] || 'in').toLowerCase();
-  const activeCountryConfig = countryConfigs[currentRegionCode] || countryConfigs['in'];
+  // Extract region from pathname (e.g. /en-in/tours -> 'en-in')
+  const currentRegionCode = (pathname?.split('/')[1] || 'en-in').toLowerCase();
+  const activeCountryConfig = countryConfigs[currentRegionCode] || countryConfigs['en-in'];
 
   const switchRegion = (newRegion: string) => {
     if (!pathname) return;
     const segments = pathname.split('/');
-    if (['in', 'au', 'us'].includes(segments[1])) {
+    if (['en-in', 'en-au', 'en-us'].includes(segments[1])) {
       segments[1] = newRegion;
       router.push(segments.join('/'));
     } else {
@@ -42,7 +42,7 @@ export default function Navbar() {
   };
 
   const getFlagURL = (id: string) => {
-    const code = id?.toLowerCase() === 'in' ? 'in' : id?.toLowerCase() === 'au' ? 'au' : 'us';
+    const code = id?.toLowerCase() === 'en-in' ? 'in' : id?.toLowerCase() === 'en-au' ? 'au' : 'us';
     return `https://flagcdn.com/w40/${code}.png`;
   };
 

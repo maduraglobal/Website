@@ -16,8 +16,8 @@ export interface RegionConfig {
 }
 
 export const countryConfigs: Record<string, RegionConfig> = {
-  in: {
-    id: 'in',
+  'en-in': {
+    id: 'en-in',
     name: 'India',
     locale: 'en-IN',
     currencyCode: 'INR',
@@ -27,8 +27,8 @@ export const countryConfigs: Record<string, RegionConfig> = {
     phonePrefix: '+91',
     baseExchangeRate: 1.0, 
   },
-  au: {
-    id: 'au',
+  'en-au': {
+    id: 'en-au',
     name: 'Australia',
     locale: 'en-AU',
     currencyCode: 'AUD',
@@ -38,8 +38,8 @@ export const countryConfigs: Record<string, RegionConfig> = {
     phonePrefix: '+61',
     baseExchangeRate: 0.018, // ~ 1 INR = 0.018 AUD
   },
-  us: {
-    id: 'us',
+  'en-us': {
+    id: 'en-us',
     name: 'United States',
     locale: 'en-US',
     currencyCode: 'USD',
@@ -53,10 +53,10 @@ export const countryConfigs: Record<string, RegionConfig> = {
 
 /**
  * Retrieves the heavily typed configuration for a specific geographic region binding.
- * Safely defaults to India ('in') if an unrecognized region is passed.
+ * Safely defaults to India ('en-in') if an unrecognized region is passed.
  */
 export function getCountryConfig(region: string): RegionConfig {
-  return countryConfigs[region.toLowerCase()] || countryConfigs['in'];
+  return countryConfigs[region.toLowerCase()] || countryConfigs['en-in'];
 }
 
 /**

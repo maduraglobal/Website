@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
   
   // If requesting the root path, redirect to the default region
   if (pathname === '/') {
-    return NextResponse.redirect(new URL('/in', request.url))
+    return NextResponse.redirect(new URL('/en-in', request.url))
   }
 
   let response = NextResponse.next({
