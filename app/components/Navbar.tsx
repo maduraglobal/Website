@@ -91,22 +91,44 @@ export default function Navbar() {
           <Link href={`/${currentRegionCode}/login`} className="text-[14px] font-bold hover:text-[#ee2229] transition-colors">Login</Link>
 
           {/* Country Selector */}
-          <div className="relative group cursor-pointer">
-            <div className="flex items-center gap-2 border border-gray-100 px-3 py-1.5 rounded-lg font-bold text-[13px] hover:border-gray-200">
+          <div className="relative group cursor-pointer z-150">
+            <div className="flex items-center gap-2 border border-gray-100 px-3 py-1.5 rounded-lg font-bold text-[13px] hover:border-gray-200 bg-white">
               <img
                 src={getFlagURL(activeCountryConfig.id)}
                 alt={`${activeCountryConfig.name} flag`}
-                className="w-5 h-3.5 object-cover rounded-sm"
+                className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
               />
               <span>{activeCountryConfig.name}</span>
-              <svg className="w-2 h-2 opacity-40 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M19 9l-7 7-7-7" /></svg>
+              <svg className="w-2.5 h-2.5 ml-1 opacity-40 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M19 9l-7 7-7-7" /></svg>
+            </div>
+
+            {/* FLYOUT MENU */}
+            <div className="absolute top-full right-0 mt-1 w-[220px] bg-white shadow-2xl rounded-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-200 overflow-hidden">
+              <div className="p-2 flex flex-col gap-1">
+                {Object.values(countryConfigs).map((config) => (
+                  <div
+                    key={config.id}
+                    onClick={() => switchRegion(config.id)}
+                    className={`flex items-center justify-between px-4 py-2.5 rounded-lg text-[13px] font-bold transition-all ${activeCountryConfig.id === config.id ? 'bg-gray-50 text-[#ee2229]' : 'text-[#191974] hover:bg-gray-50'}`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <img src={getFlagURL(config.id)} alt={config.name} className="w-5 h-3.5 object-cover rounded-sm shadow-xs" />
+                      <span>{config.name}</span>
+                    </div>
+                    {activeCountryConfig.id === config.id && <div className="w-1.5 h-1.5 rounded-full bg-[#ee2229]" />}
+                  </div>
+                ))}
+              </div>
+              <div className="bg-gray-50 px-4 py-2 border-t border-gray-100">
+                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest text-center">Switch Regional Pricing</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* 🔷 BOTTOM NAVBAR */}
-      <nav className="bg-white text-[#191974] px-8 lg:px-16 py-3 flex items-center justify-center gap-10 text-[11px] font-black tracking-widest font-inter uppercase relative border-b border-gray-100 shadow-sm">
+      <nav className="bg-white text-[#191974] px-14 lg:px-16 py-3.5 flex items-center justify-center gap-10 text-[14px] font-black tracking-widest font-inter uppercase relative border-b border-gray-100 shadow-sm">
 
         <div className="relative group cursor-pointer py-1">
           <span className="flex items-center hover:text-[#ee2229] transition-colors group">
@@ -114,19 +136,19 @@ export default function Navbar() {
             <svg className="w-2.5 h-2.5 ml-1.5 opacity-40 group-hover:rotate-180 group-hover:text-[#ee2229] transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
           </span>
           {/* MEGAMENU CONTAINER */}
-          <div className="absolute top-full left-[-200px] w-[980px] bg-white text-black shadow-[0_25px_80px_rgba(0,0,0,0.25)] rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-[110] flex overflow-hidden border border-gray-100 mt-4 h-[540px]">
-            
+          <div className="absolute top-full left-0 w-[980px] bg-white text-black shadow-[0_25px_80px_rgba(0,0,0,0.25)] rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-110 flex overflow-hidden border border-gray-100 mt-4 h-[540px]">
+
             {/* Left Regions Sidebar */}
             <div className="w-[300px] bg-[#f8f9fa] flex flex-col border-r border-gray-100 overflow-y-auto shrink-0">
               <div className="px-8 py-6 border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-20">
-                <span className="text-[11px] font-black text-[#191974] uppercase tracking-[0.25em]">Global Regions</span>
+                <span className="text-[13px] font-black text-[#191974] uppercase tracking-[0.25em]">Global Regions</span>
               </div>
               <div className="flex-1 py-4">
                 {Object.keys(destinations).map((region) => (
                   <div
                     key={region}
                     onMouseEnter={() => setActiveRegion(region as DestinationKey)}
-                    className={`px-8 py-4.5 cursor-pointer text-[13.5px] transition-all flex justify-between items-center group/region relative border-b border-gray-100/10 ${activeRegion === region ? 'bg-white text-[#191974] font-black shadow-sm' : 'text-[#191974]/50 hover:text-[#191974] hover:bg-white/50'}`}
+                    className={`px-8 py-4.5 cursor-pointer text-[14px] transition-all flex justify-between items-center group/region relative border-b border-gray-100/10 ${activeRegion === region ? 'bg-white text-[#191974] font-black shadow-sm' : 'text-[#191974]/60 hover:text-[#191974] hover:bg-white/50'}`}
                   >
                     <span className="uppercase tracking-[0.05em] relative z-10">{region}</span>
                     {activeRegion === region && (
@@ -149,7 +171,7 @@ export default function Navbar() {
                   </h3>
                 </div>
                 <Link href={`/${currentRegionCode}/destination`} className="group/all flex items-center gap-2 text-[11px] font-black text-[#191974] hover:text-[#ee2229] transition-colors uppercase tracking-widest pb-1 border-b-2 border-transparent hover:border-[#ee2229]">
-                   Expore all {activeRegion}
+                  Expore all {activeRegion}
                   <svg className="w-3.5 h-3.5 group-hover/all:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7-7 7" /></svg>
                 </Link>
               </div>
@@ -157,9 +179,9 @@ export default function Navbar() {
               {/* Grid */}
               <div className="grid grid-cols-3 gap-x-10 gap-y-6">
                 {destinations[activeRegion].map((place, idx) => (
-                  <Link 
-                    key={idx} 
-                    href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, '-')}`} 
+                  <Link
+                    key={idx}
+                    href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, '-')}`}
                     className="text-[#191974]/80 hover:text-[#ee2229] hover:font-black transition-all font-inter font-black text-[14px] uppercase tracking-tighter flex items-center gap-3 group/link relative py-1"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-gray-100 group-hover/link:bg-[#ee2229] group-hover/link:scale-125 transition-all" />

@@ -229,12 +229,12 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
           <div className="flex overflow-x-auto gap-4 lg:gap-5 pb-6 custom-scrollbar snap-x snap-mandatory">
             {[
-              { name: 'Asia', price: '₹13,551', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=600&auto=format&fit=crop', slug: 'india' },
-              { name: 'Mainland Europe', price: '₹14,511', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=600&auto=format&fit=crop', slug: 'france' },
-              { name: 'Middle East', price: '₹21,748', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=600&auto=format&fit=crop', slug: 'dubai' },
-              { name: 'Europe', price: '₹23,887', image: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=600&auto=format&fit=crop', slug: 'italy' },
-              { name: 'Africa', price: '₹34,111', image: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=600&auto=format&fit=crop', slug: 'egypt' },
-              { name: 'Australia & NZ', price: '₹46,175', image: 'https://images.unsplash.com/photo-1528072164453-f4e8ef0d475a?q=80&w=600&auto=format&fit=crop', slug: 'australia' }
+              { name: 'Asia', basePrice: 13551, image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=600&auto=format&fit=crop', slug: 'india' },
+              { name: 'Mainland Europe', basePrice: 14511, image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=600&auto=format&fit=crop', slug: 'france' },
+              { name: 'Middle East', basePrice: 21748, image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=600&auto=format&fit=crop', slug: 'dubai' },
+              { name: 'Europe', basePrice: 23887, image: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=600&auto=format&fit=crop', slug: 'italy' },
+              { name: 'Africa', basePrice: 34111, image: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=600&auto=format&fit=crop', slug: 'egypt' },
+              { name: 'Australia & NZ', basePrice: 46175, image: 'https://images.unsplash.com/photo-1528072164453-f4e8ef0d475a?q=80&w=600&auto=format&fit=crop', slug: 'australia' }
             ].map((card, idx) => (
               <Link
                 key={idx}
@@ -250,7 +250,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
                 <div className="absolute bottom-4 left-4 right-4">
                   <p className="text-white/80 text-[10px] font-medium mb-0.5 drop-shadow-md">Starting from</p>
-                  <p className="text-white font-black text-[16px] lg:text-[15px] tracking-tight drop-shadow-md">{card.price}</p>
+                  <p className="text-white font-black text-[16px] lg:text-[15px] tracking-tight drop-shadow-md">{formatRegionalPrice(card.basePrice, region)}</p>
                 </div>
               </Link>
             ))}

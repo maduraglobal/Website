@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Calendar, Star, Clock, CheckCircle2, Heart, Share2 } from 'lucide-react';
 import Link from 'next/link';
+import { formatRegionalPrice } from '../../../config/country';
 
 interface TourCardProps {
   tour: any;
@@ -14,11 +15,9 @@ interface TourCardProps {
 export default function TourCard({ tour, destinationSlug, region }: TourCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Format price based on region
+  // Format price based on region using central configuration
   const formatPrice = (price: number) => {
-    if (region === 'au') return new Intl.NumberFormat('en-AU', { style: 'currency', currency: 'AUD', maximumFractionDigits: 0 }).format(price * 0.018); // rough conversion
-    if (region === 'us') return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(price * 0.012); // rough conversion
-    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(price);
+    return formatRegionalPrice(price, region);
   };
 
   const price = tour.base_price_inr || tour.price || 45000;
