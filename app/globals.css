@@ -1,21 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Brand Colors */
+  --primary: #191974;
+  --accent: #ee2229;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-inter: 'Inter', sans-serif;
+  --font-inter-tight: 'Inter Tight', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    /* keep white for project if they want typical header style or adjust as needed */
+    --foreground: #171717;
   }
 }
 
@@ -23,4 +29,23 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+h1,
+.heading {
+  font-family: 'Inter', sans-serif;
+  font-size: 32px;
+}
+
+h2,
+h3,
+.sub-heading {
+  font-family: 'Inter', sans-serif;
+  font-size: 26px;
+}
+
+button,
+.btn {
+  font-family: 'Inter Tight', sans-serif;
 }
