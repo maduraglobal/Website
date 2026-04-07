@@ -47,7 +47,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="w-full flex flex-col fixed top-0 left-0 z-50 shadow-md">
+    <div className="w-full flex flex-col fixed top-0 left-0 z-[100] shadow-md">
 
       {/* 🔷 TOP HEADER */}
       <div className="bg-white  text-[#191974] px-4 lg:px-8 py-3 flex items-center justify-between">

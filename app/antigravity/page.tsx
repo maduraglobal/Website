@@ -48,9 +48,8 @@ export default function AntigravityTourDetail() {
 
       {/* Floating Header Summary (Shows on Scroll) */}
       <div
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 transform ${
-          scrolled ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-        } bg-[#0a0a12]/80 backdrop-blur-xl border-b border-white/5 py-4 px-6 md:px-12 flex justify-between items-center`}
+        className={`fixed top-[112px] left-0 right-0 z-50 transition-all duration-500 transform ${scrolled ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+          } bg-[#0a0a12]/80 backdrop-blur-xl border-b border-white/5 py-4 px-6 md:px-12 flex justify-between items-center`}
       >
         <div className="flex items-center gap-4">
           <h2 className="text-xl font-bold text-white tracking-tight">
@@ -65,7 +64,7 @@ export default function AntigravityTourDetail() {
             <p className="text-sm text-gray-400">Starting from</p>
             <p className="text-lg font-bold text-white">₹44,000</p>
           </div>
-          <button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-6 py-2 rounded-full font-semibold transition-all shadow-[0_0_15px_rgba(168,85,247,0.4)]">
+          <button className="bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-6 py-2 rounded-full font-semibold transition-all shadow-[0_0_15px_rgba(168,85,247,0.4)]">
             Book Now
           </button>
         </div>
@@ -82,8 +81,8 @@ export default function AntigravityTourDetail() {
               className="w-full h-full object-cover scale-105 animate-[zoom-in_20s_ease-out_forwards]"
             />
             {/* Gradient Overlay for dark theme transition */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#05050A] via-[#05050A]/60 to-transparent"></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#05050A]/80 via-transparent to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-[#05050A] via-[#05050A]/60 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-r from-[#05050A]/80 via-transparent to-transparent"></div>
           </div>
 
           <div className="absolute inset-0 flex flex-col justify-end pb-12">
@@ -91,8 +90,8 @@ export default function AntigravityTourDetail() {
               {/* Left Content Card (Glassmorphism) */}
               <div className="relative group md:w-2/3 max-w-2xl bg-white/5 backdrop-blur-2xl border border-white/10 p-8 rounded-3xl overflow-hidden shadow-2xl transition-all hover:bg-white/10">
                 {/* Glow effect on hover */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-3xl blur opacity-0 group-hover:opacity-20 transition duration-1000 group-hover:duration-200"></div>
-                
+                <div className="absolute -inset-1 bg-linear-to-r from-purple-600 to-blue-600 rounded-3xl blur opacity-0 group-hover:opacity-20 transition duration-1000 group-hover:duration-200"></div>
+
                 <div className="relative z-10">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
@@ -102,10 +101,10 @@ export default function AntigravityTourDetail() {
                       <Star className="w-4 h-4 fill-current" /> 4.9 (128 Reviews)
                     </span>
                   </div>
-                  
+
                   <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-4 tracking-tight leading-tight">
-                    Shimla Manali <br/>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
+                    Shimla Manali <br />
+                    <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-purple-500">
                       Escape
                     </span>
                   </h1>
@@ -149,10 +148,10 @@ export default function AntigravityTourDetail() {
 
         {/* Main Content Area */}
         <section className="max-w-7xl mx-auto px-6 md:px-12 py-12 flex flex-col lg:flex-row gap-12">
-          
+
           {/* Left Column (Details) */}
           <div className="w-full lg:w-2/3 space-y-16">
-            
+
             {/* 2. Tour Overview */}
             <div className="flex flex-wrap items-center gap-8 bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-xl">
               <div className="flex items-center gap-4">
@@ -172,9 +171,9 @@ export default function AntigravityTourDetail() {
                 <div className="flex-1">
                   <p className="text-sm text-gray-400 uppercase tracking-widest">Route</p>
                   <div className="flex items-center gap-2 text-white font-medium mt-1 text-sm md:text-base flex-wrap">
-                    Delhi <ChevronRight className="w-4 h-4 text-gray-500" /> 
-                    Shimla <ChevronRight className="w-4 h-4 text-gray-500" /> 
-                    Manali <ChevronRight className="w-4 h-4 text-gray-500" /> 
+                    Delhi <ChevronRight className="w-4 h-4 text-gray-500" />
+                    Shimla <ChevronRight className="w-4 h-4 text-gray-500" />
+                    Manali <ChevronRight className="w-4 h-4 text-gray-500" />
                     Chandigarh
                   </div>
                 </div>
@@ -182,7 +181,7 @@ export default function AntigravityTourDetail() {
             </div>
 
             {/* AI Insight Box (Bonus) */}
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-blue-500/30 p-6 flex flex-col md:flex-row items-center gap-6">
+            <div className="relative overflow-hidden rounded-2xl bg-linear-to-r from-blue-900/40 to-purple-900/40 border border-blue-500/30 p-6 flex flex-col md:flex-row items-center gap-6">
               <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-blue-500/30 blur-2xl rounded-full"></div>
               <div className="w-14 h-14 rounded-full bg-black/50 border border-white/10 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(59,130,246,0.5)]">
                 <Sparkles className="w-6 h-6 text-cyan-400" />
@@ -259,12 +258,12 @@ export default function AntigravityTourDetail() {
                   { d: 6, title: "Departure via Chandigarh", desc: "Depart for Chandigarh after breakfast. Drop at Airport/Railway station for your onward journey with Antigravity memories." },
                 ].map((day) => (
                   <div key={day.d} className="border border-white/10 bg-white/5 rounded-2xl overflow-hidden backdrop-blur-md">
-                    <button 
+                    <button
                       onClick={() => setExpandedDay(expandedDay === day.d ? null : day.d)}
                       className="w-full flex items-center justify-between p-6 hover:bg-white/5 transition-colors"
                     >
                       <div className="flex items-center gap-4">
-                        <span className="flex-shrink-0 w-12 h-12 rounded-full bg-black/50 border border-white/10 flex items-center justify-center font-bold text-purple-400">
+                        <span className="shrink-0 w-12 h-12 rounded-full bg-black/50 border border-white/10 flex items-center justify-center font-bold text-purple-400">
                           Day {day.d}
                         </span>
                         <h4 className="text-lg font-bold text-left text-gray-100">{day.title}</h4>
@@ -288,11 +287,10 @@ export default function AntigravityTourDetail() {
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`flex-1 py-3 px-4 rounded-xl text-sm font-semibold capitalize transition-all whitespace-nowrap ${
-                      activeTab === tab 
-                        ? 'bg-gradient-to-r from-blue-600/80 to-purple-600/80 text-white shadow-lg' 
+                    className={`flex-1 py-3 px-4 rounded-xl text-sm font-semibold capitalize transition-all whitespace-nowrap ${activeTab === tab
+                        ? 'bg-linear-to-r from-blue-600/80 to-purple-600/80 text-white shadow-lg'
                         : 'text-gray-400 hover:text-white hover:bg-white/5'
-                    }`}
+                      }`}
                   >
                     {tab}
                   </button>
@@ -325,7 +323,7 @@ export default function AntigravityTourDetail() {
 
             {/* 10. Contact / Callback Form */}
             <div className="relative overflow-hidden rounded-3xl border border-white/10 p-8 md:p-10">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-black z-0"></div>
+              <div className="absolute inset-0 bg-linear-to-br from-purple-900/20 to-black z-0"></div>
               <div className="relative z-10 grid md:grid-cols-2 gap-10 items-center">
                 <div>
                   <h3 className="text-3xl font-bold text-white mb-4">Want a Custom Experience?</h3>
@@ -346,10 +344,10 @@ export default function AntigravityTourDetail() {
           {/* Right Column (Sticky Sidebar) */}
           <div className="w-full lg:w-1/3">
             <div className="sticky top-28 space-y-6">
-              
+
               {/* 3. Pricing Card */}
               <div className="bg-[#0A0B14]/80 backdrop-blur-2xl border border-white/10 rounded-3xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-                
+
                 {/* Header */}
                 <div className="p-6 border-b border-white/10 flex justify-between items-center">
                   <div className="flex gap-3">
@@ -394,16 +392,16 @@ export default function AntigravityTourDetail() {
                     </h4>
                     <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
                       {/* Active Date */}
-                      <button className="flex-shrink-0 w-24 p-3 rounded-xl bg-purple-600/20 border-2 border-purple-500 relative flex flex-col items-center justify-center overflow-hidden">
+                      <button className="shrink-0 w-24 p-3 rounded-xl bg-purple-600/20 border-2 border-purple-500 relative flex flex-col items-center justify-center overflow-hidden">
                         <div className="absolute top-0 right-0 left-0 bg-purple-500 text-[9px] font-bold text-white text-center py-0.5 uppercase">Lowest</div>
                         <span className="text-gray-300 text-xs mt-3">Dec</span>
                         <span className="text-xl font-bold text-white">12</span>
                         <span className="text-[10px] text-green-400 mt-1">₹44k</span>
                       </button>
-                      
+
                       {/* Other Dates */}
                       {[15, 22, 28].map(day => (
-                        <button key={day} className="flex-shrink-0 w-24 p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex flex-col items-center justify-center">
+                        <button key={day} className="shrink-0 w-24 p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex flex-col items-center justify-center">
                           <span className="text-gray-400 text-xs">Dec</span>
                           <span className="text-xl font-bold text-gray-200">{day}</span>
                           <span className="text-[10px] text-gray-400 mt-1">₹46k</span>
@@ -417,12 +415,12 @@ export default function AntigravityTourDetail() {
                     <button className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/10 font-bold py-4 rounded-xl transition-all shadow-sm">
                       Check Dates & Prices
                     </button>
-                    <button className="relative w-full overflow-hidden group bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_30px_rgba(168,85,247,0.6)]">
+                    <button className="relative w-full overflow-hidden group bg-linear-to-r from-blue-600 to-purple-600 text-white font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_30px_rgba(168,85,247,0.6)]">
                       <span className="relative z-10">Proceed to Book</span>
-                      <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute inset-0 h-full w-full bg-linear-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </button>
                   </div>
-                  
+
                   {/* Summary / Mini Info */}
                   <p className="text-center text-xs text-gray-500 flex items-center justify-center gap-1.5">
                     <CheckCircle2 className="w-3 h-3 text-green-500" /> Free cancellation up to 45 days
@@ -456,7 +454,7 @@ export default function AntigravityTourDetail() {
       </main>
 
       {/* AI Trip Assistant Chatbot Floating FAB */}
-      <button className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.5)] hover:scale-110 transition-transform z-50 group border-2 border-purple-400/30">
+      <button className="fixed bottom-6 right-6 w-14 h-14 bg-linear-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.5)] hover:scale-110 transition-transform z-50 group border-2 border-purple-400/30">
         <Bot className="w-6 h-6 text-white" />
         <span className="absolute right-full mr-4 bg-black/80 backdrop-blur-md text-white text-sm px-4 py-2 rounded-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity border border-white/10 pointer-events-none">
           Ask AI Assistant
@@ -464,7 +462,8 @@ export default function AntigravityTourDetail() {
       </button>
 
       {/* Extra styles for hiding scrollbars nicely */}
-      <style dangerouslySetInnerHTML={{__html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .no-scrollbar::-webkit-scrollbar {
           display: none;
         }
