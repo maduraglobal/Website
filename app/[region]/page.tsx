@@ -136,7 +136,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               Find your dream destination and start your journey with us.
             </p>
             <div className="pt-4">
-              <Link href={`/${region}/destination`} className="inline-block bg-white text-[#191974] px-8 py-3.5 rounded-lg font-bold text-[14px] font-inter-tight uppercase tracking-wider hover:bg-white hover:text-black transition-colors shadow-lg">
+              <Link href={`/${region}/destination`} className="inline-block bg-white text-[#191974] px-8 py-3.5 rounded-lg font-bold text-[14px] font-inter-tight uppercase tracking-wider hover:bg-white hover:text-[#ee2229] transition-colors shadow-lg">
                 SHOW ALL DESTINATIONS
               </Link>
             </div>
@@ -156,13 +156,14 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
               {/* Carousel Controls */}
               <div className="absolute -right-2 md:right-0 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-50">
-                <button onClick={handlePrevSlide} className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/20 backdrop-blur-md hover:bg-white/40 flex items-center justify-center text-white transition-all border border-white/20 cursor-pointer shadow-xl hover:scale-105 active:scale-95">
-                  <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
+                <button onClick={handlePrevSlide} className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/80 backdrop-blur-xl hover:bg-white flex items-center justify-center text-[#191974] transition-all border border-white/40 cursor-pointer shadow-2xl hover:scale-110 active:scale-90">
+                  <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" /></svg>
                 </button>
-                <button onClick={handleNextSlide} className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/20 backdrop-blur-md hover:bg-white/40 flex items-center justify-center text-white transition-all border border-white/20 cursor-pointer shadow-xl hover:scale-105 active:scale-95">
-                  <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
+                <button onClick={handleNextSlide} className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/80 backdrop-blur-xl hover:bg-white flex items-center justify-center text-[#191974] transition-all border border-white/40 cursor-pointer shadow-2xl hover:scale-110 active:scale-90">
+                  <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg>
                 </button>
               </div>
+
             </div>
           </div>
         </div>
@@ -241,8 +242,8 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
       <section className="pt-12 pb-8 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-10">
-            <h2 className="font-inter text-[32px] font-black text-[#191974] mb-2 uppercase tracking-tight">Top Destinations</h2>
-            <p className="font-inter text-[26px] text-gray-400 font-light">Discover the world&apos;s most sought-after holiday spots.</p>
+            <h2 className="font-inter text-[16px] font-black text-[#191974] mb-2 uppercase tracking-tight">Top Destinations</h2>
+            <p className="font-inter text-[16px] text-gray-400 font-light">Discover the world&apos;s most sought-after holiday spots.</p>
           </div>
 
           <div className="flex overflow-x-auto gap-4 lg:gap-5 pb-6 custom-scrollbar snap-x snap-mandatory">
@@ -257,18 +258,18 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               <Link
                 key={idx}
                 href={`/${region}/destination/${card.slug}`}
-                className="relative w-[150px] h-[220px] lg:w-[190px] lg:h-[260px] shrink-0 rounded-[16px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block"
+                className="relative w-[160px] h-[230px] lg:w-[160px] lg:h-[230px] shrink-0 rounded-[12px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block"
               >
                 <img src={card.image} alt={card.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/10 to-black/90 pointer-events-none" />
 
                 <div className="absolute top-4 left-4 right-4">
-                  <h3 className="text-white font-bold text-[14px] lg:text-[16px] leading-tight drop-shadow-md">{card.name}</h3>
+                  <h3 className="text-white text-[13px] lg:text-[13px] leading-tight drop-shadow-md">{card.name}</h3>
                 </div>
 
                 <div className="absolute bottom-4 left-4 right-4">
                   <p className="text-white/80 text-[10px] font-medium mb-0.5 drop-shadow-md">Starting from</p>
-                  <p className="text-white font-black text-[18px] lg:text-[22px] tracking-tight drop-shadow-md">{card.price}</p>
+                  <p className="text-white font-black text-[16px] lg:text-[15px] tracking-tight drop-shadow-md">{card.price}</p>
                 </div>
               </Link>
             ))}
@@ -306,8 +307,8 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
             <div>
-              <h2 className="font-inter text-[32px] font-black text-[#191974] mb-2 uppercase tracking-tight">Featured Tours</h2>
-              <p className="font-inter text-[26px] text-gray-400 font-light">Explore some of our most popular tours selected for you.</p>
+              <h2 className="font-inter text-[16px] font-black text-[#191974] mb-2 uppercase tracking-tight">Featured Tours</h2>
+              <p className="font-inter text-[16px] text-gray-400 font-light">Explore some of our most popular tours selected for you.</p>
             </div>
             <button className="font-inter-tight text-[14px] font-bold text-[#191974] border border-gray-200 rounded-full px-6 py-2.5 hover:bg-gray-50 transition-colors whitespace-nowrap uppercase tracking-widest">
               Explore all &rsaquo;
@@ -365,9 +366,9 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
                   {/* Content Section */}
                   <div className="p-5 flex flex-col flex-1">
-                    <p className="text-[11px] text-[#ee2229] font-black uppercase tracking-widest mb-1 font-inter-tight">Explorer</p>
+                    <p className="text-[12px] text-gray-500 font-medium mb-1 font-inter-tight">Explorer</p>
                     <Link href={`/${region}/tours/${tour.slug}`}>
-                      <h3 className="text-[17px] font-bold text-[#191974] mb-3 leading-snug line-clamp-2 h-[48px] font-inter hover:text-[#ee2229] transition-colors">
+                      <h3 className="text-[18px] font-bold text-[#191974] mb-3 leading-tight font-inter hover:text-[#ee2229] transition-colors">
                         {tour.title}
                       </h3>
                     </Link>
@@ -376,7 +377,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
                     {/* Icon Grid */}
                     <div className="flex items-center justify-between mb-5 border-t border-gray-50 pt-4">
-                      <span className="text-[12px] font-black text-gray-400 uppercase tracking-widest">Included</span>
+                      <span className="text-[14px] font-bold text-gray-800">Tour Includes</span>
                       <div className="flex gap-3 text-[#ee2229]">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -388,8 +389,8 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                     <div className="bg-gray-50 -mx-5 px-5 py-5 mt-auto border-t border-gray-100">
                       <div className="flex justify-between items-start mb-5">
                         <div>
-                          <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Starts from</p>
-                          <p className="text-[22px] font-black text-[#191974] leading-none tracking-tighter">
+                          <p className="text-[11px] text-gray-500 font-medium mb-1 leading-none">All inclusive price starts</p>
+                          <p className="text-[24px] font-black text-[#191974] leading-none tracking-tighter">
                             {formatRegionalPrice(tour.base_price_inr, region)}
                           </p>
                         </div>
@@ -401,10 +402,10 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
                       {/* Action Buttons */}
                       <div className="grid grid-cols-2 gap-3">
-                        <Link href={`/${region}/tours/${tour.slug}`} className="border border-[#ee2229] text-[#ee2229] py-2.5 rounded-lg text-[13px] font-bold text-center font-inter-tight hover:bg-[#ee2229]/5 transition-colors uppercase tracking-widest">
+                        <Link href={`/${region}/tours/${tour.slug}`} className="border border-[#191974] text-[#191974] py-2.5 rounded-lg text-[13px] font-bold text-center font-inter-tight hover:bg-[#ee2229]/5 transition-colors uppercase tracking-widest">
                           View Details
                         </Link>
-                        <Link href={`/${region}/booking?tour=${tour.slug}`} className="bg-[#ee2229] text-white py-2.5 rounded-lg text-[13px] font-bold text-center font-inter-tight hover:bg-[#191974] transition-all shadow-md uppercase tracking-widest">
+                        <Link href={`/${region}/booking?tour=${tour.slug}`} className="bg-[#191974] text-white py-2.5 rounded-lg text-[13px] font-bold text-center font-inter-tight hover:bg-[#ee2229] transition-all shadow-md uppercase tracking-widest">
                           Book Now
                         </Link>
                       </div>
@@ -508,15 +509,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
             </div>
 
             {/* Floating Info-Blue Badge (Bottom Right Ref) */}
-            <div className="absolute bottom-10 right-10 flex items-center bg-[#191974]/95 backdrop-blur-md border border-white/10 rounded-xl pl-3 pr-8 py-2.5 gap-4 shadow-2xl">
-              <div className="w-12 h-12 rounded-lg bg-white flex items-center justify-center text-[#ee2229]">
-                <p className="text-[11px] font-black leading-tight text-center uppercase">Book<br />Now</p>
-              </div>
-              <div className="text-[12px] text-white leading-tight font-black uppercase tracking-wider">
-                Support Available 24/7<br />
-                <span className="opacity-50 text-[10px] font-arial">Global Assistance</span>
-              </div>
-            </div>
+
 
           </div>
         </div>
@@ -567,20 +560,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         />
       </section>
 
-      <section className="py-24 relative overflow-hidden bg-[#191974]">
-        <div className="absolute inset-0 bg-[#ee2229] opacity-10 rounded-[100%] blur-[120px] translate-y-1/2 scale-150"></div>
-        <div className="max-w-5xl mx-auto px-4 text-center relative z-20">
-          <h2 className="text-[32px] font-black font-inter text-white mb-6 drop-shadow-2xl uppercase tracking-tight">
-            Plan Your Dream <br />Trip Today
-          </h2>
-          <p className="text-[26px] text-white/50 font-inter font-light mb-12 max-w-2xl mx-auto leading-relaxed">
-            Ready to explore? Book your fully managed luxury package with Madura Travel and let us handle the rest.
-          </p>
-          <Link href={`/${region}/tours`} className="inline-block bg-[#ee2229] text-white px-14 py-5 rounded-full text-[14px] font-inter-tight font-black tracking-widest hover:bg-white hover:text-[#ee2229] transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-red-500/20 active:scale-95 uppercase">
-            Browse All Tours
-          </Link>
-        </div>
-      </section>
+
 
     </div>
   );

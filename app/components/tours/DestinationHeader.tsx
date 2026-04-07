@@ -26,10 +26,10 @@ export default function DestinationHeader({ destinationName, totalTours }: Desti
           className="flex flex-col md:flex-row md:items-center justify-between gap-6"
         >
           <div>
-            <h1 className="text-4xl md:text-5xl font-black mb-3 text-white capitalize tracking-tight font-poppins">
+            <h1 className="text-4xl md:text-5xl font-black mb-3 text-white capitalize tracking-tighter font-inter">
               {destinationName} Tour Packages
             </h1>
-            <p className="text-[#e2e2e2] text-lg">
+            <p className="text-white/80 text-[14px] font-arial uppercase tracking-widest">
               Showing 1-{Math.min(10, totalTours)} of {totalTours} packages
             </p>
           </div>

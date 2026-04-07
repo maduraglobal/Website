@@ -108,31 +108,26 @@ export default function Footer() {
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-[#191974]/40 blur-3xl" />
         <div className="absolute bottom-0 -left-20 w-[400px] h-[300px] rounded-full bg-[#ee2229]/5 blur-3xl" />
-        {/* Subtle grid lines */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
-        />
+
       </div>
 
       {/* ── NEWSLETTER BANNER ── */}
+      {/* ── NEWSLETTER BANNER –—
       <div className="relative border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col lg:flex-row items-start lg:items-center gap-8">
 
+
           {/* Left copy */}
-          <div className="shrink-0 lg:w-[360px]">
+      {/* <div className="shrink-0 lg:w-[360px]">
             <p className="text-[11px] uppercase tracking-[0.25em] text-[#ee2229] font-bold mb-2">Stay Inspired</p>
             <h3 className="text-[22px] lg:text-[26px] font-black leading-tight text-white">
               Travel deals & ideas,<br />
               <span className="text-white/40">straight to your inbox.</span>
             </h3>
-          </div>
+          </div> */}
 
-          {/* Form */}
-          {subscribed ? (
+      {/* Form */}
+      {/* {subscribed ? (
             <div className="flex-1 flex items-center gap-3 bg-[#ee2229]/60 border border-[#ee2229] rounded-2xl px-6 py-5">
               <div className="w-10 h-10 rounded-full bg-[#ee2229] flex items-center justify-center shrink-0">
                 <svg className="w-5 h-5 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -187,7 +182,9 @@ export default function Footer() {
             </form>
           )}
         </div>
-      </div>
+        </div>
+      </div> */}
+
 
       {/* ── MAIN FOOTER BODY ── */}
       <div className="relative max-w-7xl mx-auto px-6 lg:px-10 pt-14 pb-10">
@@ -266,7 +263,7 @@ export default function Footer() {
           </div>
 
           {/* Links columns */}
-          <div className="lg:col-span-6 grid grid-cols-2 md:grid-cols-3 gap-8">
+          <div className="lg:col-span-6 grid grid-cols-2 gap-8">
             <FooterColumn
               title="Discover Us"
               links={[
@@ -274,7 +271,7 @@ export default function Footer() {
                 { label: "Our Team", href: "#" },
                 { label: "Tour Managers", href: "#" },
                 { label: "Sales Partners", href: "#" },
-                { label: "Careers", href: "#", badge: "Hiring" },
+                { label: "Careers", href: "#", },
                 { label: "CSR Policy", href: "#" },
                 { label: "Guest Reviews", href: "#" },
               ]}
@@ -291,18 +288,7 @@ export default function Footer() {
                 { label: "Tour Status", href: "#" },
               ]}
             />
-            <FooterColumn
-              title="Resources"
-              links={[
-                { label: "Blog", href: "#" },
-                { label: "Podcasts", href: "#" },
-                { label: "Video Blogs", href: "#" },
-                { label: "Travel Planners", href: "#" },
-                { label: "Corporate Travel", href: "#" },
-                { label: "Customized Holidays", href: "#" },
-                { label: "Weddings Abroad", href: "#" },
-              ]}
-            />
+
           </div>
         </div>
 
@@ -364,7 +350,7 @@ export default function Footer() {
         <div className="mt-10 bg-[#191974]/30 border border-white/8 rounded-xl px-5 py-4">
           <p className="text-[11px] text-white/30 leading-relaxed italic">
             <span className="text-[#ee2229] font-bold not-italic">⚠ Caution:</span>{" "}
-            Beware of fake promotions. All authorized Madura Travel communications come from <span className="text-white/45">mail@maduratravel.com</span> or <span className="text-white/45">@maduratravel.in</span>. Do not engage with any emails, SMS, or links from unverified sources. Madura Travel bears no liability for fraudulent communications.
+            Beware of fake promotions. All authorized Madura Travel communications come from <span className="text-white/45">mail@maduratravel.com</span>. Do not engage with any emails, SMS, or links from unverified sources. Madura Travel bears no liability for fraudulent communications.
           </p>
         </div>
 

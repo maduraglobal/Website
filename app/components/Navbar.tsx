@@ -50,357 +50,186 @@ export default function Navbar() {
     <div className="w-full flex flex-col fixed top-0 left-0 z-100 shadow-md">
 
       {/* 🔷 TOP HEADER */}
-      <div className="bg-white  text-[#191974] px-4 lg:px-8 py-3 flex items-center justify-between">
+      <div className="bg-white text-[#191974] px-4 lg:px-8 py-3 flex items-center justify-between">
 
         {/* Logo */}
         <Link href={`/${currentRegionCode}`} className="flex items-center shrink-0">
           <Image
             src="/logo.webp"
             alt="Madura Travel Logo"
-            width={140}
-            height={45}
+            width={160}
+            height={50}
             className="object-contain"
             priority
           />
         </Link>
 
         {/* 🔍 Search Bar */}
-        <div className="hidden md:flex flex-1 max-w-xl mx-8 relative">
+        <div className="hidden lg:flex flex-1 max-w-xl mx-8">
           <div className="relative w-full">
             <input
               type="text"
               placeholder='Search "Destination"'
-              className="w-full px-5 py-2.5 rounded-full text-white text-[14px] font-arial outline-none bg-[#191974] border-[#191974] font-medium"
+              className="w-full px-6 py-2.5 rounded-full text-white text-[14px] font-arial outline-none bg-[#191974] placeholder:text-white/60 font-medium"
             />
-            {/* <div className="absolute right-4 top-2.5 flex items-center gap-2">
-              <span className="text-gray-400 cursor-pointer text-lg">🎤</span>
-              <span className="text-gray-400 text-lg">🔍</span>
-            </div> */}
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            </div>
           </div>
         </div>
 
         {/* Utilities */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-6 font-arial">
 
-          {/* Contact */}
-          <div className="hidden lg:flex flex-col relative group">
-            <div className="flex items-center bg-white px-4 py-2 rounded-md gap-2 border border-[#191974] cursor-pointer hover:bg-white transition-all">
-              <div className="flex flex-col">
-                <a href="tel:+919092949494" className="text-[14px] font-bold leading-none hover:text-[#ee2229] transition-colors">+91 90 92 94 94 94</a>
-              </div>
-              <svg
-                className="w-2.5 h-2.5 ml-1 opacity-60 transition-transform group-hover:rotate-180"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-
-            {/* Contact Dropdown */}
-            <div className="absolute top-full right-0 mt-2 w-[340px] bg-white shadow-[0_10px_30px_rgba(0,0,0,0.15)] rounded-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 overflow-hidden">
-              <div className="p-6 flex flex-col gap-5">
-                <h3 className="text-[18px] font-bold text-[#171717] font-inter">Contact Us</h3>
-
-                {/* Toll Free */}
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                    <svg className="w-4 h-4 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[12px] text-gray-500 font-medium">Our Toll Free Numbers:</span>
-                    <a href="tel:+919092949494" className="text-[15px] font-bold text-[#171717] hover:text-[#ee2229] transition-colors">+91 90 92 94 94 94</a>
-                  </div>
-                </div>
-
-                {/* Local Call */}
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center shrink-0">
-                    <svg className="w-4 h-4 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[12px] text-gray-500 font-medium">You can also call us on:</span>
-                    <a href="tel:+919092949494" className="text-[14px] font-bold text-[#171717] hover:text-[#ee2229] transition-colors">+91 90 92 94 94 94</a>
-                    <a href="tel:+919092949494" className="text-[14px] font-bold text-[#171717] hover:text-[#ee2229] transition-colors">+91 90 92 94 94 94</a>
-                  </div>
-                </div>
-
-                {/* NRI / Foreign */}
-                <div className="flex gap-3 pt-2 border-t border-gray-50">
-                  <div className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center shrink-0">
-                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[12px] text-gray-500 font-medium">Foreign Nationals/NRIs:</span>
-                    <div className="mt-1">
-                      <span className="text-[11px] text-gray-400 block uppercase">Within India</span>
-                      <a href="tel:+919152004511" className="text-[14px] font-bold text-[#171717] hover:text-[#ee2229] transition-colors">+91 915 200 4511</a>
-                    </div>
-                    <div className="mt-1">
-                      <span className="text-[11px] text-gray-400 block uppercase">Outside India</span>
-                      <a href="tel:+918879972221" className="text-[14px] font-bold text-[#171717] hover:text-[#ee2229] transition-colors">+91 887 997 2221</a>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Footer Links */}
-                <div className="flex flex-col gap-3 pt-4 border-t border-gray-100">
-                  <Link href="mailto:mail@maduratravel.com" className="flex items-center gap-2 text-[13px] text-[#191974] font-semibold hover:underline">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                    mail@maduratravel.com
-                  </Link>
-                  <Link href="#" className="flex items-center gap-2 text-[13px] text-[#191974] font-semibold hover:underline">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                    Nearest Madura Travel Office &gt;
-                  </Link>
-                  <div className="flex items-center gap-2 text-[12px] text-gray-500 font-medium">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    Business hours <span className="font-bold text-[#171717] ml-1">9.30AM - 6PM</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* Contact info box */}
+          <div className="hidden xl:flex items-center border border-gray-200 px-4 py-1.5 rounded-lg gap-2 cursor-pointer hover:border-[#191974] transition-all group">
+            <span className="text-[14px] font-bold">+91 90 92 94 94 94</span>
+            <svg className="w-2.5 h-2.5 opacity-40 group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
           </div>
 
           {/* Login */}
-          <div className="flex items-center gap-2 group cursor-pointer hover:text-[#191974] transition-colors">
-            {/* <div className="w-8 h-8 rounded-full border border-gray-400 flex items-center justify-center text-lg">👤</div> */}
-            <div className="flex flex-col items-center">
-              <Link href={`/${currentRegionCode}/login`} className="text-[12px] font-bold leading-none">Login</Link>
-
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-
-            </div>
-          </div>
+          <Link href={`/${currentRegionCode}/login`} className="text-[14px] font-bold hover:text-[#ee2229] transition-colors">Login</Link>
 
           {/* Country Selector */}
           <div className="relative group cursor-pointer">
-            <div className="flex items-center gap-1.5 bg-white text-black px-3 py-1.5 rounded-[4px] font-bold text-[13px] border border-gray-100 shadow-sm hover:border-gray-200 transition-all">
+            <div className="flex items-center gap-2 border border-gray-100 px-3 py-1.5 rounded-lg font-bold text-[13px] hover:border-gray-200">
               <img
                 src={getFlagURL(activeCountryConfig.id)}
                 alt={`${activeCountryConfig.name} flag`}
-                className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
+                className="w-5 h-3.5 object-cover rounded-sm"
               />
-              <span className="whitespace-nowrap">{activeCountryConfig.name}</span>
-              <svg
-                className="w-2.5 h-2.5 opacity-60 transition-transform group-hover:rotate-180"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-
-            {/* Dropdown */}
-            <div className="absolute top-full right-0 mt-2 w-[180px] bg-white shadow-xl rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 overflow-hidden">
-              <div className="py-1">
-                {Object.values(countryConfigs).map((config) => (
-                  <button
-                    key={config.id}
-                    onClick={() => switchRegion(config.id)}
-                    className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#ee2229] transition-colors"
-                  >
-                    <img
-                      src={getFlagURL(config.id)}
-                      alt={config.name}
-                      className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
-                    />
-                    <span className="font-medium">{config.name}</span>
-                    {activeCountryConfig.id === config.id && (
-                      <span className="ml-auto text-[#ee2229] text-[10px]">●</span>
-                    )}
-                  </button>
-                ))}
-              </div>
+              <span>{activeCountryConfig.name}</span>
+              <svg className="w-2 h-2 opacity-40 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M19 9l-7 7-7-7" /></svg>
             </div>
           </div>
         </div>
       </div>
 
       {/* 🔷 BOTTOM NAVBAR */}
-      <nav className="bg-[#191974] text-white px-8 lg:px-16 py-3 flex items-center justify-between text-[13px] font-black tracking-[0.05em] border-t border-[#1e4a8a] shadow-inner font-inter uppercase">
+      <nav className="bg-white text-[#191974] px-8 lg:px-16 py-3 flex items-center justify-center gap-10 text-[11px] font-black tracking-widest font-inter uppercase relative border-b border-gray-100 shadow-sm">
 
-        {/* Destination Dropdown */}
         <div className="relative group cursor-pointer py-1">
-          <span className="flex items-center hover:text-red-500 transition-colors uppercase">
+          <span className="flex items-center hover:text-[#ee2229] transition-colors group">
             Destinations
-            <svg
-              className="w-2.5 h-2.5 ml-1 opacity-60 transition-transform group-hover:rotate-180"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
+            <svg className="w-2.5 h-2.5 ml-1.5 opacity-40 group-hover:rotate-180 group-hover:text-[#ee2229] transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
           </span>
-          <div className="absolute top-full left-0 w-[800px] bg-white text-black shadow-2xl rounded-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 flex overflow-hidden border border-gray-200 mt-2">
-            <div className="w-1/3 bg-gray-50 flex flex-col max-h-[500px] overflow-y-auto">
-              {Object.keys(destinations).map((region) => (
-                <div
-                  key={region}
-                  onMouseEnter={() => setActiveRegion(region as DestinationKey)}
-                  className={`px-5 py-3 cursor-pointer text-[13px] transition-colors flex justify-between items-center ${activeRegion === region ? 'bg-white border-l-4 border-red-600 font-bold text-[#191974]' : 'text-gray-600 hover:bg-gray-100'}`}
-                >
-                  {region}
-                  <span className="text-gray-400">›</span>
-                </div>
-              ))}
+          {/* MEGAMENU CONTAINER */}
+          <div className="absolute top-full left-[-200px] w-[980px] bg-white text-black shadow-[0_25px_80px_rgba(0,0,0,0.25)] rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-[110] flex overflow-hidden border border-gray-100 mt-4 h-[540px]">
+            
+            {/* Left Regions Sidebar */}
+            <div className="w-[300px] bg-[#f8f9fa] flex flex-col border-r border-gray-100 overflow-y-auto shrink-0">
+              <div className="px-8 py-6 border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-20">
+                <span className="text-[11px] font-black text-[#191974] uppercase tracking-[0.25em]">Global Regions</span>
+              </div>
+              <div className="flex-1 py-4">
+                {Object.keys(destinations).map((region) => (
+                  <div
+                    key={region}
+                    onMouseEnter={() => setActiveRegion(region as DestinationKey)}
+                    className={`px-8 py-4.5 cursor-pointer text-[13.5px] transition-all flex justify-between items-center group/region relative border-b border-gray-100/10 ${activeRegion === region ? 'bg-white text-[#191974] font-black shadow-sm' : 'text-[#191974]/50 hover:text-[#191974] hover:bg-white/50'}`}
+                  >
+                    <span className="uppercase tracking-[0.05em] relative z-10">{region}</span>
+                    {activeRegion === region && (
+                      <div className="absolute inset-y-0 left-0 w-1.5 bg-[#ee2229]" />
+                    )}
+                    <svg className={`w-3.5 h-3.5 transition-transform ${activeRegion === region ? 'translate-x-0 opacity-100 text-[#ee2229]' : '-translate-x-2 opacity-0 group-hover/region:translate-x-0 group-hover/region:opacity-40'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="w-2/3 p-6 bg-white flex flex-col">
-              <h3 className="text-[26px] font-light text-[#191974] mb-4 border-b border-gray-100 pb-2 uppercase font-inter">{activeRegion}</h3>
-              <div className="grid grid-cols-3 gap-x-4 gap-y-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar font-arial text-[14px]">
+
+            {/* Right Destinations Content Area Area Area */}
+            <div className="flex-1 p-12 bg-white flex flex-col overflow-y-auto">
+              {/* Header */}
+              <div className="mb-10 border-b border-gray-100 pb-8 flex items-end justify-between">
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-[#ee2229] text-[11px] font-black uppercase tracking-[0.3em]">Tour Packages in</span>
+                  <h3 className="text-[38px] font-black text-[#191974] uppercase tracking-tighter font-inter leading-none">
+                    {activeRegion}
+                  </h3>
+                </div>
+                <Link href={`/${currentRegionCode}/destination`} className="group/all flex items-center gap-2 text-[11px] font-black text-[#191974] hover:text-[#ee2229] transition-colors uppercase tracking-widest pb-1 border-b-2 border-transparent hover:border-[#ee2229]">
+                   Expore all {activeRegion}
+                  <svg className="w-3.5 h-3.5 group-hover/all:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7-7 7" /></svg>
+                </Link>
+              </div>
+
+              {/* Grid */}
+              <div className="grid grid-cols-3 gap-x-10 gap-y-6">
                 {destinations[activeRegion].map((place, idx) => (
-                  <Link key={idx} href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, '-')}`} className="text-[#191974] hover:text-[#ee2229] hover:underline transition-all">
+                  <Link 
+                    key={idx} 
+                    href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, '-')}`} 
+                    className="text-[#191974]/80 hover:text-[#ee2229] hover:font-black transition-all font-inter font-black text-[14px] uppercase tracking-tighter flex items-center gap-3 group/link relative py-1"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-gray-100 group-hover/link:bg-[#ee2229] group-hover/link:scale-125 transition-all" />
                     {place}
                   </Link>
                 ))}
               </div>
             </div>
+
           </div>
         </div>
 
-        <div className="relative group">
-
-          {/* Trigger */}
-          <span className="hover:text-[#ee2229] transition uppercase group flex items-center cursor-pointer">
+        {/* 🇮🇳 INDIA */}
+        <div className="relative group cursor-pointer py-1">
+          <span className="flex items-center hover:text-[#ee2229] transition-colors group">
             India
-            <svg
-              className="w-2.5 h-2.5 ml-1 opacity-60 transition-transform group-hover:rotate-180"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
+            <svg className="w-2.5 h-2.5 ml-1.5 opacity-40 group-hover:rotate-180 group-hover:text-[#ee2229] transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
           </span>
-
-          {/* Dropdown */}
-          <div className="absolute top-full left-0 mt-2 w-[220px] bg-white shadow-xl rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 max-h-[300px] overflow-y-auto">
-
-            {destinations["India"].map((place, idx) => (
-              <Link
-                key={idx}
-                href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, "-")}`}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#ee2229] transition"
-              >
-                {place}
-              </Link>
-            ))}
-
+          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[220px] bg-white shadow-xl rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+            <div className="py-2 max-h-[400px] overflow-y-auto">
+              {destinations["India"].map((place) => (
+                <Link key={place} href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, "-")}`} className="block px-6 py-2.5 text-[13px] text-[#191974] font-bold hover:bg-gray-50 hover:text-[#ee2229] transition-all font-arial uppercase tracking-tighter">
+                  {place}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
-        <div className="relative group">
 
-          {/* Trigger */}
-          <span className="hover:text-[#ee2229] transition uppercase flex items-center cursor-pointer">
+        {/* SPECIALITY TOURS */}
+        <div className="relative group cursor-pointer py-1">
+          <span className="flex items-center hover:text-[#ee2229] transition-colors group">
             Speciality Tours
-            <svg
-              className="w-2.5 h-2.5 ml-1 opacity-60 transition-transform group-hover:rotate-180"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
+            <svg className="w-2.5 h-2.5 ml-1.5 opacity-40 group-hover:rotate-180 group-hover:text-[#ee2229] transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
           </span>
-
-          {/* Dropdown */}
-          <div className="absolute top-full left-0 mt-2 w-[220px] bg-white shadow-xl rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
-
-            {[
-              "Family Tour",
-              "Group Tour",
-              "Spiritual Tour",
-              "Honeymoon Tour",
-            ].map((tour, idx) => (
-              <Link
-                key={idx}
-                href={`/tours/${tour.toLowerCase().replace(/ /g, "-")}`}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#ee2229] transition"
-              >
-                {tour}
-              </Link>
-            ))}
-
+          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[220px] bg-white shadow-xl rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+            <div className="py-2">
+              {["Family Tour", "Group Tour", "Spiritual Tour", "Honeymoon Tour", "Luxury Retreats"].map((tour) => (
+                <Link key={tour} href={`/${currentRegionCode}/tours`} className="block px-6 py-2.5 text-[13px] text-[#191974] font-bold hover:bg-gray-50 hover:text-[#ee2229] transition-all font-arial uppercase tracking-tighter">
+                  {tour}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
-        <Link href="#" className="hover:text-red-500 transition-colors uppercase group flex items-center">
-          Customized Holidays
-          <svg
-            className="w-2.5 h-2.5 ml-1 opacity-60 transition-transform group-hover:rotate-180"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </Link>
-        <Link href={`/${currentRegionCode}/visa`} className="hover:text-red-500 transition-colors uppercase">Visa</Link>
-        <div className="relative group">
 
-          {/* Trigger */}
-          <span className="hover:text-[#ee2229] transition uppercase flex items-center cursor-pointer">
+        <Link href="#" className="hover:text-[#ee2229] transition-colors font-black">Customized Holidays</Link>
+        <Link href={`/${currentRegionCode}/visa`} className="hover:text-[#ee2229] transition-colors font-black">Visa</Link>
+
+        {/* COMPANY */}
+        <div className="relative group cursor-pointer py-1">
+          <span className="flex items-center hover:text-[#ee2229] transition-colors group">
             Company
-            <svg
-              className="w-2.5 h-2.5 ml-1 opacity-60 transition-transform group-hover:rotate-180"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
+            <svg className="w-2.5 h-2.5 ml-1.5 opacity-40 group-hover:rotate-180 group-hover:text-[#ee2229] transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
           </span>
-
-          {/* Dropdown */}
-          <div className="absolute top-full left-0 mt-2 w-[200px] bg-white shadow-xl rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
-
-            <Link
-              href={`/${currentRegionCode}/our-story`}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#ee2229]"
-            >
-              Our Story
-            </Link>
-
-            <Link
-              href={`/${currentRegionCode}/careers`}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#ee2229]"
-            >
-              Careers
-            </Link>
-
-            <Link
-              href={`/${currentRegionCode}/testimonials`}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#ee2229]"
-            >
-              Testimonials
-            </Link>
-
-            <Link
-              href={`/${currentRegionCode}/media`}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#ee2229]"
-            >
-              Media
-            </Link>
-
+          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[220px] bg-white shadow-xl rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+            <div className="py-2">
+              {["Our Story", "Careers", "Testimonials", "Media"].map((item) => (
+                <Link key={item} href={`/${currentRegionCode}/${item.toLowerCase().replace(/ /g, "-")}`} className="block px-6 py-2.5 text-[13px] text-[#191974] font-bold hover:bg-gray-50 hover:text-[#ee2229] transition-all font-arial uppercase tracking-tighter">
+                  {item}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
-        <Link href="#" className="hover:text-red-500 transition-colors uppercase group flex items-center">
-          Inbound
-          <svg
-            className="w-2.5 h-2.5 ml-1 opacity-60 transition-transform group-hover:rotate-180"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </Link>
-        <Link href="#" className="hover:text-red-500 transition-colors uppercase">Weddings</Link>
-        <Link href="#" className="hover:text-red-500 transition-colors uppercase">Contact Us</Link>
-      </nav>
 
-    </div >
+        <Link href="#" className="hover:text-[#ee2229] transition-colors font-black">Inbound</Link>
+        <Link href="#" className="hover:text-[#ee2229] transition-colors font-black">Weddings</Link>
+        <Link href="#" className="hover:text-[#ee2229] transition-colors font-black">Contact Us</Link>
+      </nav>
+    </div>
   );
 }

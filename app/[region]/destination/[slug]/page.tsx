@@ -72,19 +72,19 @@ export default async function DestinationToursPage({ params }: { params: Promise
         totalTours={tours.length} 
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 font-arial">
         
         {/* Breadcrumb / Layout Top */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-          <div className="text-sm text-gray-500 font-medium">
+          <div className="text-[14px] text-gray-500 font-medium lowercase tracking-wide">
             <span className="hover:text-[#ee2229] cursor-pointer">Home</span> / 
             <span className="hover:text-[#ee2229] cursor-pointer ml-1">Destinations</span> / 
-            <span className="text-[#191974] font-bold ml-1 capitalize">{destName}</span>
+            <span className="text-[#191974] font-black ml-1 capitalize">{destName}</span>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-sm font-bold text-gray-600">Sort By:</span>
-            <select className="bg-white border border-gray-200 text-sm rounded-lg focus:ring-[#191974] focus:border-[#191974] block p-2 font-medium">
+            <span className="text-[14px] font-black text-[#191974] uppercase tracking-tighter">Sort By:</span>
+            <select className="bg-white border border-gray-200 text-[14px] rounded-lg focus:ring-[#191974] focus:border-[#191974] block p-2.5 font-bold text-[#191974]">
               <option>Recommended</option>
               <option>Price: Low to High</option>
               <option>Price: High to Low</option>
@@ -104,12 +104,12 @@ export default async function DestinationToursPage({ params }: { params: Promise
           <div className="w-full lg:w-3/4 flex flex-col space-y-6">
             
             {/* Active Filters Display */}
-            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center gap-3 overflow-x-auto">
-              <span className="text-sm font-bold text-gray-700 shrink-0">Active Filters:</span>
-              <span className="bg-[#191974]/5 text-[#191974] px-3 py-1.5 rounded-lg text-xs font-bold border border-[#191974]/10 shrink-0">
-                {destName} <button className="ml-1 text-gray-400 hover:text-[#ee2229]">×</button>
+            <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4 overflow-x-auto">
+              <span className="text-[12px] font-black text-[#191974] shrink-0 uppercase tracking-widest font-inter">Active Filters:</span>
+              <span className="bg-[#191974] text-white px-4 py-2 rounded-lg text-xs font-black shrink-0 flex items-center gap-2 uppercase tracking-tighter font-inter-tight">
+                {destName} <button className="ml-1 text-white/40 hover:text-white transition-colors">×</button>
               </span>
-              <button className="text-xs font-bold text-[#ee2229] ml-auto shrink-0 hover:underline">Clear All</button>
+              <button className="text-[11px] font-black text-[#ee2229] ml-auto shrink-0 hover:underline uppercase tracking-widest font-inter">Clear All</button>
             </div>
 
             {/* Tour Cards Grid */}
@@ -120,16 +120,16 @@ export default async function DestinationToursPage({ params }: { params: Promise
             </div>
 
             {/* Pagination Component */}
-            <div className="py-8 flex justify-center">
-              <div className="flex items-center gap-2">
-                <button className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 hover:text-[#191974] transition-colors shadow-sm">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+            <div className="py-12 flex justify-center font-inter">
+              <div className="flex items-center gap-3">
+                <button className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-[#191974] transition-all shadow-sm">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
                 </button>
-                <button className="w-10 h-10 rounded-xl bg-[#191974] text-white flex items-center justify-center font-bold shadow-md shadow-[#191974]/20">1</button>
-                <button className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center font-bold text-gray-600 hover:border-[#191974] hover:text-[#191974] transition-colors shadow-sm">2</button>
-                <button className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center font-bold text-gray-600 hover:border-[#191974] hover:text-[#191974] transition-colors shadow-sm">3</button>
-                <button className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 hover:text-[#191974] transition-colors shadow-sm">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                <button className="w-12 h-12 rounded-xl bg-[#191974] text-white flex items-center justify-center font-black shadow-xl shadow-[#191974]/20 scale-110">1</button>
+                <button className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center font-black text-gray-500 hover:border-[#191974] hover:text-[#191974] transition-all shadow-sm">2</button>
+                <button className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center font-black text-gray-500 hover:border-[#191974] hover:text-[#191974] transition-all shadow-sm">3</button>
+                <button className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-[#191974] transition-all shadow-sm">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
                 </button>
               </div>
             </div>

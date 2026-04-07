@@ -3,17 +3,17 @@
 import React, { useState } from 'react';
 import { formatRegionalPrice } from '../../../../config/country';
 
-export default function BookingWidget({ 
-  tourId, 
-  baseInrPrice, 
-  region 
-}: { 
-  tourId: string, 
-  baseInrPrice: number, 
-  region: string 
+export default function BookingWidget({
+  tourId,
+  baseInrPrice,
+  region
+}: {
+  tourId: string,
+  baseInrPrice: number,
+  region: string
 }) {
   const [step, setStep] = useState<"initial" | "form" | "processing" | "success">("initial");
-  
+
   // Form State
   const [formData, setFormData] = useState({
     name: '',
@@ -35,7 +35,7 @@ export default function BookingWidget({
       // Step 3: Lead Creation
       /* await fetch('/api/leads/create', { method: 'POST', body: JSON.stringify(formData) }) */
       console.log(`[POST /api/leads/create] -> Dispatched for ${formData.email}`);
-      
+
       const mockLeadId = `lead_${Math.floor(Math.random() * 1000)}`;
 
       // Step 4: Booking Creation
@@ -46,15 +46,15 @@ export default function BookingWidget({
         status: "pending",
         amount: baseInrPrice * formData.travelers
       };
-      
+
       /* await fetch('/api/bookings/create', { method: 'POST', body: JSON.stringify(...) }) */
       console.log(`[POST /api/bookings/create] -> Generated Booking`, mockBookingPayload);
-      
+
       // Simulate network delay
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      
+
       setBookingObj(mockBookingPayload);
-      
+
       // Move to success / payment redirect logic here
       setStep("success");
 
@@ -70,7 +70,7 @@ export default function BookingWidget({
 
   return (
     <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-xl sticky top-8">
-      
+
       {step === "initial" && (
         <>
           <div className="mb-6">
@@ -80,13 +80,13 @@ export default function BookingWidget({
             </div>
             <p className="text-[#ee2229] font-bold text-[12px] mt-1 tracking-wide">Prices are all inclusive</p>
           </div>
-          
+
           <ul className="flex flex-col gap-3 mb-6 text-[14px] font-semibold text-gray-700">
             <li className="flex items-center gap-2"><div className="w-5 h-5 rounded-full bg-[#191974]/10 text-[#191974] flex items-center justify-center">✓</div> Free Cancellation (48hrs)</li>
             <li className="flex items-center gap-2"><div className="w-5 h-5 rounded-full bg-[#191974]/10 text-[#191974] flex items-center justify-center">✓</div> Zero Hidden Charges</li>
           </ul>
 
-          <button onClick={handleBookNow} className="w-full bg-[#ee2229] hover:bg-[#d61e24] text-white py-3.5 rounded-xl font-bold text-[16px] transition-colors shadow-sm">
+          <button onClick={handleBookNow} className="w-full bg-[#191974] hover:bg-[#d61e24] text-white py-3.5 rounded-xl font-bold text-[16px] transition-colors shadow-sm">
             Book Now
           </button>
         </>
@@ -95,19 +95,19 @@ export default function BookingWidget({
       {step === "form" && (
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <h3 className="font-bold text-[18px] text-[#171717] border-b border-gray-100 pb-2">Traveler Details</h3>
-          
-          <input required type="text" placeholder="Full Name" className="border border-gray-200 p-3 rounded-xl text-[14px] outline-none focus:border-[#191974]" onChange={e => setFormData({...formData, name: e.target.value})} />
-          <input required type="email" placeholder="Email Address" className="border border-gray-200 p-3 rounded-xl text-[14px] outline-none focus:border-[#191974]" onChange={e => setFormData({...formData, email: e.target.value})} />
-          <input required type="tel" placeholder="Phone Number" className="border border-gray-200 p-3 rounded-xl text-[14px] outline-none focus:border-[#191974]" onChange={e => setFormData({...formData, phone: e.target.value})} />
-          
+
+          <input required type="text" placeholder="Full Name" className="border border-gray-200 p-3 rounded-xl text-[14px] outline-none focus:border-[#191974]" onChange={e => setFormData({ ...formData, name: e.target.value })} />
+          <input required type="email" placeholder="Email Address" className="border border-gray-200 p-3 rounded-xl text-[14px] outline-none focus:border-[#191974]" onChange={e => setFormData({ ...formData, email: e.target.value })} />
+          <input required type="tel" placeholder="Phone Number" className="border border-gray-200 p-3 rounded-xl text-[14px] outline-none focus:border-[#191974]" onChange={e => setFormData({ ...formData, phone: e.target.value })} />
+
           <div className="flex gap-3">
             <div className="flex flex-col w-1/2 gap-1">
               <span className="text-[11px] font-bold uppercase text-gray-500 ml-1">Travel Date</span>
-              <input required type="date" className="border border-gray-200 p-3 rounded-xl text-[14px] outline-none focus:border-[#191974]" onChange={e => setFormData({...formData, travelDate: e.target.value})} />
+              <input required type="date" className="border border-gray-200 p-3 rounded-xl text-[14px] outline-none focus:border-[#191974]" onChange={e => setFormData({ ...formData, travelDate: e.target.value })} />
             </div>
             <div className="flex flex-col w-1/2 gap-1">
               <span className="text-[11px] font-bold uppercase text-gray-500 ml-1">Travelers</span>
-              <input required type="number" min="1" value={formData.travelers} className="border border-gray-200 p-3 rounded-xl text-[14px] outline-none focus:border-[#191974]" onChange={e => setFormData({...formData, travelers: parseInt(e.target.value)})} />
+              <input required type="number" min="1" value={formData.travelers} className="border border-gray-200 p-3 rounded-xl text-[14px] outline-none focus:border-[#191974]" onChange={e => setFormData({ ...formData, travelers: parseInt(e.target.value) })} />
             </div>
           </div>
 
@@ -136,8 +136,8 @@ export default function BookingWidget({
             <svg className="w-8 h-8 text-[#82c341]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
           </div>
           <h3 className="font-bold text-[20px] text-[#171717] mb-1">Booking Initialized!</h3>
-          <p className="text-[13px] text-gray-500 mb-6 font-inter-tight">ID: {bookingObj.id} <br/> Status: <span className="font-bold text-orange-500 uppercase">{bookingObj.status}</span></p>
-          
+          <p className="text-[13px] text-gray-500 mb-6 font-inter-tight">ID: {bookingObj.id} <br /> Status: <span className="font-bold text-orange-500 uppercase">{bookingObj.status}</span></p>
+
           <button className="w-full bg-[#171717] hover:bg-black text-white py-3.5 rounded-xl font-bold text-[14px] transition-colors">
             Proceed to Payment Gateway
           </button>
