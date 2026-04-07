@@ -125,14 +125,14 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
         <div className="max-w-7xl mx-auto w-full px-6 lg:px-8 relative z-10 flex-1 flex flex-col lg:flex-row items-center justify-between mt-10">
           {/* Left Text */}
-          <div className="w-full lg:w-[45%] text-[#191974] space-y-6 mb-12 lg:mb-0">
+          <div className="w-full text-[#191974] space-y-6 mb-12 lg:mb-0">
             <h1 className="text-[40px] md:text-[65px] font-black font-inter tracking-tight uppercase leading-[1.1] text-white drop-shadow-xl">
               The World is Waiting.<br />
               Start Exploring.
             </h1>
-            <p className="text-[20px] md:text-[26px] text-white/90 font-inter font-light leading-snug drop-shadow-md">
+            {/* <p className="text-[20px] md:text-[26px] text-white/90 font-inter font-light leading-snug drop-shadow-md">
               Find your dream destination and start your journey with us.
-            </p>
+            </p> */}
           </div>
 
           {/* Right Carousel */}
