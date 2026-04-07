@@ -56,10 +56,10 @@ export default async function AllDestinationsPage({ params }: { params: Promise<
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {destinations.map((dest: Destination) => (
-            <Link key={dest.id} href={`/${region}/destination/${dest.slug}`} className="group relative block overflow-hidden rounded-2xl aspect-4/3 shadow-md hover:shadow-xl transition-all duration-300">
+            <Link key={dest.id} href={`/${region}/destination/${dest.slug}`} className="group relative block overflow-hidden rounded-2xl aspect-[4/3] shadow-md hover:shadow-xl transition-all duration-300">
               <img 
                 src={dest.image_url || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800'} 
-                alt={dest.name}
+                alt={dest.name || 'Destination'}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>

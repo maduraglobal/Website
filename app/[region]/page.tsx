@@ -155,12 +155,12 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               </div>
 
               {/* Carousel Controls */}
-              <div className="absolute -right-2 md:right-0 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-50">
-                <button onClick={handlePrevSlide} className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/80 backdrop-blur-xl hover:bg-white flex items-center justify-center text-[#191974] transition-all border border-white/40 cursor-pointer shadow-2xl hover:scale-110 active:scale-90">
-                  <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" /></svg>
+              <div className="absolute -right-2 md:right-0 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-50">
+                <button onClick={handlePrevSlide} className="w-8 h-8 lg:w-9 lg:h-9 rounded-full bg-white/90 backdrop-blur-xl hover:bg-white flex items-center justify-center text-[#191974]/60 transition-all border border-white/40 cursor-pointer shadow-xl hover:scale-110 active:scale-90">
+                  <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
                 </button>
-                <button onClick={handleNextSlide} className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/80 backdrop-blur-xl hover:bg-white flex items-center justify-center text-[#191974] transition-all border border-white/40 cursor-pointer shadow-2xl hover:scale-110 active:scale-90">
-                  <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg>
+                <button onClick={handleNextSlide} className="w-8 h-8 lg:w-9 lg:h-9 rounded-full bg-white/90 backdrop-blur-xl hover:bg-white flex items-center justify-center text-[#191974]/60 transition-all border border-white/40 cursor-pointer shadow-xl hover:scale-110 active:scale-90">
+                  <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                 </button>
               </div>
 
