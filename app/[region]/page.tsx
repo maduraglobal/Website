@@ -74,10 +74,10 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
   }));
 
   return (
-    <div className="flex flex-col min-h-screen bg-background overflow-hidden text-[#171717] font-arial text-[14px]">
+    <div className="flex flex-col min-h-screen bg-background text-[#171717] font-arial text-[14px]">
 
       {/* HERO SECTION WITH FULL BG AND CAROUSEL */}
-      <section className="relative w-full min-h-[85vh] lg:min-h-[800px] flex flex-col justify-between pt-20 lg:pt-32 pb-32 overflow-visible">
+      <section className="relative w-full h-[50vh] lg:h-[55vh] flex flex-col justify-between pt-16 lg:pt-20 pb-8 overflow-visible">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -94,7 +94,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
           {/* Left Text */}
           <div className="w-full lg:w-[45%] text-white space-y-6 mb-12 lg:mb-0">
-            <h1 className="text-5xl lg:text-7xl font-bold leading-[1.1] font-inter">
+            <h1 className="text-[60px] lg:text-[65px] font-bold leading-[1.1] font-inter tracking-tight">
               The World is Waiting.<br />
               Start Exploring.
             </h1>
@@ -109,84 +109,105 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
           </div>
 
           {/* Right Carousel */}
-          <div className="w-full lg:w-[55%] flex flex-col items-end relative mt-10 lg:mt-0">
-            <div className="flex gap-4 overflow-hidden w-full justify-end pr-0 lg:pr-4 pl-0 lg:pl-10">
+          <div className="w-full lg:w-[50%] flex flex-col items-end relative mt-10 lg:mt-0 z-20">
+            <div className="flex gap-4 overflow-visible w-full justify-end pr-8 lg:pr-12 relative">
               {/* Card 1 */}
-              <div className="w-[220px] md:w-[260px] lg:w-[280px] h-[320px] md:h-[360px] lg:h-[400px] shrink-0 rounded-[20px] lg:rounded-[32px] overflow-hidden relative shadow-2xl transition-transform hover:scale-[1.02] cursor-pointer bg-gray-900">
+              <div className="w-[140px] md:w-[180px] lg:w-[220px] h-[180px] md:h-[220px] lg:h-[260px] shrink-0 rounded-[16px] lg:rounded-[20px] overflow-hidden relative shadow-lg transition-transform hover:scale-[1.02] cursor-pointer bg-gray-900 border border-white/20">
                 <img key={heroSlides[activeHero].card1} src={heroSlides[activeHero].card1} alt="Card 1" className="w-full h-full object-cover" />
               </div>
               {/* Card 2 */}
-              <div className="w-[220px] md:w-[260px] lg:w-[280px] h-[320px] md:h-[360px] lg:h-[400px] shrink-0 rounded-[20px] lg:rounded-[32px] overflow-hidden relative shadow-2xl transition-transform hover:scale-[1.02] cursor-pointer bg-gray-900">
+              <div className="w-[140px] md:w-[180px] lg:w-[220px] h-[180px] md:h-[220px] lg:h-[260px] shrink-0 rounded-[16px] lg:rounded-[20px] overflow-hidden relative shadow-lg transition-transform hover:scale-[1.02] cursor-pointer bg-gray-900 border border-white/20 hidden sm:block">
                 <img key={heroSlides[activeHero].card2} src={heroSlides[activeHero].card2} alt="Card 2" className="w-full h-full object-cover" />
               </div>
-            </div>
-            {/* Carousel Controls */}
-            <div className="flex gap-3 mt-6 pr-0 lg:pr-4 relative z-30">
-              <button onClick={handlePrevSlide} className="w-10 h-10 rounded-full bg-black/40 flex items-center justify-center text-white backdrop-blur-md hover:bg-black/60 transition-colors border border-white/20 cursor-pointer relative z-30">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-              </button>
-              <button onClick={handleNextSlide} className="w-10 h-10 rounded-full bg-black/40 flex items-center justify-center text-white backdrop-blur-md hover:bg-black/60 transition-colors border border-white/20 cursor-pointer relative z-30">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-              </button>
-            </div>
-          </div>
-        </div>
 
-        {/* Floating Search Bar */}
-        <div className="absolute -bottom-[60px] sm:-bottom-[50px] left-1/2 -translate-x-1/2 w-screen lg:w-full z-20 xl:max-w-none px-0 lg:px-10">
-          <div className="w-full bg-white lg:rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] p-5 lg:p-6 pb-6">
-
-            <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-0 lg:divide-x divide-gray-200">
-              <div className="w-full lg:flex-1 pl-2 text-center lg:text-left">
-                <label className="block text-[11px] font-bold text-gray-400 mb-1">Destination</label>
-                <input type="text" placeholder="Where to next?" className="w-full text-center lg:text-left text-[15px] font-bold text-gray-800 outline-none placeholder-gray-800 bg-transparent" />
-              </div>
-              <div className="w-full lg:flex-1 pt-3 lg:pt-0 pb-2 lg:pb-0 px-2 lg:px-6 border-t lg:border-t-0 border-gray-100 text-center lg:text-left">
-                <label className="block text-[11px] font-bold text-gray-400 mb-1">Check In-Out</label>
-                <input type="text" placeholder="Add Dates" className="w-full text-center lg:text-left text-[15px] font-bold text-gray-800 outline-none placeholder-gray-800 bg-transparent" />
-              </div>
-              <div className="w-full lg:flex-1 pt-3 lg:pt-0 px-2 lg:px-6 border-t lg:border-t-0 border-gray-100 text-center lg:text-left">
-                <label className="block text-[11px] font-bold text-gray-400 mb-1">Who</label>
-                <input type="text" placeholder="Add Guests" className="w-full text-center lg:text-left text-[15px] font-bold text-gray-800 outline-none placeholder-gray-800 bg-transparent" />
-              </div>
-              <div className="w-full lg:w-auto pt-4 lg:pt-0 pl-0 lg:pl-6 shrink-0 mt-2 lg:mt-0 border-t lg:border-t-0 border-gray-100 flex justify-center">
-                <button className="w-full lg:w-auto bg-[#3b82f6] hover:bg-blue-600 text-white font-bold py-3.5 px-10 rounded-xl transition-colors shadow-lg shadow-blue-500/30 whitespace-nowrap">
-                  SEARCH
+              {/* Carousel Controls */}
+              <div className="absolute -right-2 md:right-0 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-50">
+                <button onClick={handlePrevSlide} className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-black/50 hover:bg-[#191974] flex items-center justify-center text-white backdrop-blur-md transition-all border border-white/30 cursor-pointer shadow-xl hover:scale-105 active:scale-95">
+                  <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
+                </button>
+                <button onClick={handleNextSlide} className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-black/50 hover:bg-[#191974] flex items-center justify-center text-white backdrop-blur-md transition-all border border-white/30 cursor-pointer shadow-xl hover:scale-105 active:scale-95">
+                  <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
                 </button>
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
+      {/* Clean Flat Search Bar */}
+      <div className="w-full bg-[#fcfafa] border-b border-gray-100 z-20 py-2">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-end justify-between gap-6 lg:gap-10">
+
+            <div className="w-full lg:flex-1 border-b border-gray-200  pb-1.5 flex flex-col">
+              <label className="text-[11px]  text-gray-900 mb-0.5">Depart From</label>
+              <input type="text" placeholder="New Delhi" className="w-full text-[16px] text-gray-900 outline-none bg-transparent placeholder-gray-900" />
+            </div>
+
+            <div className="w-full lg:flex-1 border-b border-gray-200   pb-1.5 flex flex-col">
+              <label className="text-[11px]  text-gray-900 mb-0.5">Going To</label>
+              <input type="text" placeholder="Going to" className="w-full text-[16px] text-gray-900 outline-none bg-transparent placeholder-gray-900" />
+            </div>
+
+            <div className="w-full lg:flex-1 border-b border-gray-200  pb-1.5 flex flex-col relative lg:w-auto">
+              <label className="text-[11px]  text-gray-900 mb-0.5">Month of Travel(Optional)</label>
+              <select className="w-full text-[16px] text-gray-900 outline-none bg-transparent appearance-none cursor-pointer">
+                <option value="">Select Month</option>
+                <option value="jan">January</option>
+                <option value="feb">February</option>
+                <option value="mar">March</option>
+                <option value="apr">April</option>
+                <option value="may">May</option>
+                <option value="jun">June</option>
+                <option value="jul">July</option>
+                <option value="aug">August</option>
+                <option value="sep">September</option>
+                <option value="oct">October</option>
+                <option value="nov">November</option>
+                <option value="dec">December</option>
+              </select>
+              <div className="absolute right-0 bottom-1.5 pointer-events-none">
+                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+              </div>
+            </div>
+
+            <div className="w-full lg:w-[120px] shrink-0 flex justify-end pb-1.5">
+              <button className="w-full bg-[#da2424] hover:bg-[#b01e1e] text-white font-bold py-2 px-6 rounded-md transition-colors whitespace-nowrap shadow-sm text-[14px]">
+                Search
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
       {/* Logos Ribbon */}
-      <div className="w-full py-10 mt-[120px] lg:mt-[100px] bg-white border-y border-gray-100 flex overflow-hidden">
-        <InfiniteMovingCards items={logoItems} speed="slow" direction="left" className="bg-transparent w-full" />
+      <div className="w-full h-[10vh] lg:h-[12vh] bg-white border-b border-gray-100 flex items-center justify-center overflow-hidden relative z-10">
+        <InfiniteMovingCards items={logoItems} speed="slow" direction="left" className="bg-transparent w-full pt-0 pb-0" />
       </div>
 
       {/* Explore By Category */}
       <section className="pt-20 pb-10 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-10">
-            <h2 className="text-[24px] font-bold text-gray-900 mb-2 font-inter">Explore By Category</h2>
-            <p className="text-[14px] text-gray-500">We will help you find the experience you are looking for.</p>
+            <h2 className="font-inter text-[32px] font-bold text-gray-900 mb-2">Explore By Category</h2>
+            <p className="font-arial text-[14px] text-gray-500">We will help you find the experience you are looking for.</p>
           </div>
           <div className="flex flex-wrap gap-8 justify-between lg:justify-start lg:gap-16">
-             {[
-               { name: 'Educational', color: 'bg-blue-50', icon: 'M12 14l9-5-9-5-9 5 9 5z' },
-               { name: 'Cultural', color: 'bg-orange-50', icon: 'M3 21v-4m22 4v-4m-3.1-3.1l-4-4m-10.8 4l-4-4' },
-               { name: 'Heritage', color: 'bg-green-50', icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16' },
-               { name: 'Bird Watching', color: 'bg-red-50', icon: 'M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2' },
-               { name: 'Cruises', color: 'bg-purple-50', icon: 'M13 10V3L4 14h7v8l9-11h-7z' },
-             ].map(cat => (
-                <div key={cat.name} className="flex flex-col items-center gap-3 cursor-pointer group hover:-translate-y-1 transition-transform">
-                   <div className={`w-16 h-16 rounded-full ${cat.color} flex items-center justify-center group-hover:shadow-md transition-shadow border border-gray-100`}>
-                      <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={cat.icon} /></svg>
-                   </div>
-                   <span className="text-[12px] font-bold text-gray-700">{cat.name} Tours</span>
+            {[
+              { name: 'Educational', color: 'bg-blue-50', icon: 'M12 14l9-5-9-5-9 5 9 5z' },
+              { name: 'Cultural', color: 'bg-orange-50', icon: 'M3 21v-4m22 4v-4m-3.1-3.1l-4-4m-10.8 4l-4-4' },
+              { name: 'Heritage', color: 'bg-green-50', icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16' },
+              { name: 'Bird Watching', color: 'bg-red-50', icon: 'M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2' },
+              { name: 'Cruises', color: 'bg-purple-50', icon: 'M13 10V3L4 14h7v8l9-11h-7z' },
+            ].map(cat => (
+              <div key={cat.name} className="flex flex-col items-center gap-3 cursor-pointer group hover:-translate-y-1 transition-transform">
+                <div className={`w-16 h-16 rounded-full ${cat.color} flex items-center justify-center group-hover:shadow-md transition-shadow border border-gray-100`}>
+                  <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={cat.icon} /></svg>
                 </div>
-             ))}
+                <span className="text-[12px] font-bold text-gray-700">{cat.name} Tours</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -195,10 +216,10 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
             <div>
-              <h2 className="text-[28px] font-bold font-inter text-gray-900 mb-2">Featured Tours</h2>
-              <p className="text-[15px] text-gray-500 font-inter-tight">Explore some of our most popular tours selected for you.</p>
+              <h2 className="font-inter text-[32px] font-bold text-gray-900 mb-2">Featured Tours</h2>
+              <p className="font-arial text-[14px] text-gray-500">Explore some of our most popular tours selected for you.</p>
             </div>
-            <button className="text-[13px] font-bold text-gray-700 border border-gray-200 rounded-full px-6 py-2.5 hover:bg-gray-50 transition-colors whitespace-nowrap">
+            <button className="font-arial text-[14px] font-bold text-gray-700 border border-gray-200 rounded-full px-6 py-2.5 hover:bg-gray-50 transition-colors whitespace-nowrap">
               Explore all &rsaquo;
             </button>
           </div>
