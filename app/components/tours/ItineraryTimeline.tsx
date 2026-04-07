@@ -30,54 +30,64 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
   const collapseAll = () => setExpandedDays([]);
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex justify-between items-center mb-2">
-        <h2 className="text-[24px] font-black text-[#171717]">Itinerary <span className="text-gray-400 font-medium text-[16px]">({itinerary.length} Days)</span></h2>
-        <div className="flex gap-4">
-          <button onClick={expandAll} className="text-[#191974] font-bold text-[13px] hover:underline uppercase tracking-tight">Expand All</button>
-          <span className="text-gray-300">|</span>
-          <button onClick={collapseAll} className="text-[#191974] font-bold text-[13px] hover:underline uppercase tracking-tight">Collapse All</button>
+    <div className="flex flex-col gap-10 font-arial">
+      <div className="flex justify-between items-end border-b border-gray-100 pb-8">
+        <h2 className="text-[26px] font-inter font-light text-[#191974] tracking-tight uppercase">
+          Tactical Itinerary <span className="text-gray-300 font-bold text-[14px] ml-4 tracking-widest">{itinerary.length} Phases</span>
+        </h2>
+        <div className="flex gap-6">
+          <button onClick={expandAll} className="text-[#ee2229] font-black text-[11px] hover:text-[#191974] transition-colors uppercase tracking-[0.2em] font-inter-tight">Expand All</button>
+          <span className="text-gray-100 font-light">|</span>
+          <button onClick={collapseAll} className="text-[#ee2229] font-black text-[11px] hover:text-[#191974] transition-colors uppercase tracking-[0.2em] font-inter-tight">Collapse All</button>
         </div>
       </div>
 
-      <div className="relative pl-8 space-y-8 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-gray-100">
+      <div className="relative pl-12 space-y-8 before:content-[''] before:absolute before:left-[15px] before:top-4 before:bottom-4 before:w-[2px] before:bg-gradient-to-b before:from-[#191974]/20 (3) before:via-[#ee2229]/20 before:to-[#191974]/20 before:opacity-30">
         {itinerary.map((item) => (
-          <div key={item.day} className="relative">
+          <div key={item.day} className="relative group">
             {/* Timeline Dot */}
             <div className={cn(
-              "absolute -left-[32px] top-0 w-6 h-6 rounded-full border-4 border-white shadow-sm z-10 transition-colors duration-300",
-              expandedDays.includes(item.day) ? "bg-[#191974]" : "bg-gray-200"
+              "absolute -left-[45px] top-4 w-7 h-7 rounded-full border-4 border-white shadow-xl z-10 transition-all duration-500",
+              expandedDays.includes(item.day) ? "bg-[#ee2229] scale-110" : "bg-gray-100 group-hover:bg-[#191974]"
             )} />
 
             {/* Content Card */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all hover:shadow-md">
+            <div className={cn(
+              "bg-white rounded-3xl border transition-all duration-500 overflow-hidden",
+              expandedDays.includes(item.day) ? "border-[#ee2229]/20 shadow-2xl" : "border-gray-50 shadow-sm hover:shadow-xl hover:border-gray-100"
+            )}>
               <button 
                 onClick={() => toggleDay(item.day)}
-                className="w-full flex items-center justify-between p-5 text-left bg-white hover:bg-gray-50 transition-colors"
+                className="w-full flex items-center justify-between p-8 text-left bg-white transition-colors"
               >
-                <div className="flex items-center gap-4">
-                  <span className="text-[14px] font-black text-[#191974] uppercase tracking-widest whitespace-nowrap">Day {item.day}</span>
-                  <h3 className="text-[17px] font-bold text-[#171717] leading-tight">{item.title}</h3>
+                <div className="flex items-center gap-8">
+                  <span className="text-[14px] font-black text-[#ee2229] uppercase tracking-[0.3em] font-inter-tight whitespace-nowrap min-w-[70px]">Day {item.day}</span>
+                  <h3 className="text-[20px] font-black text-[#191974] font-inter uppercase tracking-tight leading-none">{item.title}</h3>
                 </div>
-                <ChevronDown className={cn(
-                  "w-5 h-5 text-gray-400 transition-transform duration-300",
-                  expandedDays.includes(item.day) ? "rotate-180" : ""
-                )} />
+                <div className={cn(
+                  "w-10 h-10 rounded-full flex items-center justify-center border border-gray-50 transition-all duration-500",
+                  expandedDays.includes(item.day) ? "bg-[#191974] text-white rotate-180" : "text-gray-300"
+                )}>
+                  <ChevronDown className="w-5 h-5" strokeWidth={3} />
+                </div>
               </button>
 
               <div className={cn(
-                "transition-all duration-300 ease-in-out overflow-hidden",
-                expandedDays.includes(item.day) ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
+                "transition-all duration-700 ease-in-out",
+                expandedDays.includes(item.day) ? "max-h-[2000px] opacity-100 visible" : "max-h-0 opacity-0 invisible"
               )}>
-                <div className="px-6 pb-6 pt-2 border-t border-gray-50">
-                  <div className="text-[15px] text-gray-600 leading-relaxed font-inter-tight mb-4 whitespace-pre-line">
+                <div className="px-10 pb-10 pt-2 border-t border-gray-50">
+                  <div className="text-[14px] text-gray-500 font-arial font-bold uppercase tracking-tighter leading-relaxed mb-8 whitespace-pre-line opacity-80">
                     {item.description}
                   </div>
                   
                   {item.meals && (
-                    <div className="flex items-center gap-3 bg-orange-50 px-4 py-2 rounded-lg border border-orange-100/50">
-                      <span className="text-[12px] font-black text-orange-800 uppercase tracking-wider">Meals:</span>
-                      <span className="text-[13px] text-orange-700 font-bold">{item.meals}</span>
+                    <div className="flex items-center gap-4 bg-[#191974]/5 px-6 py-4 rounded-2xl border border-[#191974]/10 shadow-inner">
+                      <div className="w-8 h-8 rounded-full bg-[#191974] flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                      </div>
+                      <span className="text-[11px] font-black text-[#191974] uppercase tracking-[0.2em] opacity-40">Provisions:</span>
+                      <span className="text-[14px] text-[#191974] font-black uppercase tracking-tight">{item.meals}</span>
                     </div>
                   )}
                 </div>

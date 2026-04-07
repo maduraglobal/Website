@@ -16,18 +16,18 @@ interface TourTabsProps {
 
 export default function TourTabs({ tabs, activeTab, onTabChange }: TourTabsProps) {
   return (
-    <div className="border-b border-gray-200 sticky top-16 bg-white z-30">
+    <div className="border-b border-gray-50 sticky top-16 bg-white/80 backdrop-blur-xl z-30 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4">
-        <nav className="flex space-x-8 overflow-x-auto no-scrollbar">
+        <nav className="flex space-x-10 overflow-x-auto no-scrollbar scroll-smooth">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={cn(
-                "py-4 px-1 border-b-2 font-bold text-[14px] uppercase tracking-wider transition-all whitespace-nowrap",
+                "py-6 px-1 border-b-2 font-black text-[11px] uppercase tracking-[0.2em] transition-all duration-500 whitespace-nowrap font-inter-tight active:scale-95",
                 activeTab === tab.id
-                  ? "border-[#191974] text-[#191974]"
-                  : "border-transparent text-gray-400 hover:text-gray-600 hover:border-gray-300"
+                  ? "border-[#ee2229] text-[#ee2229] opacity-100"
+                  : "border-transparent text-gray-300 hover:text-[#191974] hover:opacity-100 opacity-60"
               )}
             >
               {tab.label}

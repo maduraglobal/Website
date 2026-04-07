@@ -22,32 +22,34 @@ export default function AccommodationTable({ accommodations }: AccommodationTabl
   ];
 
   return (
-    <div className="overflow-hidden border border-gray-200 rounded-xl bg-white shadow-sm">
+    <div className="overflow-hidden border border-gray-100 rounded-3xl bg-white shadow-2xl font-arial">
       <table className="w-full text-left border-collapse">
-        <thead className="bg-gray-50 border-b border-gray-200">
+        <thead className="bg-[#191974] text-white">
           <tr>
-            <th className="px-6 py-4 font-bold text-[#191974] text-[14px] uppercase tracking-wider">City</th>
-            <th className="px-6 py-4 font-bold text-[#191974] text-[14px] uppercase tracking-wider">Hotel Name</th>
-            <th className="px-6 py-4 font-bold text-[#191974] text-[14px] uppercase tracking-wider text-center">Nights</th>
+            <th className="px-8 py-5 font-black text-[11px] uppercase tracking-[0.2em] opacity-80">Designated City</th>
+            <th className="px-8 py-5 font-black text-[11px] uppercase tracking-[0.2em] opacity-80">Accommodations Selection</th>
+            <th className="px-8 py-5 font-black text-[11px] uppercase tracking-[0.2em] opacity-80 text-center">Nights</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-100">
+        <tbody className="divide-y divide-gray-50">
           {displayData.map((item, index) => (
-            <tr key={index} className="hover:bg-gray-50 transition-colors">
-              <td className="px-6 py-4 font-bold text-[#171717] text-[15px]">{item.city}</td>
-              <td className="px-6 py-4 text-gray-600 text-[14px]">{item.hotel}</td>
-              <td className="px-6 py-4 text-gray-600 text-[14px] text-center font-medium bg-gray-50/50">{item.nights}</td>
+            <tr key={index} className="hover:bg-gray-50/50 transition-colors">
+              <td className="px-8 py-6 font-black text-[#191974] text-[16px] uppercase tracking-tight">{item.city}</td>
+              <td className="px-8 py-6 text-gray-500 text-[14px] font-bold uppercase tracking-tighter opacity-70">{item.hotel}</td>
+              <td className="px-8 py-6 text-[#191974] text-[14px] text-center font-black bg-[#191974]/5">{item.nights}</td>
             </tr>
           ))}
         </tbody>
       </table>
       
-      <div className="p-4 bg-blue-50 border-t border-blue-100">
-        <p className="text-[12px] text-blue-800 flex items-start gap-2">
-          <svg className="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          Note: Check-in / Check-out time is as per Hotel Policy. Hotel names are subject to change depending on availability.
+      <div className="p-6 bg-gray-50 border-t border-gray-100 flex items-center gap-4">
+        <div className="w-10 h-10 rounded-full bg-[#ee2229] flex items-center justify-center shrink-0 shadow-lg shadow-red-500/20">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+        <p className="text-[11px] text-[#191974] font-black uppercase tracking-widest opacity-40 leading-relaxed">
+          Operational Standards: Check-in / Check-out timing is governed by Hotel Policy. Preferred selections are subject to availability and may be substituted with equivalents.
         </p>
       </div>
     </div>

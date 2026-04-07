@@ -70,7 +70,7 @@ export default function Navbar() {
             <input
               type="text"
               placeholder='Search "Destination"'
-              className="w-full px-5 py-2.5 rounded-full text-white text-sm outline-none bg-[#191974] border-[#191974] font-medium"
+              className="w-full px-5 py-2.5 rounded-full text-white text-[14px] font-arial outline-none bg-[#191974] border-[#191974] font-medium"
             />
             {/* <div className="absolute right-4 top-2.5 flex items-center gap-2">
               <span className="text-gray-400 cursor-pointer text-lg">🎤</span>
@@ -249,10 +249,10 @@ export default function Navbar() {
               ))}
             </div>
             <div className="w-2/3 p-6 bg-white flex flex-col">
-              <h3 className="text-[16px] font-bold text-[#191974] mb-4 border-b border-gray-100 pb-2 uppercase">{activeRegion}</h3>
-              <div className="grid grid-cols-3 gap-x-4 gap-y-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+              <h3 className="text-[26px] font-light text-[#191974] mb-4 border-b border-gray-100 pb-2 uppercase font-inter">{activeRegion}</h3>
+              <div className="grid grid-cols-3 gap-x-4 gap-y-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar font-arial text-[14px]">
                 {destinations[activeRegion].map((place, idx) => (
-                  <Link key={idx} href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, '-')}`} className="text-[12px] text-gray-600 hover:text-red-600 hover:underline transition-all">
+                  <Link key={idx} href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, '-')}`} className="text-[#191974] hover:text-[#ee2229] hover:underline transition-all">
                     {place}
                   </Link>
                 ))}

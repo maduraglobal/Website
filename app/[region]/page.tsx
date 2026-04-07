@@ -111,7 +111,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
     <div className="flex flex-col min-h-screen bg-background text-[#171717] font-arial text-[14px]">
 
       {/* HERO SECTION WITH FULL BG AND CAROUSEL */}
-      <section className="relative w-full h-[70vh] flex flex-col justify-between pt-16 lg:pt-20 pb-8 overflow-visible">
+      <section className="relative w-full h-[60vh] flex flex-col justify-between pt-16 lg:pt-20 pb-8 overflow-visible">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -127,16 +127,16 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         <div className="max-w-7xl mx-auto w-full px-6 lg:px-8 relative z-10 flex-1 flex flex-col lg:flex-row items-center justify-between mt-10">
 
           {/* Left Text */}
-          <div className="w-full lg:w-[45%] text-white space-y-6 mb-12 lg:mb-0">
-            <h1 className="text-[60px] lg:text-[65px] font-bold leading-[1.1] font-inter tracking-tight">
+          <div className="w-full lg:w-[45%] text-[#191974] space-y-6 mb-12 lg:mb-0">
+            <h1 className="text-[32px] font-black font-inter tracking-tight uppercase leading-tight">
               The World is Waiting.<br />
               Start Exploring.
             </h1>
-            <p className="text-[17px] text-white/90 max-w-lg font-inter-tight leading-relaxed">
-              The world is full of beautiful places — and your next adventure is just a few clicks away. Find your dream destination and start your journey with us.
+            <p className="text-[26px] text-white font-inter font-light leading-snug">
+              Find your dream destination and start your journey with us.
             </p>
             <div className="pt-4">
-              <Link href={`/${region}/destination`} className="inline-block border border-white text-white px-8 py-3.5 rounded-lg font-bold text-[13px] uppercase tracking-wider hover:bg-white hover:text-black transition-colors shadow-lg">
+              <Link href={`/${region}/destination`} className="inline-block bg-white text-[#191974] px-8 py-3.5 rounded-lg font-bold text-[14px] font-inter-tight uppercase tracking-wider hover:bg-white hover:text-black transition-colors shadow-lg">
                 SHOW ALL DESTINATIONS
               </Link>
             </div>
@@ -156,10 +156,10 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
               {/* Carousel Controls */}
               <div className="absolute -right-2 md:right-0 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-50">
-                <button onClick={handlePrevSlide} className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-black/50 hover:bg-[#191974] flex items-center justify-center text-white backdrop-blur-md transition-all border border-white/30 cursor-pointer shadow-xl hover:scale-105 active:scale-95">
+                <button onClick={handlePrevSlide} className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/20 backdrop-blur-md hover:bg-white/40 flex items-center justify-center text-white transition-all border border-white/20 cursor-pointer shadow-xl hover:scale-105 active:scale-95">
                   <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
                 </button>
-                <button onClick={handleNextSlide} className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-black/50 hover:bg-[#191974] flex items-center justify-center text-white backdrop-blur-md transition-all border border-white/30 cursor-pointer shadow-xl hover:scale-105 active:scale-95">
+                <button onClick={handleNextSlide} className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/20 backdrop-blur-md hover:bg-white/40 flex items-center justify-center text-white transition-all border border-white/20 cursor-pointer shadow-xl hover:scale-105 active:scale-95">
                   <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
                 </button>
               </div>
@@ -168,46 +168,64 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         </div>
       </section>
 
-      {/* Clean Flat Search Bar */}
-      <div className="w-full bg-[#fcfafa] border-b border-gray-100 z-20 py-2">
+      {/* Pill-Shaped Minimalist Search Bar */}
+      <div className="w-full bg-white z-20 py-8">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-end justify-between gap-6 lg:gap-10">
+          <div className="flex flex-col lg:flex-row items-center border border-gray-200 rounded-full bg-white shadow-lg py-2 px-3 transition-shadow hover:shadow-xl">
 
-            <div className="w-full lg:flex-1 border-b border-gray-200  pb-1.5 flex flex-col">
-              <label className="text-[11px]  text-gray-900 mb-0.5">Depart From</label>
-              <input type="text" placeholder="New Delhi" className="w-full text-[16px] text-gray-900 outline-none bg-transparent placeholder-gray-900" />
-            </div>
-
-            <div className="w-full lg:flex-1 border-b border-gray-200   pb-1.5 flex flex-col">
-              <label className="text-[11px]  text-gray-900 mb-0.5">Going To</label>
-              <input type="text" placeholder="Going to" className="w-full text-[16px] text-gray-900 outline-none bg-transparent placeholder-gray-900" />
-            </div>
-
-            <div className="w-full lg:flex-1 border-b border-gray-200  pb-1.5 flex flex-col relative lg:w-auto">
-              <label className="text-[11px]  text-gray-900 mb-0.5">Month of Travel(Optional)</label>
-              <select className="w-full text-[16px] text-gray-900 outline-none bg-transparent appearance-none cursor-pointer">
-                <option value="">Select Month</option>
-                <option value="jan">January</option>
-                <option value="feb">February</option>
-                <option value="mar">March</option>
-                <option value="apr">April</option>
-                <option value="may">May</option>
-                <option value="jun">June</option>
-                <option value="jul">July</option>
-                <option value="aug">August</option>
-                <option value="sep">September</option>
-                <option value="oct">October</option>
-                <option value="nov">November</option>
-                <option value="dec">December</option>
-              </select>
-              <div className="absolute right-0 bottom-1.5 pointer-events-none">
-                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+            {/* Depart From */}
+            <div className="w-full lg:flex-1 px-8 py-2 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-200 group cursor-pointer">
+              <label className="text-[11px] font-medium text-gray-400 mb-0.5">Depart From</label>
+              <div className="flex items-center justify-between w-full">
+                <input
+                  type="text"
+                  placeholder="Where From?"
+                  className="w-full text-[15px] font-bold text-gray-900 outline-none bg-transparent placeholder-gray-400"
+                />
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </div>
             </div>
 
-            <div className="w-full lg:w-[120px] shrink-0 flex justify-end pb-1.5">
-              <button className="w-full bg-[#da2424] hover:bg-[#b01e1e] text-white font-bold py-2 px-6 rounded-md transition-colors whitespace-nowrap shadow-sm text-[14px]">
-                Search
+            {/* Going To */}
+            <div className="w-full lg:flex-1 px-8 py-2 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-200 group cursor-pointer">
+              <label className="text-[11px] font-medium text-gray-400 mb-0.5">Going To</label>
+              <div className="flex items-center justify-between w-full">
+                <input
+                  type="text"
+                  placeholder="Where to?"
+                  className="w-full text-[15px] font-bold text-gray-900 outline-none bg-transparent placeholder-gray-400"
+                />
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+              </div>
+            </div>
+
+            {/* Month of Travel */}
+            <div className="w-full lg:flex-1 px-8 py-2 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-200 group cursor-pointer relative">
+              <label className="text-[11px] font-medium text-gray-400 mb-0.5">Month Of Travel</label>
+              <div className="relative w-full flex items-center justify-between">
+                <select className="w-full text-[15px] font-bold text-gray-900 outline-none bg-transparent appearance-none cursor-pointer">
+                  <option value="">Any Month</option>
+                  {["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].map(m => (
+                    <option key={m} value={m.toLowerCase()}>{m}</option>
+                  ))}
+                </select>
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+              </div>
+            </div>
+
+            {/* Group/Type (Added to match ref image width) */}
+            {/* <div className="w-full lg:flex-[0.6] px-8 py-2 flex flex-col border-b lg:border-b-0 group cursor-pointer">
+              <label className="text-[11px] font-medium text-gray-400 mb-0.5">Holidays</label>
+              <div className="flex items-center justify-between w-full">
+                <span className="text-[15px] font-bold text-gray-900">Select Types</span>
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+              </div>
+            </div> */}
+
+            {/* Compact Search Button */}
+            <div className="w-full lg:w-auto p-1.5 flex h-full">
+              <button className="w-full lg:w-[130px] bg-[#ee2229] hover:bg-[#d11920] text-white font-black py-4 px-8 rounded-full transition-all shadow-md active:scale-95 text-[14px] uppercase tracking-widest flex items-center justify-center gap-2">
+                <span>Search</span>
               </button>
             </div>
 
@@ -220,12 +238,11 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         <InfiniteMovingCards items={logoItems} speed="slow" direction="left" className="bg-transparent w-full pt-0 pb-0" />
       </div>
 
-      {/* Trending Destinations Row (Image Ref Layout) */}
       <section className="pt-12 pb-8 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-10">
-            <h2 className="font-inter text-[32px] font-bold text-gray-900 mb-2">Top Destinations</h2>
-            <p className="font-arial text-[14px] text-gray-500">Discover the world&apos;s most sought-after holiday spots.</p>
+            <h2 className="font-inter text-[32px] font-black text-[#191974] mb-2 uppercase tracking-tight">Top Destinations</h2>
+            <p className="font-inter text-[26px] text-gray-400 font-light">Discover the world&apos;s most sought-after holiday spots.</p>
           </div>
 
           <div className="flex overflow-x-auto gap-4 lg:gap-5 pb-6 custom-scrollbar snap-x snap-mandatory">
@@ -289,10 +306,10 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
             <div>
-              <h2 className="font-inter text-[32px] font-bold text-gray-900 mb-2">Featured Tours</h2>
-              <p className="font-arial text-[14px] text-gray-500">Explore some of our most popular tours selected for you.</p>
+              <h2 className="font-inter text-[32px] font-black text-[#191974] mb-2 uppercase tracking-tight">Featured Tours</h2>
+              <p className="font-inter text-[26px] text-gray-400 font-light">Explore some of our most popular tours selected for you.</p>
             </div>
-            <button className="font-arial text-[14px] font-bold text-gray-700 border border-gray-200 rounded-full px-6 py-2.5 hover:bg-gray-50 transition-colors whitespace-nowrap">
+            <button className="font-inter-tight text-[14px] font-bold text-[#191974] border border-gray-200 rounded-full px-6 py-2.5 hover:bg-gray-50 transition-colors whitespace-nowrap uppercase tracking-widest">
               Explore all &rsaquo;
             </button>
           </div>
@@ -347,70 +364,49 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                   </Link>
 
                   {/* Content Section */}
-                  <div className="p-4 flex flex-col flex-1">
-                    <p className="text-[13px] text-gray-500 mb-1">Explorer</p>
+                  <div className="p-5 flex flex-col flex-1">
+                    <p className="text-[11px] text-[#ee2229] font-black uppercase tracking-widest mb-1 font-inter-tight">Explorer</p>
                     <Link href={`/${region}/tours/${tour.slug}`}>
-                      <h3 className="text-[15px] font-bold text-gray-900 mb-2 leading-snug line-clamp-2 h-[40px]">
+                      <h3 className="text-[17px] font-bold text-[#191974] mb-3 leading-snug line-clamp-2 h-[48px] font-inter hover:text-[#ee2229] transition-colors">
                         {tour.title}
                       </h3>
                     </Link>
 
-                    <p className="text-[13px] text-gray-600 mb-4">1 Dates</p>
+                    <p className="text-[14px] text-gray-500 mb-4 font-arial uppercase tracking-wide">1 Dates Available</p>
 
                     {/* Icon Grid */}
-                    <div className="flex items-center justify-between mb-4 border-t border-gray-50 pt-3">
-                      <span className="text-[13px] font-bold text-gray-900">Tour Includes</span>
-                      <div className="flex gap-3 text-red-600">
+                    <div className="flex items-center justify-between mb-5 border-t border-gray-50 pt-4">
+                      <span className="text-[12px] font-black text-gray-400 uppercase tracking-widest">Included</span>
+                      <div className="flex gap-3 text-[#ee2229]">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
                       </div>
                     </div>
 
                     {/* Price Section */}
-                    <div className="bg-gray-50 -mx-4 px-4 py-4 mt-auto border-t border-gray-100">
-                      <div className="flex justify-between items-start mb-4">
+                    <div className="bg-gray-50 -mx-5 px-5 py-5 mt-auto border-t border-gray-100">
+                      <div className="flex justify-between items-start mb-5">
                         <div>
-                          <p className="text-[10px] text-gray-500 font-medium">All inclusive price starts</p>
-                          <p className="text-[22px] font-black text-gray-900 leading-tight">
-                            {formatRegionalPrice(tour.base_price_inr, region)}*
+                          <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Starts from</p>
+                          <p className="text-[22px] font-black text-[#191974] leading-none tracking-tighter">
+                            {formatRegionalPrice(tour.base_price_inr, region)}
                           </p>
                         </div>
                         <div className="text-right">
-                          <div className="flex items-center gap-1.5 text-[#191974]">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            <div className="text-left">
-                              <p className="text-[11px] font-bold leading-none">EMI from</p>
-                              <p className="text-[12px] font-bold text-[#191974]">₹5,259/month</p>
-                            </div>
-                          </div>
+                          <p className="text-[10px] font-bold text-[#ee2229] uppercase">EMI from</p>
+                          <p className="text-[12px] font-black text-[#191974]">₹5,259/mo</p>
                         </div>
                       </div>
 
                       {/* Action Buttons */}
-                      <div className="grid grid-cols-2 gap-3 pb-2">
-                        <Link href={`/${region}/tours/${tour.slug}`} className="border border-red-600 text-red-600 py-2 rounded-[6px] text-[13px] font-bold text-center hover:bg-red-50 transition-colors">
-                          View Tour
+                      <div className="grid grid-cols-2 gap-3">
+                        <Link href={`/${region}/tours/${tour.slug}`} className="border border-[#ee2229] text-[#ee2229] py-2.5 rounded-lg text-[13px] font-bold text-center font-inter-tight hover:bg-[#ee2229]/5 transition-colors uppercase tracking-widest">
+                          View Details
                         </Link>
-                        <Link href={`/${region}/booking?tour=${tour.slug}`} className="bg-[#ee2229] text-white py-2 rounded-[6px] text-[13px] font-bold text-center hover:bg-red-700 transition-colors shadow-sm">
-                          Book Online
+                        <Link href={`/${region}/booking?tour=${tour.slug}`} className="bg-[#ee2229] text-white py-2.5 rounded-lg text-[13px] font-bold text-center font-inter-tight hover:bg-[#191974] transition-all shadow-md uppercase tracking-widest">
+                          Book Now
                         </Link>
-                      </div>
-
-                      {/* Bottom Links */}
-                      <div className="flex items-center justify-between pt-3 mt-1 border-t border-gray-100">
-                        <div className="flex items-center gap-2">
-                          <div className="w-5 h-5 bg-green-50 rounded-full flex items-center justify-center">
-                            <svg className="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
-                          </div>
-                          <span className="text-[11px] font-bold text-red-600 border-b border-red-600 leading-tight cursor-pointer">Request Callback</span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <svg className="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" /></svg>
-                          <span className="text-[11px] font-medium text-gray-600">Get Itinerary</span>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -447,17 +443,16 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               className="relative h-full flex flex-col justify-center px-10 lg:px-20 text-white max-w-2xl"
             >
 
-              {/* Category Info with Yellow Bar */}
               <div className="flex items-start gap-4 mb-3">
-                <div className="w-1 h-12 bg-[#ee2229] rounded-full shrink-0" />
+                <div className="w-2 h-14 bg-[#ee2229] rounded-full shrink-0" />
                 <div>
-                  <p className="text-[14px] lg:text-[16px] font-medium tracking-wide mb-1 opacity-90 uppercase leading-none">{offerSlides[activeOffer].category}</p>
-                  <h2 className="text-[36px] lg:text-[48px] font-black leading-tight text-[#ffcc00] tracking-tight">{offerSlides[activeOffer].title}</h2>
+                  <p className="text-[14px] lg:text-[16px] font-bold tracking-widest mb-1 opacity-90 uppercase leading-none font-inter-tight">Specials</p>
+                  <h2 className="text-[32px] lg:text-[40px] font-black leading-tight text-white tracking-tight uppercase font-inter">{offerSlides[activeOffer].title}</h2>
                 </div>
               </div>
 
               {/* Destination Stops */}
-              <div className="flex flex-wrap items-center gap-3 mb-6 text-[13px] lg:text-[15px] opacity-80 font-medium tracking-wider">
+              <div className="flex flex-wrap items-center gap-3 mb-8 text-[14px] font-arial font-bold uppercase tracking-widest text-[#ee2229]">
                 {offerSlides[activeOffer].stops.map((stop, sIdx) => (
                   <React.Fragment key={stop}>
                     <span>{stop}</span>
@@ -467,24 +462,21 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               </div>
 
               {/* Timing and Pricing */}
-              <div className="space-y-1 mb-8">
-                <p className="text-[17px] lg:text-[20px] font-bold">
-                  {offerSlides[activeOffer].details.split('₹')[0]} <span className="text-[#ffcc00]">₹{offerSlides[activeOffer].details.split('₹')[1]}</span>
+              <div className="mb-10">
+                <p className="text-[26px] font-light font-inter mb-2 text-white/90">
+                  {offerSlides[activeOffer].details.split('₹')[0]} <span className="text-[#ee2229] font-black">₹{offerSlides[activeOffer].details.split('₹')[1]}</span>
                 </p>
-                <p className="text-[20px] lg:text-[24px] font-black text-[#ffcc00]">
-                  Joining Leaving price from {offerSlides[activeOffer].joiningPrice}
-                </p>
-                <p className="text-[13px] lg:text-[14px] leading-relaxed opacity-70 mt-2 max-w-md font-inter-tight">
+                <p className="text-[14px] font-arial leading-relaxed opacity-60 max-w-md">
                   {offerSlides[activeOffer].desc}
                 </p>
               </div>
 
               {/* Action and Disclaimer */}
               <div className="flex flex-col items-start gap-3">
-                <Link href={`/${region}/booking`} className="bg-[#ffcc00] hover:bg-[#e6b800] text-black px-12 py-3.5 rounded-lg font-black text-[15px] transition-all transform active:scale-95 shadow-xl uppercase tracking-widest">
-                  Book now
+                <Link href={`/${region}/booking`} className="bg-[#ee2229] hover:bg-[#191974] text-white px-14 py-4 rounded-lg font-black text-[14px] font-inter-tight transition-all transform active:scale-95 shadow-2xl uppercase tracking-widest">
+                  Confirm Booking
                 </Link>
-                <p className="text-[10px] opacity-40 font-bold uppercase tracking-widest">*T&C Apply</p>
+                <p className="text-[10px] opacity-30 font-bold uppercase tracking-widest mt-2">*TERMS AND CONDITIONS APPLY</p>
               </div>
             </motion.div>
 
@@ -516,13 +508,13 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
             </div>
 
             {/* Floating Info-Blue Badge (Bottom Right Ref) */}
-            <div className="absolute bottom-6 right-6 flex items-center bg-[#00529b]/90 backdrop-blur-md border border-white/10 rounded-full pl-2 pr-6 py-1.5 gap-3 shadow-2xl">
-              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#ffcc00]">
-                <p className="text-[11px] font-black leading-tight text-center text-[#00529b]">Book<br />Online</p>
+            <div className="absolute bottom-10 right-10 flex items-center bg-[#191974]/95 backdrop-blur-md border border-white/10 rounded-xl pl-3 pr-8 py-2.5 gap-4 shadow-2xl">
+              <div className="w-12 h-12 rounded-lg bg-white flex items-center justify-center text-[#ee2229]">
+                <p className="text-[11px] font-black leading-tight text-center uppercase">Book<br />Now</p>
               </div>
-              <div className="text-[11px] text-white leading-tight font-bold">
-                365 days, 24x7<br />
-                <span className="opacity-70">from your desk.</span>
+              <div className="text-[12px] text-white leading-tight font-black uppercase tracking-wider">
+                Support Available 24/7<br />
+                <span className="opacity-50 text-[10px] font-arial">Global Assistance</span>
               </div>
             </div>
 
@@ -578,13 +570,13 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
       <section className="py-24 relative overflow-hidden bg-[#191974]">
         <div className="absolute inset-0 bg-[#ee2229] opacity-10 rounded-[100%] blur-[120px] translate-y-1/2 scale-150"></div>
         <div className="max-w-5xl mx-auto px-4 text-center relative z-20">
-          <h2 className="text-[48px] lg:text-[72px] font-black font-inter text-white mb-6 drop-shadow-2xl uppercase tracking-tighter leading-[0.9]">
+          <h2 className="text-[32px] font-black font-inter text-white mb-6 drop-shadow-2xl uppercase tracking-tight">
             Plan Your Dream <br />Trip Today
           </h2>
-          <p className="text-[20px] text-white/50 font-inter font-light mb-12 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-[26px] text-white/50 font-inter font-light mb-12 max-w-2xl mx-auto leading-relaxed">
             Ready to explore? Book your fully managed luxury package with Madura Travel and let us handle the rest.
           </p>
-          <Link href={`/${region}/tours`} className="inline-block bg-[#ee2229] text-white px-14 py-5 rounded-full text-[16px] font-black tracking-widest hover:bg-white hover:text-[#ee2229] transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-red-500/20 active:scale-95 uppercase">
+          <Link href={`/${region}/tours`} className="inline-block bg-[#ee2229] text-white px-14 py-5 rounded-full text-[14px] font-inter-tight font-black tracking-widest hover:bg-white hover:text-[#ee2229] transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-red-500/20 active:scale-95 uppercase">
             Browse All Tours
           </Link>
         </div>
