@@ -47,13 +47,13 @@ export default function Navbar() {
   };
 
   return (
-    <div className="w-full flex flex-col fixed top-0 left-0 z-[100] shadow-md">
+    <div className="w-full flex flex-col fixed top-0 left-0 z-100 shadow-md">
 
       {/* 🔷 TOP HEADER */}
       <div className="bg-white  text-[#191974] px-4 lg:px-8 py-3 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center shrink-0">
+        <Link href={`/${currentRegionCode}`} className="flex items-center shrink-0">
           <Image
             src="/logo.webp"
             alt="Madura Travel Logo"
@@ -252,7 +252,7 @@ export default function Navbar() {
               <h3 className="text-[16px] font-bold text-[#191974] mb-4 border-b border-gray-100 pb-2 uppercase">{activeRegion}</h3>
               <div className="grid grid-cols-3 gap-x-4 gap-y-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                 {destinations[activeRegion].map((place, idx) => (
-                  <Link key={idx} href={`/destination/${place.toLowerCase().replace(/ /g, '-')}`} className="text-[12px] text-gray-600 hover:text-red-600 hover:underline transition-all">
+                  <Link key={idx} href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, '-')}`} className="text-[12px] text-gray-600 hover:text-red-600 hover:underline transition-all">
                     {place}
                   </Link>
                 ))}
@@ -282,7 +282,7 @@ export default function Navbar() {
             {destinations["India"].map((place, idx) => (
               <Link
                 key={idx}
-                href={`/destination/${place.toLowerCase().replace(/ /g, "-")}`}
+                href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, "-")}`}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#ee2229] transition"
               >
                 {place}

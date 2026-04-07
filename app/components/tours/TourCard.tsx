@@ -8,13 +8,20 @@ import Link from 'next/link';
 interface TourCardProps {
   tour: any;
   destinationSlug: string;
+  region: string;
 }
 
-export default function TourCard({ tour, destinationSlug }: TourCardProps) {
+export default function TourCard({ tour, destinationSlug, region }: TourCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const formatter = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+  
+  // Format price based on region
+  const formatPrice = (price: number) => {
+    if (region === 'au') return new Intl.NumberFormat('en-AU', { style: 'currency', currency: 'AUD', maximumFractionDigits: 0 }).format(price * 0.018); // rough conversion
+    if (region === 'us') return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(price * 0.012); // rough conversion
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(price);
+  };
 
-  const price = tour.price || 45000; // fallback mock price
+  const price = tour.base_price_inr || tour.price || 45000;
   const emi = Math.round(price / 12);
   const tags = tour.tags || ["Family", "Best Seller"];
 
@@ -101,28 +108,28 @@ export default function TourCard({ tour, destinationSlug }: TourCardProps) {
             <div className="text-left md:text-right w-full mb-4 md:mb-6">
               <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Starting From</p>
               <div className="flex md:flex-col items-baseline md:items-end gap-2 md:gap-0">
-                <span className="text-2xl font-black text-[#171717]">{formatter.format(price)}</span>
+                <span className="text-2xl font-black text-[#171717]">{formatPrice(price)}</span>
                 <span className="text-xs text-gray-500">per person on twin sharing</span>
               </div>
-              <p className="text-xs font-bold text-[#ee2229] mt-2">EMI from {formatter.format(emi)}/mo</p>
+              <p className="text-xs font-bold text-[#ee2229] mt-2">EMI from {formatPrice(emi)}/mo</p>
             </div>
 
             <div className="space-y-2.5 w-full flex flex-col relative z-20">
               <Link 
-                href={`/${destinationSlug}/tours/${tour.slug || tour.id}`} 
+                href={`/${region}/destination/${destinationSlug}/tours/${tour.slug || tour.id}`} 
                 className="w-full block text-center bg-[#ee2229] hover:bg-[#d41c23] text-white font-bold py-2.5 px-4 rounded-xl shadow-md shadow-red-500/20 transition-all text-sm"
               >
                 Book Now
               </Link>
               <div className="grid grid-cols-2 gap-2 w-full">
                 <Link 
-                  href={`/${destinationSlug}/tours/${tour.slug || tour.id}`} 
+                  href={`/${region}/destination/${destinationSlug}/tours/${tour.slug || tour.id}`} 
                   className="w-full block text-center border border-gray-300 hover:border-[#191974] hover:text-[#191974] text-gray-700 font-bold py-2 px-2 rounded-xl transition-all text-xs bg-white"
                 >
                   View Details
                 </Link>
                 <Link 
-                  href={`/${destinationSlug}/tours/${tour.slug || tour.id}#enquire`} 
+                  href={`/${region}/destination/${destinationSlug}/tours/${tour.slug || tour.id}#enquire`} 
                   className="w-full block text-center border border-gray-300 hover:border-[#191974] hover:text-[#191974] text-gray-700 font-bold py-2 px-2 rounded-xl transition-all text-xs bg-white"
                 >
                   Enquire

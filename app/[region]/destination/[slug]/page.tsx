@@ -1,12 +1,24 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '../../../../utils/supabase/server';
 import DestinationHeader from '@/app/components/tours/DestinationHeader';
 import FiltersSidebar from '@/app/components/tours/FiltersSidebar';
 import TourCard from '@/app/components/tours/TourCard';
 
-export default async function DestinationToursPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+interface Tour {
+  id: string;
+  title: string;
+  slug: string;
+  price?: number;
+  duration_days?: number;
+  cities_count?: number;
+  image_url: string;
+  tags?: string[];
+  highlights?: string[];
+}
+
+export default async function DestinationToursPage({ params }: { params: Promise<{ slug: string, region: string }> }) {
+  const { slug, region } = await params;
   const supabase = await createClient();
 
   // Try fetching destination
@@ -102,8 +114,8 @@ export default async function DestinationToursPage({ params }: { params: Promise
 
             {/* Tour Cards Grid */}
             <div className="space-y-6">
-              {tours.map((tour) => (
-                <TourCard key={tour.id} tour={tour} destinationSlug={slug} />
+              {tours.map((tour: Tour) => (
+                <TourCard key={tour.id} tour={tour} destinationSlug={slug} region={region} />
               ))}
             </div>
 

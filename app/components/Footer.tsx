@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 
 const destinations = {
   "India": ["Andaman", "Kashmir", "Kerala", "Rajasthan", "Goa", "Himachal Pradesh", "Tamil Nadu", "Uttarakhand"],
@@ -84,6 +85,9 @@ const FooterColumn = ({ title, links }: { title: string; links: { label: string;
 );
 
 export default function Footer() {
+  const params = useParams();
+  const currentRegion = (params?.region as string) || "in";
+
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -193,13 +197,15 @@ export default function Footer() {
           <div className="lg:col-span-3 flex flex-col gap-6">
             {/* Logo */}
             <div className="flex items-center">
-              <Image
-                src="/logo.webp"
-                alt="Madura Travel Logo"
-                width={150}
-                height={50}
-                priority
-              />
+              <Link href={`/${currentRegion}`} className="block">
+                <Image
+                  src="/logo.webp"
+                  alt="Madura Travel Logo"
+                  width={150}
+                  height={50}
+                  priority
+                />
+              </Link>
             </div>
             <p className="text-[13px] text-white/45 leading-relaxed">
               India&apos;s trusted travel partner crafting unforgettable journeys across the world — from the Himalayas to the Mediterranean.
@@ -247,7 +253,7 @@ export default function Footer() {
                   {places.slice(0, 4).map((place) => (
                     <Link
                       key={place}
-                      href={`/destination/${place.toLowerCase().replace(/ /g, "-")}`}
+                      href={`/${currentRegion}/destination/${place.toLowerCase().replace(/ /g, "-")}`}
                       className="text-[12px] text-white/50 hover:text-white transition-colors group flex items-center gap-1.5"
                     >
                       <span className="w-0 group-hover:w-1.5 h-1.5 rounded-full bg-[#ee2229] shrink-0 transition-all duration-200" />
