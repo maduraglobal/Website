@@ -109,9 +109,8 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-[#171717] font-arial text-[14px]">
-
-      {/* HERO SECTION WITH FULL BG AND CAROUSEL */}
-      <section className="relative w-full h-[60vh] flex flex-col justify-between pt-16 lg:pt-20 pb-8 overflow-visible">
+      {/* HERO SECTION - 60vh */}
+      <section className="relative w-full h-[60vh] flex flex-col pt-16 lg:pt-20 pb-8 overflow-visible">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -125,21 +124,15 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         </div>
 
         <div className="max-w-7xl mx-auto w-full px-6 lg:px-8 relative z-10 flex-1 flex flex-col lg:flex-row items-center justify-between mt-10">
-
           {/* Left Text */}
           <div className="w-full lg:w-[45%] text-[#191974] space-y-6 mb-12 lg:mb-0">
-            <h1 className="text-[32px] font-black font-inter tracking-tight uppercase leading-tight">
+            <h1 className="text-[32px] md:text-[40px] font-black font-inter tracking-tight uppercase leading-tight text-white drop-shadow-lg">
               The World is Waiting.<br />
               Start Exploring.
             </h1>
-            <p className="text-[26px] text-white font-inter font-light leading-snug">
+            <p className="text-[20px] md:text-[26px] text-white/90 font-inter font-light leading-snug drop-shadow-md">
               Find your dream destination and start your journey with us.
             </p>
-            <div className="pt-4">
-              <Link href={`/${region}/destination`} className="inline-block bg-white text-[#191974] px-8 py-3.5 rounded-lg font-bold text-[14px] font-inter-tight uppercase tracking-wider hover:bg-white hover:text-[#ee2229] transition-colors shadow-lg">
-                SHOW ALL DESTINATIONS
-              </Link>
-            </div>
           </div>
 
           {/* Right Carousel */}
@@ -163,48 +156,46 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                   <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                 </button>
               </div>
-
             </div>
           </div>
         </div>
       </section>
 
-      {/* Pill-Shaped Minimalist Search Bar */}
-      <div className="w-full bg-white z-20 py-8">
-        <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center border border-gray-200 rounded-full bg-white shadow-lg py-2 px-3 transition-shadow hover:shadow-xl">
-
+      {/* SEARCH BAR SECTION - 10vh */}
+      <div className="w-full h-[10vh] min-h-[80px] bg-white flex items-center z-20">
+        <div className="max-w-6xl mx-auto w-full px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center border border-gray-200 rounded-full bg-white shadow-xl py-2 px-3 transition-shadow hover:shadow-2xl">
             {/* Depart From */}
-            <div className="w-full lg:flex-1 px-8 py-2 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-200 group cursor-pointer">
-              <label className="text-[11px] font-medium text-gray-400 mb-0.5">Depart From</label>
+            <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer">
+              <label className="text-[10px] uppercase font-black tracking-widest text-[#ee2229] mb-0.5">Depart From</label>
               <div className="flex items-center justify-between w-full">
                 <input
                   type="text"
                   placeholder="Where From?"
-                  className="w-full text-[15px] font-bold text-gray-900 outline-none bg-transparent placeholder-gray-400"
+                  className="w-full text-[14px] font-bold text-gray-900 outline-none bg-transparent placeholder-gray-400"
                 />
                 <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </div>
             </div>
 
             {/* Going To */}
-            <div className="w-full lg:flex-1 px-8 py-2 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-200 group cursor-pointer">
-              <label className="text-[11px] font-medium text-gray-400 mb-0.5">Going To</label>
+            <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer">
+              <label className="text-[10px] uppercase font-black tracking-widest text-[#ee2229] mb-0.5">Going To</label>
               <div className="flex items-center justify-between w-full">
                 <input
                   type="text"
                   placeholder="Where to?"
-                  className="w-full text-[15px] font-bold text-gray-900 outline-none bg-transparent placeholder-gray-400"
+                  className="w-full text-[14px] font-bold text-gray-900 outline-none bg-transparent placeholder-gray-400"
                 />
                 <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </div>
             </div>
 
-            {/* Month of Travel */}
-            <div className="w-full lg:flex-1 px-8 py-2 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-200 group cursor-pointer relative">
-              <label className="text-[11px] font-medium text-gray-400 mb-0.5">Month Of Travel</label>
+            {/* Month */}
+            <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer relative">
+              <label className="text-[10px] uppercase font-black tracking-widest text-[#ee2229] mb-0.5">Month</label>
               <div className="relative w-full flex items-center justify-between">
-                <select className="w-full text-[15px] font-bold text-gray-900 outline-none bg-transparent appearance-none cursor-pointer">
+                <select className="w-full text-[14px] font-bold text-gray-900 outline-none bg-transparent appearance-none cursor-pointer">
                   <option value="">Any Month</option>
                   {["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].map(m => (
                     <option key={m} value={m.toLowerCase()}>{m}</option>
@@ -214,29 +205,19 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               </div>
             </div>
 
-            {/* Group/Type (Added to match ref image width) */}
-            {/* <div className="w-full lg:flex-[0.6] px-8 py-2 flex flex-col border-b lg:border-b-0 group cursor-pointer">
-              <label className="text-[11px] font-medium text-gray-400 mb-0.5">Holidays</label>
-              <div className="flex items-center justify-between w-full">
-                <span className="text-[15px] font-bold text-gray-900">Select Types</span>
-                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-              </div>
-            </div> */}
-
-            {/* Compact Search Button */}
-            <div className="w-full lg:w-auto p-1.5 flex h-full">
-              <button className="w-full lg:w-[130px] bg-[#ee2229] hover:bg-[#d11920] text-white font-black py-4 px-8 rounded-full transition-all shadow-md active:scale-95 text-[14px] uppercase tracking-widest flex items-center justify-center gap-2">
+            {/* Search Button */}
+            <div className="w-full lg:w-auto p-1 flex h-full">
+              <button className="w-full lg:w-[120px] bg-[#ee2229] hover:bg-[#d11920] text-white font-black py-3 px-6 rounded-full transition-all shadow-md active:scale-95 text-[13px] uppercase tracking-widest flex items-center justify-center gap-2">
                 <span>Search</span>
               </button>
             </div>
-
           </div>
         </div>
       </div>
 
-      {/* Logos Ribbon */}
-      <div className="w-full h-[20vh] bg-white border-b border-gray-100 flex items-center justify-center overflow-hidden relative z-10">
-        <InfiniteMovingCards items={logoItems} speed="slow" direction="left" className="bg-transparent w-full pt-0 pb-0" />
+      {/* LOGO CAROUSEL SECTION - 10vh */}
+      <div className="w-full h-[10vh] min-h-[60px] bg-white border-b border-gray-100 flex items-center justify-center overflow-hidden relative z-10">
+        <InfiniteMovingCards items={logoItems} speed="slow" direction="left" className="bg-transparent w-full" />
       </div>
 
       <section className="pt-12 pb-8 bg-white overflow-hidden">
