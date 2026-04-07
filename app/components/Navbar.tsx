@@ -220,7 +220,7 @@ export default function Navbar() {
       </div>
 
       {/* 🔷 BOTTOM NAVBAR */}
-      <nav className="bg-[#191974] text-white px-4 lg:px-8 py-2.5 flex items-center justify-center space-x-7 text-[13px] font-bold tracking-tight border-t border-[#1e4a8a]">
+      <nav className="bg-[#191974] text-white px-8 lg:px-16 py-3 flex items-center justify-between text-[13px] font-black tracking-[0.05em] border-t border-[#1e4a8a] shadow-inner font-inter uppercase">
 
         {/* Destination Dropdown */}
         <div className="relative group cursor-pointer py-1">
@@ -398,7 +398,6 @@ export default function Navbar() {
           </svg>
         </Link>
         <Link href="#" className="hover:text-red-500 transition-colors uppercase">Weddings</Link>
-        <Link href={`/${currentRegionCode}/visa`} className="hover:text-red-500 transition-colors uppercase">Visa</Link>
         <Link href="#" className="hover:text-red-500 transition-colors uppercase">Contact Us</Link>
       </nav>
 

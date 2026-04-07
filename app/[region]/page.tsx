@@ -50,47 +50,102 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
     "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=2940&fill=blur", // Bali
   ];
 
-  return (
-    <div className="flex flex-col min-h-screen bg-background overflow-hidden text-black">
+  const logoItems = Array.from({ length: 40 }, (_, i) => ({
+    quote: "",
+    name: "",
+    title: "",
+    image: `/images/logos/img-${i + 1}.jpg`,
+  }));
 
-      {/* HERO SECTION */}
-      <section className="h-[85vh] w-full relative">
-        <ImagesSlider className="h-[85vh]" images={heroImages}>
-          <div className="z-50 flex flex-col justify-center items-center text-center px-4">
-            <h1 className="font-bold text-4xl md:text-6xl text-white mb-6 drop-shadow-2xl font-inter">
-              Explore the World with Madura Travel
+  return (
+    <div className="flex flex-col min-h-screen bg-background overflow-hidden text-[#171717] font-arial text-[14px]">
+
+      {/* STABLE MODERN GRID HERO */}
+      <section className="relative min-h-[85vh] flex flex-col pt-[110px] bg-gray-50/30 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center flex-1 z-10 relative pb-20">
+          
+          {/* Left: Content & Search */}
+          <div className="flex flex-col items-start">
+            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#ee2229] mb-4">World's Leading Travel Curator</span>
+            <h1 className="text-4xl md:text-[62px] font-black text-[#191974] leading-[1.05] mb-8 tracking-tight font-inter">
+              Masterpieces of <br/>
+              Global Exploration
             </h1>
-            <p className="text-white text-lg md:text-xl font-light font-inter-tight opacity-90 max-w-3xl mb-12 drop-shadow-md">
-              Discover breathtaking destinations and exclusive all-inclusive holiday packages designed for the modern explorer.
+            <p className="text-lg md:text-[19px] text-gray-500 font-medium max-w-lg mb-12 leading-relaxed">
+              We orchestrate bespoke travel experiences, combining luxury, comfort, and discovery in every single journey.
             </p>
 
-            <div className="bg-white/10 backdrop-blur-xl p-4 md:p-6 rounded-3xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] w-full max-w-5xl border border-white/20 flex flex-col md:flex-row gap-4">
-              <div className="flex-1 bg-white/60 hover:bg-white transition-colors rounded-2xl p-3 flex flex-col items-start px-4">
-                <span className="text-[11px] text-[#191974] font-bold uppercase tracking-widest pl-1 mb-1">Destination</span>
-                <input type="text" placeholder="Where do you want to go?" className="w-full bg-transparent outline-none text-[#171717] font-semibold text-[15px] placeholder-gray-500" />
+            {/* Structured Search Box */}
+            <div className="w-full bg-white rounded-xl shadow-[0_15px_40px_-10px_rgba(31,38,135,0.15)] border border-gray-100 flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-gray-100 overflow-hidden">
+              <div className="flex-1 p-5 flex flex-col gap-1">
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Destination</label>
+                <input type="text" placeholder="Search destinations" className="bg-transparent outline-none text-[15px] font-bold text-[#171717] placeholder-gray-300" />
               </div>
-              <div className="flex-1 bg-white/60 hover:bg-white transition-colors rounded-2xl p-3 flex flex-col items-start px-4">
-                <span className="text-[11px] text-[#191974] font-bold uppercase tracking-widest pl-1 mb-1">Duration</span>
-                <select className="w-full bg-transparent outline-none text-[#171717] font-semibold text-[15px] cursor-pointer appearance-none">
-                  <option>Any Duration</option>
-                  <option>1-4 Days</option>
-                  <option>5-9 Days</option>
-                  <option>10+ Days</option>
+              <div className="flex-1 p-5 flex flex-col gap-1">
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Package Type</label>
+                <select className="bg-transparent outline-none text-[15px] font-bold text-[#171717] cursor-pointer">
+                   <option>All Packages</option>
+                   <option>Family Holidays</option>
+                   <option>Honey Moon</option>
+                   <option>Group Tours</option>
                 </select>
               </div>
-              <button className="bg-[#ee2229] hover:bg-white hover:text-[#ee2229] border-2 border-transparent hover:border-[#ee2229] text-white px-10 py-3 rounded-2xl text-[15px] font-bold uppercase tracking-wider transition-all duration-300 shadow-xl">
-                Search
+              <button className="bg-[#191974] hover:bg-[#ee2229] text-white px-10 py-5 font-black uppercase tracking-widest text-[13px] transition-all duration-300">
+                Explore Now
               </button>
             </div>
+
+            {/* Quick trust metrics */}
+            <div className="mt-12 flex items-center gap-10">
+               <div className="flex flex-col">
+                  <span className="text-2xl font-black text-[#191974]">40+</span>
+                  <span className="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Years</span>
+               </div>
+               <div className="w-px h-8 bg-gray-200"></div>
+               <div className="flex flex-col">
+                  <span className="text-2xl font-black text-[#191974]">100+</span>
+                  <span className="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Countries</span>
+               </div>
+               <div className="w-px h-8 bg-gray-200"></div>
+               <div className="flex flex-col">
+                  <span className="text-2xl font-black text-[#191974]">24/7</span>
+                  <span className="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Support</span>
+               </div>
+            </div>
           </div>
-        </ImagesSlider>
+
+          {/* Right: Visual Grid (Static) */}
+          <div className="hidden lg:grid grid-cols-2 gap-4 h-[550px]">
+             <div className="rounded-2xl overflow-hidden shadow-lg h-full">
+                <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=2940" alt="Swiss" className="h-full w-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700" />
+             </div>
+             <div className="flex flex-col gap-4 h-full">
+                <div className="flex-1 rounded-2xl overflow-hidden shadow-lg">
+                   <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=2920" alt="Paris" className="h-full w-full object-cover" />
+                </div>
+                <div className="flex-1 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+                   <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=2940" alt="Bali" className="h-full w-full object-cover" />
+                </div>
+             </div>
+          </div>
+        </div>
+
+        {/* Partners Ribbon (Bottom of Hero) */}
+        <div className="w-full py-6 mt-auto border-t border-gray-100 bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.03)] relative z-20">
+          <InfiniteMovingCards
+            speed="slow"
+            direction="left"
+            items={logoItems}
+            className="bg-transparent"
+          />
+        </div>
       </section>
 
-      {/* TOP DESTINATIONS */}
-      <section className="py-20 bg-gray-50">
+
+      <section className="py-24 bg-gray-50/50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-[36px] font-bold font-inter text-[#191974] mb-4">Top Destinations</h2>
+            <h2 className="text-[32px] font-black font-inter text-[#191974] mb-4 uppercase tracking-tight">Top Destinations</h2>
             <p className="text-[16px] text-gray-500 font-inter-tight max-w-2xl mx-auto">Explore carefully curated, all-inclusive tour packages across the globe.</p>
           </div>
 
@@ -177,12 +232,12 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         </div>
       </section>
 
-      {/* WHY CHOOSE US (ACETERNITY STYLE GRID) */}
-      <section className="py-24 bg-white relative">
+      {/* WHY CHOOSE US */}
+      <section className="py-32 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-[36px] font-bold font-inter text-[#191974] mb-4">Why Choose Madura Travel</h2>
-            <p className="text-[16px] text-gray-500 font-inter-tight">Premium services designed for the seamless holiday experience.</p>
+          <div className="text-center mb-20">
+            <h2 className="text-[32px] font-black font-inter text-[#191974] mb-4 uppercase tracking-tight">Why Choose Madura Travel</h2>
+            <p className="text-[26px] text-gray-400 font-inter font-light">Premium services designed for the seamless holiday experience.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
@@ -203,11 +258,10 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         </div>
       </section>
 
-      {/* INFINITE TESTIMONIALS */}
-      <section className="py-24 bg-gray-50 border-y border-gray-100 overflow-hidden flex flex-col items-center">
-        <div className="text-center mb-12 relative z-10 w-full max-w-7xl px-4">
-          <h2 className="text-[36px] font-bold font-inter text-[#191974] mb-4">Guest Testimonials</h2>
-          <p className="text-[16px] text-gray-500 font-inter-tight">Hear from those who've experienced the world with us.</p>
+      <section className="py-32 bg-gray-50/50 border-y border-gray-100 overflow-hidden flex flex-col items-center">
+        <div className="text-center mb-16 relative z-10 w-full max-w-7xl px-4">
+          <h2 className="text-[32px] font-black font-inter text-[#191974] mb-4 uppercase tracking-tight">Guest Testimonials</h2>
+          <p className="text-[26px] text-gray-400 font-inter font-light">Hear from those who've experienced the world with us.</p>
         </div>
         <InfiniteMovingCards
           speed="slow"
@@ -220,14 +274,13 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         />
       </section>
 
-      {/* CTA BANNER */}
-      <section className="py-24 relative overflow-hidden bg-[#191974]">
-        <div className="absolute inset-0 bg-[#ee2229] opacity-10 rounded-[100%] blur-[120px] translate-y-1/2 scale-150"></div>
-        <div className="max-w-4xl mx-auto px-4 text-center relative z-20">
-          <h2 className="text-[40px] md:text-[56px] font-bold font-inter text-white mb-6 drop-shadow-xl">
-            Plan Your Dream Trip Today
+      <section className="py-32 relative overflow-hidden bg-[#191974]">
+        <div className="absolute inset-0 bg-[#ee2229] opacity-20 rounded-[100%] blur-[150px] translate-y-1/2 scale-150"></div>
+        <div className="max-w-5xl mx-auto px-4 text-center relative z-20">
+          <h2 className="text-[56px] lg:text-[65px] font-black font-inter text-white mb-8 drop-shadow-2xl uppercase tracking-tighter leading-none">
+            Plan Your Dream <br />Trip Today
           </h2>
-          <p className="text-[18px] text-white/80 font-inter-tight mb-10 max-w-2xl mx-auto">
+          <p className="text-[26px] text-white/60 font-inter font-light mb-12 max-w-3xl mx-auto leading-relaxed">
             Ready to explore? Book your fully managed luxury package and let us handle the rest.
           </p>
           <Link href={`/${region}/tours`} className="inline-block bg-[#ee2229] text-white px-12 py-4 rounded-full text-[16px] font-bold tracking-wide hover:bg-white hover:text-[#ee2229] transition-all duration-300 shadow-2xl hover:-translate-y-1">

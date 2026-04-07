@@ -61,7 +61,7 @@ const socialLinks = [
 
 const FooterColumn = ({ title, links }: { title: string; links: { label: string; href: string; badge?: string }[] }) => (
   <div className="flex flex-col gap-4">
-    <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#f4a021]">{title}</h4>
+    <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#ee2229]">{title}</h4>
     <ul className="flex flex-col gap-2.5">
       {links.map((link) => (
         <li key={link.label}>
@@ -95,7 +95,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#191974] text-white relative overflow-hidden">
+    <footer className="bg-[#191974] text-white     relative overflow-hidden">
 
       {/* Subtle top accent line */}
       <div className="h-1 w-full bg-linear-to-r from-[#ee2229] via-[#191974] to-[#ee2229]" />
@@ -129,8 +129,8 @@ export default function Footer() {
 
           {/* Form */}
           {subscribed ? (
-            <div className="flex-1 flex items-center gap-3 bg-[#191974]/60 border border-[#f4a021]/30 rounded-2xl px-6 py-5">
-              <div className="w-10 h-10 rounded-full bg-[#f4a021]/20 flex items-center justify-center shrink-0">
+            <div className="flex-1 flex items-center gap-3 bg-[#ee2229]/60 border border-[#ee2229] rounded-2xl px-6 py-5">
+              <div className="w-10 h-10 rounded-full bg-[#ee2229] flex items-center justify-center shrink-0">
                 <svg className="w-5 h-5 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                 </svg>
@@ -239,7 +239,7 @@ export default function Footer() {
 
           {/* Destinations spotlight */}
           <div className="lg:col-span-3 flex flex-col gap-5">
-            <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#f4a021]">Top Destinations</h4>
+            <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#ee2229]">Top Destinations</h4>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2">
               {Object.entries(destinations).map(([region, places]) => (
                 <div key={region} className="flex flex-col gap-1.5">
@@ -386,7 +386,7 @@ export default function Footer() {
         {/* Online badge */}
         <div className="bg-white/95 backdrop-blur text-[#191974] px-3 py-1.5 rounded-full font-bold text-[11px] shadow-xl flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-          Available 24×7
+          Available on  24×7
         </div>
 
         {/* CTA button */}
