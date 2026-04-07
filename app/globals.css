@@ -35,14 +35,14 @@ body {
 h1,
 .heading {
   font-family: 'Inter', sans-serif;
-  font-size: 32px;
+  font-size: 65px;
 }
 
 h2,
 h3,
 .sub-heading {
   font-family: 'Inter', sans-serif;
-  font-size: 26px;
+  font-size: 14px;
 }
 
 button,

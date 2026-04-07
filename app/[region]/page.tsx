@@ -136,7 +136,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
           </div>
 
           {/* Right Carousel */}
-          <div className="w-full lg:w-[50%] flex flex-col items-end relative mt-10 lg:mt-0 z-20">
+          <div className="w-full lg:w-[50%] flex flex-col items-end relative mt-2 lg:mt-0 lg:-translate-y-12 z-20">
             <div className="flex gap-4 overflow-visible w-full justify-end pr-8 lg:pr-12 relative">
               {/* Card 1 */}
               <div className="w-[140px] md:w-[180px] lg:w-[220px] h-[180px] md:h-[220px] lg:h-[260px] shrink-0 rounded-[16px] lg:rounded-[20px] overflow-hidden relative shadow-lg transition-transform hover:scale-[1.02] cursor-pointer bg-gray-900 border border-white/20">
@@ -161,10 +161,10 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         </div>
       </section>
 
-      {/* SEARCH BAR SECTION - 10vh */}
-      <div className="w-full h-[10vh] min-h-[80px] bg-white flex items-center z-20">
+      {/* SEARCH BAR SECTION - Overlapping Hero */}
+      <div className="w-full relative z-30 -mt-10 md:-mt-14">
         <div className="max-w-6xl mx-auto w-full px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center border border-gray-200 rounded-full bg-white shadow-xl py-2 px-3 transition-shadow hover:shadow-2xl">
+          <div className="flex flex-col lg:flex-row items-center border border-gray-200 rounded-2xl md:rounded-full bg-white shadow-2xl py-2 px-3 transition-shadow hover:shadow-[0_25px_60px_rgba(0,0,0,0.15)]">
             {/* Depart From */}
             <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer">
               <label className="text-[10px] uppercase font-black tracking-widest text-[#ee2229] mb-0.5">Depart From</label>
@@ -216,7 +216,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
       </div>
 
       {/* LOGO CAROUSEL SECTION - 10vh */}
-      <div className="w-full h-[10vh] min-h-[60px] bg-white border-b border-gray-100 flex items-center justify-center overflow-hidden relative z-10">
+      <div className="w-full h-[20vh] min-h-[60px] bg-white border-b border-gray-100 flex items-center justify-center overflow-hidden relative z-10">
         <InfiniteMovingCards items={logoItems} speed="slow" direction="left" className="bg-transparent w-full" />
       </div>
 
