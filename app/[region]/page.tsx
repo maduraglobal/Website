@@ -111,7 +111,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
     <div className="flex flex-col min-h-screen bg-background text-[#171717] font-arial text-[14px]">
 
       {/* HERO SECTION WITH FULL BG AND CAROUSEL */}
-      <section className="relative w-full h-[80vh] flex flex-col justify-between pt-16 lg:pt-20 pb-8 overflow-visible">
+      <section className="relative w-full h-[70vh] flex flex-col justify-between pt-16 lg:pt-20 pb-8 overflow-visible">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -426,57 +426,57 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         <div className="max-w-7xl mx-auto px-4">
           <div className="relative w-full h-[400px] lg:h-[500px] rounded-[12px] overflow-hidden group shadow-2xl">
             {/* Background Image */}
-            <motion.img 
+            <motion.img
               key={offerSlides[activeOffer].image}
               initial={{ opacity: 0, scale: 1.1 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
-              src={offerSlides[activeOffer].image} 
-              alt={offerSlides[activeOffer].title} 
+              src={offerSlides[activeOffer].image}
+              alt={offerSlides[activeOffer].title}
               className="absolute inset-0 w-full h-full object-cover"
             />
             {/* Dark Overlay Wrapper */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/40 to-transparent" />
 
             {/* Banner Content Container */}
-            <motion.div 
-               key={offerSlides[activeOffer].title}
-               initial={{ opacity: 0, x: -30 }}
-               animate={{ opacity: 1, x: 0 }}
-               transition={{ duration: 0.6, delay: 0.2 }}
-               className="relative h-full flex flex-col justify-center px-10 lg:px-20 text-white max-w-2xl"
+            <motion.div
+              key={offerSlides[activeOffer].title}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="relative h-full flex flex-col justify-center px-10 lg:px-20 text-white max-w-2xl"
             >
-              
+
               {/* Category Info with Yellow Bar */}
               <div className="flex items-start gap-4 mb-3">
-                <div className="w-1 h-12 bg-[#ffcc00] rounded-full shrink-0" />
+                <div className="w-1 h-12 bg-[#ee2229] rounded-full shrink-0" />
                 <div>
-                   <p className="text-[14px] lg:text-[16px] font-medium tracking-wide mb-1 opacity-90 uppercase tracking-widest leading-none">{offerSlides[activeOffer].category}</p>
-                   <h2 className="text-[36px] lg:text-[48px] font-black leading-tight text-[#ffcc00] tracking-tight">{offerSlides[activeOffer].title}</h2>
+                  <p className="text-[14px] lg:text-[16px] font-medium tracking-wide mb-1 opacity-90 uppercase leading-none">{offerSlides[activeOffer].category}</p>
+                  <h2 className="text-[36px] lg:text-[48px] font-black leading-tight text-[#ffcc00] tracking-tight">{offerSlides[activeOffer].title}</h2>
                 </div>
               </div>
 
               {/* Destination Stops */}
               <div className="flex flex-wrap items-center gap-3 mb-6 text-[13px] lg:text-[15px] opacity-80 font-medium tracking-wider">
                 {offerSlides[activeOffer].stops.map((stop, sIdx) => (
-                   <React.Fragment key={stop}>
-                      <span>{stop}</span>
-                      {sIdx < offerSlides[activeOffer].stops.length - 1 && <span className="w-1.5 h-1.5 rounded-full bg-white opacity-40" />}
-                   </React.Fragment>
+                  <React.Fragment key={stop}>
+                    <span>{stop}</span>
+                    {sIdx < offerSlides[activeOffer].stops.length - 1 && <span className="w-1.5 h-1.5 rounded-full bg-white opacity-40" />}
+                  </React.Fragment>
                 ))}
               </div>
 
               {/* Timing and Pricing */}
               <div className="space-y-1 mb-8">
-                 <p className="text-[17px] lg:text-[20px] font-bold">
-                    {offerSlides[activeOffer].details.split('₹')[0]} <span className="text-[#ffcc00]">₹{offerSlides[activeOffer].details.split('₹')[1]}</span>
-                 </p>
-                 <p className="text-[20px] lg:text-[24px] font-black text-[#ffcc00]">
-                    Joining Leaving price from {offerSlides[activeOffer].joiningPrice}
-                 </p>
-                 <p className="text-[13px] lg:text-[14px] leading-relaxed opacity-70 mt-2 max-w-md font-inter-tight">
-                    {offerSlides[activeOffer].desc}
-                 </p>
+                <p className="text-[17px] lg:text-[20px] font-bold">
+                  {offerSlides[activeOffer].details.split('₹')[0]} <span className="text-[#ffcc00]">₹{offerSlides[activeOffer].details.split('₹')[1]}</span>
+                </p>
+                <p className="text-[20px] lg:text-[24px] font-black text-[#ffcc00]">
+                  Joining Leaving price from {offerSlides[activeOffer].joiningPrice}
+                </p>
+                <p className="text-[13px] lg:text-[14px] leading-relaxed opacity-70 mt-2 max-w-md font-inter-tight">
+                  {offerSlides[activeOffer].desc}
+                </p>
               </div>
 
               {/* Action and Disclaimer */}
@@ -490,13 +490,13 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
             {/* Navigation Chevrons */}
             <div className="absolute top-1/2 -translate-y-1/2 flex justify-between w-full px-6">
-              <button 
+              <button
                 onClick={handlePrevOffer}
                 className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center hover:bg-white/40 transition-all cursor-pointer border border-white/10 group/btn shadow-lg"
               >
                 <svg className="w-6 h-6 text-white group-hover/btn:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
               </button>
-              <button 
+              <button
                 onClick={handleNextOffer}
                 className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center hover:bg-white/40 transition-all cursor-pointer border border-white/10 group/btn shadow-lg"
               >
@@ -507,11 +507,11 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
             {/* Pagination Dots */}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2">
               {offerSlides.map((_, dotIdx) => (
-                 <div 
-                   key={dotIdx} 
-                   onClick={() => setActiveOffer(dotIdx)}
-                   className={`h-1.5 rounded-full transition-all cursor-pointer ${dotIdx === activeOffer ? 'w-12 bg-[#ffcc00]' : 'w-8 bg-white/30 hover:bg-white/50'}`} 
-                 />
+                <div
+                  key={dotIdx}
+                  onClick={() => setActiveOffer(dotIdx)}
+                  className={`h-1.5 rounded-full transition-all cursor-pointer ${dotIdx === activeOffer ? 'w-12 bg-[#ffcc00]' : 'w-8 bg-white/30 hover:bg-white/50'}`}
+                />
               ))}
             </div>
 
@@ -558,7 +558,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
       <section className="py-32 bg-[#f8f9ff] border-y border-gray-100 overflow-hidden flex flex-col items-center relative">
         <div className="absolute left-0 top-0 w-64 h-64 bg-red-500/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2" />
-        
+
         <div className="text-center mb-16 relative z-10 w-full max-w-7xl px-4">
           <h2 className="text-[36px] font-black font-inter text-[#191974] mb-3 uppercase tracking-tighter">Guest Testimonials</h2>
           <div className="w-24 h-1.5 bg-[#ee2229] mx-auto rounded-full mb-6" />
