@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { createClient } from "@/utils/supabase/client";
 import PopupForm from "../components/PopupForm";
 import CorporateOffice from "../components/CorporateOffice";
+import AwardsSection from "../components/AwardsSection";
 import { Users, Globe, Award, Star as StarIcon } from "lucide-react";
 
 const supabase = createClient();
@@ -389,9 +390,15 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                         <Link href={`/${region}/tours/${tour.slug}`} className="border border-[#191974] text-[#191974] py-2.5 rounded-lg text-[13px] font-bold text-center font-inter-tight hover:bg-[#ee2229]/5 transition-colors uppercase tracking-widest">
                           View Details
                         </Link>
-                        <Link href={`/${region}/booking?tour=${tour.slug}`} className="bg-[#191974] text-white py-2.5 rounded-lg text-[13px] font-bold text-center font-inter-tight hover:bg-[#ee2229] transition-all shadow-md uppercase tracking-widest">
+                        <button 
+                          type="button"
+                          className="book-now-btn bg-[#191974] text-white py-2.5 rounded-lg text-[13px] font-bold text-center font-inter-tight hover:bg-[#ee2229] transition-all shadow-md uppercase tracking-widest"
+                          data-package={tour.title}
+                          data-price={tour.base_price_inr.toLocaleString('en-IN')}
+                          data-original-price={(tour.base_price_inr * 1.25).toLocaleString('en-IN')}
+                        >
                           Book Now
-                        </Link>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -458,9 +465,15 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
               {/* Action and Disclaimer */}
               <div className="flex flex-col items-start gap-3">
-                <Link href={`/${region}/booking`} className="bg-[#ee2229] hover:bg-[#191974] text-white px-14 py-4 rounded-lg font-black text-[14px] font-inter-tight transition-all transform active:scale-95 shadow-2xl uppercase tracking-widest">
+                <button 
+                  type="button"
+                  className="book-now-btn bg-[#ee2229] hover:bg-[#191974] text-white px-14 py-4 rounded-lg font-black text-[14px] font-inter-tight transition-all transform active:scale-95 shadow-2xl uppercase tracking-widest"
+                  data-package={offerSlides[activeOffer].title}
+                  data-price={offerSlides[activeOffer].details.split('₹')[1]}
+                  data-original-price="0"
+                >
                   Confirm Booking
-                </Link>
+                </button>
                 <p className="text-[10px] opacity-30 font-bold uppercase tracking-widest mt-2">*TERMS AND CONDITIONS APPLY</p>
               </div>
             </motion.div>
@@ -575,6 +588,9 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
           </div>
         </div>
       </section>
+
+      {/* AWARDS & RECOGNITIONS */}
+      <AwardsSection />
 
       {/* WHY CHOOSE US */}
       <section className="py-32 bg-white relative">

@@ -24,10 +24,10 @@ export default function TourTabs({ tabs, activeTab, onTabChange }: TourTabsProps
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={cn(
-                "py-6 px-1 border-b-2 font-black text-[11px] uppercase tracking-[0.2em] transition-all duration-500 whitespace-nowrap font-inter-tight active:scale-95",
+                "py-6 px-1 border-b-2 font-black text-[14px] uppercase tracking-[0.2em] transition-all duration-500 whitespace-nowrap font-inter-tight active:scale-95",
                 activeTab === tab.id
                   ? "border-[#ee2229] text-[#ee2229] opacity-100"
-                  : "border-transparent text-gray-300 hover:text-[#191974] hover:opacity-100 opacity-60"
+                  : "border-transparent text-[#191974] hover:text-[#ee2229] hover:opacity-100 opacity-60"
               )}
             >
               {tab.label}

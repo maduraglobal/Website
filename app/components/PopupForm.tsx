@@ -13,18 +13,10 @@ export default function PopupForm() {
   });
 
   useEffect(() => {
-    // Show popup after 3 seconds on every hard refresh
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 3000);
-
-    const handleOpenPopup = () => setIsVisible(true);
-    window.addEventListener('openPopup', handleOpenPopup);
-
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener('openPopup', handleOpenPopup);
-    };
+    // Newsletter popup disabled — BookingModal handles the openPopup event.
+    // Re-enable the timer below if you want a newsletter popup after page load.
+    // const timer = setTimeout(() => setIsVisible(true), 8000);
+    // return () => clearTimeout(timer);
   }, []);
 
   const handleClose = () => {

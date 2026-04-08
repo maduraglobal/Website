@@ -2,18 +2,18 @@
 
 import React, { use } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Compass, 
-  Map as MapIcon, 
-  Bed, 
-  Car, 
-  Languages, 
-  Package, 
-  ShieldCheck, 
-  Award, 
-  Globe2, 
-  Star, 
-  Send 
+import {
+  Compass,
+  Map as MapIcon,
+  Bed,
+  Car,
+  Languages,
+  Package,
+  ShieldCheck,
+  Award,
+  Globe2,
+  Star,
+  Send
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -41,16 +41,16 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
       {/* ── HERO SECTION ── */}
       <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image 
-            src="https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&q=80&w=2000" 
-            alt="Inbound India" 
-            fill 
+          <Image
+            src="https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&q=80&w=2000"
+            alt="Inbound India"
+            fill
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#191974]/80 via-[#191974]/40 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-b from-[#191974]/80 via-[#191974]/40 to-transparent" />
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10 text-center text-white">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -64,7 +64,12 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
             <p className="text-[20px] md:text-[24px] font-light max-w-2xl mx-auto mb-10 text-white/90">
               Curated inbound travel experiences for international travelers. Heritage, Luxury, and Spirituality await you.
             </p>
-            <button className="bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white px-12 py-5 rounded-xl font-black uppercase tracking-widest transition-all shadow-2xl">
+            <button 
+              className="book-now-btn bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white px-12 py-5 rounded-xl font-black uppercase tracking-widest transition-all shadow-2xl"
+              data-package="Soul of India - Heritage Tour"
+              data-price="1,49,999"
+              data-original-price="1,89,999"
+            >
               Explore Tours
             </button>
           </motion.div>
@@ -98,13 +103,13 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
               </div>
             </div>
           </div>
-          
+
           <div className="lg:w-1/2 relative">
             <div className="rounded-[3rem] overflow-hidden shadow-2xl relative z-10">
-              <Image 
-                src="https://images.unsplash.com/photo-1524492707947-5c3b44b80e55?auto=format&fit=crop&q=80&w=1200" 
-                alt="About India" 
-                width={800} height={1000} 
+              <Image
+                src="https://images.unsplash.com/photo-1524492707947-5c3b44b80e55?auto=format&fit=crop&q=80&w=1200"
+                alt="About India"
+                width={800} height={1000}
                 className="object-cover"
               />
             </div>
@@ -120,10 +125,10 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
             <h2 className="text-[36px] font-black text-[#191974] uppercase tracking-tighter mb-4">Our Premium Services</h2>
             <div className="w-20 h-1.5 bg-[#ee2229] mx-auto rounded-full" />
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((svc, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
                 whileHover={{ y: -10 }}
                 className="bg-white p-10 rounded-4xl border border-gray-100 shadow-xl shadow-blue-900/5 group text-center lg:text-left"
@@ -146,12 +151,12 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
             <h2 className="text-[36px] font-black text-[#191974] uppercase tracking-tighter mb-4">Iconic Landmarks</h2>
             <p className="text-gray-400 font-bold uppercase tracking-widest text-[13px]">The best of India waiting for you</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {destinations.map((dest, i) => (
-              <div key={i} className="group relative aspect-[3/4] rounded-[2.5rem] overflow-hidden shadow-xl">
+              <div key={i} className="group relative aspect-3/4 rounded-[2.5rem] overflow-hidden shadow-xl">
                 <Image src={dest.img} alt={dest.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <h4 className="text-white text-[22px] font-black leading-tight mb-1">{dest.title}</h4>
                   <p className="text-white/60 text-[12px] uppercase font-bold tracking-widest">{dest.loc}</p>
@@ -165,7 +170,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
       {/* ── WHY CHOOSE US ── */}
       <section className="py-24 bg-[#191974] px-6 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#ee2229]/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
-        
+
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {[
             { icon: <Award className="w-8 h-8" />, title: "40+ Years Experience", desc: "Decades of trust in global tourism." },
@@ -191,7 +196,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
             <h2 className="text-[36px] font-black text-[#191974] uppercase tracking-tighter mb-4">Guest Experiences</h2>
             <p className="text-gray-400 font-bold uppercase tracking-widest text-[13px]">Stories from across the globe</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               { name: "John & Sarah Miller", loc: "London, UK", quote: "Our heritage tour of Rajasthan was life-changing. Madura Travel's guides were so knowledgeable and the hotels were palatial. Highly recommended!" },
@@ -217,13 +222,13 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
         <div className="max-w-4xl mx-auto">
           <div className="bg-[#191974] rounded-[3rem] p-8 md:p-16 text-white shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#ee2229]/20 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
-            
+
             <div className="relative z-10">
               <div className="text-center mb-12">
                 <h2 className="text-[32px] md:text-[42px] font-black uppercase tracking-tighter mb-4">Plan Your Indian Journey</h2>
                 <p className="text-white/60 font-light max-w-lg mx-auto">Tell us where you want to go and our specialists will contact you.</p>
               </div>
-              
+
               <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input type="text" placeholder="Full Name" className="bg-white/10 border border-white/20 rounded-xl px-6 py-4 focus:border-[#ee2229] outline-none transition-all placeholder:text-white/30" />
                 <input type="text" placeholder="Country" className="bg-white/10 border border-white/20 rounded-xl px-6 py-4 focus:border-[#ee2229] outline-none transition-all placeholder:text-white/30" />

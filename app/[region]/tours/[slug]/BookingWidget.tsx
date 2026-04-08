@@ -69,7 +69,7 @@ export default function BookingWidget({
   const formattedTotal = formatRegionalPrice(baseInrPrice * formData.travelers, region);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-xl sticky top-8">
+    <div data-no-modal className="bg-white border border-gray-200 rounded-2xl p-6 shadow-xl sticky top-8">
 
       {step === "initial" && (
         <>

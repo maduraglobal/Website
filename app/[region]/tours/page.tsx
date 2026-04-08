@@ -95,9 +95,15 @@ export default async function ToursListingPage({ params }: { params: Promise<{ r
                         {formatRegionalPrice(tour.base_price_inr || 245000, region)}
                       </p>
                     </div>
-                     <Link href={`/${region}/booking?tour=${tour.slug}`} className="bg-[#ee2229] text-white px-5 py-2.5 rounded-lg text-[13px] font-bold font-inter-tight hover:bg-[#191974] transition-all uppercase tracking-widest shadow-md">
+                     <button
+                        type="button"
+                        className="book-now-btn bg-[#ee2229] text-white px-5 py-2.5 rounded-lg text-[13px] font-bold font-inter-tight hover:bg-[#191974] transition-all uppercase tracking-widest shadow-md"
+                        data-package={tour.title}
+                        data-price={String(tour.base_price_inr || 245000)}
+                        data-original-price={String((tour.base_price_inr || 245000) * 1.25)}
+                     >
                         Book Now
-                     </Link>
+                     </button>
                   </div>
 
                   <div className="flex items-center justify-between py-3 border-t border-gray-50 mt-auto">

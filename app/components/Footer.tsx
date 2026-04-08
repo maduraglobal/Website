@@ -1,16 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { usePathname } from "next/navigation";
+
+// ─── Data ───────────────────────────────────────────────────────────────────
 
 const destinations = {
-  "India": ["Andaman", "Kashmir", "Kerala", "Rajasthan", "Goa", "Himachal Pradesh", "Tamil Nadu", "Uttarakhand"],
-  "Europe": ["France", "Italy", "Switzerland", "Spain", "Germany", "Portugal", "Greece", "Norway"],
-  "South East Asia": ["Thailand", "Bali", "Singapore", "Vietnam", "Malaysia", "Maldives", "Sri Lanka", "Bhutan"],
-  "Middle East": ["Dubai", "Jordan", "Turkey", "Qatar", "Oman", "Saudi Arabia"],
+  India: ["Andaman", "Kashmir", "Kerala", "Rajasthan"],
+  Europe: ["France", "Italy", "Switzerland", "Spain"],
+  "South East Asia": ["Thailand", "Bali", "Singapore", "Vietnam"],
+  "Middle East": ["Dubai", "Jordan", "Turkey", "Qatar"],
 };
+
+const discoverLinks = [
+  { label: "Our Story", href: "/our-story" },
+  { label: "Testimonials", href: "/testimonials" },
+  { label: "Careers", href: "/careers" },
+  { label: "Media", href: "/media" },
+  { label: "Contact Us", href: "/contact" },
+];
 
 const socialLinks = [
   {
@@ -60,170 +70,64 @@ const socialLinks = [
   },
 ];
 
-const FooterColumn = ({ title, links }: { title: string; links: { label: string; href: string; badge?: string }[] }) => (
-  <div className="flex flex-col gap-4">
-    <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#ee2229]">{title}</h4>
-    <ul className="flex flex-col gap-2.5">
-      {links.map((link) => (
-        <li key={link.label}>
-          <Link
-            href={link.href}
-            className="text-[13px] text-white/55 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
-          >
-            <span className="w-0 group-hover:w-2 h-px bg-[#ee2229] transition-all duration-300 shrink-0" />
-            {link.label}
-            {link.badge && (
-              <span className="bg-[#191974] text-white px-2 py-0.5 rounded text-[10px] font-bold transition-all border border-white/20 ml-auto">
-                {link.badge}
-              </span>
-            )}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+const bottomLinks = [
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms & Conditions", href: "/terms-and-conditions" },
+];
+
+// ─── Component ───────────────────────────────────────────────────────────────
 
 export default function Footer() {
-  const params = useParams();
-  const currentRegion = (params?.region as string) || "en-in";
+  const pathname = usePathname();
+  const region = (pathname?.split("/")[1] || "en-in").toLowerCase();
 
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email && name) setSubscribed(true);
-  };
+  const prefixed = (href: string) => `/${region}${href}`;
 
   return (
-    <footer className="bg-[#191974] text-white     relative overflow-hidden">
+    <footer className="bg-[#191974] text-white">
+      {/* Top accent line */}
+      <div className="h-1 w-full bg-linear-to-r from-[#ee2229] via-white/20 to-[#ee2229]" />
 
-      {/* Subtle top accent line */}
-      <div className="h-1 w-full bg-linear-to-r from-[#ee2229] via-[#191974] to-[#ee2229]" />
+      {/* ── MAIN BODY ── */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
 
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-[#191974]/40 blur-3xl" />
-        <div className="absolute bottom-0 -left-20 w-[400px] h-[300px] rounded-full bg-[#ee2229]/5 blur-3xl" />
-
-      </div>
-
-      {/* ── NEWSLETTER BANNER ── */}
-      {/* ── NEWSLETTER BANNER –—
-      <div className="relative border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col lg:flex-row items-start lg:items-center gap-8">
-
-
-          {/* Left copy */}
-      {/* <div className="shrink-0 lg:w-[360px]">
-            <p className="text-[11px] uppercase tracking-[0.25em] text-[#ee2229] font-bold mb-2">Stay Inspired</p>
-            <h3 className="text-[22px] lg:text-[26px] font-black leading-tight text-white">
-              Travel deals & ideas,<br />
-              <span className="text-white/40">straight to your inbox.</span>
-            </h3>
-          </div> */}
-
-      {/* Form */}
-      {/* {subscribed ? (
-            <div className="flex-1 flex items-center gap-3 bg-[#ee2229]/60 border border-[#ee2229] rounded-2xl px-6 py-5">
-              <div className="w-10 h-10 rounded-full bg-[#ee2229] flex items-center justify-center shrink-0">
-                <svg className="w-5 h-5 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <div>
-                <p className="font-bold text-white">You&apos;re subscribed!</p>
-                <p className="text-[13px] text-white/50">We&apos;ll send you the best travel deals and inspiration.</p>
-              </div>
-            </div>
-          ) : (
-            <form onSubmit={handleSubscribe} className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-              <input
-                type="text"
-                placeholder="Full Name*"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="bg-[#191974]/60 border border-white/10 focus:border-[#ee2229] outline-none px-4 py-3 rounded-xl text-[13px] text-white placeholder-white/30 transition-colors"
+          {/* ── COL 1: Company Info ── */}
+          <div className="flex flex-col gap-6 lg:col-span-1">
+            <Link href={`/${region}`} className="inline-block">
+              <Image
+                src="/Footer-logo.png"
+                alt="Madura Travel Service Pvt Ltd"
+                width={160}
+                height={52}
+                priority
               />
-              <input
-                type="email"
-                placeholder="Email Address*"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="bg-[#191974]/60 border border-white/10 focus:border-[#ee2229] outline-none px-4 py-3 rounded-xl text-[13px] text-white placeholder-white/30 transition-colors"
-              />
-              <div className="flex gap-2">
-                <div className="bg-[#191974]/60 border border-white/10 px-3 py-3 rounded-xl flex items-center gap-2 shrink-0">
-                  <img src="https://flagcdn.com/w20/in.png" className="w-5 h-3.5 object-cover" alt="IN" />
-                  <span className="text-[13px] font-bold text-white/80">+91</span>
-                </div>
-                <input
-                  type="tel"
-                  placeholder="Mobile No."
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="flex-1 bg-[#191974]/60 border border-white/10 focus:border-[#ee2229] outline-none px-4 py-3 rounded-xl text-[13px] text-white placeholder-white/30 transition-colors"
-                />
-              </div>
-              <button
-                type="submit"
-                className="bg-[#191974] hover:bg-[#ee2229] active:scale-95 text-white font-black px-6 py-3 rounded-xl text-[14px] transition-all shadow-lg shadow-[#f4a021]/20 flex items-center justify-center gap-2 group"
-              >
-                Subscribe
-                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </button>
-            </form>
-          )}
-        </div>
-        </div>
-      </div> */}
+            </Link>
 
-
-      {/* ── MAIN FOOTER BODY ── */}
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-10 pt-14 pb-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
-
-          {/* Brand column */}
-          <div className="lg:col-span-3 flex flex-col gap-6">
-            {/* Logo */}
-            <div className="flex items-center">
-              <Link href={`/${currentRegion}`} className="block">
-                <Image
-                  src="/Footer-logo.png"
-                  alt="Madura Travel Logo"
-                  width={150}
-                  height={50}
-                  priority
-                />
-              </Link>
-            </div>
-            <p className="text-[13px] text-white/45 leading-relaxed">
-              Founded on January 17th, 1986, in Egmore, Chennai, Madura Travel Service (P) Ltd. has been a trusted name in the Indian travel industry for nearly four decades. What began as a visionary dream has evolved into a legacy of delivering authentic, personalized, and reliable travel experiences across the globe. Our commitment to integrity, service excellence, and customer satisfaction continues to drive every journey we plan.
+            <p className="text-[13px] text-white/55 leading-relaxed">
+              Founded in 1986, Madura Travel Service Pvt Ltd is a trusted name
+              in the travel industry, delivering personalized and reliable travel
+              experiences worldwide.
             </p>
 
-            {/* Social icons */}
-            <div className="flex items-center gap-2">
+            {/* Social Icons */}
+            <div className="flex items-center gap-2 mt-1">
               {socialLinks.map((s) => (
-                <Link
+                <a
                   key={s.name}
                   href={s.href}
                   aria-label={s.name}
-                  className="w-8 h-8 rounded-lg bg-white/5 hover:bg-[#ee2229] border border-white/10 hover:border-[#ee2229] flex items-center justify-center text-white/50 hover:text-white transition-all duration-200"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center text-white/50 hover:bg-[#ee2229] hover:text-white hover:border-[#ee2229] transition-all duration-200"
                 >
                   {s.icon}
-                </Link>
+                </a>
               ))}
             </div>
 
             {/* Trust badges */}
-            <div className="flex items-center gap-4 pt-2">
+            <div className="flex items-center gap-3 pt-1">
               <img
                 src="https://upload.wikimedia.org/wikipedia/en/thumb/0/0d/IATA_logo.svg/1024px-IATA_logo.svg.png"
                 className="h-5 opacity-30 hover:opacity-60 transition-opacity"
@@ -234,24 +138,30 @@ export default function Footer() {
                 className="h-6 opacity-30 hover:opacity-60 transition-opacity"
                 alt="ISO Certified"
               />
-              <div className="text-[11px] font-black border border-white/20 hover:border-white/50 px-2 py-1 rounded tracking-widest text-white/30 hover:text-white/60 transition-all uppercase">
+              <span className="text-[10px] font-black border border-white/20 hover:border-white/50 px-2 py-1 rounded tracking-widest text-white/30 hover:text-white/60 transition-all uppercase">
                 TAFI
-              </div>
+              </span>
             </div>
           </div>
 
-          {/* Destinations spotlight */}
-          <div className="lg:col-span-3 flex flex-col gap-5">
-            <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#ee2229]">Top Destinations</h4>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-              {Object.entries(destinations).map(([region, places]) => (
-                <div key={region} className="flex flex-col gap-1.5">
-                  <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mt-2">{region}</p>
-                  {places.slice(0, 4).map((place) => (
+          {/* ── COL 2: Top Destinations ── */}
+          <div className="flex flex-col gap-5">
+            <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#ee2229]">
+              Top Destinations
+            </h4>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+              {Object.entries(destinations).map(([continent, places]) => (
+                <div key={continent} className="flex flex-col gap-1.5">
+                  <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-0.5">
+                    {continent}
+                  </p>
+                  {places.map((place) => (
                     <Link
                       key={place}
-                      href={`/${currentRegion}/destination/${place.toLowerCase().replace(/ /g, "-")}`}
-                      className="text-[12px] text-white/50 hover:text-white transition-colors group flex items-center gap-1.5"
+                      href={prefixed(
+                        `/destination/${place.toLowerCase().replace(/ /g, "-")}`
+                      )}
+                      className="text-[12.5px] text-white/55 hover:text-[#ee2229] transition-colors duration-200 flex items-center gap-1.5 group"
                     >
                       <span className="w-0 group-hover:w-1.5 h-1.5 rounded-full bg-[#ee2229] shrink-0 transition-all duration-200" />
                       {place}
@@ -262,115 +172,111 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Links columns */}
-          <div className="lg:col-span-6 grid grid-cols-2 gap-8">
-            <FooterColumn
-              title="Discover Us"
-              links={[
-                { label: "About Us", href: `/${currentRegion}/our-story` },
-                { label: "Our Team", href: "#" },
-                { label: "Tour Managers", href: "#" },
-                { label: "Sales Partners", href: "#" },
-                { label: "Careers", href: `/${currentRegion}/careers` },
-                { label: "CSR Policy", href: "#" },
-                { label: "Guest Reviews", href: `/${currentRegion}/testimonials` },
-              ]}
-            />
-            <FooterColumn
-              title="Support"
-              links={[
-                { label: "Contact Us", href: `/${currentRegion}/contact` },
-                { label: "How To Book", href: "#" },
-                { label: "FAQ", href: "#" },
-                { label: "Travel Deals", href: "#" },
-                { label: "Singapore Visa", href: "#" },
-                { label: "Leave Feedback", href: "#" },
-                { label: "Tour Status", href: "#" },
-              ]}
-            />
+          {/* ── COL 3: Discover Us ── */}
+          <div className="flex flex-col gap-5">
+            <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#ee2229]">
+              Discover Us
+            </h4>
+            <ul className="flex flex-col gap-3">
+              {discoverLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={prefixed(link.href)}
+                    className="text-[13px] text-white/55 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
+                  >
+                    <span className="w-0 group-hover:w-2 h-px bg-[#ee2229] transition-all duration-300 shrink-0" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
+          {/* ── COL 4: Contact Info ── */}
+          <div className="flex flex-col gap-5">
+            <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#ee2229]">
+              Get In Touch
+            </h4>
+
+            <div className="flex flex-col gap-4">
+              <a
+                href="tel:+919092949494"
+                className="flex items-start gap-3 group"
+              >
+                <div className="w-8 h-8 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center text-white/40 group-hover:bg-[#ee2229] group-hover:text-white group-hover:border-[#ee2229] transition-all shrink-0 mt-0.5">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold">Call Us</p>
+                  <p className="text-[13px] font-semibold text-white/70 group-hover:text-white transition-colors">+91 90 92 94 94 94</p>
+                  <p className="text-[11px] text-white/35">Mon–Sat, 9:30AM–6PM</p>
+                </div>
+              </a>
+
+              <a
+                href="mailto:mail@maduratravel.com"
+                className="flex items-start gap-3 group"
+              >
+                <div className="w-8 h-8 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center text-white/40 group-hover:bg-[#ee2229] group-hover:text-white group-hover:border-[#ee2229] transition-all shrink-0 mt-0.5">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold">Email Us</p>
+                  <p className="text-[13px] font-semibold text-white/70 group-hover:text-white transition-colors">mail@maduratravel.com</p>
+                  <p className="text-[11px] text-white/35">We reply within 24 hours</p>
+                </div>
+              </a>
+
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center text-white/40 shrink-0 mt-0.5">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold">Headquarters</p>
+                  <p className="text-[13px] font-semibold text-white/70">Egmore, Chennai</p>
+                  <p className="text-[11px] text-white/35">Tamil Nadu – 600 008</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Contact strip */}
-        <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-4">
-          {[
-            {
-              icon: (
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-              ),
-              label: "Call Us",
-              value: "+91 90 92 94 94 94",
-              sub: "Mon–Sat, 9:30AM – 6PM",
-              href: "tel:+919092949494",
-            },
-            {
-              icon: (
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              ),
-              label: "Email Us",
-              value: "mail@maduratravel.com",
-              sub: "We reply within 24 hours",
-              href: "mailto:mail@maduratravel.com",
-            },
-            {
-              icon: (
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              ),
-              label: "Visit Us",
-              value: "Find Our Nearest Office",
-              sub: "Pan-India network",
-              href: "#",
-            },
-          ].map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="group flex items-start gap-4 bg-[#191974]/40 hover:bg-[#191974]/70 border border-white/8 hover:border-[#f4a021]/30 rounded-2xl px-5 py-4 transition-all duration-200"
-            >
-              <div className="w-9 h-9 rounded-xl bg-[#ee2229]/10 group-hover:bg-[#f4a021]/20 flex items-center justify-center text-[#ee2229] shrink-0 transition-colors">
-                {item.icon}
-              </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold">{item.label}</p>
-                <p className="text-[14px] font-bold text-white group-hover:text-[#ee2229] transition-colors leading-snug">{item.value}</p>
-                <p className="text-[11px] text-white/35">{item.sub}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* Caution */}
-        <div className="mt-10 bg-[#191974]/30 border border-white/8 rounded-xl px-5 py-4">
-          <p className="text-[11px] text-white/30 leading-relaxed italic">
+      {/* ── CAUTION BAR ── */}
+      <div className="border-t border-white/8">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-4">
+          <p className="text-[11px] text-white/30 leading-relaxed italic text-center">
             <span className="text-[#ee2229] font-bold not-italic">⚠ Caution:</span>{" "}
-            Beware of fake promotions. All authorized Madura Travel communications come from <span className="text-white/45">mail@maduratravel.com</span>. Do not engage with any emails, SMS, or links from unverified sources. Madura Travel bears no liability for fraudulent communications.
+            Beware of fake promotions. All authorized Madura Travel communications come from{" "}
+            <span className="text-white/45">mail@maduratravel.com</span>. Do not engage with
+            emails, SMS, or links from unverified sources.
           </p>
         </div>
+      </div>
 
-        {/* Bottom bar */}
-        <div className="mt-8 pt-6 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-4 text-[12px] text-white/30">
+      {/* ── BOTTOM BAR ── */}
+      <div className="border-t border-white/8">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex flex-col md:flex-row items-center justify-between gap-4 text-[12px] text-white/35">
           <p>© 2026 Madura Travel Service Pvt Ltd. All Rights Reserved.</p>
           <div className="flex items-center gap-5">
-            {[
-              { label: "Privacy Policy", href: `/${currentRegion}/privacy-policy` },
-              { label: "Terms & Conditions", href: `/${currentRegion}/terms-and-conditions` },
-              { label: "Site Map", href: "#" },
-              { label: "Corporate Governance", href: "#" }
-            ].map((item) => (
-              <Link key={item.label} href={item.href} className="hover:text-white transition-colors">
-                {item.label}
+            {bottomLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={prefixed(link.href)}
+                className="hover:text-white transition-colors"
+              >
+                {link.label}
               </Link>
             ))}
           </div>
           <div className="flex items-center gap-1.5 text-white/25">
-            <svg className="w-3.5 h-3.5 text-[#f4a021]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5 text-[#ee2229]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
             <span className="uppercase tracking-widest text-[9px] font-bold">Secure Payments</span>
@@ -379,19 +285,13 @@ export default function Footer() {
       </div>
 
       {/* ── FLOATING QUICK ENQUIRY ── */}
-      <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 flex flex-col items-end gap-2 md:gap-3">
-        {/* Online badge */}
-        {/* <div className="bg-white/95 backdrop-blur text-[#191974] px-2 md:px-3 py-1.5 rounded-full font-bold text-[10px] md:text-[11px] shadow-xl flex items-center gap-1.5 md:gap-2"> */}
-        {/* <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-green-500 animate-pulse" /> */}
-        {/* <span className="hidden sm:inline">Available</span> 24×7 */}
-        {/* </div> */}
-
-        {/* CTA button */}
+      <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50">
         <button
-          onClick={() => window.dispatchEvent(new Event('openPopup'))}
-          className="bg-[#ee2229] hover:bg-[#d11e24] active:scale-95 text-white px-4 py-3 md:px-6 md:py-3.5 rounded-full font-black text-[13px] md:text-[15px] shadow-2xl shadow-[#ee2229]/30 flex items-center gap-2 md:gap-2.5 transition-all hover:-translate-y-0.5 group"
+          onClick={() => window.dispatchEvent(new Event("openPopup"))}
+          suppressHydrationWarning
+          className="bg-[#ee2229] hover:bg-[#d11e24] active:scale-95 text-white px-5 py-3 md:px-6 md:py-3.5 rounded-full font-black text-[13px] md:text-[14px] shadow-2xl shadow-[#ee2229]/30 flex items-center gap-2 transition-all hover:-translate-y-0.5 group"
         >
-          <svg className="w-3.5 h-3.5 md:w-4 md:h-4 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
           </svg>
           Quick Enquiry

@@ -63,9 +63,18 @@ export function getCountryConfig(region: string): RegionConfig {
  * Utility function to dynamically convert and format a base price (in INR) 
  * to the destination region's currency rules layout (using the Intl API).
  */
-export function formatRegionalPrice(baseInrPrice: number, region: string): string {
+export function formatRegionalPrice(baseInrPrice: number | string, region: string): string {
   const config = getCountryConfig(region);
-  const convertedPrice = baseInrPrice * config.baseExchangeRate;
+  
+  // Clean and parse the input if it's a string
+  let numericPrice = 0;
+  if (typeof baseInrPrice === 'string') {
+    numericPrice = parseInt(baseInrPrice.replace(/[^0-9]/g, '')) || 0;
+  } else {
+    numericPrice = baseInrPrice;
+  }
+
+  const convertedPrice = numericPrice * config.baseExchangeRate;
   
   return new Intl.NumberFormat(config.locale, {
     style: 'currency',

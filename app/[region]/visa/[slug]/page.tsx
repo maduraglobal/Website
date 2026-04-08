@@ -18,6 +18,7 @@ const scrollToId = (id: string) => {
 };
 
 import { getDestinationBySlug, VisaDestination } from '@/app/data/visaData';
+import { formatRegionalPrice } from '@/config/country';
 
 export default function DynamicVisaDetailPage({ params }: { params: Promise<{ region: string, slug: string }> }) {
   const resolvedParams = use(params);
@@ -102,7 +103,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             <div className="hidden sm:block w-px bg-white/20 h-10 mt-1"></div>
             <div>
               <p className="text-[13px] text-white/70 uppercase tracking-widest font-bold mb-1">Starting from</p>
-              <p className="text-[18px] font-bold">₹{currentData.startingPrice}/–</p>
+              <p className="text-[18px] font-bold">{formatRegionalPrice(currentData.startingPrice, region)}/–</p>
             </div>
           </div>
 
@@ -176,7 +177,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                         <tr className="border-b border-gray-100"><td className="py-2.5 px-4 text-gray-500">Stay period</td><td className="py-2.5 px-4 font-medium">{v.stay}</td></tr>
                         <tr className="border-b border-gray-100"><td className="py-2.5 px-4 text-gray-500">Validity</td><td className="py-2.5 px-4 font-medium">{v.valid}</td></tr>
                         <tr className="border-b border-gray-100"><td className="py-2.5 px-4 text-gray-500">Entry</td><td className="py-2.5 px-4 font-medium">{v.entry}</td></tr>
-                        <tr><td className="py-3 px-4 text-gray-500">Fees</td><td className="py-3 px-4 font-bold text-[#191974]">INR {v.fees}/–</td></tr>
+                        <tr><td className="py-3 px-4 text-gray-500">Fees</td><td className="py-3 px-4 font-bold text-[#191974]">{formatRegionalPrice(v.fees, region)}/–</td></tr>
                       </tbody>
                     </table>
                   </div>
@@ -412,7 +413,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
               ].map((o, i) => (
                 <div key={i} className="min-w-[200px] bg-white border border-gray-200 p-4 rounded-lg shadow-sm snap-start hover:shadow-md transition-shadow cursor-pointer">
                   <p className="font-bold text-[14.5px] text-gray-800 mb-2">{o.t} {destName} Visa</p>
-                  <p className="text-[16px] font-black text-[#191974]">INR {o.p}/–</p>
+                  <p className="text-[16px] font-black text-[#191974]">{formatRegionalPrice(o.p, region)}/–</p>
                 </div>
               ))}
             </div>
@@ -451,7 +452,13 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                   <span className="text-[22px] font-black">₹0</span>
                 </div>
 
-                <button type="button" className="w-full bg-[#ee2229] hover:bg-[#d11e24] text-white font-bold text-[15px] py-4 rounded transition-colors shadow-lg shadow-red-500/20 mt-2 tracking-wide">
+                <button 
+                  type="button" 
+                  className="book-now-btn w-full bg-[#ee2229] hover:bg-[#d11e24] text-white font-bold text-[15px] py-4 rounded transition-colors shadow-lg shadow-red-500/20 mt-2 tracking-wide"
+                  data-package={`${destName} Visa Application`}
+                  data-price={currentData.startingPrice}
+                  data-original-price={parseInt(currentData.startingPrice.replace(/,/g, '')) * 1.5 ? (parseInt(currentData.startingPrice.replace(/,/g, '')) * 1.5).toLocaleString('en-IN') : "0"}
+                >
                   APPLY NOW
                 </button>
               </form>
