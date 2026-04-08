@@ -267,19 +267,19 @@ export default function Footer() {
             <FooterColumn
               title="Discover Us"
               links={[
-                { label: "About Us", href: "#" },
+                { label: "About Us", href: `/${currentRegion}/our-story` },
                 { label: "Our Team", href: "#" },
                 { label: "Tour Managers", href: "#" },
                 { label: "Sales Partners", href: "#" },
-                { label: "Careers", href: "#", },
+                { label: "Careers", href: `/${currentRegion}/careers` },
                 { label: "CSR Policy", href: "#" },
-                { label: "Guest Reviews", href: "#" },
+                { label: "Guest Reviews", href: `/${currentRegion}/testimonials` },
               ]}
             />
             <FooterColumn
               title="Support"
               links={[
-                { label: "Contact Us", href: "#" },
+                { label: "Contact Us", href: `/${currentRegion}/contact` },
                 { label: "How To Book", href: "#" },
                 { label: "FAQ", href: "#" },
                 { label: "Travel Deals", href: "#" },

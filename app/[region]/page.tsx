@@ -8,6 +8,7 @@ import { InfiniteMovingCards } from "../components/ui/infinite-moving-cards";
 import { motion } from "framer-motion";
 import { createClient } from "@/utils/supabase/client";
 import PopupForm from "../components/PopupForm";
+import CorporateOffice from "../components/CorporateOffice";
 import { Users, Globe, Award, Star as StarIcon } from "lucide-react";
 
 const supabase = createClient();
@@ -622,6 +623,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
 
 
+      <CorporateOffice />
       <PopupForm />
     </div>
   );
