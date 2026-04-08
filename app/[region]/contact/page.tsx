@@ -3,6 +3,7 @@
 import React, { use } from 'react';
 import { motion } from 'framer-motion';
 import CorporateOffice from '../../components/CorporateOffice';
+import BranchLocations from '../../components/BranchLocations';
 import { Mail, Phone, MapPin, Clock, MessageSquare, Send } from 'lucide-react';
 
 export default function ContactPage({ params }: { params: Promise<{ region: string }> }) {
@@ -55,8 +56,11 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
         </div>
       </section>
 
-      {/* Corporate Office Section (from component) */}
+      {/* Corporate Office Section (HQ Focus) */}
       <CorporateOffice />
+
+      {/* Global Branch Directory */}
+      <BranchLocations />
 
       {/* Contact Form Section */}
       <section className="py-24 bg-white px-6">
@@ -81,7 +85,7 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
             </div>
             <div className="space-y-2">
               <label className="text-[12px] font-black text-[#191974] uppercase tracking-widest ml-1">Tour Interest</label>
-              <select className="w-full px-6 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#ee2229] outline-none transition-all font-inter appearance-none cursor-pointer">
+              <select className="w-full px-6 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#ee2229] outline-none transition-all font-inter appearance-none cursor-pointer text-[#191974] font-medium">
                 <option>General Holiday</option>
                 <option>Visa Assistance</option>
                 <option>Corporate Travel</option>

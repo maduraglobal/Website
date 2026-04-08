@@ -248,7 +248,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        <Link href="#" className="hover:text-[#ee2229] transition-colors font-black">Inbound</Link>
+        <Link href={`/${currentRegionCode}/inbound`} className="hover:text-[#ee2229] transition-colors font-black">Inbound</Link>
         <Link href="#" className="hover:text-[#ee2229] transition-colors font-black">Weddings</Link>
         <Link href={`/${currentRegionCode}/contact`} className="hover:text-[#ee2229] transition-colors font-black">Contact Us</Link>
       </nav>

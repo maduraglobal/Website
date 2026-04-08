@@ -507,7 +507,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           {/* Section Heading */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -517,7 +517,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
             <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter leading-tight lg:leading-[1.1]">
               Trusted by <span className="relative inline-block">
                 Millions
-                <motion.div 
+                <motion.div
                   initial={{ width: 0 }}
                   whileInView={{ width: "100%" }}
                   transition={{ duration: 1, delay: 0.5 }}
@@ -623,7 +623,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
 
 
-      <CorporateOffice />
+
       <PopupForm />
     </div>
   );
