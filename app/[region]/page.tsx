@@ -125,8 +125,8 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
         <div className="max-w-7xl mx-auto w-full px-6 lg:px-8 relative z-10 flex-1 flex flex-col lg:flex-row items-center justify-between mt-10">
           {/* Left Text */}
-          <div className="w-full text-[#191974] space-y-6 mb-12 lg:mb-0">
-            <h1 className="text-[40px] md:text-[65px] font-black font-inter tracking-tight uppercase leading-[1.1] text-white drop-shadow-xl">
+          <div className="w-full text-[#191974] space-y-4 md:space-y-6 mb-10 md:mb-12 lg:mb-0">
+            <h1 className="text-[32px] md:text-[65px] font-black font-inter tracking-tight uppercase leading-[1.1] text-white drop-shadow-xl text-center lg:text-left mt-10 md:mt-0">
               The World is Waiting.<br />
               Start Exploring.
             </h1>
@@ -136,7 +136,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
           </div>
 
           {/* Right Carousel */}
-          <div className="w-full lg:w-[50%] flex flex-col items-end relative mt-2 lg:mt-0 lg:-translate-y-12 z-20">
+          <div className="w-full lg:w-[50%] flex flex-col items-center lg:items-end relative mt-2 lg:mt-0 lg:-translate-y-12 z-20">
             <div className="flex gap-4 overflow-visible w-full justify-end pr-8 lg:pr-12 relative">
               {/* Card 1 */}
               <div className="w-[140px] md:w-[180px] lg:w-[220px] h-[180px] md:h-[220px] lg:h-[260px] shrink-0 rounded-[16px] lg:rounded-[20px] overflow-hidden relative shadow-lg transition-transform hover:scale-[1.02] cursor-pointer bg-gray-900 border border-white/20">

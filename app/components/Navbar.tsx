@@ -128,7 +128,7 @@ export default function Navbar() {
       </div>
 
       {/* 🔷 BOTTOM NAVBAR */}
-      <nav className="bg-white text-[#191974] px-14 lg:px-16 py-3.5 flex items-center justify-center gap-10 text-[14px] font-black tracking-widest font-inter uppercase relative border-b border-gray-100 shadow-sm">
+      <nav className="bg-white text-[#191974] px-6 lg:px-16 py-3.5 flex items-center lg:justify-center gap-6 lg:gap-10 text-[14px] font-black tracking-widest font-inter uppercase relative border-b border-gray-100 shadow-sm overflow-x-auto whitespace-nowrap [&::-webkit-scrollbar]:hidden">
 
         <div className="relative group cursor-pointer py-1">
           <span className="flex items-center hover:text-[#ee2229] transition-colors group">
@@ -136,7 +136,7 @@ export default function Navbar() {
             <svg className="w-2.5 h-2.5 ml-1.5 opacity-40 group-hover:rotate-180 group-hover:text-[#ee2229] transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
           </span>
           {/* MEGAMENU CONTAINER */}
-          <div className="absolute top-full left-0 w-[980px] bg-white text-black shadow-[0_25px_80px_rgba(0,0,0,0.25)] rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-110 flex border border-gray-100 mt-4 max-h-[550px] overflow-hidden">
+          <div className="absolute top-full left-0 w-[980px] bg-white text-black shadow-[0_25px_80px_rgba(0,0,0,0.25)] rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-110 hidden lg:flex border border-gray-100 mt-4 max-h-[550px] overflow-hidden">
 
             {/* Left Regions Sidebar */}
             <div className="w-[300px] bg-[#f8f9fa] flex flex-col border-r border-gray-100 shrink-0">
@@ -200,7 +200,7 @@ export default function Navbar() {
             India
             <svg className="w-2.5 h-2.5 ml-1.5 opacity-40 group-hover:rotate-180 group-hover:text-[#ee2229] transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
           </span>
-          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[400px] bg-white shadow-xl rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[400px] bg-white shadow-xl rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 hidden lg:block">
             <div className="p-4 grid grid-cols-2 gap-x-4 gap-y-1">
               {destinations["India"].map((place) => (
                 <Link key={place} href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, "-")}`} className="block px-2 py-1.5 text-[13px] text-[#191974] font-bold hover:bg-gray-50 hover:text-[#ee2229] transition-all font-arial uppercase tracking-tighter rounded-md">
@@ -217,7 +217,7 @@ export default function Navbar() {
             Speciality Tours
             <svg className="w-2.5 h-2.5 ml-1.5 opacity-40 group-hover:rotate-180 group-hover:text-[#ee2229] transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
           </span>
-          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[220px] bg-white shadow-xl rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[220px] bg-white shadow-xl rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 hidden lg:block">
             <div className="py-2">
               {["Family Tour", "Group Tour", "Spiritual Tour", "Honeymoon Tour", "Luxury Retreats"].map((tour) => (
                 <Link key={tour} href={`/${currentRegionCode}/tours`} className="block px-6 py-2.5 text-[13px] text-[#191974] font-bold hover:bg-gray-50 hover:text-[#ee2229] transition-all font-arial uppercase tracking-tighter">
@@ -237,7 +237,7 @@ export default function Navbar() {
             Company
             <svg className="w-2.5 h-2.5 ml-1.5 opacity-40 group-hover:rotate-180 group-hover:text-[#ee2229] transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
           </span>
-          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[220px] bg-white shadow-xl rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[220px] bg-white shadow-xl rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 hidden lg:block">
             <div className="py-2">
               {["Our Story", "Careers", "Testimonials", "Media"].map((item) => (
                 <Link key={item} href={`/${currentRegionCode}/${item.toLowerCase().replace(/ /g, "-")}`} className="block px-6 py-2.5 text-[13px] text-[#191974] font-bold hover:bg-gray-50 hover:text-[#ee2229] transition-all font-arial uppercase tracking-tighter">

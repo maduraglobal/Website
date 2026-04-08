@@ -13,20 +13,22 @@ export default function PopupForm() {
   });
 
   useEffect(() => {
-    // Show popup after 3 seconds
+    // Show popup after 3 seconds on every hard refresh
     const timer = setTimeout(() => {
-      const hasSeenPopup = localStorage.getItem('hasSeenPopup');
-      if (!hasSeenPopup) {
-        setIsVisible(true);
-      }
+      setIsVisible(true);
     }, 3000);
 
-    return () => clearTimeout(timer);
+    const handleOpenPopup = () => setIsVisible(true);
+    window.addEventListener('openPopup', handleOpenPopup);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('openPopup', handleOpenPopup);
+    };
   }, []);
 
   const handleClose = () => {
     setIsVisible(false);
-    localStorage.setItem('hasSeenPopup', 'true');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -38,7 +40,7 @@ export default function PopupForm() {
   return (
     <AnimatePresence>
       {isVisible && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-200 flex items-center justify-center p-4">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -64,20 +66,20 @@ export default function PopupForm() {
             </button>
 
             {/* Left Image Side */}
-            <div className="md:w-[45%] bg-[#f8f9fa] relative flex items-center justify-center p-8 overflow-hidden">
-                {/* Decorative background for the image */}
-                <div className="absolute inset-0 opacity-10">
-                    <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&q=80&w=800" alt="Travel" className="w-full h-full object-cover grayscale" />
-                </div>
-                
-                <div className="relative z-10 w-full h-full flex items-center justify-center">
-                    {/* Suitcase Illustration / Image */}
-                    <img 
-                      src="https://img.freepik.com/free-vector/travel-tourism-illustration-with-world-famous-landmarks-suitcase_1284-33031.jpg" 
-                      alt="Travel Suitcase" 
-                      className="w-full h-auto max-w-[320px] drop-shadow-2xl animate-float"
-                    />
-                </div>
+            <div className="hidden md:flex md:w-[45%] bg-[#f8f9fa] relative items-center justify-center p-8 overflow-hidden">
+              {/* Decorative background for the image */}
+              <div className="absolute inset-0 opacity-10">
+                <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&q=80&w=800" alt="Travel" className="w-full h-full object-cover grayscale" />
+              </div>
+
+              <div className="relative z-10 w-full h-full flex items-center justify-center">
+                {/* Suitcase Illustration / Image */}
+                <img
+                  src="https://img.freepik.com/free-vector/travel-tourism-illustration-with-world-famous-landmarks-suitcase_1284-33031.jpg"
+                  alt="Travel Suitcase"
+                  className="w-full h-auto max-w-[320px] drop-shadow-2xl animate-float"
+                />
+              </div>
             </div>
 
             {/* Right Form Side */}
@@ -129,12 +131,12 @@ export default function PopupForm() {
 
                 <button
                   type="submit"
-                  className="w-full bg-[#f4a021] hover:bg-[#e89410] text-black font-black py-4.5 rounded-2xl text-[16px] transition-all shadow-xl shadow-orange-500/20 active:scale-[0.98] mt-4 uppercase tracking-[0.1em]"
+                  className="w-full bg-[#f4a021] hover:bg-[#e89410] text-black font-black py-4.5 rounded-2xl text-[16px] transition-all shadow-xl shadow-orange-500/20 active:scale-[0.98] mt-4 uppercase tracking-widest"
                 >
                   Subscribe
                 </button>
               </form>
-              
+
               <p className="mt-6 text-[12px] text-center text-gray-400">
                 By subscribing, you agree to our <a href="#" className="underline">Privacy Policy</a>
               </p>
@@ -142,7 +144,7 @@ export default function PopupForm() {
           </motion.div>
         </div>
       )}
-      
+
       <style jsx global>{`
         @keyframes float {
           0% { transform: translateY(0px); }

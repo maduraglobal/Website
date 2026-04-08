@@ -196,7 +196,7 @@ export default function Footer() {
             <div className="flex items-center">
               <Link href={`/${currentRegion}`} className="block">
                 <Image
-                  src="/logo.webp"
+                  src="/Footer-logo.png"
                   alt="Madura Travel Logo"
                   width={150}
                   height={50}
@@ -205,7 +205,7 @@ export default function Footer() {
               </Link>
             </div>
             <p className="text-[13px] text-white/45 leading-relaxed">
-              India&apos;s trusted travel partner crafting unforgettable journeys across the world — from the Himalayas to the Mediterranean.
+              Founded on January 17th, 1986, in Egmore, Chennai, Madura Travel Service (P) Ltd. has been a trusted name in the Indian travel industry for nearly four decades. What began as a visionary dream has evolved into a legacy of delivering authentic, personalized, and reliable travel experiences across the globe. Our commitment to integrity, service excellence, and customer satisfaction continues to drive every journey we plan.
             </p>
 
             {/* Social icons */}
@@ -358,9 +358,14 @@ export default function Footer() {
         <div className="mt-8 pt-6 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-4 text-[12px] text-white/30">
           <p>© 2026 Madura Travel Service Pvt Ltd. All Rights Reserved.</p>
           <div className="flex items-center gap-5">
-            {["Privacy Policy", "Terms & Conditions", "Site Map", "Corporate Governance"].map((item) => (
-              <Link key={item} href="#" className="hover:text-white transition-colors">
-                {item}
+            {[
+              { label: "Privacy Policy", href: `/${currentRegion}/privacy-policy` },
+              { label: "Terms & Conditions", href: `/${currentRegion}/terms-and-conditions` },
+              { label: "Site Map", href: "#" },
+              { label: "Corporate Governance", href: "#" }
+            ].map((item) => (
+              <Link key={item.label} href={item.href} className="hover:text-white transition-colors">
+                {item.label}
               </Link>
             ))}
           </div>
@@ -374,16 +379,19 @@ export default function Footer() {
       </div>
 
       {/* ── FLOATING QUICK ENQUIRY ── */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+      <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 flex flex-col items-end gap-2 md:gap-3">
         {/* Online badge */}
-        <div className="bg-white/95 backdrop-blur text-[#191974] px-3 py-1.5 rounded-full font-bold text-[11px] shadow-xl flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-          Available on  24×7
+        <div className="bg-white/95 backdrop-blur text-[#191974] px-2 md:px-3 py-1.5 rounded-full font-bold text-[10px] md:text-[11px] shadow-xl flex items-center gap-1.5 md:gap-2">
+          <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-green-500 animate-pulse" />
+          <span className="hidden sm:inline">Available</span> 24×7
         </div>
 
         {/* CTA button */}
-        <button className="bg-[#ee2229] hover:bg-[#d11e24] active:scale-95 text-white px-6 py-3.5 rounded-full font-black text-[15px] shadow-2xl shadow-[#ee2229]/30 flex items-center gap-2.5 transition-all hover:-translate-y-0.5 group">
-          <svg className="w-4 h-4 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button
+          onClick={() => window.dispatchEvent(new Event('openPopup'))}
+          className="bg-[#ee2229] hover:bg-[#d11e24] active:scale-95 text-white px-4 py-3 md:px-6 md:py-3.5 rounded-full font-black text-[13px] md:text-[15px] shadow-2xl shadow-[#ee2229]/30 flex items-center gap-2 md:gap-2.5 transition-all hover:-translate-y-0.5 group"
+        >
+          <svg className="w-3.5 h-3.5 md:w-4 md:h-4 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
           </svg>
           Quick Enquiry
