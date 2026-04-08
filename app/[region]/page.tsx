@@ -8,6 +8,7 @@ import { InfiniteMovingCards } from "../components/ui/infinite-moving-cards";
 import { motion } from "framer-motion";
 import { createClient } from "@/utils/supabase/client";
 import PopupForm from "../components/PopupForm";
+import { Users, Globe, Award, Star as StarIcon } from "lucide-react";
 
 const supabase = createClient();
 
@@ -493,6 +494,83 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
             {/* Floating Info-Blue Badge (Bottom Right Ref) */}
 
 
+          </div>
+        </div>
+      </section>
+
+      {/* STATISTICS HIGHLIGHT SECTION */}
+      <section className="py-24 bg-[#191974] relative overflow-hidden">
+        {/* Abstract Background Shapes */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#ee2229]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          {/* Section Heading */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-20"
+          >
+            <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter leading-tight lg:leading-[1.1]">
+              Trusted by <span className="relative inline-block">
+                Millions
+                <motion.div 
+                  initial={{ width: 0 }}
+                  whileInView={{ width: "100%" }}
+                  transition={{ duration: 1, delay: 0.5 }}
+                  className="absolute -bottom-2 left-0 h-2 bg-[#ee2229] rounded-full"
+                ></motion.div>
+              </span> Around the World
+            </h2>
+            <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto font-medium">
+              Delivering unforgettable travel experiences with excellence and trust.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-6">
+            {[
+              { val: 4, suffix: "M+", label: "Happy Customers", icon: <Users className="w-8 h-8" /> },
+              { val: 28, suffix: "K+", label: "Total Destinations", icon: <Globe className="w-8 h-8" /> },
+              { val: 40, suffix: "+", label: "Years of Experience", icon: <Award className="w-8 h-8" /> },
+              { val: 10, suffix: "K+", label: "5-Star Ratings", icon: <StarIcon className="w-8 h-8" /> }
+            ].map((stat, idx) => {
+              const [count, setCount] = useState(0);
+              const target = stat.val;
+
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  onViewportEnter={() => {
+                    let start = 0;
+                    const duration = 2000;
+                    const stepTime = Math.abs(Math.floor(duration / target));
+                    const timer = setInterval(() => {
+                      start += 1;
+                      setCount(start);
+                      if (start >= target) clearInterval(timer);
+                    }, stepTime);
+                  }}
+                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+                  className="flex flex-col items-center text-center p-10 rounded-4xl border border-white/10 backdrop-blur-sm transition-all shadow-2xl group"
+                >
+                  <div className="w-16 h-16 bg-[#ee2229] rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl shadow-[#ee2229]/20 group-hover:shadow-[#ee2229]/40 transition-all group-hover:-rotate-6">
+                    {stat.icon}
+                  </div>
+                  <h3 className="text-[42px] md:text-[48px] font-black text-white leading-none mb-3 font-inter tracking-tighter">
+                    {count}{stat.suffix}
+                  </h3>
+                  <p className="text-[14px] md:text-[16px] font-medium text-white/60 uppercase tracking-[0.2em] font-inter">
+                    {stat.label}
+                  </p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>

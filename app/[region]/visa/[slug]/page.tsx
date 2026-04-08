@@ -17,11 +17,24 @@ const scrollToId = (id: string) => {
   }
 };
 
+import { getDestinationBySlug, VisaDestination } from '@/app/data/visaData';
+
 export default function DynamicVisaDetailPage({ params }: { params: Promise<{ region: string, slug: string }> }) {
   const resolvedParams = use(params);
   const { region, slug } = resolvedParams;
 
-  const destName = slug ? slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, ' ') : "Dubai";
+  const destination = getDestinationBySlug(slug);
+  const destName = destination ? destination.name : (slug ? slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, ' ') : "Dubai");
+
+  // Get current country data or fallback to a safe default
+  const currentData = destination ? { ...destination, heroImg: destination.image } : {
+    startingPrice: "4,500",
+    partner: "Authorised Visa Agent",
+    heroImg: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=1200",
+    visaTypes: [{ name: "Tourist Visa", pop: true, pTime: "5-7 days", stay: "30 days", valid: "90 days", entry: "Single", fees: "4,500" }],
+    attractions: [{ title: "Popular Landmarks", desc: "Explore the most iconic sites and cultural heritage of this beautiful destination." }],
+    embassy: "Contact our support for the latest embassy address and submission details."
+  };
 
   // State for interactive elements
   const [activeTab, setActiveTab] = useState("Types Of Visas");
@@ -29,17 +42,8 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [openDocs, setOpenDocs] = useState(true);
 
-  // MOCK DATA
-  const visaTypes = [
-    { name: "48 Hours Transit Visa", pop: false, pTime: "Upto 5 days", stay: "2 days", valid: "30 days", entry: "Single", fees: "3,499" },
-    { name: "30 Days Tourist Visa", pop: true, pTime: "Upto 5 days", stay: "30 days", valid: "58 days", entry: "Single", fees: "7,899" },
-    { name: "30 Days Tourist Visa (Family included: 2 Adults + 1 Child)", pop: true, pTime: "Upto 5 days", stay: "30 days", valid: "58 days", entry: "Single", fees: "22,500" },
-    { name: "96 Hours Transit Visa", pop: false, pTime: "Upto 5 days", stay: "4 days", valid: "30 days", entry: "Single", fees: "5,299" },
-    { name: "14 Days Tourist Visa", pop: false, pTime: "Upto 5 days", stay: "14 days", valid: "58 days", entry: "Single", fees: "7,699" },
-    { name: "30 Days Tourist Visa Express", pop: false, pTime: "Upto 48 hours", stay: "30 days", valid: "58 days", entry: "Single", fees: "8,999" },
-    { name: "60 Days Tourist Visa", pop: false, pTime: "Upto 5 days", stay: "60 days", valid: "58 days", entry: "Single", fees: "13,999" },
-    { name: "30 Days Multiple Entry Tourist Visa", pop: false, pTime: "Upto 5 days", stay: "30 days", valid: "58 days", entry: "Multiple", fees: "17,999" }
-  ];
+  // DATA
+  const visaTypes = currentData.visaTypes;
 
   const faqs = [
     `How much does a ${destName} visa cost?`,
@@ -62,12 +66,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
     { name: "Raj Bhatt", role: "Senior Visa Officer", exp: "5 yrs", img: "https://ui-avatars.com/api/?name=Raj+Bhatt&background=f3f4f6&color=191974" }
   ];
 
-  const attractions = [
-    { title: "Burj Khalifa", desc: "The tallest building in the world, offering spectacular panoramic views of the city." },
-    { title: "Dubai Mall", desc: "A massive shopping, entertainment, and leisure complex located next to the Burj Khalifa." },
-    { title: "Palm Jumeirah", desc: "A phenomenal man-made island shaped like a palm tree, featuring luxury resorts." },
-    { title: "Dubai Museum", desc: "Located in the Al Fahidi Fort, showcasing the rich history and culture of the UAE." }
-  ];
+  const attractions = currentData.attractions;
 
   // STICKY TABS
   const tabs = ["Types Of Visas", "Documents", "Process", "Why Choose Us", "Sample Visa", "FAQs", "Embassy", "Visit Us"];
@@ -98,22 +97,22 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           <div className="flex flex-col sm:flex-row gap-6 mb-8">
             <div>
               <p className="text-[13px] text-white/70 uppercase tracking-widest font-bold mb-1">Processing time</p>
-              <p className="text-[18px] font-bold">Up to 48 hours</p>
+              <p className="text-[18px] font-bold">{visaTypes[0]?.pTime || 'Up to 5 days'}</p>
             </div>
             <div className="hidden sm:block w-px bg-white/20 h-10 mt-1"></div>
             <div>
               <p className="text-[13px] text-white/70 uppercase tracking-widest font-bold mb-1">Starting from</p>
-              <p className="text-[18px] font-bold">₹3,499/–</p>
+              <p className="text-[18px] font-bold">₹{currentData.startingPrice}/–</p>
             </div>
           </div>
 
           <div className="inline-block bg-[#111155] border border-white/20 rounded-full px-5 py-2 text-[13px] font-medium shadow-md">
-            Authorised Visa Agent – Official Partner of UAE Government
+            {currentData.partner}
           </div>
         </div>
 
         {/* Abstract Hero Background (Fallback if image not loading) */}
-        <div className="absolute top-0 right-0 bottom-0 w-1/2 opacity-20 pointer-events-none" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=1200')`, backgroundSize: 'cover', backgroundPosition: 'center', maskImage: 'linear-gradient(to right, transparent, black)' }}></div>
+        <div className="absolute top-0 right-0 bottom-0 w-1/2 opacity-20 pointer-events-none" style={{ backgroundImage: `url('${currentData.heroImg}')`, backgroundSize: 'cover', backgroundPosition: 'center', maskImage: 'linear-gradient(to right, transparent, black)' }}></div>
       </section>
 
       {/* ===== STICKY NAV BAR ===== */}
@@ -308,12 +307,9 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-10">
               {[
                 { icon: Globe, t: "Visa services for all countries" },
-                { icon: Star, t: "45+ years of experience in visa processing" },
-                { icon: Building2, t: "150+ branches worldwide" },
+                { icon: Star, t: "40+ years of experience in visa processing" },
                 { icon: CheckCircle2, t: "99.8% visa success rate" },
-                { icon: Users, t: "Start-to-end visa assistance" },
-                { icon: MapPin, t: "Pick up & drop of documents at your doorstep" },
-                { icon: ShieldCheck, t: "Total fee refund if visa rejected" }
+                { icon: Users, t: "Start-to-end visa assistance" }
               ].map((u, i) => (
                 <div key={i} className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-[#191974]/10 text-[#191974] flex items-center justify-center shrink-0">
@@ -397,11 +393,8 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
               </div>
               <div className="flex-1 bg-gray-50 border border-gray-200 rounded-lg p-5">
                 <h3 className="font-bold text-[#191974] mb-4 flex items-center gap-2"><Globe className="w-5 h-5 text-[#ee2229]" /> {destName} Embassy Setup</h3>
-                <p className="text-[14px] leading-relaxed text-gray-600">
-                  12, Chandragupta Marg,<br />
-                  Chanakyapuri,<br />
-                  New Delhi – 110 021,<br />
-                  India
+                <p className="text-[14px] leading-relaxed text-gray-600 whitespace-pre-line">
+                  {currentData.embassy}
                 </p>
               </div>
             </div>

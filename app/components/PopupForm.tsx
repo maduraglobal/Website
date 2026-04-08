@@ -87,7 +87,7 @@ export default function PopupForm() {
               <div className="mb-8">
                 <h2 className="text-[28px] md:text-[34px] font-black leading-tight text-[#191974] mb-3 font-poppins">
                   Join a community of <br />
-                  <span className="text-[#ee2229]">9,41,397 happy guests</span>
+                  <span className="text-[#ee2229]">4M+ happy guests</span>
                 </h2>
                 <p className="text-gray-500 text-[15px] leading-relaxed">
                   Get the latest travel deals, new tour announcements, travel ideas & a whole lot more.
@@ -133,7 +133,7 @@ export default function PopupForm() {
                   type="submit"
                   className="w-full bg-[#f4a021] hover:bg-[#e89410] text-black font-black py-4.5 rounded-2xl text-[16px] transition-all shadow-xl shadow-orange-500/20 active:scale-[0.98] mt-4 uppercase tracking-widest"
                 >
-                  Subscribe
+                  Send Enquiry
                 </button>
               </form>
 

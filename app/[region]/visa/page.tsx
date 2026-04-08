@@ -4,16 +4,9 @@ import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Search, ChevronLeft, ChevronRight, Star, MapPin, CheckCircle2, ShieldCheck, Globe, Building2, Map, Users, CreditCard } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-// Destinations Data
-const destinations = [
-  { name: "Dubai", price: "3,499", image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=800" },
-  { name: "Malaysia", price: "499", image: "https://images.unsplash.com/photo-1596422846543-75c6fa190074?auto=format&fit=crop&q=80&w=800" },
-  { name: "Singapore", price: "2,100", image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&q=80&w=800" },
-  { name: "Sri Lanka", price: "999", image: "https://images.unsplash.com/photo-1538356111053-748a48e1acb8?auto=format&fit=crop&q=80&w=800" },
-  { name: "Thailand", price: "499", image: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&q=80&w=800" },
-  { name: "Australia", price: "12,999", image: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&q=80&w=800" }
-];
+import { destinations } from '@/app/data/visaData';
 
 // Experts Data
 const experts = [
@@ -27,6 +20,11 @@ export default function VisaServicesPage() {
   const params = useParams();
   const region = params?.region as string || "india";
   const [activeContinent, setActiveContinent] = useState("Asia");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredDestinations = destinations.filter(dest => 
+    dest.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="font-sans min-h-screen flex flex-col">
@@ -38,16 +36,28 @@ export default function VisaServicesPage() {
           </h1>
 
           {/* Search Bar */}
-          <div className="max-w-4xl mx-auto flex flex-col md:flex-row bg-white rounded-2xl md:rounded-full p-2 mb-8 shadow-2xl">
+          <div className="max-w-4xl mx-auto flex flex-col md:flex-row bg-white rounded-2xl md:rounded-full p-2 mb-8 shadow-2xl overflow-hidden">
             <div className="flex-1 flex items-center px-6 py-4 border-b md:border-b-0 md:border-r border-gray-200">
-              <MapPin className="text-gray-400 w-5 h-5 mr-3 shrink-0" />
-              <input type="text" placeholder="I am a citizen of..." defaultValue="India" readOnly className="w-full text-[#191974] font-bold text-lg outline-none bg-transparent" />
+              <MapPin className="text-[#ee2229] w-5 h-5 mr-3 shrink-0" />
+              <div className="flex flex-col items-start">
+                <span className="text-[10px] uppercase font-bold text-gray-400">Citizen of</span>
+                <input type="text" value="India" readOnly className="w-full text-[#191974] font-black text-lg outline-none bg-transparent" />
+              </div>
             </div>
-            <div className="flex-1 flex items-center px-6 py-4">
-              <Search className="text-gray-400 w-5 h-5 mr-3 shrink-0" />
-              <input type="text" placeholder="Travelling to..." className="w-full text-[#191974] font-bold text-lg outline-none bg-transparent placeholder-gray-400" />
+            <div className="flex-[1.5] flex items-center px-6 py-4">
+              <Search className="text-[#ee2229] w-5 h-5 mr-3 shrink-0" />
+              <div className="flex flex-col items-start w-full">
+                <span className="text-[10px] uppercase font-bold text-gray-400">Travelling to</span>
+                <input 
+                  type="text" 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Enter country name..." 
+                  className="w-full text-[#191974] font-black text-lg outline-none bg-transparent placeholder-gray-300" 
+                />
+              </div>
             </div>
-            <button className="bg-[#ee2229] hover:bg-[#d11e24] active:scale-95 text-white font-black py-4 md:py-3 px-10 rounded-xl md:rounded-full transition-all mt-2 md:mt-0 w-full md:w-auto tracking-widest text-sm shadow-lg shadow-red-500/30">
+            <button className="bg-[#ee2229] hover:bg-[#d11e24] active:scale-95 text-white font-black py-5 md:py-3 px-12 rounded-xl md:rounded-full transition-all mt-2 md:mt-0 w-full md:w-auto tracking-widest text-sm shadow-xl shadow-red-500/40">
               SEARCH
             </button>
           </div>
@@ -71,23 +81,74 @@ export default function VisaServicesPage() {
           <h2 className="text-3xl lg:text-4xl font-black text-[#191974] mb-2 text-center">Popular Destinations</h2>
           <p className="text-gray-500 text-center mb-16 font-medium text-lg">Select your next travel destination</p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {destinations.map((dest, i) => (
-              <Link href={`/${region}/visa/${dest.name.toLowerCase().replace(/ /g, '-')}`} key={i} className="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 cursor-pointer block">
-                <div className="h-72 w-full relative">
-                  <img src={dest.image} alt={dest.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent"></div>
-                </div>
-                {/* Circle Badge */}
-                <div className="absolute top-6 left-6 bg-[#ee2229] text-white rounded-full w-20 h-20 flex flex-col items-center justify-center p-2 shadow-2xl rotate-12 group-hover:rotate-0 transition-transform">
-                  <span className="text-[8px] font-black uppercase tracking-widest text-white/90 leading-none mb-0.5">Starting</span>
-                  <span className="text-sm font-black leading-none">₹{dest.price}/-</span>
-                  <span className="text-[7px] font-black uppercase tracking-widest text-white/90 leading-none mt-0.5">Only</span>
-                </div>
-                <div className="absolute bottom-8 left-8">
-                  <h3 className="text-3xl font-black text-white">{dest.name}</h3>
-                </div>
-              </Link>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {filteredDestinations.map((dest, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.05 }}
+              >
+                <Link
+                  href={`/${region}/visa/${dest.name.toLowerCase().replace(/ /g, '-')}`}
+                  className="group relative rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 cursor-pointer block h-[440px] bg-white"
+                >
+                  {/* Background Image */}
+                  <div className="absolute inset-0">
+                    <img
+                      src={dest.image}
+                      alt={dest.name}
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent opacity-90 group-hover:from-black transition-all"></div>
+                  </div>
+
+                  {/* Visa Type Badge */}
+                  <div className="absolute top-6 right-6 z-10">
+                    <div className="bg-white/10 backdrop-blur-md border border-white/20 text-white text-[9px] font-black tracking-widest px-3 py-1.5 rounded-full uppercase">
+                      {dest.type}
+                    </div>
+                  </div>
+
+                  {/* Content Overlay */}
+                  <div className="absolute inset-0 p-8 flex flex-col justify-end text-white z-10">
+                    {/* Flag Icon */}
+                    <div className="flex justify-center mb-4 transform group-hover:-translate-y-2 transition-transform duration-500">
+                      <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-2xl">
+                        <img
+                          src={`https://flagcdn.com/w160/${dest.flag}.png`}
+                          alt={dest.name}
+                          className="w-full h-full object-cover shadow-inner"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Country Name */}
+                    <h3 className="text-2xl font-serif uppercase tracking-[0.1em] text-center mb-6 drop-shadow-xl">
+                      {dest.name}
+                    </h3>
+
+                    {/* Info Grid */}
+                    <div className="grid grid-cols-2 gap-y-4 gap-x-4 border-t border-white/10 pt-6 mb-8">
+                      <div className="text-center">
+                        <p className="text-[9px] uppercase font-black tracking-widest text-white/40 mb-1">Validity</p>
+                        <p className="text-[12px] font-black uppercase text-white/90">{dest.valid}</p>
+                      </div>
+                      <div className="text-center border-l border-white/10">
+                        <p className="text-[9px] uppercase font-black tracking-widest text-white/40 mb-1">Start From</p>
+                        <p className="text-[12px] font-black uppercase text-[#ee2229]">₹{dest.price}</p>
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="space-y-4">
+                      <div className="bg-[#ee2229] hover:bg-[#ff333a] text-white py-3.5 rounded-2xl text-center font-black text-xs tracking-[0.2em] transition-all shadow-xl shadow-red-500/20 active:scale-95">
+                        GET START NOW
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -273,53 +334,123 @@ export default function VisaServicesPage() {
             ))}
           </div>
 
-          {/* Directory Content (Asia selected by default) */}
-          {activeContinent === "Asia" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-              <div>
-                <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">Western Asia</h4>
-                <ul className="space-y-4 font-bold text-[#191974]/60">
-                  <li><Link href={`/${region}/visa/dubai`} className="hover:text-[#ee2229] transition-colors">Dubai Visa</Link></li>
-                  <li><Link href={`/${region}/visa/saudi-arabia`} className="hover:text-[#ee2229] transition-colors">Saudi Visa</Link></li>
-                  <li><Link href={`/${region}/visa/oman`} className="hover:text-[#ee2229] transition-colors">Oman Visa</Link></li>
-                  <li><Link href={`/${region}/visa/turkey`} className="hover:text-[#ee2229] transition-colors">Turkey Visa</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">East Asia</h4>
-                <ul className="space-y-4 font-bold text-[#191974]/60">
-                  <li><a href="#" className="hover:text-[#ee2229] transition-colors">Japan Visa</a></li>
-                  <li><a href="#" className="hover:text-[#ee2229] transition-colors">China Visa</a></li>
-                  <li><a href="#" className="hover:text-[#ee2229] transition-colors">South Korea Visa</a></li>
-                  <li><a href="#" className="hover:text-[#ee2229] transition-colors">Taiwan Visa</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">South Asia</h4>
-                <ul className="space-y-4 font-bold text-[#191974]/60">
-                  <li><a href="#" className="hover:text-[#ee2229] transition-colors">Sri Lanka Visa</a></li>
-                  <li><a href="#" className="hover:text-[#ee2229] transition-colors">Bangladesh Visa</a></li>
-                  <li><a href="#" className="hover:text-[#ee2229] transition-colors">Nepal Visa</a></li>
-                  <li><a href="#" className="hover:text-[#ee2229] transition-colors">Maldives Visa</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">Southeast Asia</h4>
-                <ul className="space-y-4 font-bold text-[#191974]/60">
-                  <li><Link href={`/${region}/visa/singapore`} className="hover:text-[#ee2229] transition-colors">Singapore Visa</Link></li>
-                  <li><Link href={`/${region}/visa/malaysia`} className="hover:text-[#ee2229] transition-colors">Malaysia Visa</Link></li>
-                  <li><Link href={`/${region}/visa/thailand`} className="hover:text-[#ee2229] transition-colors">Thailand Visa</Link></li>
-                  <li><Link href={`/${region}/visa/vietnam`} className="hover:text-[#ee2229] transition-colors">Vietnam Visa</Link></li>
-                  <li><Link href={`/${region}/visa/indonesia`} className="hover:text-[#ee2229] transition-colors">Indonesia Visa</Link></li>
-                </ul>
-              </div>
-            </div>
-          )}
-          {activeContinent !== "Asia" && (
-            <div className="text-center py-20 text-gray-400 font-bold tracking-wide">
-              Select countries available under {activeContinent}. Contact us for more details.
-            </div>
-          )}
+          {/* Directory Content */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            {activeContinent === "Asia" && (
+              <>
+                <div>
+                  <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">East Asia</h4>
+                  <ul className="space-y-4 font-bold text-[#191974]/60">
+                    <li><Link href={`/${region}/visa/japan`} className="hover:text-[#ee2229] transition-colors">Japan Visa</Link></li>
+                    <li><Link href={`/${region}/visa/china`} className="hover:text-[#ee2229] transition-colors">China Visa</Link></li>
+                    <li><Link href={`/${region}/visa/south-korea`} className="hover:text-[#ee2229] transition-colors">South Korea Visa</Link></li>
+                    <li><Link href={`/${region}/visa/taiwan`} className="hover:text-[#ee2229] transition-colors">Taiwan Visa</Link></li>
+                    <li><Link href={`/${region}/visa/hong-kong`} className="hover:text-[#ee2229] transition-colors">Hong Kong Visa</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">Southeast Asia</h4>
+                  <ul className="space-y-4 font-bold text-[#191974]/60">
+                    <li><Link href={`/${region}/visa/singapore`} className="hover:text-[#ee2229] transition-colors">Singapore Visa</Link></li>
+                    <li><Link href={`/${region}/visa/malaysia`} className="hover:text-[#ee2229] transition-colors">Malaysia Visa</Link></li>
+                    <li><Link href={`/${region}/visa/thailand`} className="hover:text-[#ee2229] transition-colors">Thailand Visa</Link></li>
+                    <li><Link href={`/${region}/visa/vietnam`} className="hover:text-[#ee2229] transition-colors">Vietnam Visa</Link></li>
+                    <li><Link href={`/${region}/visa/indonesia`} className="hover:text-[#ee2229] transition-colors">Indonesia Visa</Link></li>
+                    <li><Link href={`/${region}/visa/cambodia`} className="hover:text-[#ee2229] transition-colors">Cambodia Visa</Link></li>
+                    <li><Link href={`/${region}/visa/laos`} className="hover:text-[#ee2229] transition-colors">Laos Visa</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">West & Central Asia</h4>
+                  <ul className="space-y-4 font-bold text-[#191974]/60">
+                    <li><Link href={`/${region}/visa/united-arab-emirates`} className="hover:text-[#ee2229] transition-colors">UAE Visa</Link></li>
+                    <li><Link href={`/${region}/visa/oman`} className="hover:text-[#ee2229] transition-colors">Oman Visa</Link></li>
+                    <li><Link href={`/${region}/visa/turkey`} className="hover:text-[#ee2229] transition-colors">Turkey Visa</Link></li>
+                    <li><Link href={`/${region}/visa/jordan`} className="hover:text-[#ee2229] transition-colors">Jordan Visa</Link></li>
+                    <li><Link href={`/${region}/visa/uzbekistan`} className="hover:text-[#ee2229] transition-colors">Uzbekistan Visa</Link></li>
+                    <li><Link href={`/${region}/visa/azerbaijan`} className="hover:text-[#ee2229] transition-colors">Azerbaijan Visa</Link></li>
+                    <li><Link href={`/${region}/visa/georgia`} className="hover:text-[#ee2229] transition-colors">Georgia Visa</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">South Asia</h4>
+                  <ul className="space-y-4 font-bold text-[#191974]/60">
+                    <li><Link href={`/${region}/visa/sri-lanka`} className="hover:text-[#ee2229] transition-colors">Sri Lanka Visa</Link></li>
+                    <li><Link href={`/${region}/visa/russia`} className="hover:text-[#ee2229] transition-colors">Russia Visa</Link></li>
+                  </ul>
+                </div>
+              </>
+            )}
+            {activeContinent === "Europe" && (
+              <>
+                <div>
+                  <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">Western Europe</h4>
+                  <ul className="space-y-4 font-bold text-[#191974]/60">
+                    <li><Link href={`/${region}/visa/france`} className="hover:text-[#ee2229] transition-colors">France Visa</Link></li>
+                    <li><Link href={`/${region}/visa/netherlands`} className="hover:text-[#ee2229] transition-colors">Netherlands Visa</Link></li>
+                    <li><Link href={`/${region}/visa/switzerland`} className="hover:text-[#ee2229] transition-colors">Switzerland Visa</Link></li>
+                    <li><Link href={`/${region}/visa/austria`} className="hover:text-[#ee2229] transition-colors">Austria Visa</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">British Isles</h4>
+                  <ul className="space-y-4 font-bold text-[#191974]/60">
+                    <li><Link href={`/${region}/visa/united-kingdom`} className="hover:text-[#ee2229] transition-colors">United Kingdom Visa</Link></li>
+                    <li><Link href={`/${region}/visa/ireland`} className="hover:text-[#ee2229] transition-colors">Ireland Visa</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">Southern Europe</h4>
+                  <ul className="space-y-4 font-bold text-[#191974]/60">
+                    <li><Link href={`/${region}/visa/spain`} className="hover:text-[#ee2229] transition-colors">Spain Visa</Link></li>
+                    <li><Link href={`/${region}/visa/greece`} className="hover:text-[#ee2229] transition-colors">Greece Visa</Link></li>
+                    <li><Link href={`/${region}/visa/italy`} className="hover:text-[#ee2229] transition-colors">Italy Visa</Link></li>
+                  </ul>
+                </div>
+              </>
+            )}
+            {activeContinent === "North America" && (
+              <>
+                <div>
+                  <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">Major Destinations</h4>
+                  <ul className="space-y-4 font-bold text-[#191974]/60">
+                    <li><Link href={`/${region}/visa/united-states`} className="hover:text-[#ee2229] transition-colors">United States Visa</Link></li>
+                    <li><Link href={`/${region}/visa/canada`} className="hover:text-[#ee2229] transition-colors">Canada Visa</Link></li>
+                  </ul>
+                </div>
+              </>
+            )}
+            {activeContinent === "Australia" && (
+              <>
+                <div>
+                  <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">Oceania</h4>
+                  <ul className="space-y-4 font-bold text-[#191974]/60">
+                    <li><Link href={`/${region}/visa/australia`} className="hover:text-[#ee2229] transition-colors">Australia Visa</Link></li>
+                    <li><Link href={`/${region}/visa/new-zealand`} className="hover:text-[#ee2229] transition-colors">New Zealand Visa</Link></li>
+                  </ul>
+                </div>
+              </>
+            )}
+            {activeContinent === "Africa" && (
+              <>
+                <div>
+                  <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">Sub-Saharan Africa</h4>
+                  <ul className="space-y-4 font-bold text-[#191974]/60">
+                    <li><Link href={`/${region}/visa/south-africa`} className="hover:text-[#ee2229] transition-colors">South Africa Visa</Link></li>
+                    <li><Link href={`/${region}/visa/kenya`} className="hover:text-[#ee2229] transition-colors">Kenya Visa</Link></li>
+                    <li><Link href={`/${region}/visa/zimbabwe`} className="hover:text-[#ee2229] transition-colors">Zimbabwe Visa</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-black text-[#191974] tracking-widest uppercase text-xs mb-6">North Africa</h4>
+                  <ul className="space-y-4 font-bold text-[#191974]/60">
+                    <li><Link href={`/${region}/visa/egypt`} className="hover:text-[#ee2229] transition-colors">Egypt Visa</Link></li>
+                    <li><Link href={`/${region}/visa/morocco`} className="hover:text-[#ee2229] transition-colors">Morocco Visa</Link></li>
+                  </ul>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </section>
     </div>
