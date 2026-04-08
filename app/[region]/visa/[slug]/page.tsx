@@ -4,7 +4,8 @@ import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import {
   CheckCircle2, ChevronRight, ChevronDown, ChevronUp, Star, Phone, MessageCircle, Clock,
-  MapPin, ShieldCheck, FileText, Globe, Building2, Check, ExternalLink, ChevronLeft, Users
+  MapPin, ShieldCheck, FileText, Globe, Building2, Check, ExternalLink, ChevronLeft, Users,
+  Sparkles, Calendar, Zap
 } from 'lucide-react';
 
 // Helpers
@@ -19,6 +20,7 @@ const scrollToId = (id: string) => {
 
 import { getDestinationBySlug, VisaDestination } from '@/app/data/visaData';
 import { formatRegionalPrice } from '@/config/country';
+import DeparturePricing from '@/app/components/tours/DeparturePricing';
 
 export default function DynamicVisaDetailPage({ params }: { params: Promise<{ region: string, slug: string }> }) {
   const resolvedParams = use(params);
@@ -42,6 +44,22 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
   const [isSidebarLetUsCallOpen, setSidebarLetUsCallOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [openDocs, setOpenDocs] = useState(true);
+
+  // DEPARTURE PRICING DATA
+  const pricingCities = ["All departures", "Mumbai", "Bangalore", "Chennai", "Cochin", "Hyderabad", "Indore", "Kolkata", "New Delhi"];
+  const [selectedCity, setSelectedCity] = useState("All departures");
+  const [selectedDateId, setSelectedDateId] = useState("d1");
+
+  const pricingDates: Record<string, any[]> = {
+    "All departures": [
+      { id: "d1", date: "06", day: "SAT", month: "Jun", year: "2026", price: 525000, savings: 15000, isLowest: true },
+      { id: "d2", date: "15", day: "THU", month: "Oct", year: "2026", price: 525000, savings: 15000 }
+    ]
+  };
+  // Mocking cities
+  pricingCities.forEach(city => {
+    if (city !== "All departures") pricingDates[city] = pricingDates["All departures"];
+  });
 
   // DATA
   const visaTypes = currentData.visaTypes;
@@ -159,27 +177,90 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           {/* 2. Types of Visas */}
           <div id="types-of-visas" className="pt-2">
             <h2 className="text-[22px] font-medium text-[#191974] mb-6 border-b border-gray-300 pb-2">Types of {destName} Visas for Indians</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            
+            {/* Departure Pricing Integration */}
+            <div className="mb-10">
+              <p className="text-gray-500 italic mb-4">As seats fill, prices increase! So book today!</p>
+              <DeparturePricing 
+                cities={pricingCities}
+                dates={pricingDates}
+                selectedCity={selectedCity}
+                selectedDateId={selectedDateId}
+                onCityChange={setSelectedCity}
+                onDateChange={setSelectedDateId}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {visaTypes.map((v, i) => (
-                <div key={i} className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm flex flex-col group hover:shadow-md transition-shadow relative">
+                <div key={i} className="bg-white rounded-[24px] border border-gray-100 shadow-[0_8px_30px_rgba(25,25,116,0.04)] p-6 hover:shadow-[0_20px_50px_rgba(25,25,116,0.12)] transition-all duration-500 group relative flex flex-col">
                   {v.pop && (
-                    <div className="absolute top-0 right-0 bg-[#ee2229] text-white text-[10px] font-bold px-3 py-1 flex items-center justify-center rounded-bl-lg shadow-sm">
-                      POPULAR <span className="ml-1">★</span>
+                    <div className="absolute -top-3 right-6 bg-linear-to-r from-amber-400 to-orange-500 text-white text-[10px] font-black px-4 py-1.5 rounded-full shadow-lg shadow-amber-500/20 flex items-center gap-1.5 z-10 uppercase tracking-widest">
+                      <Sparkles className="w-3.5 h-3.5" /> Popular Choice
                     </div>
                   )}
-                  <div className="bg-gray-50 border-b border-gray-200 p-4">
-                    <h3 className="text-[15px] font-bold text-[#191974] pr-12">{v.name}</h3>
+
+                  <div className="mb-6">
+                    <h3 className="text-[19px] font-black text-[#191974] tracking-tight group-hover:text-[#ee2229] transition-colors">{v.name}</h3>
+                    <div className="w-10 h-1 bg-gray-100 rounded-full mt-2 group-hover:w-16 transition-all duration-500" />
                   </div>
-                  <div className="p-0 flex-1">
-                    <table className="w-full text-left text-[14px]">
-                      <tbody>
-                        <tr className="border-b border-gray-100"><td className="py-2.5 px-4 text-gray-500 w-1/2">Processing time</td><td className="py-2.5 px-4 font-medium">{v.pTime}</td></tr>
-                        <tr className="border-b border-gray-100"><td className="py-2.5 px-4 text-gray-500">Stay period</td><td className="py-2.5 px-4 font-medium">{v.stay}</td></tr>
-                        <tr className="border-b border-gray-100"><td className="py-2.5 px-4 text-gray-500">Validity</td><td className="py-2.5 px-4 font-medium">{v.valid}</td></tr>
-                        <tr className="border-b border-gray-100"><td className="py-2.5 px-4 text-gray-500">Entry</td><td className="py-2.5 px-4 font-medium">{v.entry}</td></tr>
-                        <tr><td className="py-3 px-4 text-gray-500">Fees</td><td className="py-3 px-4 font-bold text-[#191974]">{formatRegionalPrice(v.fees, region)}/–</td></tr>
-                      </tbody>
-                    </table>
+
+                  <div className="grid grid-cols-2 gap-y-6 gap-x-4 mb-8">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-2xl bg-blue-50 text-[#191974] flex items-center justify-center shrink-0">
+                        <Clock className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Processing</p>
+                        <p className="text-[13px] font-bold text-[#191974]">{v.pTime}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+                        <Calendar className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Stay Period</p>
+                        <p className="text-[13px] font-bold text-[#191974]">{v.stay}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                        <ShieldCheck className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Validity</p>
+                        <p className="text-[13px] font-bold text-[#191974]">{v.valid}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
+                        <Globe className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Entry Type</p>
+                        <p className="text-[13px] font-bold text-[#191974]">{v.entry}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
+                    <div>
+                      <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">Starting From</p>
+                      <p className="text-[22px] font-black text-[#191974] leading-none">
+                        {formatRegionalPrice(v.fees, region)}<span className="text-sm font-bold text-gray-400">/–</span>
+                      </p>
+                    </div>
+                    <button 
+                      className="bg-[#191974] hover:bg-[#ee2229] text-white px-6 py-3 rounded-xl font-black text-[12px] uppercase tracking-widest transition-all shadow-xl shadow-blue-900/10 active:scale-95 flex items-center gap-2 group/btn"
+                      onClick={() => scrollToId('apply-online')}
+                    >
+                      Apply Now
+                      <Zap className="w-3.5 h-3.5 group-hover/btn:fill-current" />
+                    </button>
                   </div>
                 </div>
               ))}

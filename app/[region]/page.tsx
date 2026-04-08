@@ -256,42 +256,52 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                 <p className="text-gray-500 text-xs">Please check back soon.</p>
               </div>
             ) : (
-              displayTours.map((tour, idx) => (
-                <div key={idx} className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col">
-                  <Link href={`/${region}/tours/${tour.slug}`} className="relative block h-[180px] shrink-0 overflow-hidden">
-                    <img src={tour.image_url} alt={tour.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-                    <div className="absolute bottom-2 left-2">
-                      <span className="bg-white/90 backdrop-blur-sm text-[#191974] text-[10px] font-black px-2.5 py-1 rounded-lg">
-                        {tour.duration}
-                      </span>
-                    </div>
-                  </Link>
-                  <div className="p-4 flex flex-col flex-1">
-                    <p className="text-[10px] font-black text-[#ee2229] uppercase tracking-widest mb-1">Best Seller</p>
-                    <Link href={`/${region}/tours/${tour.slug}`}>
-                      <h3 className="text-sm font-black text-[#191974] mb-3 leading-snug line-clamp-2 hover:text-[#ee2229] transition-colors uppercase">
-                        {tour.title}
-                      </h3>
-                    </Link>
-                    <div className="mt-auto">
-                      <div className="flex items-end justify-between mb-3 border-t border-gray-50 pt-3">
-                        <div>
-                          <p className="text-[9px] text-gray-400 font-bold uppercase mb-0.5">Starting at</p>
-                          <p className="text-lg font-black text-[#191974]">{formatRegionalPrice(tour.base_price_inr, region)}</p>
+              displayTours.map((tour, idx) => {
+                const [imgError, setImgError] = React.useState(false);
+                return (
+                  <div key={idx} className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col">
+                    {!imgError && tour.image_url && (
+                      <Link href={`/${region}/tours/${tour.slug}`} className="relative block h-[180px] shrink-0 overflow-hidden">
+                        <img 
+                          src={tour.image_url} 
+                          alt={tour.title} 
+                          onError={() => setImgError(true)}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform" 
+                        />
+                        <div className="absolute bottom-2 left-2">
+                          <span className="bg-white/90 backdrop-blur-sm text-[#191974] text-[10px] font-black px-2.5 py-1 rounded-lg">
+                            {tour.duration}
+                          </span>
                         </div>
-                        <div className="text-right">
-                          <p className="text-[9px] font-bold text-[#ee2229] uppercase">EMI</p>
-                          <p className="text-[10px] font-black text-[#191974]">₹5,259/mo</p>
+                      </Link>
+                    )}
+                    <div className="p-4 flex flex-col flex-1">
+                      <p className="text-[10px] font-black text-[#ee2229] uppercase tracking-widest mb-1">Best Seller</p>
+                      <Link href={`/${region}/tours/${tour.slug}`}>
+                        <h3 className="text-[14px] font-black text-[#191974] mb-3 leading-snug line-clamp-2 hover:text-[#ee2229] transition-colors uppercase">
+                          {tour.title}
+                        </h3>
+                      </Link>
+                      <div className="mt-auto">
+                        <div className="flex items-end justify-between mb-3 border-t border-gray-50 pt-3">
+                          <div>
+                            <p className="text-[9px] text-gray-400 font-bold uppercase mb-0.5">Starting at</p>
+                            <p className="text-lg font-black text-[#191974]">{formatRegionalPrice(tour.base_price_inr, region)}</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-[9px] font-bold text-[#ee2229] uppercase">EMI</p>
+                            <p className="text-[10px] font-black text-[#191974]">₹5,259/mo</p>
+                          </div>
                         </div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-2">
-                        <Link href={`/${region}/tours/${tour.slug}`} className="border border-[#191974] text-[#191974] py-2 rounded-lg text-[11px] font-black text-center hover:bg-[#191974]/5 uppercase">Details</Link>
-                        <button className="book-now-btn bg-[#191974] text-white py-2 rounded-lg text-[11px] font-black hover:bg-[#ee2229] uppercase shadow-lg shadow-blue-500/10" data-package={tour.title}>Book Now</button>
+                        <div className="grid grid-cols-2 gap-2">
+                          <Link href={`/${region}/tours/${tour.slug}`} className="border border-[#191974] text-[#191974] py-2 rounded-lg text-[11px] font-black text-center hover:bg-[#191974]/5 uppercase">Details</Link>
+                          <button className="book-now-btn bg-[#191974] text-white py-2 rounded-lg text-[11px] font-black hover:bg-[#ee2229] uppercase shadow-lg shadow-blue-500/10" data-package={tour.title}>Book Now</button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         </div>
