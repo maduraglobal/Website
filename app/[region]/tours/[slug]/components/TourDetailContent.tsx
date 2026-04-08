@@ -102,7 +102,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 {[
                   { icon: Camera, text: "Scenic Visuals", color: "text-blue-500" },
                   { icon: Users, text: "Group Experience", color: "text-purple-500" },
-                  { icon: ShieldCheck, text: "A-Grade Safety", color: "text-green-500" },
+                  { icon: ShieldCheck, text: "A-Grade Safety", color: "text-[#191974]" },
                   { icon: Star, text: "Premium Service", color: "text-amber-500" }
                 ].map((item, i) => (
                   <div key={i} className="flex flex-col items-center justify-center gap-2 bg-gray-50/50 p-4 rounded-xl border border-gray-100 hover:bg-white hover:shadow-md transition-all text-center group">
@@ -139,7 +139,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm">
-                  <h3 className="text-[12px] font-black text-[#191974] mb-6 flex items-center gap-2 tracking-widest uppercase border-b border-green-50 pb-3">
+                  <h3 className="text-[12px] font-black text-[#191974] mb-6 flex items-center gap-2 tracking-widest uppercase border-b border-[#191974]/10 pb-3">
                     <CheckCircle2 className="w-5 h-5" />
                     Tour Inclusions
                   </h3>

@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { countryConfigs } from "../../config/country";
-import { useEffect, useRef } from "react";
+import LoginPopup from "./LoginPopup";
 
 const destinations = {
+// ... existing destinations ...
   "India": ["Andaman", "Assam", "Arunachal pradesh", "Golden Triangle", "Gujarat", "Himachal Pradesh", "Karnataka", "Kashmir", "Kerala", "Maharashtra", "Madhya Pradesh", "North East India", "Orissa", "Rajasthan", "Tamil Nadu", "Telangana", "Goa", "Sikkim", "Delhi", "Uttar Pradesh", "Uttarakhand", "West Bengal"],
   "Mainland Europe": ["Austria", "Belgium", "Finland", "France", "Germany", "Iceland", "Ireland", "Italy", "Luxembourg", "Netherlands", "Norway", "Poland", "Portugal", "Denmark", "Spain", "Sweden", "Switzerland", "United Kingdom", "Vatican City"],
   "Australasia": ["Australia", "New Zealand", "Fiji", "Queensland"],
@@ -26,6 +27,7 @@ const allDestinations = Object.values(destinations).flat();
 type DestinationKey = keyof typeof destinations;
 
 export default function Navbar() {
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [activeRegion, setActiveRegion] = useState<DestinationKey>("India");
   const pathname = usePathname();
   const router = useRouter();
