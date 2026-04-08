@@ -25,7 +25,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
   const { region, slug } = resolvedParams;
 
   const destination = getDestinationBySlug(slug);
-  const destName = destination ? destination.name : (slug ? slug.charAt(0).to() + slug.slice(1).replace(/-/g, ' ') : "Dubai");
+  const destName = destination ? destination.name : (slug ? slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, ' ') : "Dubai");
 
   // Get current country data or fallback to a safe default
   const currentData = destination ? { ...destination, heroImg: destination.image } : {
@@ -87,7 +87,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             <span className="text-[#ee2229]">{destName} Visa</span>
           </div>
 
-          <h1 className="text-[36px] font-medium mb-6 leading-tight drop-shadow-md">
+          <h1 className="text-[32px] md:text-[56px] font-black font-inter mb-4 leading-tight drop-shadow-md">
             {destName} Visa Online for Indians
           </h1>
 
@@ -141,7 +141,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
       <div className="max-w-7xl mx-auto px-4 py-10 flex flex-col lg:flex-row gap-10 items-start relative">
 
         {/* LEFT CONTENT COLUMN (70%) */}
-        <div className="w-full lg:w-[70%] flex flex-col gap-10 pb-20">
+        <div className="w-full lg:w-[70%] flex flex-col gap-6 pb-12">
 
           {/* 1. Guarantee Banner */}
           <div className="rounded-xl overflow-hidden shadow-sm border border-gray-200">

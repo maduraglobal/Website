@@ -14,16 +14,16 @@ import React from "react";
 
 export default function AwardsSection() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
 
         {/* ══════════════════════════════════════════════ */}
         {/* 1. GOVERNMENT RECOGNITIONS                     */}
         {/* ══════════════════════════════════════════════ */}
-        <div className="mb-16">
+        <div className="mb-8">
           {/* Label badge */}
           <div className="flex justify-center mb-4">
-            <span className="bg-amber-50 border border-amber-200 text-[#ee2229] text-[32px] font-black  tracking-[0.25em] px-4 py-1.5 rounded-full">
+            <span className="bg-amber-50 border border-amber-200 text-[#ee2229] text-[12px] font-black  tracking-[0.25em] px-4 py-1.5 rounded-full uppercase">
               Government Recognitions
             </span>
           </div>

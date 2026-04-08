@@ -23,7 +23,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ reg
       isMock = true;
       currentTour = {
         id: 'mock-1',
-        title: `${region.charAt(0).to() + region.slice(1)} Premium Tour Showcase`,
+        title: `${region.charAt(0).toUpperCase() + region.slice(1)} Premium Tour Showcase`,
         slug: slug,
         duration: '7 Days | 6 Nights',
         image_url: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=1200',
@@ -79,7 +79,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ reg
                   </span>
                 ))}
               </div>
-              <h1 className="text-[32px] md:text-[40px] font-black font-inter text-[#191974] leading-tight tracking-tight ">
+              <h1 className="text-[32px] md:text-[65px] font-black font-inter text-[#191974] leading-tight tracking-tight ">
                 {currentTour.title}
               </h1>
               <div className="flex items-center gap-8 mt-4">

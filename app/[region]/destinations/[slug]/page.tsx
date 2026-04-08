@@ -42,7 +42,7 @@ export default function DestinationPage() {
         await new Promise(resolve => setTimeout(resolve, 600));
 
         // Mock Destination Data
-        const titleFormatted = slug ? slug.split('-').map(w => w.charAt(0).to() + w.slice(1)).join(' ') : 'Europe';
+        const titleFormatted = slug ? slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : 'Europe';
 
         const mockResponse: DestinationDetail = {
           id: `dest_${slug}`,
@@ -98,23 +98,23 @@ export default function DestinationPage() {
   return (
     <div className="bg-white min-h-screen font-arial text-[14px]">
       {/* DESTINATION HERO */}
-      <section className={`relative w-full h-[50vh] min-h-[400px] flex items-center justify-center bg-linear-to-tr ${destination.heroImage} overflow-hidden`}>
+      <section className={`relative w-full h-[45vh] min-h-[350px] flex items-center justify-center bg-linear-to-tr ${destination.heroImage} overflow-hidden`}>
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto text-white">
-          <h1 className="text-[32px] font-black font-inter mb-4 drop-shadow-xl  tracking-tight">
-            {destination.title}
+          <h1 className="text-[32px] md:text-[48px] font-black font-inter mb-4 leading-tight drop-shadow-md">
+            {destination.title} Visa Online for Indians
           </h1>
-          <p className="text-[26px] font-inter font-light drop-shadow-lg opacity-90 max-w-2xl mx-auto leading-tight">
+          <p className="text-[18px] md:text-[22px] font-inter font-light drop-shadow-lg opacity-90 max-w-2xl mx-auto leading-tight">
             {destination.description}
           </p>
         </div>
       </section>
 
       {/* RELATED TOURS */}
-      <section className="py-20 max-w-7xl mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-[32px] font-black font-inter text-[#191974] mb-3  tracking-tight">Popular {destination.title} Packages</h2>
-          <p className="text-[26px] text-gray-400 font-inter font-light max-w-2xl mx-auto leading-tight">Explore our most sought-after itineraries.</p>
+      <section className="py-12 max-w-7xl mx-auto px-4">
+        <div className="text-center mb-10">
+          <h2 className="text-[28px] md:text-[32px] font-black font-inter text-[#191974] mb-2 tracking-tight">Popular {destination.title} Packages</h2>
+          <p className="text-[16px] md:text-[20px] text-gray-400 font-inter font-light max-w-2xl mx-auto leading-tight">Explore our most sought-after itineraries.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">

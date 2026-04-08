@@ -6,9 +6,18 @@ import { cn } from '@/utils/cn';
 interface BookingSidebarProps {
   price?: number;
   tourName: string;
+  selectedCity?: string;
+  selectedDate?: string;
+  emiAmount?: string;
 }
 
-export default function BookingSidebar({ price = 45000, tourName }: BookingSidebarProps) {
+export default function BookingSidebar({ 
+  price = 45000, 
+  tourName, 
+  selectedCity = "Mumbai", 
+  selectedDate = "Select Date",
+  emiAmount = "₹5,219"
+}: BookingSidebarProps) {
   const [formData, setFormData] = useState({
     fullName: '',
     mobileNo: ''
@@ -22,98 +31,89 @@ export default function BookingSidebar({ price = 45000, tourName }: BookingSideb
   };
 
   return (
-    <div className="flex flex-col gap-8 relative font-arial">
-      {/* Trust Stats */}
-      <div className="bg-white rounded-3xl border border-gray-50 shadow-xl p-8 grid grid-cols-3 gap-6">
-        <div className="text-center border-r border-gray-100">
-          <p className="text-[20px] font-black text-[#191974] font-inter">5M+</p>
-          <p className="text-[9px] text-gray-300  font-black tracking-widest leading-tight mt-1">Global<br />Guests</p>
+    <div className="flex flex-col gap-4 relative font-arial">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden sticky top-28">
+        <div className="p-5 border-b border-gray-50 bg-gray-50/30">
+          <div className="flex items-center gap-2 text-[#191974]">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1" />
+            </svg>
+            <h3 className="text-[14px] font-black uppercase tracking-widest font-inter">Booking Summary</h3>
+          </div>
         </div>
-        <div className="text-center border-r border-gray-100">
-          <p className="text-[20px] font-black text-[#191974] font-inter">30K+</p>
-          <p className="text-[9px] text-gray-300  font-black tracking-widest leading-tight mt-1">Tour<br />Success</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[20px] font-black text-[#191974] font-inter">30Y+</p>
-          <p className="text-[9px] text-gray-300  font-black tracking-widest leading-tight mt-1">Heritage<br />Expert</p>
-        </div>
-      </div>
 
-      {/* Pricing and Main CTA */}
-      <div className="bg-white rounded-3xl border border-gray-50 shadow-2xl overflow-hidden">
-        <div className="p-10">
+        <div className="p-6">
+          {/* Booking Summary Details */}
+          <div className="space-y-4 mb-8">
+            <div className="flex justify-between items-center text-[13px]">
+              <span className="text-gray-400 font-medium">Dept. city</span>
+              <span className="text-[#191974] font-black">{selectedCity}</span>
+            </div>
+            <div className="flex justify-between items-center text-[13px]">
+              <span className="text-gray-400 font-medium">Dept. date</span>
+              <span className="text-[#191974] font-black">{selectedDate}</span>
+            </div>
+            <div className="flex justify-between items-center text-[13px]">
+              <span className="text-gray-400 font-medium">Travellers</span>
+              <span className="text-gray-300 font-medium italic">0 Adult(s) | 0 Child | 0 Infant</span>
+            </div>
+            <div className="flex justify-between items-center text-[13px]">
+              <span className="text-gray-400 font-medium">Rooms</span>
+              <span className="text-gray-300 font-medium italic">0 Room</span>
+            </div>
+          </div>
+
+          <div className="border-t border-dashed border-gray-200 pt-6 mb-6">
+            <div className="flex justify-between items-end mb-1">
+              <span className="text-[13px] text-gray-400 font-black uppercase">Basic Price</span>
+              <span className="text-[24px] font-black text-[#191974] font-inter tracking-tighter leading-none">
+                ₹{price.toLocaleString('en-IN')}
+              </span>
+            </div>
+            <div className="flex justify-between items-center text-[11px] text-[#191974] font-bold">
+              <span className="hover:underline cursor-pointer flex items-center gap-1">View Pricing Table &rsaquo;</span>
+              <span className="hover:underline cursor-pointer">Cancellation Policy &rsaquo;</span>
+            </div>
+          </div>
+
           <div className="mb-8">
-            <span className="text-[11px] text-gray-400 font-bold  tracking-widest mb-2 block">Premium Package from</span>
-            <div className="flex items-baseline gap-2">
-              <span className="text-[32px] font-black text-[#191974] font-inter tracking-tighter">₹ {price.toLocaleString()}</span>
-              <span className="text-[12px] text-gray-300 font-bold  tracking-widest">per pax</span>
+            <div className="flex justify-between items-center">
+               <div>
+                 <p className="text-[12px] text-[#191974] font-black">EMI Available</p>
+                 <span className="text-[11px] text-[#191974] border-b border-gray-400 hover:border-[#191974] cursor-pointer">Check eligibility &rsaquo;</span>
+               </div>
+               <div className="text-right">
+                 <p className="text-[18px] font-black text-[#191974] leading-none mb-0.5">{emiAmount}</p>
+                 <span className="text-[10px] text-gray-400 font-bold uppercase">/ month</span>
+               </div>
             </div>
           </div>
 
-          <button className="w-full bg-[#ee2229] hover:bg-[#191974] text-white font-black py-5 rounded-2xl text-[14px] font-inter-tight  tracking-widest transition-all mb-8 shadow-xl shadow-red-500/20 active:scale-95">
-            Availability & Booking
-          </button>
+          <div className="space-y-4 mb-6">
+            <div className="flex items-center justify-center gap-2 text-[14px] text-[#191974] font-black">
+               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5.25V3h1.5v2.25H3zm13.125 15.625l-1.062 1.062-1.062-1.062 1.062-1.062 1.062 1.062zm-9.187 0l-1.062 1.062-1.062-1.062 1.062-1.062 1.062 1.062z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.25 18.75V21h1.5v-2.25H2.25zm19.5 0V21h-1.5v-2.25h1.5zM7.5 7.5h9v9h-9v-9zM3.75 3.75v16.5h16.5V3.75H3.75z" /></svg>
+               1800 313 5555
+               <span className="text-gray-200 mx-1">|</span>
+               <span className="text-[11px] hover:underline cursor-pointer">Locate nearest brand</span>
+            </div>
+          </div>
 
-          <div className="grid grid-cols-4 gap-4">
-            {[
-              { label: "Save", icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /> },
-              { label: "PDF", icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /> },
-              { label: "Mail", icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /> },
-              { label: "Share", icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /> }
-            ].map((action) => (
-              <button key={action.label} className="flex flex-col items-center gap-2 group">
-                <div className="w-12 h-12 rounded-full border border-gray-50 flex items-center justify-center group-hover:bg-[#191974] group-hover:text-white transition-all text-gray-300">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">{action.icon}</svg>
-                </div>
-                <span className="text-[9px] text-gray-400 font-black  tracking-widest">{action.label}</span>
-              </button>
-            ))}
+          {/* Dual CTAs */}
+          <div className="grid grid-cols-2 gap-3">
+            <button 
+              onClick={() => alert("Opening enquiry form...")}
+              className="w-full bg-white border-2 border-[#191974] text-[#191974] font-black py-3.5 rounded-lg text-[13px] tracking-widest transition-all hover:bg-gray-50 active:scale-95 uppercase font-inter"
+            >
+              Enquire
+            </button>
+            <button 
+              onClick={() => alert("Selecting guests & rooms...")}
+              className="w-full bg-[#ffcc00] border-2 border-[#ffcc00] text-[#191974] font-black py-3.5 rounded-lg text-[13px] tracking-widest transition-all hover:bg-[#ffbb00] active:scale-95 uppercase font-inter shadow-lg shadow-yellow-500/10"
+            >
+              Book Now
+            </button>
           </div>
         </div>
-      </div>
-
-      {/* Enquiry Form */}
-      <div className="bg-[#191974] rounded-3xl p-10 text-white shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-[#ee2229]" />
-        <h3 className="text-[20px] font-black font-inter mb-2  tracking-tight">Expert Callback</h3>
-        <p className="text-[13px] text-white/50 mb-8 font-arial leading-snug">Personalized guidance from our senior consultants.</p>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-1.5">
-            <label className="text-[9px] font-black text-white/40  tracking-[0.2em] ml-1">Full Identity</label>
-            <input
-              type="text"
-              placeholder="e.g. Rahul Sharma"
-              required
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-[#ee2229] transition-all text-[14px] font-bold"
-              value={formData.fullName}
-              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-            />
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-[9px] font-black text-white/40  tracking-[0.2em] ml-1">Contact Number</label>
-            <div className="flex gap-3">
-              <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-[14px] font-bold text-white/40">
-                +91
-              </div>
-              <input
-                type="tel"
-                placeholder="Mobile ID"
-                required
-                pattern="[0-9]{10}"
-                className="flex-1 bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-[#ee2229] transition-all text-[14px] font-bold"
-                value={formData.mobileNo}
-                onChange={(e) => setFormData({ ...formData, mobileNo: e.target.value })}
-              />
-            </div>
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white font-black py-4.5 rounded-xl transition-all  text-[14px] font-inter-tight tracking-widest shadow-xl shadow-black/20 mt-4 active:scale-95"
-          >
-            Request Assistance
-          </button>
-        </form>
       </div>
     </div>
   );

@@ -35,7 +35,7 @@ export default async function AllDestinationsPage() {
           </svg>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h1 className="text-4xl md:text-5xl font-black mb-4 text-white  tracking-tight font-poppins">
+          <h1 className="text-4xl md:text-[65px] font-black mb-4 text-white  tracking-tight font-inter">
             Explore All Destinations
           </h1>
           <p className="text-[#e2e2e2] text-lg max-w-2xl mx-auto">
@@ -47,7 +47,7 @@ export default async function AllDestinationsPage() {
       {/* Destinations Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {destinations.map((dest: { id: React.Key | null | undefined; slug: any; image_url: any; name: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; }) => (
+          {destinations.map((dest: { id: string; slug: string; image_url: string; name: string }) => (
             <Link key={dest.id} href={`/destination/${dest.slug}`} className="group relative block overflow-hidden rounded-2xl aspect-4/3 shadow-md hover:shadow-xl transition-all duration-300">
               <img
                 src={dest.image_url || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800'}

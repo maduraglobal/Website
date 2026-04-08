@@ -3,6 +3,7 @@
 
 :root {
   --background: #ffffff;
+  --white-base: #f7f7ff;
   --foreground: #171717;
 
   /* Brand Colors */
@@ -10,7 +11,7 @@
   --accent: #ee2229;
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-inter: 'Inter', sans-serif;
@@ -34,6 +35,11 @@ body {
 
 h1,
 .heading {
+  font-family: 'Inter', sans-serif;
+  font-size: 32px;
+}
+
+.hero-heading {
   font-family: 'Inter', sans-serif;
   font-size: 65px;
 }

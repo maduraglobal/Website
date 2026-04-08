@@ -114,7 +114,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
   return (
     <div className="flex flex-col min-h-screen bg-background text-[#171717] font-arial text-[14px]">
       {/* HERO SECTION - 60vh */}
-      <section className="relative w-full h-[70vh] flex flex-col pt-16 lg:pt-20 pb-8 overflow-visible">
+      <section className="relative w-full h-[65vh] flex flex-col pt-12 lg:pt-16 pb-6 overflow-visible">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -129,39 +129,12 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
         <div className="max-w-7xl mx-auto w-full px-6 lg:px-8 relative z-10 flex-1 flex flex-col lg:flex-row items-center justify-between mt-10">
           {/* Left Text */}
-          <div className="w-full text-[#191974] space-y-4 md:space-y-6 mb-10 md:mb-12 lg:mb-0">
-            <h1 className="text-[32px] md:text-[65px] font-black font-inter tracking-tight  leading-[1.1] text-white drop-shadow-xl text-center lg:text-left mt-10 md:mt-0">
+          <div className="w-full text-[#191974] space-y-3 mb-6 lg:mb-0">
+            <h1 className="text-[32px] md:text-[56px] font-black font-inter tracking-tight leading-[1.1] text-white drop-shadow-xl text-center lg:text-left mt-6 md:mt-0">
               The World is Waiting.<br />
               Start Exploring.
             </h1>
-            {/* <p className="text-[20px] md:text-[26px] text-white/90 font-inter font-light leading-snug drop-shadow-md">
-              Find your dream destination and start your journey with us.
-            </p> */}
           </div>
-
-          {/* Right Carousel */}
-          {/* <div className="w-full lg:w-[50%] flex flex-col items-center lg:items-end relative mt-2 lg:mt-0 lg:-translate-y-12 z-20">
-            <div className="flex gap-4 overflow-visible w-full justify-end pr-8 lg:pr-12 relative"> */}
-          {/* Card 1
-              <div className="w-[140px] md:w-[180px] lg:w-[220px] h-[180px] md:h-[220px] lg:h-[260px] shrink-0 rounded-[16px] lg:rounded-[20px] overflow-hidden relative shadow-lg transition-transform hover:scale-[1.02] cursor-pointer bg-gray-900 border border-white/20">
-                <img key={heroSlides[activeHero].card1} src={heroSlides[activeHero].card1} alt="Card 1" className="w-full h-full object-cover" />
-              </div>
-              {/* Card 2 */}
-          {/* <div className="w-[140px] md:w-[180px] lg:w-[220px] h-[180px] md:h-[220px] lg:h-[260px] shrink-0 rounded-[16px] lg:rounded-[20px] overflow-hidden relative shadow-lg transition-transform hover:scale-[1.02] cursor-pointer bg-gray-900 border border-white/20 hidden sm:block">
-                <img key={heroSlides[activeHero].card2} src={heroSlides[activeHero].card2} alt="Card 2" className="w-full h-full object-cover" />
-              </div>  */}
-
-          {/* Carousel Controls */}
-          {/* <div className="absolute -right-2 md:right-0 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-50">
-                <button onClick={handlePrevSlide} className="w-8 h-8 lg:w-9 lg:h-9 rounded-full bg-white/90 backdrop-blur-xl hover:bg-white flex items-center justify-center text-[#191974]/60 transition-all border border-white/40 cursor-pointer shadow-xl hover:scale-110 active:scale-90">
-                  <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-                </button>
-                <button onClick={handleNextSlide} className="w-8 h-8 lg:w-9 lg:h-9 rounded-full bg-white/90 backdrop-blur-xl hover:bg-white flex items-center justify-center text-[#191974]/60 transition-all border border-white/40 cursor-pointer shadow-xl hover:scale-110 active:scale-90">
-                  <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                </button>
-              </div> */}
-          {/* </div>
-          </div> */}
         </div>
       </section>
 
@@ -169,9 +142,8 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
       <div className="w-full relative z-30 -mt-10 md:-mt-14">
         <div className="max-w-6xl mx-auto w-full px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center border border-gray-200 rounded-2xl md:rounded-full bg-white shadow-2xl py-2 px-3 transition-shadow hover:shadow-[0_25px_60px_rgba(0,0,0,0.15)]">
-            {/* Depart From */}
             <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer">
-              <label className="text-[10px]  font-black tracking-widest text-[#ee2229] mb-0.5">Depart From</label>
+              <label className="text-[10px] font-black tracking-widest text-[#ee2229] mb-0.5">Depart From</label>
               <div className="flex items-center justify-between w-full">
                 <input
                   type="text"
@@ -182,9 +154,8 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               </div>
             </div>
 
-            {/* Going To */}
             <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer">
-              <label className="text-[10px]  font-black tracking-widest text-[#ee2229] mb-0.5">Going To</label>
+              <label className="text-[10px] font-black tracking-widest text-[#ee2229] mb-0.5">Going To</label>
               <div className="flex items-center justify-between w-full">
                 <input
                   type="text"
@@ -195,9 +166,8 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               </div>
             </div>
 
-            {/* Month */}
             <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer relative">
-              <label className="text-[10px]  font-black tracking-widest text-[#ee2229] mb-0.5">Month</label>
+              <label className="text-[10px] font-black tracking-widest text-[#ee2229] mb-0.5">Month</label>
               <div className="relative w-full flex items-center justify-between">
                 <select className="w-full text-[14px] font-bold text-gray-900 outline-none bg-transparent appearance-none cursor-pointer">
                   <option value="">Any Month</option>
@@ -209,9 +179,8 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               </div>
             </div>
 
-            {/* Search Button */}
             <div className="w-full lg:w-auto p-1 flex h-full">
-              <button className="w-full lg:w-[120px] bg-[#ee2229] hover:bg-[#d11920] text-white font-black py-3 px-6 rounded-full transition-all shadow-md active:scale-95 text-[13px]  tracking-widest flex items-center justify-center gap-2">
+              <button className="w-full lg:w-[120px] bg-[#ee2229] hover:bg-[#d11920] text-white font-black py-3 px-6 rounded-full transition-all shadow-md active:scale-95 text-[13px] tracking-widest flex items-center justify-center gap-2">
                 <span>Search</span>
               </button>
             </div>
@@ -219,15 +188,15 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         </div>
       </div>
 
-      {/* LOGO CAROUSEL SECTION - 10vh */}
-      <div className="w-full h-[20vh] min-h-[60px] bg-white border-b border-gray-100 flex items-center justify-center overflow-hidden relative z-10">
+      {/* LOGO CAROUSEL SECTION */}
+      <div className="w-full h-[15vh] min-h-[60px] bg-white border-b border-gray-100 flex items-center justify-center overflow-hidden relative z-10">
         <InfiniteMovingCards items={logoItems} speed="slow" direction="left" className="bg-transparent w-full" />
       </div>
 
-      <section className="pt-12 pb-8 bg-white overflow-hidden">
+      <section className="py-12 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="mb-10">
-            <h2 className="font-inter text-[16px] font-black text-[#191974] mb-2  tracking-tight">Top Destinations</h2>
+          <div className="mb-8">
+            <h2 className="font-inter text-[16px] font-black text-[#191974] mb-2 tracking-tight">Top Destinations</h2>
             <p className="font-inter text-[16px] text-gray-400 font-light">Discover the world&apos;s most sought-after holiday spots.</p>
           </div>
 
@@ -243,18 +212,16 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               <Link
                 key={idx}
                 href={`/${region}/destination/${card.slug}`}
-                className="relative w-[400px] md:w-[400px] lg:w-[320px] h-[250px] aspect-square overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block rounded-2xl"
+                className="relative min-w-[300px] h-[220px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block rounded-2xl"
               >
                 <img src={card.image} alt={card.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/10 to-black/90 pointer-events-none" />
-
-                <div className="absolute top-6 left-6 right-6">
-                  <p className="text-white text-[24px] md:text-[24px] font-inter leading-tight tracking-tight">{card.name}</p>
+                <div className="absolute inset-0 bg-linear-to-b from-black/60 via-transparent to-black/80 pointer-events-none" />
+                <div className="absolute top-4 left-4 right-4">
+                  <p className="text-white text-[20px] font-inter leading-tight tracking-tight">{card.name}</p>
                 </div>
-
-                <div className="absolute bottom-6 left-6 right-6">
-                  <p className="text-white text-[12px] md:text-[14px] font-inter mb-1 drop-shadow-md  tracking-widest">Starting from</p>
-                  <p className="text-white  text-[14px] md:text-[16px]  text-inter tracking-tighter drop-shadow-xl">{formatRegionalPrice(card.basePrice, region)}</p>
+                <div className="absolute bottom-4 left-4 right-4 text-left">
+                  <p className="text-white/70 text-[10px] font-bold tracking-widest uppercase mb-0.5">Starting from</p>
+                  <p className="text-white text-[16px] font-black">{formatRegionalPrice(card.basePrice, region)}</p>
                 </div>
               </Link>
             ))}
@@ -262,147 +229,67 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         </div>
       </section>
 
-      {/* Explore By Category */}
-      {/* <section className="pt-20 pb-10 bg-white">
+      {/* Featured Tours Section */}
+      <section className="py-12 bg-[#F8F9FF]">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="mb-10">
-            <h2 className="font-inter text-[32px] font-bold text-gray-900 mb-2">Explore By Category</h2>
-            <p className="font-arial text-[14px] text-gray-500">We will help you find the experience you are looking for.</p>
-          </div>
-          <div className="flex flex-wrap gap-8 justify-between lg:justify-start lg:gap-16">
-            {[
-              { name: 'Educational', color: 'bg-blue-50', icon: 'M12 14l9-5-9-5-9 5 9 5z' },
-              { name: 'Cultural', color: 'bg-orange-50', icon: 'M3 21v-4m22 4v-4m-3.1-3.1l-4-4m-10.8 4l-4-4' },
-              { name: 'Heritage', color: 'bg-green-50', icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16' },
-              { name: 'Bird Watching', color: 'bg-red-50', icon: 'M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2' },
-              { name: 'Cruises', color: 'bg-purple-50', icon: 'M13 10V3L4 14h7v8l9-11h-7z' },
-            ].map(cat => (
-              <div key={cat.name} className="flex flex-col items-center gap-3 cursor-pointer group hover:-translate-y-1 transition-transform">
-                <div className={`w-16 h-16 rounded-full ${cat.color} flex items-center justify-center group-hover:shadow-md transition-shadow border border-gray-100`}>
-                  <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={cat.icon} /></svg>
-                </div>
-                <span className="text-[12px] font-bold text-gray-700">{cat.name} Tours</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
-      <section className="pt-12 pb-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
             <div>
-              <h2 className="font-inter text-[16px] font-black text-[#191974] mb-2  tracking-tight">Featured Tours</h2>
+              <h2 className="font-inter text-[16px] font-black text-[#191974] mb-2 tracking-tight uppercase">Featured Tours</h2>
               <p className="font-inter text-[16px] text-gray-400 font-light">Explore some of our most popular tours selected for you.</p>
             </div>
-            <button className="font-inter-tight text-[14px] font-bold text-[#191974] border border-gray-200 rounded-full px-6 py-2.5 hover:bg-gray-50 transition-colors whitespace-nowrap  tracking-widest">
-              Explore all &rsaquo;
-            </button>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {loading ? (
-              <div className="col-span-full py-20 text-center">
+              <div className="col-span-full py-12 text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#191974] mx-auto mb-4"></div>
-                <p className="text-gray-500">Searching for the best destinations...</p>
+                <p className="text-gray-500 font-bold uppercase tracking-widest text-xs">Finding the best adventures...</p>
               </div>
             ) : errorStatus ? (
-              <div className="col-span-full py-20 text-center bg-red-50 rounded-3xl border border-red-100">
-                <p className="text-red-600 font-bold mb-2">Something went wrong</p>
-                <p className="text-red-400 text-sm">{errorStatus}</p>
+              <div className="col-span-full py-12 text-center bg-red-50 rounded-2xl border border-red-100">
+                <p className="text-red-600 font-black mb-1">Something went wrong</p>
+                <p className="text-red-400 text-xs">{errorStatus}</p>
               </div>
             ) : displayTours.length === 0 ? (
-              <div className="col-span-full py-20 text-center bg-blue-50 rounded-3xl border border-blue-100">
-                <p className="text-[#191974] font-bold mb-2">No destinations currently listed</p>
-                <p className="text-gray-500 text-sm">Please check back soon or run the SQL seed script.</p>
+              <div className="col-span-full py-12 text-center bg-blue-50 rounded-2xl border border-blue-100">
+                <p className="text-[#191974] font-black mb-1">No tours currently listed</p>
+                <p className="text-gray-500 text-xs">Please check back soon.</p>
               </div>
             ) : (
               displayTours.map((tour, idx) => (
-                <div key={idx} className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group flex flex-col">
-
-                  {/* Image */}
-                  <Link href={`/${region}/tours/${tour.slug}`} className="relative block overflow-hidden h-[200px] shrink-0">
-                    <img
-                      src={tour.image_url || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800'}
-                      alt={tour.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      onError={(e: any) => { e.target.src = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800'; }}
-                    />
-                    {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
-                    {/* Duration pill */}
-                    <div className="absolute bottom-3 left-3">
-                      <span className="bg-white/95 backdrop-blur-sm text-[#191974] text-[11px] font-black px-3 py-1.5 rounded-full shadow-sm">
+                <div key={idx} className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col">
+                  <Link href={`/${region}/tours/${tour.slug}`} className="relative block h-[180px] shrink-0 overflow-hidden">
+                    <img src={tour.image_url} alt={tour.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                    <div className="absolute bottom-2 left-2">
+                      <span className="bg-white/90 backdrop-blur-sm text-[#191974] text-[10px] font-black px-2.5 py-1 rounded-lg">
                         {tour.duration}
                       </span>
                     </div>
-                    {/* Rating */}
-                    <div className="absolute top-3 right-3">
-                      <span className="bg-[#191974]/80 backdrop-blur-sm text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
-                        <svg className="w-3 h-3 fill-yellow-400 text-yellow-400" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
-                        {tour.rating || '4.8'}
-                      </span>
-                    </div>
                   </Link>
-
-                  {/* Card Body */}
                   <div className="p-4 flex flex-col flex-1">
-                    <p className="text-[10px] font-bold text-[#ee2229] uppercase tracking-widest mb-1">Explorer</p>
+                    <p className="text-[10px] font-black text-[#ee2229] uppercase tracking-widest mb-1">Best Seller</p>
                     <Link href={`/${region}/tours/${tour.slug}`}>
-                      <p className="text-[16px] font-inter font-black text-[#191974] mb-3 leading-snug hover:text-[#ee2229] transition-colors line-clamp-2">
+                      <h3 className="text-sm font-black text-[#191974] mb-3 leading-snug line-clamp-2 hover:text-[#ee2229] transition-colors uppercase">
                         {tour.title}
-                      </p>
+                      </h3>
                     </Link>
-
-                    {/* Includes Row */}
-                    <div className="flex items-center justify-between py-3 border-t border-b border-gray-100 mb-3">
-                      <span className="text-[11px] font-bold text-gray-500">Tour Includes</span>
-                      <div className="flex gap-2 text-[#ee2229]">
-                        {/* Hotel */}
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-                        {/* Meals */}
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        {/* Sightseeing */}
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.069A1 1 0 0121 8.868V19a1 1 0 01-1.447.894L15 17M3 8h12v9H3z" /></svg>
-                      </div>
-                    </div>
-
-                    {/* Price */}
                     <div className="mt-auto">
-                      <div className="flex items-end justify-between mb-3">
+                      <div className="flex items-end justify-between mb-3 border-t border-gray-50 pt-3">
                         <div>
-                          <p className="text-[10px] text-gray-400 mb-0.5">All-inclusive from</p>
-                          <p className="text-[20px] font-black text-[#191974] leading-none tracking-tight">
-                            {formatRegionalPrice(tour.base_price_inr, region)}
-                          </p>
+                          <p className="text-[9px] text-gray-400 font-bold uppercase mb-0.5">Starting at</p>
+                          <p className="text-lg font-black text-[#191974]">{formatRegionalPrice(tour.base_price_inr, region)}</p>
                         </div>
                         <div className="text-right">
-                          <p className="text-[10px] font-bold text-[#ee2229]">EMI from</p>
-                          <p className="text-[12px] font-black text-[#191974]">₹5,259/mo</p>
+                          <p className="text-[9px] font-bold text-[#ee2229] uppercase">EMI</p>
+                          <p className="text-[10px] font-black text-[#191974]">₹5,259/mo</p>
                         </div>
                       </div>
-
-                      {/* Buttons */}
                       <div className="grid grid-cols-2 gap-2">
-                        <Link
-                          href={`/${region}/tours/${tour.slug}`}
-                          className="border border-[#191974] text-[#191974] py-2.5 rounded-xl text-[12px] font-bold text-center hover:bg-[#191974]/5 transition-colors"
-                        >
-                          View Details
-                        </Link>
-                        <button
-                          type="button"
-                          className="book-now-btn bg-[#191974] text-white py-2.5 rounded-xl text-[12px] font-bold hover:bg-[#ee2229] transition-all shadow-sm"
-                          data-package={tour.title}
-                          data-price={tour.base_price_inr.toLocaleString('en-IN')}
-                          data-original-price={(tour.base_price_inr * 1.25).toLocaleString('en-IN')}
-                        >
-                          Book Now
-                        </button>
+                        <Link href={`/${region}/tours/${tour.slug}`} className="border border-[#191974] text-[#191974] py-2 rounded-lg text-[11px] font-black text-center hover:bg-[#191974]/5 uppercase">Details</Link>
+                        <button className="book-now-btn bg-[#191974] text-white py-2 rounded-lg text-[11px] font-black hover:bg-[#ee2229] uppercase shadow-lg shadow-blue-500/10" data-package={tour.title}>Book Now</button>
                       </div>
                     </div>
                   </div>
-
                 </div>
               ))
             )}
@@ -410,223 +297,97 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         </div>
       </section>
 
-
-      {/* Featured Offers Banner Section (Ref Image Layout) */}
-      <section className="pb-20 bg-white">
+      {/* Featured Offers Banner Section */}
+      <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="relative w-full h-[400px] lg:h-[500px] rounded-[12px] overflow-hidden group shadow-2xl">
-            {/* Background Image */}
+          <div className="relative w-full h-[400px] lg:h-[450px] rounded-[24px] overflow-hidden group shadow-2xl">
             <motion.img
               key={offerSlides[activeOffer].image}
-              initial={{ opacity: 0, scale: 1.1 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
               src={offerSlides[activeOffer].image}
-              alt={offerSlides[activeOffer].title}
               className="absolute inset-0 w-full h-full object-cover"
+              initial={{ scale: 1.1 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.8 }}
             />
-            {/* Dark Overlay Wrapper */}
-            <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/40 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-r from-black/90 via-black/40 to-transparent" />
 
-            {/* Banner Content Container */}
-            <motion.div
-              key={offerSlides[activeOffer].title}
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative h-full flex flex-col justify-center px-10 lg:px-20 text-white max-w-2xl"
-            >
-
-              <div className="flex items-start gap-4 mb-3">
-                <div className="w-2 h-14 bg-[#ee2229] rounded-full shrink-0" />
+            <div className="relative h-full flex flex-col justify-center px-10 lg:px-20 text-white max-w-2xl">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-1.5 h-12 bg-[#ee2229] rounded-full" />
                 <div>
-                  <p className="text-[14px] lg:text-[16px] font-bold tracking-widest mb-1 opacity-90  leading-none font-inter-tight">Specials</p>
-                  <h2 className="text-[32px] lg:text-[40px] font-black leading-tight text-white tracking-tight  font-inter">{offerSlides[activeOffer].title}</h2>
+                  <p className="text-xs font-black tracking-[0.3em] uppercase opacity-70 mb-1">Featured Offer</p>
+                  <h2 className="text-3xl lg:text-4xl font-black uppercase tracking-tight">{offerSlides[activeOffer].title}</h2>
                 </div>
               </div>
 
-              {/* Destination Stops */}
-              <div className="flex flex-wrap items-center gap-3 mb-8 text-[14px] font-arial font-bold  tracking-widest text-[#ee2229]">
-                {offerSlides[activeOffer].stops.map((stop, sIdx) => (
-                  <React.Fragment key={stop}>
-                    <span>{stop}</span>
-                    {sIdx < offerSlides[activeOffer].stops.length - 1 && <span className="w-1.5 h-1.5 rounded-full bg-white opacity-40" />}
-                  </React.Fragment>
-                ))}
-              </div>
-
-              {/* Timing and Pricing */}
-              <div className="mb-10">
-                <p className="text-[26px] font-light font-inter mb-2 text-white/90">
+              <div className="mb-8">
+                <p className="text-xl font-light mb-2 text-white/90">
                   {offerSlides[activeOffer].details.split('₹')[0]} <span className="text-[#ee2229] font-black">₹{offerSlides[activeOffer].details.split('₹')[1]}</span>
                 </p>
-                <p className="text-[14px] font-arial leading-relaxed opacity-60 max-w-md">
-                  {offerSlides[activeOffer].desc}
-                </p>
+                <p className="text-[13px] opacity-60 max-w-md font-medium leading-relaxed uppercase tracking-wider">{offerSlides[activeOffer].desc}</p>
               </div>
 
-              {/* Action and Disclaimer */}
-              <div className="flex flex-col items-start gap-3">
-                <button
-                  type="button"
-                  className="book-now-btn bg-[#ee2229] hover:bg-[#191974] text-white px-14 py-4 rounded-lg font-black text-[14px] font-inter-tight transition-all transform active:scale-95 shadow-2xl  tracking-widest"
-                  data-package={offerSlides[activeOffer].title}
-                  data-price={offerSlides[activeOffer].details.split('₹')[1]}
-                  data-original-price="0"
-                >
-                  Confirm Booking
-                </button>
-                <p className="text-[10px] opacity-30 font-bold  tracking-widest mt-2">*TERMS AND CONDITIONS APPLY</p>
-              </div>
-            </motion.div>
-
-            {/* Navigation Chevrons */}
-            <div className="absolute top-1/2 -translate-y-1/2 flex justify-between w-full px-6">
-              <button
-                onClick={handlePrevOffer}
-                className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center hover:bg-white/40 transition-all cursor-pointer border border-white/10 group/btn shadow-lg"
-              >
-                <svg className="w-6 h-6 text-white group-hover/btn:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
-              </button>
-              <button
-                onClick={handleNextOffer}
-                className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center hover:bg-white/40 transition-all cursor-pointer border border-white/10 group/btn shadow-lg"
-              >
-                <svg className="w-6 h-6 text-white group-hover/btn:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
-              </button>
+              <button className="book-now-btn bg-[#ee2229] border border-[#ee2229] hover:bg-transparent text-white px-10 py-3.5 rounded-lg font-black text-xs uppercase tracking-[0.2em] transition-all transform active:scale-95 shadow-xl shadow-red-500/30" data-package={offerSlides[activeOffer].title}>Book Journey</button>
             </div>
 
-            {/* Pagination Dots */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2">
-              {offerSlides.map((_, dotIdx) => (
-                <div
-                  key={dotIdx}
-                  onClick={() => setActiveOffer(dotIdx)}
-                  className={`h-1.5 rounded-full transition-all cursor-pointer ${dotIdx === activeOffer ? 'w-12 bg-[#ffcc00]' : 'w-8 bg-white/30 hover:bg-white/50'}`}
-                />
-              ))}
+            <div className="absolute top-1/2 -translate-y-1/2 flex justify-between w-full px-6 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button onClick={handlePrevOffer} className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-[#ee2229] hover:border-[#ee2229] transition-all cursor-pointer"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" /></svg></button>
+              <button onClick={handleNextOffer} className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-[#ee2229] hover:border-[#ee2229] transition-all cursor-pointer"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg></button>
             </div>
-
-            {/* Floating Info-Blue Badge (Bottom Right Ref) */}
-
-
           </div>
         </div>
       </section>
 
-      {/* STATISTICS HIGHLIGHT SECTION */}
-      <section className="py-24 bg-[#191974] relative overflow-hidden">
-        {/* Abstract Background Shapes */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#ee2229]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />
-
+      {/* STATISTICS HIGHLIGHT */}
+      <section className="py-12 bg-[#191974] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          {/* Section Heading */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-20"
-          >
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter leading-tight lg:leading-[1.1]">
-              Trusted by <span className="relative inline-block">
-                Millions
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: "100%" }}
-                  transition={{ duration: 1, delay: 0.5 }}
-                  className="absolute -bottom-2 left-0 h-2 bg-[#ee2229] rounded-full"
-                ></motion.div>
-              </span> Around the World
-            </h2>
-            <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto font-medium">
-              Delivering unforgettable travel experiences with excellence and trust.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-6">
-            {[
-              { val: 4, suffix: "M+", label: "Happy Customers", icon: <Users className="w-8 h-8" /> },
-              { val: 28, suffix: "K+", label: "Total Destinations", icon: <Globe className="w-8 h-8" /> },
-              { val: 40, suffix: "+", label: "Years of Experience", icon: <Award className="w-8 h-8" /> },
-              { val: 10, suffix: "K+", label: "5-Star Ratings", icon: <StarIcon className="w-8 h-8" /> }
-            ].map((stat, idx) => {
-              const [count, setCount] = useState(0);
-              const target = stat.val;
-
-              return (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  onViewportEnter={() => {
-                    let start = 0;
-                    const duration = 2000;
-                    const stepTime = Math.abs(Math.floor(duration / target));
-                    const timer = setInterval(() => {
-                      start += 1;
-                      setCount(start);
-                      if (start >= target) clearInterval(timer);
-                    }, stepTime);
-                  }}
-                  transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.05)" }}
-                  className="flex flex-col items-center text-center p-10 rounded-4xl border border-white/10 backdrop-blur-sm transition-all shadow-2xl group"
-                >
-                  <div className="w-16 h-16 bg-[#ee2229] rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl shadow-[#ee2229]/20 group-hover:shadow-[#ee2229]/40 transition-all group-hover:-rotate-6">
-                    {stat.icon}
-                  </div>
-                  <h3 className="text-[42px] md:text-[48px] font-black text-white leading-none mb-3 font-inter tracking-tighter">
-                    {count}{stat.suffix}
-                  </h3>
-                  <p className="text-[14px] md:text-[16px] font-medium text-white/60  tracking-[0.2em] font-inter">
-                    {stat.label}
-                  </p>
-                </motion.div>
-              );
-            })}
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-4 uppercase tracking-tighter">Trusted by Millions Worldwide</h2>
+            <div className="w-20 h-1 bg-[#ee2229] mx-auto rounded-full" />
           </div>
-        </div>
-      </section>
 
-      {/* AWARDS & RECOGNITIONS */}
-      <AwardsSection />
-
-      {/* WHY CHOOSE US */}
-      <section className="py-32 bg-white relative">
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-[32px] font-black font-inter text-[#191974] mb-4  tracking-tight">Why Choose Madura Travel</h2>
-            <p className="text-[26px] text-gray-400 font-inter font-light">Premium services designed for the seamless holiday experience.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: "All Inclusive Packages", desc: "Flights, visas, accommodations, and meals are entirely covered." },
-              { title: "Expert Tour Managers", desc: "Travel with seasoned professionals who take care of every detail." },
-              { title: "Premium Hotels", desc: "Rest in beautifully curated 4-star and 5-star properties globally." }
-            ].map((feat, idx) => (
-              <div key={idx} className="group relative bg-[#191974]/5 border border-[#191974]/10 p-10 rounded-3xl hover:bg-[#191974]/10 transition-colors overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-[#ee2229] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
-                <div className="w-14 h-14 bg-white rounded-2xl shadow-xl flex items-center justify-center mb-6 text-[#191974]">
-                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" /></svg>
-                </div>
-                <h3 className="text-[20px] font-bold text-[#171717] mb-3">{feat.title}</h3>
-                <p className="text-gray-600 font-inter-tight leading-relaxed">{feat.desc}</p>
+              { val: "4M+", label: "Happy Customers", icon: <Users className="w-6 h-6" /> },
+              { val: "28K+", label: "Destinations", icon: <Globe className="w-6 h-6" /> },
+              { val: "40+", label: "Years Experience", icon: <Award className="w-6 h-6" /> },
+              { val: "10K+", label: "5-Star Ratings", icon: <StarIcon className="w-6 h-6" /> }
+            ].map((stat, idx) => (
+              <div key={idx} className="flex flex-col items-center text-center p-6 rounded-2xl border border-white/5 bg-white/5 backdrop-blur-sm">
+                <div className="w-12 h-12 bg-[#ee2229] rounded-xl flex items-center justify-center text-white mb-4 shadow-lg shadow-red-500/20">{stat.icon}</div>
+                <h3 className="text-3xl font-black text-white mb-1 uppercase tracking-tighter">{stat.val}</h3>
+                <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">{stat.label}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-32 bg-[#f8f9ff] border-y border-gray-100 overflow-hidden flex flex-col items-center relative">
-        <div className="absolute left-0 top-0 w-64 h-64 bg-red-500/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2" />
+      <AwardsSection />
 
-        <div className="text-center mb-16 relative z-10 w-full max-w-7xl px-4">
-          <h2 className="text-[36px] font-black font-inter text-[#191974] mb-3  tracking-tighter">Guest Testimonials</h2>
-          <div className="w-24 h-1.5 bg-[#ee2229] mx-auto rounded-full mb-6" />
-          <p className="text-[22px] text-gray-400 font-inter font-light max-w-2xl mx-auto">Hear from those who&apos;ve experienced the world with Madura Travel.</p>
+      <section className="py-12 bg-white relative">
+        <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
+          <h2 className="text-[24px] font-black text-[#191974] mb-2 uppercase tracking-tight">Why Choose Madura Travel</h2>
+          <p className="text-gray-400 font-bold mb-10 uppercase tracking-widest text-[12px]">Setting the standard for premium global travel.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { title: "All Inclusive", desc: "Flights, visas, stays, and meals - everything taken care of." },
+              { title: "Expert Support", desc: "Travel with seasoned professionals at every step." },
+              { title: "Premium Stays", desc: "Handpicked 4-star and 5-star properties worldwide." }
+            ].map((feat, idx) => (
+              <div key={idx} className="bg-gray-50 border border-gray-100 p-8 rounded-2xl hover:bg-white hover:shadow-xl transition-all">
+                <h3 className="font-black text-[#191974] mb-2 uppercase text-sm">{feat.title}</h3>
+                <p className="text-xs text-gray-500 font-medium leading-relaxed">{feat.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-[#F8F9FF] flex flex-col items-center">
+        <div className="text-center mb-10 px-4">
+          <h2 className="text-2xl font-black text-[#191974] mb-2 uppercase">Guest Testimonials</h2>
+          <p className="text-gray-400 font-bold uppercase tracking-widest text-[11px]">Real experiences from real travelers.</p>
         </div>
         <InfiniteMovingCards
           speed="slow"
@@ -638,9 +399,6 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
           ]}
         />
       </section>
-
-
-
 
       <PopupForm />
     </div>

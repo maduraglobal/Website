@@ -144,7 +144,7 @@ export default function BookingPage() {
                   </div>
                   <div>
                     <span className="text-[11px] font-black text-[#ee2229]  tracking-widest mb-1 block">Selected Package</span>
-                    <h3 className="text-[26px] font-inter font-light tracking-tight">{tourSlug.replace(/-/g, ' ').to()}</h3>
+                    <h3 className="text-[26px] font-inter font-light tracking-tight">{tourSlug.replace(/-/g, ' ').toUpperCase()}</h3>
                   </div>
                 </div>
                 <div className="text-right border-l border-white/10 pl-8 hidden md:block">
