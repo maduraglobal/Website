@@ -42,7 +42,7 @@ export default function DestinationPage() {
         await new Promise(resolve => setTimeout(resolve, 600));
 
         // Mock Destination Data
-        const titleFormatted = slug ? slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : 'Europe';
+        const titleFormatted = slug ? slug.split('-').map(w => w.charAt(0).to() + w.slice(1)).join(' ') : 'Europe';
 
         const mockResponse: DestinationDetail = {
           id: `dest_${slug}`,
@@ -101,7 +101,7 @@ export default function DestinationPage() {
       <section className={`relative w-full h-[50vh] min-h-[400px] flex items-center justify-center bg-linear-to-tr ${destination.heroImage} overflow-hidden`}>
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto text-white">
-          <h1 className="text-[32px] font-black font-inter mb-4 drop-shadow-xl uppercase tracking-tight">
+          <h1 className="text-[32px] font-black font-inter mb-4 drop-shadow-xl  tracking-tight">
             {destination.title}
           </h1>
           <p className="text-[26px] font-inter font-light drop-shadow-lg opacity-90 max-w-2xl mx-auto leading-tight">
@@ -113,21 +113,21 @@ export default function DestinationPage() {
       {/* RELATED TOURS */}
       <section className="py-20 max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-[32px] font-black font-inter text-[#191974] mb-3 uppercase tracking-tight">Popular {destination.title} Packages</h2>
+          <h2 className="text-[32px] font-black font-inter text-[#191974] mb-3  tracking-tight">Popular {destination.title} Packages</h2>
           <p className="text-[26px] text-gray-400 font-inter font-light max-w-2xl mx-auto leading-tight">Explore our most sought-after itineraries.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {destination.relatedTours.map((tour) => (
             <div key={tour.id} className="group relative flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all">
-               <Link href={`/${region}/tours/${tour.slug}`} className="absolute inset-0 z-20"></Link>
+              <Link href={`/${region}/tours/${tour.slug}`} className="absolute inset-0 z-20"></Link>
               <div className={`h-64 w-full relative overflow-hidden flex items-center justify-center bg-linear-to-tr ${tour.imgColor}`}>
-                <div className="absolute top-5 left-5 bg-[#ee2229] text-white px-3 py-1 rounded-sm text-[11px] font-black tracking-widest uppercase shadow-xl z-20">
+                <div className="absolute top-5 left-5 bg-[#ee2229] text-white px-3 py-1 rounded-sm text-[11px] font-black tracking-widest  shadow-xl z-20">
                   {tour.tags[0]}
                 </div>
               </div>
               <div className="p-8 flex flex-col flex-1">
-                <span className="text-[12px] font-black text-[#ee2229] mb-4 uppercase tracking-widest flex items-center font-inter-tight">
+                <span className="text-[12px] font-black text-[#ee2229] mb-4  tracking-widest flex items-center font-inter-tight">
                   <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   {tour.duration}
                 </span>
@@ -138,7 +138,7 @@ export default function DestinationPage() {
 
                 <div className="mt-auto pt-6 border-t border-gray-100 flex justify-between items-end">
                   <div className="flex flex-col">
-                    <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Total Price</span>
+                    <span className="text-[10px] text-gray-400 font-bold  tracking-widest mb-1">Total Price</span>
                     <span className="font-black text-[24px] text-[#191974] tracking-tighter">
                       {formatRegionalPrice(tour.baseInrPrice, region)}
                     </span>
@@ -156,9 +156,9 @@ export default function DestinationPage() {
       {/* SEO Section (Mock) */}
       <section className="bg-gray-50 py-24 border-t border-gray-100 relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <h3 className="text-[26px] font-black font-inter text-[#191974] mb-6 uppercase tracking-wider">Why Choose This Destination?</h3>
+          <h3 className="text-[26px] font-black font-inter text-[#191974] mb-6  tracking-wider">Why Choose This Destination?</h3>
           <p className="text-[14px] text-gray-600 leading-relaxed font-arial max-w-2xl mx-auto">
-            Booking a trip to {destination.title} with our specialized platform ensures a hassle-free and fully immersive experience. We partner with local experts to provide hidden gems alongside popular attractions. 
+            Booking a trip to {destination.title} with our specialized platform ensures a hassle-free and fully immersive experience. We partner with local experts to provide hidden gems alongside popular attractions.
           </p>
         </div>
       </section>

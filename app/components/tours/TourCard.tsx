@@ -45,7 +45,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
         {/* Badges */}
         <div className="absolute top-4 left-4 flex flex-col gap-2">
           {tags.slice(0, 2).map((tag: string, i: number) => (
-            <span key={i} className={`text-xs font-bold px-3 py-1.5 rounded-md uppercase tracking-wider shadow-sm ${i === 0 ? 'bg-[#ee2229] text-white' : 'bg-white text-[#191974]'}`}>
+            <span key={i} className={`text-xs font-bold px-3 py-1.5 rounded-md  tracking-wider shadow-sm ${i === 0 ? 'bg-[#ee2229] text-white' : 'bg-white text-[#191974]'}`}>
               {tag}
             </span>
           ))}
@@ -90,7 +90,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
             </div>
 
             <div className="pt-2">
-              <p className="text-[14px] font-black text-[#191974] mb-2 uppercase tracking-tight">Tour Highlights:</p>
+              <p className="text-[14px] font-black text-[#191974] mb-2  tracking-tight">Tour Highlights:</p>
               <ul className="text-[14px] text-gray-600 space-y-1 font-arial">
                 {(tour.highlights || ['Premium Accommodation', 'Sightseeing Transfers', 'All Meals Included']).slice(0, 3).map((hl: string, i: number) => (
                   <li key={i} className="flex items-start gap-2">
@@ -105,7 +105,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
           {/* Pricing & CTA */}
           <div className="md:w-56 shrink-0 flex flex-col justify-end md:items-end border-t md:border-t-0 md:border-l border-gray-100 pt-4 md:pt-0 md:pl-6">
             <div className="text-left md:text-right w-full mb-4 md:mb-6">
-              <p className="text-[10px] text-gray-400 uppercase font-black tracking-widest mb-1">Starting From</p>
+              <p className="text-[10px] text-gray-400  font-black tracking-widest mb-1">Starting From</p>
               <div className="flex md:flex-col items-baseline md:items-end gap-2 md:gap-0">
                 <span className="text-2xl font-black text-[#171717] font-inter">{formatPrice(price)}</span>
                 <span className="text-[11px] text-gray-500 font-arial">per person on twin sharing</span>
@@ -116,20 +116,20 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
             <div className="space-y-2.5 w-full flex flex-col relative z-20 font-inter-tight">
               <Link
                 href={`/${region}/destination/${destinationSlug}/tours/${tour.slug || tour.id}`}
-                className="w-full block text-center bg-[#ee2229] hover:bg-[#d41c23] text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-red-500/20 transition-all text-[15px] uppercase tracking-wider"
+                className="w-full block text-center bg-[#ee2229] hover:bg-[#d41c23] text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-red-500/20 transition-all text-[15px]  tracking-wider"
               >
                 Book Now
               </Link>
               <div className="grid grid-cols-2 gap-2 w-full">
                 <Link
                   href={`/${region}/destination/${destinationSlug}/tours/${tour.slug || tour.id}`}
-                  className="w-full block text-center border-2 border-gray-100 hover:border-[#191974] hover:text-[#191974] text-gray-700 font-bold py-2.5 px-2 rounded-xl transition-all text-[12px] bg-white uppercase tracking-tighter"
+                  className="w-full block text-center border-2 border-gray-100 hover:border-[#191974] hover:text-[#191974] text-gray-700 font-bold py-2.5 px-2 rounded-xl transition-all text-[12px] bg-white  tracking-tighter"
                 >
                   View Details
                 </Link>
                 <Link
                   href={`/${region}/destination/${destinationSlug}/tours/${tour.slug || tour.id}#enquire`}
-                  className="w-full block text-center border-2 border-gray-100 hover:border-[#191974] hover:text-[#191974] text-gray-700 font-bold py-2.5 px-2 rounded-xl transition-all text-[12px] bg-white uppercase tracking-tighter"
+                  className="w-full block text-center border-2 border-gray-100 hover:border-[#191974] hover:text-[#191974] text-gray-700 font-bold py-2.5 px-2 rounded-xl transition-all text-[12px] bg-white  tracking-tighter"
                 >
                   Enquire
                 </Link>

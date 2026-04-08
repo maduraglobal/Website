@@ -93,7 +93,7 @@ export default function AntigravityTourDetail() {
                 <div className="absolute -inset-1 bg-linear-to-r from-purple-600 to-blue-600 rounded-3xl blur opacity-0 group-hover:opacity-20 transition duration-1000 group-hover:duration-200"></div>
                 <div className="relative z-10">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                    <span className="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-bold  tracking-wider">
                       Premium Edition
                     </span>
                     <span className="flex items-center gap-1 text-yellow-400 text-sm font-semibold">
@@ -155,7 +155,7 @@ export default function AntigravityTourDetail() {
                   <Clock className="w-6 h-6 text-blue-400" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 uppercase tracking-widest">Duration</p>
+                  <p className="text-sm text-gray-400  tracking-widest">Duration</p>
                   <p className="text-xl font-bold text-white">6 Days / 5 Nights</p>
                 </div>
               </div>
@@ -165,7 +165,7 @@ export default function AntigravityTourDetail() {
                   <MapPin className="w-6 h-6 text-purple-400" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-gray-400 uppercase tracking-widest">Route</p>
+                  <p className="text-sm text-gray-400  tracking-widest">Route</p>
                   <div className="flex items-center gap-2 text-white font-medium mt-1 text-sm md:text-base flex-wrap">
                     Delhi <ChevronRight className="w-4 h-4 text-gray-500" />
                     Shimla <ChevronRight className="w-4 h-4 text-gray-500" />
@@ -284,8 +284,8 @@ export default function AntigravityTourDetail() {
                     key={tab}
                     onClick={() => setActiveTab(tab)}
                     className={`flex-1 py-3 px-4 rounded-xl text-sm font-semibold capitalize transition-all whitespace-nowrap ${activeTab === tab
-                        ? 'bg-linear-to-r from-blue-600/80 to-purple-600/80 text-white shadow-lg'
-                        : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      ? 'bg-linear-to-r from-blue-600/80 to-purple-600/80 text-white shadow-lg'
+                      : 'text-gray-400 hover:text-white hover:bg-white/5'
                       }`}
                   >
                     {tab}
@@ -319,7 +319,7 @@ export default function AntigravityTourDetail() {
 
             {/* 10. Contact / Callback Form */}
             <div className="relative overflow-hidden rounded-3xl border border-white/10 p-8 md:p-10">
-               <div className="absolute inset-0 bg-linear-to-br from-purple-900/20 to-black z-0"></div>
+              <div className="absolute inset-0 bg-linear-to-br from-purple-900/20 to-black z-0"></div>
               <div className="relative z-10 grid md:grid-cols-2 gap-10 items-center">
                 <div>
                   <h3 className="text-3xl font-bold text-white mb-4">Want a Custom Experience?</h3>
@@ -361,7 +361,7 @@ export default function AntigravityTourDetail() {
                   {/* Price info */}
                   <div>
                     <div className="flex justify-between items-start mb-2">
-                      <p className="text-gray-400 text-sm tracking-widest uppercase">Total Price</p>
+                      <p className="text-gray-400 text-sm tracking-widest ">Total Price</p>
                       <span className="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded font-bold border border-green-500/20">20% OFF</span>
                     </div>
                     <div className="flex items-end gap-3">
@@ -386,13 +386,13 @@ export default function AntigravityTourDetail() {
                     </h4>
                     <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
                       {/* Active Date */}
-                       <button className="shrink-0 w-24 p-3 rounded-xl bg-purple-600/20 border-2 border-purple-500 relative flex flex-col items-center justify-center overflow-hidden">
-                        <div className="absolute top-0 right-0 left-0 bg-purple-500 text-[9px] font-bold text-white text-center py-0.5 uppercase">Lowest</div>
+                      <button className="shrink-0 w-24 p-3 rounded-xl bg-purple-600/20 border-2 border-purple-500 relative flex flex-col items-center justify-center overflow-hidden">
+                        <div className="absolute top-0 right-0 left-0 bg-purple-500 text-[9px] font-bold text-white text-center py-0.5 ">Lowest</div>
                         <span className="text-gray-300 text-xs mt-3">Dec</span>
                         <span className="text-xl font-bold text-white">12</span>
                         <span className="text-[10px] text-green-400 mt-1">₹44k</span>
                       </button>
-                       {/* Other Dates */}
+                      {/* Other Dates */}
                       {[15, 22, 28].map(day => (
                         <button key={day} className="shrink-0 w-24 p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex flex-col items-center justify-center">
                           <span className="text-gray-400 text-xs">Dec</span>
@@ -408,7 +408,7 @@ export default function AntigravityTourDetail() {
                     <button className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/10 font-bold py-4 rounded-xl transition-all shadow-sm">
                       Check Dates & Prices
                     </button>
-                     <button className="relative w-full overflow-hidden group bg-linear-to-r from-blue-600 to-purple-600 text-white font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_30px_rgba(168,85,247,0.6)]">
+                    <button className="relative w-full overflow-hidden group bg-linear-to-r from-blue-600 to-purple-600 text-white font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_30px_rgba(168,85,247,0.6)]">
                       <span className="relative z-10">Proceed to Book</span>
                       <div className="absolute inset-0 h-full w-full bg-linear-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </button>
@@ -422,7 +422,7 @@ export default function AntigravityTourDetail() {
 
               {/* People also viewed (AI Recommendation Widget) */}
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md">
-                <h4 className="text-sm font-bold text-gray-300 uppercase tracking-wider mb-4">You might also love</h4>
+                <h4 className="text-sm font-bold text-gray-300  tracking-wider mb-4">You might also love</h4>
                 <div className="space-y-4">
                   <div className="flex gap-4 items-center group cursor-pointer">
                     <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=150" alt="Kashmir" className="w-16 h-16 rounded-xl object-cover transition-transform group-hover:scale-105" />
@@ -446,7 +446,7 @@ export default function AntigravityTourDetail() {
       </main>
 
       {/* AI Trip Assistant Chatbot Floating FAB */}
-       <button className="fixed bottom-6 right-6 w-14 h-14 bg-linear-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.5)] hover:scale-110 transition-transform z-50 group border-2 border-purple-400/30">
+      <button className="fixed bottom-6 right-6 w-14 h-14 bg-linear-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.5)] hover:scale-110 transition-transform z-50 group border-2 border-purple-400/30">
         <Bot className="w-6 h-6 text-white" />
         <span className="absolute right-full mr-4 bg-black/80 backdrop-blur-md text-white text-sm px-4 py-2 rounded-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity border border-white/10 pointer-events-none">
           Ask AI Assistant
@@ -454,7 +454,7 @@ export default function AntigravityTourDetail() {
       </button>
 
       {/* Extra styles for hiding scrollbars nicely */}
-       <style dangerouslySetInnerHTML={{
+      <style dangerouslySetInnerHTML={{
         __html: `
         .no-scrollbar::-webkit-scrollbar {
           display: none;

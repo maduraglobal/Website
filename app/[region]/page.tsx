@@ -114,7 +114,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
   return (
     <div className="flex flex-col min-h-screen bg-background text-[#171717] font-arial text-[14px]">
       {/* HERO SECTION - 60vh */}
-      <section className="relative w-full h-[60vh] flex flex-col pt-16 lg:pt-20 pb-8 overflow-visible">
+      <section className="relative w-full h-[70vh] flex flex-col pt-16 lg:pt-20 pb-8 overflow-visible">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -130,7 +130,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         <div className="max-w-7xl mx-auto w-full px-6 lg:px-8 relative z-10 flex-1 flex flex-col lg:flex-row items-center justify-between mt-10">
           {/* Left Text */}
           <div className="w-full text-[#191974] space-y-4 md:space-y-6 mb-10 md:mb-12 lg:mb-0">
-            <h1 className="text-[32px] md:text-[65px] font-black font-inter tracking-tight uppercase leading-[1.1] text-white drop-shadow-xl text-center lg:text-left mt-10 md:mt-0">
+            <h1 className="text-[32px] md:text-[65px] font-black font-inter tracking-tight  leading-[1.1] text-white drop-shadow-xl text-center lg:text-left mt-10 md:mt-0">
               The World is Waiting.<br />
               Start Exploring.
             </h1>
@@ -140,28 +140,28 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
           </div>
 
           {/* Right Carousel */}
-          <div className="w-full lg:w-[50%] flex flex-col items-center lg:items-end relative mt-2 lg:mt-0 lg:-translate-y-12 z-20">
-            <div className="flex gap-4 overflow-visible w-full justify-end pr-8 lg:pr-12 relative">
-              {/* Card 1 */}
+          {/* <div className="w-full lg:w-[50%] flex flex-col items-center lg:items-end relative mt-2 lg:mt-0 lg:-translate-y-12 z-20">
+            <div className="flex gap-4 overflow-visible w-full justify-end pr-8 lg:pr-12 relative"> */}
+          {/* Card 1
               <div className="w-[140px] md:w-[180px] lg:w-[220px] h-[180px] md:h-[220px] lg:h-[260px] shrink-0 rounded-[16px] lg:rounded-[20px] overflow-hidden relative shadow-lg transition-transform hover:scale-[1.02] cursor-pointer bg-gray-900 border border-white/20">
                 <img key={heroSlides[activeHero].card1} src={heroSlides[activeHero].card1} alt="Card 1" className="w-full h-full object-cover" />
               </div>
               {/* Card 2 */}
-              <div className="w-[140px] md:w-[180px] lg:w-[220px] h-[180px] md:h-[220px] lg:h-[260px] shrink-0 rounded-[16px] lg:rounded-[20px] overflow-hidden relative shadow-lg transition-transform hover:scale-[1.02] cursor-pointer bg-gray-900 border border-white/20 hidden sm:block">
+          {/* <div className="w-[140px] md:w-[180px] lg:w-[220px] h-[180px] md:h-[220px] lg:h-[260px] shrink-0 rounded-[16px] lg:rounded-[20px] overflow-hidden relative shadow-lg transition-transform hover:scale-[1.02] cursor-pointer bg-gray-900 border border-white/20 hidden sm:block">
                 <img key={heroSlides[activeHero].card2} src={heroSlides[activeHero].card2} alt="Card 2" className="w-full h-full object-cover" />
-              </div>
+              </div>  */}
 
-              {/* Carousel Controls */}
-              <div className="absolute -right-2 md:right-0 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-50">
+          {/* Carousel Controls */}
+          {/* <div className="absolute -right-2 md:right-0 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-50">
                 <button onClick={handlePrevSlide} className="w-8 h-8 lg:w-9 lg:h-9 rounded-full bg-white/90 backdrop-blur-xl hover:bg-white flex items-center justify-center text-[#191974]/60 transition-all border border-white/40 cursor-pointer shadow-xl hover:scale-110 active:scale-90">
                   <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
                 </button>
                 <button onClick={handleNextSlide} className="w-8 h-8 lg:w-9 lg:h-9 rounded-full bg-white/90 backdrop-blur-xl hover:bg-white flex items-center justify-center text-[#191974]/60 transition-all border border-white/40 cursor-pointer shadow-xl hover:scale-110 active:scale-90">
                   <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                 </button>
-              </div>
-            </div>
-          </div>
+              </div> */}
+          {/* </div>
+          </div> */}
         </div>
       </section>
 
@@ -171,7 +171,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
           <div className="flex flex-col lg:flex-row items-center border border-gray-200 rounded-2xl md:rounded-full bg-white shadow-2xl py-2 px-3 transition-shadow hover:shadow-[0_25px_60px_rgba(0,0,0,0.15)]">
             {/* Depart From */}
             <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer">
-              <label className="text-[10px] uppercase font-black tracking-widest text-[#ee2229] mb-0.5">Depart From</label>
+              <label className="text-[10px]  font-black tracking-widest text-[#ee2229] mb-0.5">Depart From</label>
               <div className="flex items-center justify-between w-full">
                 <input
                   type="text"
@@ -184,7 +184,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
             {/* Going To */}
             <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer">
-              <label className="text-[10px] uppercase font-black tracking-widest text-[#ee2229] mb-0.5">Going To</label>
+              <label className="text-[10px]  font-black tracking-widest text-[#ee2229] mb-0.5">Going To</label>
               <div className="flex items-center justify-between w-full">
                 <input
                   type="text"
@@ -197,7 +197,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
             {/* Month */}
             <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer relative">
-              <label className="text-[10px] uppercase font-black tracking-widest text-[#ee2229] mb-0.5">Month</label>
+              <label className="text-[10px]  font-black tracking-widest text-[#ee2229] mb-0.5">Month</label>
               <div className="relative w-full flex items-center justify-between">
                 <select className="w-full text-[14px] font-bold text-gray-900 outline-none bg-transparent appearance-none cursor-pointer">
                   <option value="">Any Month</option>
@@ -211,7 +211,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
             {/* Search Button */}
             <div className="w-full lg:w-auto p-1 flex h-full">
-              <button className="w-full lg:w-[120px] bg-[#ee2229] hover:bg-[#d11920] text-white font-black py-3 px-6 rounded-full transition-all shadow-md active:scale-95 text-[13px] uppercase tracking-widest flex items-center justify-center gap-2">
+              <button className="w-full lg:w-[120px] bg-[#ee2229] hover:bg-[#d11920] text-white font-black py-3 px-6 rounded-full transition-all shadow-md active:scale-95 text-[13px]  tracking-widest flex items-center justify-center gap-2">
                 <span>Search</span>
               </button>
             </div>
@@ -227,7 +227,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
       <section className="pt-12 pb-8 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-10">
-            <h2 className="font-inter text-[16px] font-black text-[#191974] mb-2 uppercase tracking-tight">Top Destinations</h2>
+            <h2 className="font-inter text-[16px] font-black text-[#191974] mb-2  tracking-tight">Top Destinations</h2>
             <p className="font-inter text-[16px] text-gray-400 font-light">Discover the world&apos;s most sought-after holiday spots.</p>
           </div>
 
@@ -243,18 +243,18 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               <Link
                 key={idx}
                 href={`/${region}/destination/${card.slug}`}
-                className="relative w-[320px] md:w-[320px] lg:w-[320px] h-[300px] md:h-[360px] lg:h-[300px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block rounded-2xl"
+                className="relative w-[400px] md:w-[400px] lg:w-[320px] h-[250px] aspect-square overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block rounded-2xl"
               >
                 <img src={card.image} alt={card.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/10 to-black/90 pointer-events-none" />
 
                 <div className="absolute top-6 left-6 right-6">
-                  <h3 className="text-white text-[24px] md:text-[28px] font-black leading-tight drop-shadow-lg uppercase tracking-tight">{card.name}</h3>
+                  <p className="text-white text-[24px] md:text-[24px] font-inter leading-tight tracking-tight">{card.name}</p>
                 </div>
 
                 <div className="absolute bottom-6 left-6 right-6">
-                  <p className="text-white/80 text-[12px] md:text-[14px] font-bold mb-1 drop-shadow-md uppercase tracking-widest">Starting from</p>
-                  <p className="text-white font-black text-[20px] md:text-[24px] tracking-tighter drop-shadow-xl">{formatRegionalPrice(card.basePrice, region)}</p>
+                  <p className="text-white text-[12px] md:text-[14px] font-inter mb-1 drop-shadow-md  tracking-widest">Starting from</p>
+                  <p className="text-white  text-[14px] md:text-[16px]  text-inter tracking-tighter drop-shadow-xl">{formatRegionalPrice(card.basePrice, region)}</p>
                 </div>
               </Link>
             ))}
@@ -292,15 +292,15 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
             <div>
-              <h2 className="font-inter text-[16px] font-black text-[#191974] mb-2 uppercase tracking-tight">Featured Tours</h2>
+              <h2 className="font-inter text-[16px] font-black text-[#191974] mb-2  tracking-tight">Featured Tours</h2>
               <p className="font-inter text-[16px] text-gray-400 font-light">Explore some of our most popular tours selected for you.</p>
             </div>
-            <button className="font-inter-tight text-[14px] font-bold text-[#191974] border border-gray-200 rounded-full px-6 py-2.5 hover:bg-gray-50 transition-colors whitespace-nowrap uppercase tracking-widest">
+            <button className="font-inter-tight text-[14px] font-bold text-[#191974] border border-gray-200 rounded-full px-6 py-2.5 hover:bg-gray-50 transition-colors whitespace-nowrap  tracking-widest">
               Explore all &rsaquo;
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {loading ? (
               <div className="col-span-full py-20 text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#191974] mx-auto mb-4"></div>
@@ -318,81 +318,81 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               </div>
             ) : (
               displayTours.map((tour, idx) => (
-                <div key={idx} className="bg-white border border-gray-200 rounded-[12px] overflow-hidden shadow-sm flex flex-col group transition-all hover:shadow-xl font-arial">
-                  <Link href={`/${region}/tours/${tour.slug}`} className="cursor-pointer">
-                    {/* Image Section */}
-                    <div className="relative h-[240px] overflow-hidden">
-                      <img
-                        src={tour.image_url || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800'}
-                        alt={tour.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        onError={(e: any) => {
-                          e.target.src = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800';
-                        }}
-                      />
-                      {/* Top Badges */}
-                      <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-[#ee2229] flex items-center justify-center text-white font-black text-[10px] shadow-md border border-white/20">
-                          XD
-                        </div>
-                        <div className="bg-white/90 backdrop-blur-sm text-gray-900 text-[11px] font-bold px-3 py-1 rounded-full shadow-sm">
-                          {tour.duration}
-                        </div>
-                      </div>
-                      {/* Map Button */}
-                      <div className="absolute bottom-3 right-3">
-                        <button className="bg-black/50 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1.5 hover:bg-black/70 transition-colors">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.88-2.88 7.19-5 9.88C9.92 16.19 7 11.85 7 9z" /><circle cx="12" cy="9" r="2.5" /></svg>
-                          Map
-                        </button>
-                      </div>
+                <div key={idx} className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group flex flex-col">
+
+                  {/* Image */}
+                  <Link href={`/${region}/tours/${tour.slug}`} className="relative block overflow-hidden h-[200px] shrink-0">
+                    <img
+                      src={tour.image_url || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800'}
+                      alt={tour.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={(e: any) => { e.target.src = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800'; }}
+                    />
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
+                    {/* Duration pill */}
+                    <div className="absolute bottom-3 left-3">
+                      <span className="bg-white/95 backdrop-blur-sm text-[#191974] text-[11px] font-black px-3 py-1.5 rounded-full shadow-sm">
+                        {tour.duration}
+                      </span>
+                    </div>
+                    {/* Rating */}
+                    <div className="absolute top-3 right-3">
+                      <span className="bg-[#191974]/80 backdrop-blur-sm text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+                        <svg className="w-3 h-3 fill-yellow-400 text-yellow-400" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
+                        {tour.rating || '4.8'}
+                      </span>
                     </div>
                   </Link>
 
-                  {/* Content Section */}
-                  <div className="p-5 flex flex-col flex-1">
-                    <p className="text-[12px] text-gray-500 font-medium mb-1 font-inter-tight">Explorer</p>
+                  {/* Card Body */}
+                  <div className="p-4 flex flex-col flex-1">
+                    <p className="text-[10px] font-bold text-[#ee2229] uppercase tracking-widest mb-1">Explorer</p>
                     <Link href={`/${region}/tours/${tour.slug}`}>
-                      <h3 className="text-[18px] font-bold text-[#191974] mb-3 leading-tight font-inter hover:text-[#ee2229] transition-colors">
+                      <p className="text-[16px] font-inter font-black text-[#191974] mb-3 leading-snug hover:text-[#ee2229] transition-colors line-clamp-2">
                         {tour.title}
-                      </h3>
+                      </p>
                     </Link>
 
-                    <p className="text-[14px] text-gray-500 mb-4 font-arial uppercase tracking-wide">1 Dates Available</p>
-
-                    {/* Icon Grid */}
-                    <div className="flex items-center justify-between mb-5 border-t border-gray-50 pt-4">
-                      <span className="text-[14px] font-bold text-gray-800">Tour Includes</span>
-                      <div className="flex gap-3 text-[#ee2229]">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    {/* Includes Row */}
+                    <div className="flex items-center justify-between py-3 border-t border-b border-gray-100 mb-3">
+                      <span className="text-[11px] font-bold text-gray-500">Tour Includes</span>
+                      <div className="flex gap-2 text-[#ee2229]">
+                        {/* Hotel */}
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                        {/* Meals */}
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        {/* Sightseeing */}
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.069A1 1 0 0121 8.868V19a1 1 0 01-1.447.894L15 17M3 8h12v9H3z" /></svg>
                       </div>
                     </div>
 
-                    {/* Price Section */}
-                    <div className="bg-gray-50 -mx-5 px-5 py-5 mt-auto border-t border-gray-100">
-                      <div className="flex justify-between items-start mb-5">
+                    {/* Price */}
+                    <div className="mt-auto">
+                      <div className="flex items-end justify-between mb-3">
                         <div>
-                          <p className="text-[11px] text-gray-500 font-medium mb-1 leading-none">All inclusive price starts</p>
-                          <p className="text-[24px] font-black text-[#191974] leading-none tracking-tighter">
+                          <p className="text-[10px] text-gray-400 mb-0.5">All-inclusive from</p>
+                          <p className="text-[20px] font-black text-[#191974] leading-none tracking-tight">
                             {formatRegionalPrice(tour.base_price_inr, region)}
                           </p>
                         </div>
                         <div className="text-right">
-                          <p className="text-[10px] font-bold text-[#ee2229] uppercase">EMI from</p>
+                          <p className="text-[10px] font-bold text-[#ee2229]">EMI from</p>
                           <p className="text-[12px] font-black text-[#191974]">₹5,259/mo</p>
                         </div>
                       </div>
 
-                      {/* Action Buttons */}
-                      <div className="grid grid-cols-2 gap-3">
-                        <Link href={`/${region}/tours/${tour.slug}`} className="border border-[#191974] text-[#191974] py-2.5 rounded-lg text-[13px] font-bold text-center font-inter-tight hover:bg-[#ee2229]/5 transition-colors uppercase tracking-widest">
+                      {/* Buttons */}
+                      <div className="grid grid-cols-2 gap-2">
+                        <Link
+                          href={`/${region}/tours/${tour.slug}`}
+                          className="border border-[#191974] text-[#191974] py-2.5 rounded-xl text-[12px] font-bold text-center hover:bg-[#191974]/5 transition-colors"
+                        >
                           View Details
                         </Link>
-                        <button 
+                        <button
                           type="button"
-                          className="book-now-btn bg-[#191974] text-white py-2.5 rounded-lg text-[13px] font-bold text-center font-inter-tight hover:bg-[#ee2229] transition-all shadow-md uppercase tracking-widest"
+                          className="book-now-btn bg-[#191974] text-white py-2.5 rounded-xl text-[12px] font-bold hover:bg-[#ee2229] transition-all shadow-sm"
                           data-package={tour.title}
                           data-price={tour.base_price_inr.toLocaleString('en-IN')}
                           data-original-price={(tour.base_price_inr * 1.25).toLocaleString('en-IN')}
@@ -402,12 +402,14 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                       </div>
                     </div>
                   </div>
+
                 </div>
               ))
             )}
           </div>
         </div>
       </section>
+
 
       {/* Featured Offers Banner Section (Ref Image Layout) */}
       <section className="pb-20 bg-white">
@@ -438,13 +440,13 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               <div className="flex items-start gap-4 mb-3">
                 <div className="w-2 h-14 bg-[#ee2229] rounded-full shrink-0" />
                 <div>
-                  <p className="text-[14px] lg:text-[16px] font-bold tracking-widest mb-1 opacity-90 uppercase leading-none font-inter-tight">Specials</p>
-                  <h2 className="text-[32px] lg:text-[40px] font-black leading-tight text-white tracking-tight uppercase font-inter">{offerSlides[activeOffer].title}</h2>
+                  <p className="text-[14px] lg:text-[16px] font-bold tracking-widest mb-1 opacity-90  leading-none font-inter-tight">Specials</p>
+                  <h2 className="text-[32px] lg:text-[40px] font-black leading-tight text-white tracking-tight  font-inter">{offerSlides[activeOffer].title}</h2>
                 </div>
               </div>
 
               {/* Destination Stops */}
-              <div className="flex flex-wrap items-center gap-3 mb-8 text-[14px] font-arial font-bold uppercase tracking-widest text-[#ee2229]">
+              <div className="flex flex-wrap items-center gap-3 mb-8 text-[14px] font-arial font-bold  tracking-widest text-[#ee2229]">
                 {offerSlides[activeOffer].stops.map((stop, sIdx) => (
                   <React.Fragment key={stop}>
                     <span>{stop}</span>
@@ -465,16 +467,16 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
               {/* Action and Disclaimer */}
               <div className="flex flex-col items-start gap-3">
-                <button 
+                <button
                   type="button"
-                  className="book-now-btn bg-[#ee2229] hover:bg-[#191974] text-white px-14 py-4 rounded-lg font-black text-[14px] font-inter-tight transition-all transform active:scale-95 shadow-2xl uppercase tracking-widest"
+                  className="book-now-btn bg-[#ee2229] hover:bg-[#191974] text-white px-14 py-4 rounded-lg font-black text-[14px] font-inter-tight transition-all transform active:scale-95 shadow-2xl  tracking-widest"
                   data-package={offerSlides[activeOffer].title}
                   data-price={offerSlides[activeOffer].details.split('₹')[1]}
                   data-original-price="0"
                 >
                   Confirm Booking
                 </button>
-                <p className="text-[10px] opacity-30 font-bold uppercase tracking-widest mt-2">*TERMS AND CONDITIONS APPLY</p>
+                <p className="text-[10px] opacity-30 font-bold  tracking-widest mt-2">*TERMS AND CONDITIONS APPLY</p>
               </div>
             </motion.div>
 
@@ -579,7 +581,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                   <h3 className="text-[42px] md:text-[48px] font-black text-white leading-none mb-3 font-inter tracking-tighter">
                     {count}{stat.suffix}
                   </h3>
-                  <p className="text-[14px] md:text-[16px] font-medium text-white/60 uppercase tracking-[0.2em] font-inter">
+                  <p className="text-[14px] md:text-[16px] font-medium text-white/60  tracking-[0.2em] font-inter">
                     {stat.label}
                   </p>
                 </motion.div>
@@ -596,7 +598,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
       <section className="py-32 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <div className="text-center mb-20">
-            <h2 className="text-[32px] font-black font-inter text-[#191974] mb-4 uppercase tracking-tight">Why Choose Madura Travel</h2>
+            <h2 className="text-[32px] font-black font-inter text-[#191974] mb-4  tracking-tight">Why Choose Madura Travel</h2>
             <p className="text-[26px] text-gray-400 font-inter font-light">Premium services designed for the seamless holiday experience.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -622,7 +624,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         <div className="absolute left-0 top-0 w-64 h-64 bg-red-500/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2" />
 
         <div className="text-center mb-16 relative z-10 w-full max-w-7xl px-4">
-          <h2 className="text-[36px] font-black font-inter text-[#191974] mb-3 uppercase tracking-tighter">Guest Testimonials</h2>
+          <h2 className="text-[36px] font-black font-inter text-[#191974] mb-3  tracking-tighter">Guest Testimonials</h2>
           <div className="w-24 h-1.5 bg-[#ee2229] mx-auto rounded-full mb-6" />
           <p className="text-[22px] text-gray-400 font-inter font-light max-w-2xl mx-auto">Hear from those who&apos;ve experienced the world with Madura Travel.</p>
         </div>

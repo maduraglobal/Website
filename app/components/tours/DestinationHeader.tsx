@@ -29,7 +29,7 @@ export default function DestinationHeader({ destinationName, totalTours }: Desti
             <h1 className="text-4xl md:text-5xl font-black mb-3 text-white capitalize tracking-tighter font-inter">
               {destinationName} Tour Packages
             </h1>
-            <p className="text-white/80 text-[14px] font-arial uppercase tracking-widest">
+            <p className="text-white/80 text-[14px] font-arial  tracking-widest">
               Showing 1-{Math.min(10, totalTours)} of {totalTours} packages
             </p>
           </div>
@@ -39,7 +39,7 @@ export default function DestinationHeader({ destinationName, totalTours }: Desti
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
             </span>
-            <span className="text-sm font-bold tracking-wider uppercase text-white">
+            <span className="text-sm font-bold tracking-wider  text-white">
               {totalTours} Tours Ongoing Now
             </span>
           </div>

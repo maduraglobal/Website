@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <BookingProvider>
           <Navbar />
-          <main className="flex-1 pt-28">
+          <main className="flex-1 pt-16">
             {children}
           </main>
           <Footer />

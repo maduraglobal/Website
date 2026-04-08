@@ -72,7 +72,7 @@ export default function BookingPage() {
                   }`}>
                   {step > st ? <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg> : st}
                 </div>
-                <span className={`text-[11px] font-black uppercase tracking-[0.2em] font-inter-tight ${step >= st ? 'text-[#191974]' : 'text-gray-300'}`}>
+                <span className={`text-[11px] font-black  tracking-[0.2em] font-inter-tight ${step >= st ? 'text-[#191974]' : 'text-gray-300'}`}>
                   {st === 1 ? 'Details' : st === 2 ? 'Review' : 'Payment'}
                 </span>
               </div>
@@ -86,27 +86,27 @@ export default function BookingPage() {
           {/* STEP 1: USER DETAILS */}
           {step === 1 && (
             <div className="p-10 md:p-16 flex-1 flex flex-col">
-              <h2 className="text-[32px] font-black font-inter text-[#191974] mb-8 uppercase tracking-tight text-center">Guest Information</h2>
+              <h2 className="text-[32px] font-black font-inter text-[#191974] mb-8  tracking-tight text-center">Guest Information</h2>
               <form onSubmit={handleNextStep} className="flex flex-col gap-8 flex-1">
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="flex flex-col gap-2.5">
-                    <label className="text-[11px] font-black text-[#191974] uppercase tracking-widest opacity-60">First Name</label>
+                    <label className="text-[11px] font-black text-[#191974]  tracking-widest opacity-60">First Name</label>
                     <input required type="text" name="firstName" value={formData.firstName} onChange={handleChange} className="border-b-2 border-gray-100 px-0 py-3 outline-none focus:border-[#ee2229] transition-all font-bold text-[#191974] placeholder:text-gray-200" placeholder="e.g. Rahul" />
                   </div>
                   <div className="flex flex-col gap-2.5">
-                    <label className="text-[11px] font-black text-[#191974] uppercase tracking-widest opacity-60">Last Name</label>
+                    <label className="text-[11px] font-black text-[#191974]  tracking-widest opacity-60">Last Name</label>
                     <input required type="text" name="lastName" value={formData.lastName} onChange={handleChange} className="border-b-2 border-gray-100 px-0 py-3 outline-none focus:border-[#ee2229] transition-all font-bold text-[#191974] placeholder:text-gray-200" placeholder="e.g. Sharma" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="flex flex-col gap-2.5">
-                    <label className="text-[11px] font-black text-[#191974] uppercase tracking-widest opacity-60">Email Address</label>
+                    <label className="text-[11px] font-black text-[#191974]  tracking-widest opacity-60">Email Address</label>
                     <input required type="email" name="email" value={formData.email} onChange={handleChange} className="border-b-2 border-gray-100 px-0 py-3 outline-none focus:border-[#ee2229] transition-all font-bold text-[#191974] placeholder:text-gray-200" placeholder="rahul@example.com" />
                   </div>
                   <div className="flex flex-col gap-2.5">
-                    <label className="text-[11px] font-black text-[#191974] uppercase tracking-widest opacity-60">Mobile Number</label>
+                    <label className="text-[11px] font-black text-[#191974]  tracking-widest opacity-60">Mobile Number</label>
                     <input required type="tel" name="phone" value={formData.phone} onChange={handleChange} className="border-b-2 border-gray-100 px-0 py-3 outline-none focus:border-[#ee2229] transition-all font-bold text-[#191974] placeholder:text-gray-200" placeholder="+91 90000 00000" />
                   </div>
                 </div>
@@ -114,17 +114,17 @@ export default function BookingPage() {
                 <div className="pt-10 mt-auto flex flex-col md:flex-row items-center justify-between border-t border-gray-50 gap-6">
                   <div className="flex items-center gap-6">
                     <div className="flex flex-col gap-1">
-                      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Travelers</label>
+                      <label className="text-[10px] font-bold text-gray-400  tracking-widest">Travelers</label>
                       <select name="pax" value={formData.pax} onChange={handleChange} className="bg-transparent font-black text-[#ee2229] outline-none cursor-pointer text-[16px]">
                         {[1, 2, 3, 4, 5, 6].map(v => <option key={v} value={v}>{v} {v === 1 ? 'Person' : 'People'}</option>)}
                       </select>
                     </div>
                     <div className="flex flex-col gap-1 border-l border-gray-100 pl-6">
-                      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Date</label>
+                      <label className="text-[10px] font-bold text-gray-400  tracking-widest">Date</label>
                       <input required type="date" name="date" value={formData.date} onChange={handleChange} className="bg-transparent font-black text-[#ee2229] outline-none cursor-pointer text-[16px]" />
                     </div>
                   </div>
-                  <button type="submit" className="w-full md:w-auto bg-[#ee2229] hover:bg-[#191974] text-white px-14 py-4 rounded-xl font-black text-[14px] font-inter-tight uppercase tracking-widest transition-all shadow-xl shadow-red-500/20 active:scale-95">
+                  <button type="submit" className="w-full md:w-auto bg-[#ee2229] hover:bg-[#191974] text-white px-14 py-4 rounded-xl font-black text-[14px] font-inter-tight  tracking-widest transition-all shadow-xl shadow-red-500/20 active:scale-95">
                     Verify Details &rsaquo;
                   </button>
                 </div>
@@ -135,7 +135,7 @@ export default function BookingPage() {
           {/* STEP 2: REVIEW BOOKING */}
           {step === 2 && (
             <div className="p-10 md:p-16 flex-1 flex flex-col">
-              <h2 className="text-[32px] font-black font-inter text-[#191974] mb-10 uppercase tracking-tight text-center">Review Confirmation</h2>
+              <h2 className="text-[32px] font-black font-inter text-[#191974] mb-10  tracking-tight text-center">Review Confirmation</h2>
 
               <div className="bg-[#191974] rounded-2xl p-8 mb-10 flex flex-col md:flex-row gap-8 items-center justify-between text-white shadow-2xl">
                 <div className="flex items-center gap-6">
@@ -143,34 +143,34 @@ export default function BookingPage() {
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
                   </div>
                   <div>
-                    <span className="text-[11px] font-black text-[#ee2229] uppercase tracking-widest mb-1 block">Selected Package</span>
-                    <h3 className="text-[26px] font-inter font-light tracking-tight">{tourSlug.replace(/-/g, ' ').toUpperCase()}</h3>
+                    <span className="text-[11px] font-black text-[#ee2229]  tracking-widest mb-1 block">Selected Package</span>
+                    <h3 className="text-[26px] font-inter font-light tracking-tight">{tourSlug.replace(/-/g, ' ').to()}</h3>
                   </div>
                 </div>
                 <div className="text-right border-l border-white/10 pl-8 hidden md:block">
-                  <span className="text-[11px] font-bold text-white/40 uppercase tracking-wider block mb-1">Total Amount Due</span>
+                  <span className="text-[11px] font-bold text-white/40  tracking-wider block mb-1">Total Amount Due</span>
                   <span className="text-[32px] font-black text-[#ee2229] leading-none tracking-tighter">{formatRegionalPrice(totalBaseInrPrice, region)}</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
                 <div className="space-y-4">
-                  <h4 className="text-[12px] font-black text-[#191974] uppercase tracking-widest border-b-2 border-[#191974]/5 pb-3">Primary Guest</h4>
+                  <h4 className="text-[12px] font-black text-[#191974]  tracking-widest border-b-2 border-[#191974]/5 pb-3">Primary Guest</h4>
                   <div className="space-y-1">
                     <p className="font-black text-[#191974] text-[18px] mb-1">{formData.firstName} {formData.lastName}</p>
-                    <p className="text-gray-400 font-bold uppercase text-[11px] tracking-wide">{formData.email}</p>
-                    <p className="text-gray-400 font-bold uppercase text-[11px] tracking-wide">{formData.phone}</p>
+                    <p className="text-gray-400 font-bold  text-[11px] tracking-wide">{formData.email}</p>
+                    <p className="text-gray-400 font-bold  text-[11px] tracking-wide">{formData.phone}</p>
                   </div>
                 </div>
                 <div className="space-y-4">
-                  <h4 className="text-[12px] font-black text-[#191974] uppercase tracking-widest border-b-2 border-[#191974]/5 pb-3">Booking Details</h4>
+                  <h4 className="text-[12px] font-black text-[#191974]  tracking-widest border-b-2 border-[#191974]/5 pb-3">Booking Details</h4>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <p className="text-[10px] text-gray-400 font-bold uppercase mb-1">Travelers</p>
+                      <p className="text-[10px] text-gray-400 font-bold  mb-1">Travelers</p>
                       <p className="font-black text-[#ee2229]">{formData.pax} Person(s)</p>
                     </div>
                     <div>
-                      <p className="text-[10px] text-gray-400 font-bold uppercase mb-1">Date</p>
+                      <p className="text-[10px] text-gray-400 font-bold  mb-1">Date</p>
                       <p className="font-black text-[#ee2229]">{formData.date}</p>
                     </div>
                   </div>
@@ -178,10 +178,10 @@ export default function BookingPage() {
               </div>
 
               <div className="mt-auto flex flex-col md:flex-row justify-between items-center pt-10 border-t border-gray-50 gap-6">
-                <button onClick={() => setStep(1)} className="text-[#191974] font-black text-[12px] uppercase tracking-widest hover:text-[#ee2229] transition-colors font-inter-tight">
+                <button onClick={() => setStep(1)} className="text-[#191974] font-black text-[12px]  tracking-widest hover:text-[#ee2229] transition-colors font-inter-tight">
                   &larr; Modify Details
                 </button>
-                <button onClick={() => setStep(3)} className="w-full md:w-auto bg-[#ee2229] hover:bg-[#191974] text-white px-16 py-4 rounded-xl font-black text-[14px] font-inter-tight uppercase tracking-[0.2em] transition-all shadow-2xl active:scale-95">
+                <button onClick={() => setStep(3)} className="w-full md:w-auto bg-[#ee2229] hover:bg-[#191974] text-white px-16 py-4 rounded-xl font-black text-[14px] font-inter-tight  tracking-[0.2em] transition-all shadow-2xl active:scale-95">
                   Proceed to Payment
                 </button>
               </div>
@@ -194,13 +194,13 @@ export default function BookingPage() {
               <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-8 shadow-inner">
                 <svg className="w-12 h-12 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
               </div>
-              <h2 className="text-[32px] font-black font-inter text-[#191974] mb-4 uppercase tracking-tight text-center">Final Step</h2>
+              <h2 className="text-[32px] font-black font-inter text-[#191974] mb-4  tracking-tight text-center">Final Step</h2>
               <p className="text-[26px] font-inter font-light text-gray-400 mb-10 max-w-2xl leading-tight">Authorize a total payment of <strong className="text-[#ee2229] font-black">{formatRegionalPrice(totalBaseInrPrice, region)}</strong></p>
 
               <button
                 onClick={initiatePayment}
                 disabled={loading}
-                className="w-full max-w-md bg-[#ee2229] hover:bg-[#191974] disabled:opacity-50 text-white py-5 rounded-2xl text-[14px] font-black font-inter-tight uppercase tracking-[0.3em] transition-all shadow-2xl flex items-center justify-center mb-6 active:scale-95"
+                className="w-full max-w-md bg-[#ee2229] hover:bg-[#191974] disabled:opacity-50 text-white py-5 rounded-2xl text-[14px] font-black font-inter-tight  tracking-[0.3em] transition-all shadow-2xl flex items-center justify-center mb-6 active:scale-95"
               >
                 {loading ? (
                   <div className="w-6 h-6 border-4 border-white/20 border-t-white rounded-full animate-spin"></div>
@@ -208,7 +208,7 @@ export default function BookingPage() {
                   "Complete Secure Payment"
                 )}
               </button>
-              <button onClick={() => setStep(2)} className="text-gray-300 font-bold uppercase text-[11px] tracking-widest hover:text-[#191974] transition-colors">
+              <button onClick={() => setStep(2)} className="text-gray-300 font-bold  text-[11px] tracking-widest hover:text-[#191974] transition-colors">
                 Cancel Transaction
               </button>
             </div>
@@ -218,16 +218,16 @@ export default function BookingPage() {
           {step === 4 && (
             <div className="p-10 md:p-16 flex-1 flex flex-col items-center justify-center text-center">
               <div className="mb-10 relative">
-                <div className="absolute inset-0 bg-green-500 rounded-full blur-[40px] opacity-20 animate-pulse"></div>
+                <div className="absolute inset-0 bg-green-500 rounded-full blur-2xl opacity-20 animate-pulse"></div>
                 <div className="w-32 h-32 bg-green-50 rounded-full flex items-center justify-center relative border-4 border-white">
                   <svg className="w-16 h-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                 </div>
               </div>
-              <h2 className="text-[32px] font-black font-inter text-[#191974] mb-4 uppercase tracking-tighter">Your Journey Begins!</h2>
+              <h2 className="text-[32px] font-black font-inter text-[#191974] mb-4  tracking-tighter">Your Journey Begins!</h2>
               <p className="text-[26px] text-gray-400 font-inter font-light mb-12 max-w-2xl leading-tight">
                 Booking reference <span className="text-[#ee2229] font-black">#MAD{Math.floor(Math.random() * 8999) + 1000}</span> is now active.
               </p>
-              <button onClick={() => router.push(`/${region}/tours`)} className="bg-[#191974] text-white px-16 py-5 rounded-xl font-black text-[14px] font-inter-tight uppercase tracking-widest hover:bg-[#ee2229] transition-all shadow-xl active:scale-95">
+              <button onClick={() => router.push(`/${region}/tours`)} className="bg-[#191974] text-white px-16 py-5 rounded-xl font-black text-[14px] font-inter-tight  tracking-widest hover:bg-[#ee2229] transition-all shadow-xl active:scale-95">
                 Return to Gallery
               </button>
             </div>

@@ -73,14 +73,14 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#ee2229] rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-white rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-[48px] md:text-[72px] font-black text-white uppercase tracking-tighter leading-none mb-6">
+            <h1 className="text-[48px] md:text-[72px] font-black text-white  tracking-tighter leading-none mb-6">
               What Our <span className="text-[#ee2229]">Guests Say</span>
             </h1>
             <p className="text-[18px] md:text-[22px] text-white/60 font-light max-w-2xl mx-auto">
@@ -91,7 +91,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
               {stats.map((s, i) => (
                 <div key={i} className="text-center">
                   <p className="text-[36px] font-black text-white leading-none mb-1">{s.val}</p>
-                  <p className="text-[12px] text-white/40 uppercase tracking-widest font-bold">{s.label}</p>
+                  <p className="text-[12px] text-white/40  tracking-widest font-bold">{s.label}</p>
                 </div>
               ))}
             </div>
@@ -102,7 +102,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
       {/* ── FEATURED TESTIMONIAL ── */}
       <section className="py-24 px-6 relative -mt-16 z-20">
         <div className="max-w-5xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -110,10 +110,10 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
           >
             <div className="md:w-1/3 text-center">
               <div className="relative w-40 h-40 mx-auto mb-6">
-                <Image 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300" 
-                  alt="Featured Customer" 
-                  width={160} height={160} 
+                <Image
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300"
+                  alt="Featured Customer"
+                  width={160} height={160}
                   className="rounded-full border-4 border-[#ee2229]/20"
                 />
                 <div className="absolute -bottom-2 -right-2 bg-[#ee2229] w-10 h-10 rounded-full flex items-center justify-center text-white border-4 border-white">
@@ -121,9 +121,9 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
                 </div>
               </div>
               <h3 className="text-[24px] font-black text-[#191974]">Vikram Sathya</h3>
-              <p className="text-gray-400 font-bold uppercase tracking-widest text-[11px]">USA Grand Tour</p>
+              <p className="text-gray-400 font-bold  tracking-widest text-[11px]">USA Grand Tour</p>
             </div>
-            
+
             <div className="md:w-2/3 relative">
               <Quote className="absolute -top-10 -left-10 w-24 h-24 text-gray-400/10" />
               <div className="flex gap-1 mb-4">
@@ -146,7 +146,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonials.map((t, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -158,18 +158,18 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
                   <Image src={t.image} alt={t.name} width={60} height={60} className="rounded-2xl grayscale group-hover:grayscale-0 transition-all" />
                   <div>
                     <p className="text-[17px] font-black text-[#191974] leading-none mb-1">{t.name}</p>
-                    <p className="text-[11px] text-[#ee2229] font-bold uppercase tracking-widest">{t.role}</p>
+                    <p className="text-[11px] text-[#ee2229] font-bold  tracking-widest">{t.role}</p>
                   </div>
                 </div>
-                
+
                 <div className="flex gap-1 mb-4">
                   {[...Array(t.stars)].map((_, i) => <Star key={i} className="w-4 h-4 fill-[#ee2229] text-[#ee2229]" />)}
                 </div>
-                
+
                 <p className="text-gray-600 font-light leading-relaxed mb-6 italic">
                   "{t.quote}"
                 </p>
-                
+
                 <div className="pt-4 border-t border-gray-50 flex items-center gap-2 text-gray-400 text-[13px] font-medium">
                   <MapPin className="w-4 h-4 text-gray-300" />
                   {t.location}
@@ -177,9 +177,9 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
               </motion.div>
             ))}
           </div>
-          
+
           <div className="text-center mt-20">
-            <button className="bg-transparent border-2 border-[#191974] text-[#191974] px-10 py-4 rounded-full font-black uppercase tracking-widest hover:bg-[#191974] hover:text-white transition-all">
+            <button className="bg-transparent border-2 border-[#191974] text-[#191974] px-10 py-4 rounded-full font-black  tracking-widest hover:bg-[#191974] hover:text-white transition-all">
               Load More Stories
             </button>
           </div>

@@ -16,7 +16,7 @@ export default function MICEPage() {
       <div className="w-full bg-[#191974] py-24 text-center text-white relative overflow-hidden">
         <div className="absolute top-[-120px] right-[-120px] w-[500px] h-[500px] bg-[#ee2229] opacity-15 rounded-full blur-[120px]"></div>
         <div className="max-w-7xl mx-auto px-4 relative z-10 flex flex-col items-center">
-          <span className="bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-[12px] font-bold uppercase tracking-widest mb-6">Corporate Travel</span>
+          <span className="bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-[12px] font-bold  tracking-widest mb-6">Corporate Travel</span>
           <h1 className="text-[40px] md:text-[56px] font-bold font-inter mb-4 leading-tight">MICE Travel</h1>
           <p className="font-inter-tight opacity-90 max-w-3xl text-[16px] md:text-[18px]">Meetings, Incentives, Conferences & Exhibitions — expertly managed corporate travel for businesses of all sizes.</p>
         </div>
@@ -73,28 +73,28 @@ export default function MICEPage() {
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="flex flex-col gap-1">
-                    <label className="text-[12px] font-bold text-gray-600 tracking-wide uppercase px-1">Company</label>
-                    <input required type="text" className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] focus:ring-1 focus:ring-[#191974] bg-gray-50 focus:bg-white" onChange={e => setFormData({...formData, company: e.target.value})} />
+                    <label className="text-[12px] font-bold text-gray-600 tracking-wide  px-1">Company</label>
+                    <input required type="text" className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] focus:ring-1 focus:ring-[#191974] bg-gray-50 focus:bg-white" onChange={e => setFormData({ ...formData, company: e.target.value })} />
                   </div>
                   <div className="flex flex-col gap-1">
-                    <label className="text-[12px] font-bold text-gray-600 tracking-wide uppercase px-1">Contact Person</label>
-                    <input required type="text" className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] focus:ring-1 focus:ring-[#191974] bg-gray-50 focus:bg-white" onChange={e => setFormData({...formData, name: e.target.value})} />
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div className="flex flex-col gap-1">
-                    <label className="text-[12px] font-bold text-gray-600 tracking-wide uppercase px-1">Email</label>
-                    <input required type="email" className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] focus:ring-1 focus:ring-[#191974] bg-gray-50 focus:bg-white" onChange={e => setFormData({...formData, email: e.target.value})} />
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <label className="text-[12px] font-bold text-gray-600 tracking-wide uppercase px-1">Phone</label>
-                    <input required type="tel" className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] focus:ring-1 focus:ring-[#191974] bg-gray-50 focus:bg-white" onChange={e => setFormData({...formData, phone: e.target.value})} />
+                    <label className="text-[12px] font-bold text-gray-600 tracking-wide  px-1">Contact Person</label>
+                    <input required type="text" className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] focus:ring-1 focus:ring-[#191974] bg-gray-50 focus:bg-white" onChange={e => setFormData({ ...formData, name: e.target.value })} />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="flex flex-col gap-1">
-                    <label className="text-[12px] font-bold text-gray-600 tracking-wide uppercase px-1">Event Type</label>
-                    <select required className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] bg-gray-50 focus:bg-white cursor-pointer" onChange={e => setFormData({...formData, eventType: e.target.value})}>
+                    <label className="text-[12px] font-bold text-gray-600 tracking-wide  px-1">Email</label>
+                    <input required type="email" className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] focus:ring-1 focus:ring-[#191974] bg-gray-50 focus:bg-white" onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <label className="text-[12px] font-bold text-gray-600 tracking-wide  px-1">Phone</label>
+                    <input required type="tel" className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] focus:ring-1 focus:ring-[#191974] bg-gray-50 focus:bg-white" onChange={e => setFormData({ ...formData, phone: e.target.value })} />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="flex flex-col gap-1">
+                    <label className="text-[12px] font-bold text-gray-600 tracking-wide  px-1">Event Type</label>
+                    <select required className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] bg-gray-50 focus:bg-white cursor-pointer" onChange={e => setFormData({ ...formData, eventType: e.target.value })}>
                       <option value="">Select...</option>
                       <option>Meeting / Offsite</option>
                       <option>Incentive Trip</option>
@@ -103,8 +103,8 @@ export default function MICEPage() {
                     </select>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <label className="text-[12px] font-bold text-gray-600 tracking-wide uppercase px-1">Group Size</label>
-                    <select required className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] bg-gray-50 focus:bg-white cursor-pointer" onChange={e => setFormData({...formData, groupSize: e.target.value})}>
+                    <label className="text-[12px] font-bold text-gray-600 tracking-wide  px-1">Group Size</label>
+                    <select required className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] bg-gray-50 focus:bg-white cursor-pointer" onChange={e => setFormData({ ...formData, groupSize: e.target.value })}>
                       <option value="">Select...</option>
                       <option>10-25</option>
                       <option>25-50</option>
@@ -115,8 +115,8 @@ export default function MICEPage() {
                   </div>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <label className="text-[12px] font-bold text-gray-600 tracking-wide uppercase px-1">Details</label>
-                  <textarea rows={3} className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] bg-gray-50 focus:bg-white resize-none" onChange={e => setFormData({...formData, message: e.target.value})}></textarea>
+                  <label className="text-[12px] font-bold text-gray-600 tracking-wide  px-1">Details</label>
+                  <textarea rows={3} className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] bg-gray-50 focus:bg-white resize-none" onChange={e => setFormData({ ...formData, message: e.target.value })}></textarea>
                 </div>
                 <button type="submit" className="w-full bg-[#ee2229] hover:bg-[#d61e24] text-white py-4 rounded-xl font-bold text-[16px] transition-all shadow-md mt-2">Submit MICE Enquiry</button>
               </form>

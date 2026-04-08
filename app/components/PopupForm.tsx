@@ -123,7 +123,7 @@ export default function PopupForm() {
 
                 <button
                   type="submit"
-                  className="w-full bg-[#f4a021] hover:bg-[#e89410] text-black font-black py-4.5 rounded-2xl text-[16px] transition-all shadow-xl shadow-orange-500/20 active:scale-[0.98] mt-4 uppercase tracking-widest"
+                  className="w-full bg-[#f4a021] hover:bg-[#e89410] text-black font-black py-4.5 rounded-2xl text-[16px] transition-all shadow-xl shadow-orange-500/20 active:scale-[0.98] mt-4  tracking-widest"
                 >
                   Send Enquiry
                 </button>

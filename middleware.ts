@@ -9,6 +9,19 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/en-in', request.url))
   }
 
+  // Short-code aliases: /in → /en-in, /au → /en-au, /us → /en-us
+  const shortCodes: Record<string, string> = {
+    '/in':  'en-in',
+    '/au':  'en-au',
+    '/us':  'en-us',
+  }
+  for (const [short, full] of Object.entries(shortCodes)) {
+    if (pathname === short || pathname.startsWith(short + '/')) {
+      const rest = pathname.slice(short.length) // e.g. "" or "/tours"
+      return NextResponse.redirect(new URL(`/${full}${rest}`, request.url))
+    }
+  }
+
   let response = NextResponse.next({
     request: {
       headers: request.headers,

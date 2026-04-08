@@ -67,23 +67,23 @@ export default async function DestinationToursPage({ params }: { params: Promise
     <div className="bg-[#f8f9fa] min-h-screen text-[#171717] font-sans">
 
 
-      <DestinationHeader 
-        destinationName={destName} 
-        totalTours={tours.length} 
+      <DestinationHeader
+        destinationName={destName}
+        totalTours={tours.length}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 font-arial">
-        
+
         {/* Breadcrumb / Layout Top */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div className="text-[14px] text-gray-500 font-medium lowercase tracking-wide">
-            <span className="hover:text-[#ee2229] cursor-pointer">Home</span> / 
-            <span className="hover:text-[#ee2229] cursor-pointer ml-1">Destinations</span> / 
+            <span className="hover:text-[#ee2229] cursor-pointer">Home</span> /
+            <span className="hover:text-[#ee2229] cursor-pointer ml-1">Destinations</span> /
             <span className="text-[#191974] font-black ml-1 capitalize">{destName}</span>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-[14px] font-black text-[#191974] uppercase tracking-tighter">Sort By:</span>
+            <span className="text-[14px] font-black text-[#191974]  tracking-tighter">Sort By:</span>
             <select className="bg-white border border-gray-200 text-[14px] rounded-lg focus:ring-[#191974] focus:border-[#191974] block p-2.5 font-bold text-[#191974]">
               <option>Recommended</option>
               <option>Price: Low to High</option>
@@ -94,7 +94,7 @@ export default async function DestinationToursPage({ params }: { params: Promise
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8 items-start">
-          
+
           {/* Left Sidebar */}
           <div className="w-full lg:w-1/4 shrink-0">
             <FiltersSidebar />
@@ -102,14 +102,14 @@ export default async function DestinationToursPage({ params }: { params: Promise
 
           {/* Right Content Area */}
           <div className="w-full lg:w-3/4 flex flex-col space-y-6">
-            
+
             {/* Active Filters Display */}
             <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4 overflow-x-auto">
-              <span className="text-[12px] font-black text-[#191974] shrink-0 uppercase tracking-widest font-inter">Active Filters:</span>
-              <span className="bg-[#191974] text-white px-4 py-2 rounded-lg text-xs font-black shrink-0 flex items-center gap-2 uppercase tracking-tighter font-inter-tight">
+              <span className="text-[12px] font-black text-[#191974] shrink-0  tracking-widest font-inter">Active Filters:</span>
+              <span className="bg-[#191974] text-white px-4 py-2 rounded-lg text-xs font-black shrink-0 flex items-center gap-2  tracking-tighter font-inter-tight">
                 {destName} <button className="ml-1 text-white/40 hover:text-white transition-colors">×</button>
               </span>
-              <button className="text-[11px] font-black text-[#ee2229] ml-auto shrink-0 hover:underline uppercase tracking-widest font-inter">Clear All</button>
+              <button className="text-[11px] font-black text-[#ee2229] ml-auto shrink-0 hover:underline  tracking-widest font-inter">Clear All</button>
             </div>
 
             {/* Tour Cards Grid */}

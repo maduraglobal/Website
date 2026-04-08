@@ -92,7 +92,7 @@ export const BookingProvider = ({ children }: { children: React.ReactNode }) => 
       document.removeEventListener('click', handleGlobalClick);
       window.removeEventListener('openPopup', handleOpenEvent);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -176,7 +176,7 @@ const BookingModal = () => {
                 <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
                   <CheckCircle className="w-10 h-10 text-green-500" />
                 </div>
-                <h3 className="text-[28px] font-black text-[#191974] mb-2 uppercase">
+                <h3 className="text-[28px] font-black text-[#191974] mb-2 ">
                   Booking Initiated!
                 </h3>
                 <p className="text-gray-500 font-light">
@@ -188,16 +188,16 @@ const BookingModal = () => {
               <div className="flex flex-col max-h-[90vh] overflow-y-auto">
                 {/* Header */}
                 <div className="p-8 md:p-10 bg-gray-50 border-b border-gray-100 sticky top-0">
-                  <p className="text-[#ee2229] text-[11px] font-black uppercase tracking-[0.2em] mb-1">
+                  <p className="text-[#ee2229] text-[11px] font-black  tracking-[0.2em] mb-1">
                     Book Your Experience
                   </p>
-                  <h2 className="text-[22px] md:text-[26px] font-black text-[#191974] leading-tight mb-4 uppercase tracking-tighter pr-10">
+                  <h2 className="text-[22px] md:text-[26px] font-black text-[#191974] leading-tight mb-4  tracking-tighter pr-10">
                     {bookingData?.packageName ?? 'Tour Package'}
                   </h2>
 
                   <div className="flex items-end gap-3">
                     <div className="flex flex-col leading-none">
-                      <span className="text-[10px] text-gray-400 font-bold uppercase mb-1">From</span>
+                      <span className="text-[10px] text-gray-400 font-bold  mb-1">From</span>
                       <span className="text-[28px] font-black text-[#ee2229]">
                         {formatRegionalPrice(bookingData?.discountedPrice ?? '1,99,999', region)}
                       </span>
@@ -215,7 +215,7 @@ const BookingModal = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {/* Full Name */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-black text-[#191974] uppercase tracking-widest ml-1">
+                      <label className="text-[11px] font-black text-[#191974]  tracking-widest ml-1">
                         Full Name
                       </label>
                       <div className="relative">
@@ -231,7 +231,7 @@ const BookingModal = () => {
 
                     {/* Email */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-black text-[#191974] uppercase tracking-widest ml-1">
+                      <label className="text-[11px] font-black text-[#191974]  tracking-widest ml-1">
                         Email Address
                       </label>
                       <div className="relative">
@@ -247,7 +247,7 @@ const BookingModal = () => {
 
                     {/* Phone */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-black text-[#191974] uppercase tracking-widest ml-1">
+                      <label className="text-[11px] font-black text-[#191974]  tracking-widest ml-1">
                         Phone Number
                       </label>
                       <div className="relative">
@@ -263,7 +263,7 @@ const BookingModal = () => {
 
                     {/* Travel Date */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-black text-[#191974] uppercase tracking-widest ml-1">
+                      <label className="text-[11px] font-black text-[#191974]  tracking-widest ml-1">
                         Travel Date
                       </label>
                       <div className="relative">
@@ -278,7 +278,7 @@ const BookingModal = () => {
 
                     {/* Adults */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-black text-[#191974] uppercase tracking-widest ml-1">
+                      <label className="text-[11px] font-black text-[#191974]  tracking-widest ml-1">
                         Adults (12+ Yrs)
                       </label>
                       <div className="relative">
@@ -295,7 +295,7 @@ const BookingModal = () => {
 
                     {/* Children */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-black text-[#191974] uppercase tracking-widest ml-1">
+                      <label className="text-[11px] font-black text-[#191974]  tracking-widest ml-1">
                         Children (2–12 Yrs)
                       </label>
                       <div className="relative">
@@ -316,7 +316,7 @@ const BookingModal = () => {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full bg-[#191974] hover:bg-[#ee2229] disabled:bg-gray-400 text-white font-black py-4 rounded-full uppercase tracking-[0.25em] transition-all flex items-center justify-center gap-3 group shadow-xl"
+                      className="w-full bg-[#191974] hover:bg-[#ee2229] disabled:bg-gray-400 text-white font-black py-4 rounded-full  tracking-[0.25em] transition-all flex items-center justify-center gap-3 group shadow-xl"
                     >
                       {isLoading ? (
                         <span className="flex items-center gap-2">
@@ -330,7 +330,7 @@ const BookingModal = () => {
                         </>
                       )}
                     </button>
-                    <p className="text-[10px] text-gray-400 text-center mt-4 font-medium uppercase tracking-widest">
+                    <p className="text-[10px] text-gray-400 text-center mt-4 font-medium  tracking-widest">
                       By clicking &quot;Confirm Booking&quot; you agree to our Terms &amp; Conditions
                     </p>
                   </div>

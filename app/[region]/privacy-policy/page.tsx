@@ -2,16 +2,16 @@
 
 import React, { use } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  ShieldCheck, 
-  Lock, 
-  UserCheck, 
-  Database, 
-  Share2, 
-  Eye, 
-  Clock, 
-  ExternalLink, 
-  RefreshCcw, 
+import {
+  ShieldCheck,
+  Lock,
+  UserCheck,
+  Database,
+  Share2,
+  Eye,
+  Clock,
+  ExternalLink,
+  RefreshCcw,
   Mail,
   MapPin,
   Phone,
@@ -185,20 +185,20 @@ export default function PrivacyPolicy({ params }: { params: Promise<{ region: st
           <div className="absolute -top-24 -left-24 w-96 h-96 bg-white rounded-full blur-[100px]" />
           <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#ee2229] rounded-full blur-[100px]" />
         </div>
-        
+
         <div className="max-w-4xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-[42px] md:text-[56px] font-black uppercase tracking-tight mb-4 font-inter leading-none">
+            <h1 className="text-[42px] md:text-[56px] font-black  tracking-tight mb-4 font-inter leading-none">
               Privacy Policy
             </h1>
             <p className="text-[18px] md:text-[22px] font-light text-white/80 max-w-2xl mx-auto">
               Your privacy is our priority. Learn how Madura Travel Service (P) Ltd protects and manages your information.
             </p>
-            <div className="mt-8 inline-block px-6 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-[14px] font-bold uppercase tracking-widest">
+            <div className="mt-8 inline-block px-6 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-[14px] font-bold  tracking-widest">
               Effective Date: {effectiveDate}
             </div>
           </motion.div>
@@ -208,11 +208,11 @@ export default function PrivacyPolicy({ params }: { params: Promise<{ region: st
       {/* Content Layout */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 md:py-24">
         <div className="flex flex-col lg:flex-row gap-12">
-          
+
           {/* Sidebar Navigation (Desktop) */}
           <aside className="hidden lg:block w-72 shrink-0">
             <div className="sticky top-32 space-y-1">
-              <h3 className="text-[12px] font-black text-[#ee2229] uppercase tracking-widest mb-4 px-4">Navigation</h3>
+              <h3 className="text-[12px] font-black text-[#ee2229]  tracking-widest mb-4 px-4">Navigation</h3>
               {sections.map((section) => (
                 <a
                   key={section.id}
@@ -234,7 +234,7 @@ export default function PrivacyPolicy({ params }: { params: Promise<{ region: st
                     <div className="w-12 h-12 rounded-2xl bg-red-50 flex items-center justify-center border border-red-100">
                       {section.icon}
                     </div>
-                    <h2 className="text-[24px] md:text-[28px] font-black text-[#191974] uppercase tracking-tight leading-none">
+                    <h2 className="text-[24px] md:text-[28px] font-black text-[#191974]  tracking-tight leading-none">
                       {section.title}
                     </h2>
                   </div>

@@ -104,7 +104,7 @@ export default function Footer() {
               />
             </Link>
 
-            <p className="text-[13px] text-white/55 leading-relaxed">
+            <p className="text-[13px] text-white leading-relaxed">
               Founded in 1986, Madura Travel Service Pvt Ltd is a trusted name
               in the travel industry, delivering personalized and reliable travel
               experiences worldwide.
@@ -119,7 +119,7 @@ export default function Footer() {
                   aria-label={s.name}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center text-white/50 hover:bg-[#ee2229] hover:text-white hover:border-[#ee2229] transition-all duration-200"
+                  className="w-9 h-9 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center text-white hover:bg-[#ee2229] hover:text-white hover:border-[#ee2229] transition-all duration-200"
                 >
                   {s.icon}
                 </a>
@@ -138,7 +138,7 @@ export default function Footer() {
                 className="h-6 opacity-30 hover:opacity-60 transition-opacity"
                 alt="ISO Certified"
               />
-              <span className="text-[10px] font-black border border-white/20 hover:border-white/50 px-2 py-1 rounded tracking-widest text-white/30 hover:text-white/60 transition-all uppercase">
+              <span className="text-[10px] font-black border border-white/20 hover:border-white/50 px-2 py-1 rounded tracking-widest text-white/30 hover:text-white/60 transition-all ">
                 TAFI
               </span>
             </div>
@@ -146,13 +146,13 @@ export default function Footer() {
 
           {/* ── COL 2: Top Destinations ── */}
           <div className="flex flex-col gap-5">
-            <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#ee2229]">
+            <h4 className="text-[11px] font-black  tracking-[0.2em] text-[#ee2229]">
               Top Destinations
             </h4>
             <div className="grid grid-cols-2 gap-x-4 gap-y-3">
               {Object.entries(destinations).map(([continent, places]) => (
                 <div key={continent} className="flex flex-col gap-1.5">
-                  <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-0.5">
+                  <p className="text-[10px]  tracking-widest text-white/70 font-bold mb-0.5">
                     {continent}
                   </p>
                   {places.map((place) => (
@@ -161,7 +161,7 @@ export default function Footer() {
                       href={prefixed(
                         `/destination/${place.toLowerCase().replace(/ /g, "-")}`
                       )}
-                      className="text-[12.5px] text-white/55 hover:text-[#ee2229] transition-colors duration-200 flex items-center gap-1.5 group"
+                      className="text-[12.5px] text-white hover:text-[#ee2229] transition-colors duration-200 flex items-center gap-1.5 group"
                     >
                       <span className="w-0 group-hover:w-1.5 h-1.5 rounded-full bg-[#ee2229] shrink-0 transition-all duration-200" />
                       {place}
@@ -174,7 +174,7 @@ export default function Footer() {
 
           {/* ── COL 3: Discover Us ── */}
           <div className="flex flex-col gap-5">
-            <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#ee2229]">
+            <h4 className="text-[11px] font-black  tracking-[0.2em] text-[#ee2229]">
               Discover Us
             </h4>
             <ul className="flex flex-col gap-3">
@@ -182,7 +182,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={prefixed(link.href)}
-                    className="text-[13px] text-white/55 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
+                    className="text-[13px] text-white hover:text-white transition-colors duration-200 flex items-center gap-2 group"
                   >
                     <span className="w-0 group-hover:w-2 h-px bg-[#ee2229] transition-all duration-300 shrink-0" />
                     {link.label}
@@ -194,7 +194,7 @@ export default function Footer() {
 
           {/* ── COL 4: Contact Info ── */}
           <div className="flex flex-col gap-5">
-            <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#ee2229]">
+            <h4 className="text-[11px] font-black  tracking-[0.2em] text-[#ee2229]">
               Get In Touch
             </h4>
 
@@ -203,15 +203,15 @@ export default function Footer() {
                 href="tel:+919092949494"
                 className="flex items-start gap-3 group"
               >
-                <div className="w-8 h-8 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center text-white/40 group-hover:bg-[#ee2229] group-hover:text-white group-hover:border-[#ee2229] transition-all shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center text-white group-hover:bg-[#ee2229] group-hover:text-white group-hover:border-[#ee2229] transition-all shrink-0 mt-0.5">
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold">Call Us</p>
-                  <p className="text-[13px] font-semibold text-white/70 group-hover:text-white transition-colors">+91 90 92 94 94 94</p>
-                  <p className="text-[11px] text-white/35">Mon–Sat, 9:30AM–6PM</p>
+                  <p className="text-[10px]  tracking-widest text-white font-bold">Call Us</p>
+                  <p className="text-[13px] font-semibold text-white group-hover:text-white transition-colors">+91 90 92 94 94 94</p>
+                  <p className="text-[11px] text-white">Mon–Sat, 9:30AM–6PM</p>
                 </div>
               </a>
 
@@ -219,28 +219,28 @@ export default function Footer() {
                 href="mailto:mail@maduratravel.com"
                 className="flex items-start gap-3 group"
               >
-                <div className="w-8 h-8 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center text-white/40 group-hover:bg-[#ee2229] group-hover:text-white group-hover:border-[#ee2229] transition-all shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-lg bg-white/8 border border-white flex items-center justify-center text-white group-hover:bg-[#ee2229] group-hover:text-white group-hover:border-[#ee2229] transition-all shrink-0 mt-0.5">
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold">Email Us</p>
-                  <p className="text-[13px] font-semibold text-white/70 group-hover:text-white transition-colors">mail@maduratravel.com</p>
-                  <p className="text-[11px] text-white/35">We reply within 24 hours</p>
+                  <p className="text-[10px]  tracking-widest text-white font-bold">Email Us</p>
+                  <p className="text-[13px] font-semibold text-white group-hover:text-white transition-colors">mail@maduratravel.com</p>
+                  <p className="text-[11px] text-white">We reply within 24 hours</p>
                 </div>
               </a>
 
               <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center text-white/40 shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-lg bg-white/8 border border-white flex items-center justify-center text-white shrink-0 mt-0.5">
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold">Headquarters</p>
-                  <p className="text-[13px] font-semibold text-white/70">Egmore, Chennai</p>
-                  <p className="text-[11px] text-white/35">Tamil Nadu – 600 008</p>
+                  <p className="text-[10px]  tracking-widest text-white font-bold">Headquarters</p>
+                  <p className="text-[13px] font-semibold text-white">Egmore, Chennai</p>
+                  <p className="text-[11px] text-white">Tamil Nadu – 600 008</p>
                 </div>
               </div>
             </div>
@@ -249,7 +249,7 @@ export default function Footer() {
       </div>
 
       {/* ── CAUTION BAR ── */}
-      <div className="border-t border-white/8">
+      {/* <div className="border-t border-white/8">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-4">
           <p className="text-[11px] text-white/30 leading-relaxed italic text-center">
             <span className="text-[#ee2229] font-bold not-italic">⚠ Caution:</span>{" "}
@@ -258,7 +258,7 @@ export default function Footer() {
             emails, SMS, or links from unverified sources.
           </p>
         </div>
-      </div>
+      </div> */}
 
       {/* ── BOTTOM BAR ── */}
       <div className="border-t border-white/8">
@@ -279,7 +279,7 @@ export default function Footer() {
             <svg className="w-3.5 h-3.5 text-[#ee2229]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
-            <span className="uppercase tracking-widest text-[9px] font-bold">Secure Payments</span>
+            <span className=" tracking-widest text-[9px] font-bold">Secure Payments</span>
           </div>
         </div>
       </div>

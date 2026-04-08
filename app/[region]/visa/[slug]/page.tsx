@@ -25,7 +25,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
   const { region, slug } = resolvedParams;
 
   const destination = getDestinationBySlug(slug);
-  const destName = destination ? destination.name : (slug ? slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, ' ') : "Dubai");
+  const destName = destination ? destination.name : (slug ? slug.charAt(0).to() + slug.slice(1).replace(/-/g, ' ') : "Dubai");
 
   // Get current country data or fallback to a safe default
   const currentData = destination ? { ...destination, heroImg: destination.image } : {
@@ -97,12 +97,12 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
 
           <div className="flex flex-col sm:flex-row gap-6 mb-8">
             <div>
-              <p className="text-[13px] text-white/70 uppercase tracking-widest font-bold mb-1">Processing time</p>
+              <p className="text-[13px] text-white/70  tracking-widest font-bold mb-1">Processing time</p>
               <p className="text-[18px] font-bold">{visaTypes[0]?.pTime || 'Up to 5 days'}</p>
             </div>
             <div className="hidden sm:block w-px bg-white/20 h-10 mt-1"></div>
             <div>
-              <p className="text-[13px] text-white/70 uppercase tracking-widest font-bold mb-1">Starting from</p>
+              <p className="text-[13px] text-white/70  tracking-widest font-bold mb-1">Starting from</p>
               <p className="text-[18px] font-bold">{formatRegionalPrice(currentData.startingPrice, region)}/–</p>
             </div>
           </div>
@@ -227,7 +227,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             <div className="border border-amber-200 rounded-lg overflow-hidden bg-amber-50/30">
               <button onClick={() => setOpenDocs(!openDocs)} className="w-full text-left bg-amber-100 hover:bg-amber-200 transition-colors px-5 py-4 flex justify-between items-center text-[#191974] font-bold text-[15px]">
                 Must have Documents for {destName} Entry Visa:
-                {openDocs ? <ChevronUp className="w-5 h-5 text-amber-600" /> : <ChevronDown className="w-5 h-5 text-amber-600" />}
+                {openDocs ? <ChevronUp className="w-5 h-5 text-[#ee2229]" /> : <ChevronDown className="w-5 h-5 text-[#ee2229]" />}
               </button>
               {openDocs && (
                 <div className="p-6 bg-white border-t border-amber-200">
@@ -273,7 +273,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                   <img src={exp.img} className="w-16 h-16 rounded-full border-2 border-gray-100 mb-3" />
                   <h4 className="font-bold text-[#191974] text-[15px]">{exp.name}</h4>
                   <p className="text-gray-500 text-[13px] font-medium leading-tight my-1">{exp.role}</p>
-                  <p className="text-[#ee2229] text-[12px] font-bold uppercase tracking-wide bg-red-50 px-2 py-0.5 rounded mt-2">{exp.exp} Experience</p>
+                  <p className="text-[#ee2229] text-[12px] font-bold  tracking-wide bg-red-50 px-2 py-0.5 rounded mt-2">{exp.exp} Experience</p>
                 </div>
               ))}
             </div>
@@ -452,8 +452,8 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                   <span className="text-[22px] font-black">₹0</span>
                 </div>
 
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="book-now-btn w-full bg-[#ee2229] hover:bg-[#d11e24] text-white font-bold text-[15px] py-4 rounded transition-colors shadow-lg shadow-red-500/20 mt-2 tracking-wide"
                   data-package={`${destName} Visa Application`}
                   data-price={currentData.startingPrice}
@@ -488,7 +488,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                 <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
               </div>
               <div>
-                <p className="text-[12px] text-gray-500 uppercase font-bold tracking-wider">Visa on WhatsApp</p>
+                <p className="text-[12px] text-gray-500  font-bold tracking-wider">Visa on WhatsApp</p>
                 <p className="text-[16px] font-bold text-[#191974]">+91 8879008992</p>
               </div>
             </a>
@@ -498,7 +498,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                 <Phone className="w-5 h-5 group-hover:scale-110 transition-transform" />
               </div>
               <div>
-                <p className="text-[12px] text-gray-500 uppercase font-bold tracking-wider">Call us on</p>
+                <p className="text-[12px] text-gray-500  font-bold tracking-wider">Call us on</p>
                 <p className="text-[16px] font-bold text-[#191974]">022 4066 6444</p>
               </div>
             </a>
@@ -508,7 +508,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                 <Clock className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-[12px] text-gray-500 uppercase font-bold tracking-wider">Timing</p>
+                <p className="text-[12px] text-gray-500  font-bold tracking-wider">Timing</p>
                 <p className="text-[16px] font-bold text-[#191974]">9am to 9pm</p>
               </div>
             </div>
@@ -526,19 +526,19 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
         <div className="max-w-7xl mx-auto px-4 w-full">
           <div className="flex flex-wrap gap-x-12 gap-y-6 lg:justify-between border-b border-white/10 pb-8 mb-6 text-[13px]">
             <div className="min-w-[150px]">
-              <h4 className="text-[#ee2229] font-bold uppercase tracking-widest mb-3 text-[12px]">International Tour Packages</h4>
+              <h4 className="text-[#ee2229] font-bold  tracking-widest mb-3 text-[12px]">International Tour Packages</h4>
               <p className="text-white/60 space-x-2 leading-loose">
                 <a className="hover:text-white" href="#">Dubai</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">Singapore</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">Europe</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">Thailand</a>
               </p>
             </div>
             <div className="min-w-[150px]">
-              <h4 className="text-[#ee2229] font-bold uppercase tracking-widest mb-3 text-[12px]">Domestic Tour Packages</h4>
+              <h4 className="text-[#ee2229] font-bold  tracking-widest mb-3 text-[12px]">Domestic Tour Packages</h4>
               <p className="text-white/60 space-x-2 leading-loose">
                 <a className="hover:text-white" href="#">Kerala</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">Rajasthan</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">Kashmir</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">Goa</a>
               </p>
             </div>
             <div className="min-w-[150px]">
-              <h4 className="text-[#ee2229] font-bold uppercase tracking-widest mb-3 text-[12px]">Visa</h4>
+              <h4 className="text-[#ee2229] font-bold  tracking-widest mb-3 text-[12px]">Visa</h4>
               <p className="text-white/60 space-x-2 leading-loose">
                 <a className="hover:text-white" href="#">Dubai Visa</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">Singapore Visa</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">US Visa</a>
               </p>
@@ -547,11 +547,11 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
 
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex gap-4 opacity-70">
-              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] uppercase">VISA</span>
-              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] uppercase">Mastercard</span>
-              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] uppercase">Amex</span>
-              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] uppercase">Diners Club</span>
-              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] uppercase">RuPay</span>
+              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] ">VISA</span>
+              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] ">Mastercard</span>
+              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] ">Amex</span>
+              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] ">Diners Club</span>
+              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] ">RuPay</span>
             </div>
             <div className="text-[12px] opacity-40 text-center md:text-right">
               © 2025 www.antigravitytravels.com All Rights Reserved

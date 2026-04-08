@@ -2,15 +2,7 @@ import React from 'react';
 import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
 
-interface Destination {
-  id: string;
-  name: string;
-  slug: string;
-  image_url?: string;
-}
-
-export default async function AllDestinationsPage({ params }: { params: Promise<{ region: string }> }) {
-  const { region } = await params;
+export default async function AllDestinationsPage() {
   const supabase = await createClient();
 
   // Fetch all destinations
@@ -20,7 +12,7 @@ export default async function AllDestinationsPage({ params }: { params: Promise<
     .order('name', { ascending: true });
 
   // Use mock data if database is empty or not fully configured
-  const destinations: Destination[] = (destinationsData && destinationsData.length > 0)
+  const destinations = destinationsData && destinationsData.length > 0
     ? destinationsData
     : [
       { id: '1', name: 'Delhi', slug: 'delhi', image_url: 'https://images.unsplash.com/photo-1587474260580-5a3d0d80c356?auto=format&fit=crop&q=80&w=800' },
@@ -55,11 +47,11 @@ export default async function AllDestinationsPage({ params }: { params: Promise<
       {/* Destinations Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {destinations.map((dest: Destination) => (
-            <Link key={dest.id} href={`/${region}/destination/${dest.slug}`} className="group relative block overflow-hidden rounded-2xl aspect-4/3 shadow-md hover:shadow-xl transition-all duration-300">
+          {destinations.map((dest: { id: React.Key | null | undefined; slug: any; image_url: any; name: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; }) => (
+            <Link key={dest.id} href={`/destination/${dest.slug}`} className="group relative block overflow-hidden rounded-2xl aspect-4/3 shadow-md hover:shadow-xl transition-all duration-300">
               <img
                 src={dest.image_url || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800'}
-                alt={dest.name || 'Destination'}
+                alt={dest.name}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>

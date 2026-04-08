@@ -6,39 +6,9 @@ import React from "react";
 
 
 
-const airlineLogos = [
-  "Emirates", "Thai Airways", "Malaysia Airlines",
-  "Singapore Airlines", "IndiGo", "Air India",
-  "Sahara Airlines", "Jet Airways", "SriLankan Airlines",
-];
 
-const accreditations = [
-  "IATA", "TAAI", "IATO", "IAAI",
-  "TN Travel Mart Society",
-  "TAFI", "TTTHA", "ADTOI", "ATOAI", "OTOAI",
-];
 
-const certifications = [
-  { name: "Hong Kong", emoji: "🇭🇰" },
-  { name: "Aussie Specialist", emoji: "🇦🇺" },
-  { name: "100% Pure Kiwi Specialist", emoji: "🇳🇿" },
-  { name: "Certified South African Specialist", emoji: "🇿🇦" },
-  { name: "Israel Ministry of Tourism", emoji: "🇮🇱" },
-  { name: "Dubai Specialist", emoji: "🇦🇪" },
-  { name: "Matai Fiji", emoji: "🇫🇯" },
-  { name: "Qatar Specialist", emoji: "🇶🇦" },
-  { name: "Magical Kenya", emoji: "🇰🇪" },
-  { name: "Tourism Malaysia", emoji: "🇲🇾" },
-  { name: "European Quartet Specialist", emoji: "🇪🇺" },
-  { name: "Explore France", emoji: "🇫🇷" },
-  { name: "Amazing Thailand", emoji: "🇹🇭" },
-  { name: "Switzerland", emoji: "🇨🇭" },
-  { name: "Magic Mexico Specialist", emoji: "🇲🇽" },
-  { name: "Japan Travel Specialist", emoji: "🇯🇵" },
-  { name: "USA Discovery Program", emoji: "🇺🇸" },
-  { name: "BritAgent", emoji: "🇬🇧" },
-  { name: "All in Türkiye Specialist", emoji: "🇹🇷" },
-];
+
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -53,13 +23,13 @@ export default function AwardsSection() {
         <div className="mb-16">
           {/* Label badge */}
           <div className="flex justify-center mb-4">
-            <span className="bg-amber-50 border border-amber-200 text-amber-700 text-[10px] font-black uppercase tracking-[0.25em] px-4 py-1.5 rounded-full">
+            <span className="bg-amber-50 border border-amber-200 text-[#ee2229] text-[32px] font-black  tracking-[0.25em] px-4 py-1.5 rounded-full">
               Government Recognitions
             </span>
           </div>
 
           {/* Main heading */}
-          <h2 className="text-center text-[28px] md:text-[36px] font-black text-[#191974] mb-8 uppercase tracking-tight leading-tight">
+          <h2 className="text-center text-[28px] md:text-[36px] font-black text-[#191974] mb-8  tracking-tight leading-tight">
             Awards &amp; Recognitions
           </h2>
 
@@ -120,7 +90,7 @@ export default function AwardsSection() {
               />
 
               {/* Small label (e.g. “Primary Host”) */}
-              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-amber-600 mb-1">
+              <p className="text-[10px] font-black  tracking-[0.18em] text-[#191974] mb-1">
                 {card.label}
               </p>
 

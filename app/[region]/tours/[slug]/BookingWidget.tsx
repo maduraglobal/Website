@@ -74,7 +74,7 @@ export default function BookingWidget({
       {step === "initial" && (
         <>
           <div className="mb-6">
-            <span className="text-[12px] font-bold tracking-wider text-gray-500 uppercase">Per Person</span>
+            <span className="text-[12px] font-bold tracking-wider text-gray-500 ">Per Person</span>
             <div className="text-[32px] font-bold text-[#191974] leading-tight">
               {formattedBase}
             </div>
@@ -102,11 +102,11 @@ export default function BookingWidget({
 
           <div className="flex gap-3">
             <div className="flex flex-col w-1/2 gap-1">
-              <span className="text-[11px] font-bold uppercase text-gray-500 ml-1">Travel Date</span>
+              <span className="text-[11px] font-bold  text-gray-500 ml-1">Travel Date</span>
               <input required type="date" className="border border-gray-200 p-3 rounded-xl text-[14px] outline-none focus:border-[#191974]" onChange={e => setFormData({ ...formData, travelDate: e.target.value })} />
             </div>
             <div className="flex flex-col w-1/2 gap-1">
-              <span className="text-[11px] font-bold uppercase text-gray-500 ml-1">Travelers</span>
+              <span className="text-[11px] font-bold  text-gray-500 ml-1">Travelers</span>
               <input required type="number" min="1" value={formData.travelers} className="border border-gray-200 p-3 rounded-xl text-[14px] outline-none focus:border-[#191974]" onChange={e => setFormData({ ...formData, travelers: parseInt(e.target.value) })} />
             </div>
           </div>
@@ -136,7 +136,7 @@ export default function BookingWidget({
             <svg className="w-8 h-8 text-[#82c341]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
           </div>
           <h3 className="font-bold text-[20px] text-[#171717] mb-1">Booking Initialized!</h3>
-          <p className="text-[13px] text-gray-500 mb-6 font-inter-tight">ID: {bookingObj.id} <br /> Status: <span className="font-bold text-orange-500 uppercase">{bookingObj.status}</span></p>
+          <p className="text-[13px] text-gray-500 mb-6 font-inter-tight">ID: {bookingObj.id} <br /> Status: <span className="font-bold text-orange-500 ">{bookingObj.status}</span></p>
 
           <button className="w-full bg-[#171717] hover:bg-black text-white py-3.5 rounded-xl font-bold text-[14px] transition-colors">
             Proceed to Payment Gateway
