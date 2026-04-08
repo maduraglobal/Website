@@ -128,7 +128,7 @@ export default function Navbar() {
       </div>
 
       {/* 🔷 BOTTOM NAVBAR */}
-      <nav className="bg-white text-[#191974] px-6 lg:px-16 py-3.5 flex items-center lg:justify-center gap-6 lg:gap-10 text-[14px] font-black tracking-widest font-inter uppercase relative border-b border-gray-100 shadow-sm overflow-x-auto whitespace-nowrap [&::-webkit-scrollbar]:hidden">
+      <nav className="bg-white text-[#191974] px-6 lg:px-16 py-3.5 flex items-center lg:justify-center gap-6 lg:gap-10 text-[14px] font-black tracking-widest font-inter uppercase relative border-b border-gray-100 shadow-sm overflow-x-auto lg:overflow-visible whitespace-nowrap lg:whitespace-normal [&::-webkit-scrollbar]:hidden">
 
         <div className="relative group cursor-pointer py-1">
           <span className="flex items-center hover:text-[#ee2229] transition-colors group">

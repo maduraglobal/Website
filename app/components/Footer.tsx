@@ -381,10 +381,10 @@ export default function Footer() {
       {/* ── FLOATING QUICK ENQUIRY ── */}
       <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 flex flex-col items-end gap-2 md:gap-3">
         {/* Online badge */}
-        <div className="bg-white/95 backdrop-blur text-[#191974] px-2 md:px-3 py-1.5 rounded-full font-bold text-[10px] md:text-[11px] shadow-xl flex items-center gap-1.5 md:gap-2">
-          <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-green-500 animate-pulse" />
-          <span className="hidden sm:inline">Available</span> 24×7
-        </div>
+        {/* <div className="bg-white/95 backdrop-blur text-[#191974] px-2 md:px-3 py-1.5 rounded-full font-bold text-[10px] md:text-[11px] shadow-xl flex items-center gap-1.5 md:gap-2"> */}
+        {/* <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-green-500 animate-pulse" /> */}
+        {/* <span className="hidden sm:inline">Available</span> 24×7 */}
+        {/* </div> */}
 
         {/* CTA button */}
         <button
