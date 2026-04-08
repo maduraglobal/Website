@@ -7,6 +7,7 @@ import { ImagesSlider } from "../components/ui/images-slider";
 import { InfiniteMovingCards } from "../components/ui/infinite-moving-cards";
 import { motion } from "framer-motion";
 import { createClient } from "@/utils/supabase/client";
+import PopupForm from "../components/PopupForm";
 
 const supabase = createClient();
 
@@ -239,18 +240,18 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               <Link
                 key={idx}
                 href={`/${region}/destination/${card.slug}`}
-                className="relative w-[140px] md:w-[180px] lg:w-[220px] h-[180px] md:h-[220px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block rounded-2xl"
+                className="relative w-[320px] md:w-[320px] lg:w-[320px] h-[300px] md:h-[360px] lg:h-[300px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block rounded-2xl"
               >
                 <img src={card.image} alt={card.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/10 to-black/90 pointer-events-none" />
 
-                <div className="absolute top-4 left-4 right-4">
-                  <h3 className="text-white text-[13px] lg:text-[13px] leading-tight drop-shadow-md">{card.name}</h3>
+                <div className="absolute top-6 left-6 right-6">
+                  <h3 className="text-white text-[24px] md:text-[28px] font-black leading-tight drop-shadow-lg uppercase tracking-tight">{card.name}</h3>
                 </div>
 
-                <div className="absolute bottom-4 left-4 right-4">
-                  <p className="text-white/80 text-[10px] font-medium mb-0.5 drop-shadow-md">Starting from</p>
-                  <p className="text-white font-black text-[16px] lg:text-[15px] tracking-tight drop-shadow-md">{formatRegionalPrice(card.basePrice, region)}</p>
+                <div className="absolute bottom-6 left-6 right-6">
+                  <p className="text-white/80 text-[12px] md:text-[14px] font-bold mb-1 drop-shadow-md uppercase tracking-widest">Starting from</p>
+                  <p className="text-white font-black text-[20px] md:text-[24px] tracking-tighter drop-shadow-xl">{formatRegionalPrice(card.basePrice, region)}</p>
                 </div>
               </Link>
             ))}
@@ -317,7 +318,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                 <div key={idx} className="bg-white border border-gray-200 rounded-[12px] overflow-hidden shadow-sm flex flex-col group transition-all hover:shadow-xl font-arial">
                   <Link href={`/${region}/tours/${tour.slug}`} className="cursor-pointer">
                     {/* Image Section */}
-                    <div className="relative h-[200px] overflow-hidden">
+                    <div className="relative h-[240px] overflow-hidden">
                       <img
                         src={tour.image_url || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800'}
                         alt={tour.title}
@@ -543,6 +544,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
 
 
+      <PopupForm />
     </div>
   );
 }

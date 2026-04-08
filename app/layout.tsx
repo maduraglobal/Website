@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Experience premium travel with Madura Travel. Book your next adventure with us.",
 };
 
-import PopupForm from "./components/PopupForm";
+
 
 export default function RootLayout({
   children,
@@ -23,7 +23,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <PopupForm />
+
       </body>
     </html>
   );
