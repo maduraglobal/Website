@@ -106,7 +106,7 @@ export default function AntigravityTourDetail() {
                       Escape
                     </span>
                   </h1>
-                  <p className="text-lg md:text-xl text-gray-300 font-light mb-8 max-w-lg">
+                  <p className="text-lg md:text-xl text-gray-300  mb-8 max-w-lg">
                     Experience the Himalayas like never before. Journey through snow-capped peaks, lush valleys, and mystical ancient trails.
                   </p>
 

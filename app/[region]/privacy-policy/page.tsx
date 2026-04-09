@@ -195,7 +195,7 @@ export default function PrivacyPolicy({ params }: { params: Promise<{ region: st
             <h1 className="text-[42px] md:text-[56px]   tracking-tight mb-4 leading-none">
               Privacy Policy
             </h1>
-            <p className="text-[18px] md:text-[22px] font-light text-white/80 max-w-2xl mx-auto">
+            <p className="text-[18px] md:text-[22px]  text-white/80 max-w-2xl mx-auto">
               Your privacy is our priority. Learn how Madura Travel Service (P) Ltd protects and manages your information.
             </p>
             <div className="mt-8 inline-block px-6 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-[14px] font-bold  tracking-widest">
@@ -238,7 +238,7 @@ export default function PrivacyPolicy({ params }: { params: Promise<{ region: st
                       {section.title}
                     </h2>
                   </div>
-                  <div className="text-[16px] md:text-[17px] leading-relaxed text-gray-600 font-light">
+                  <div className="text-[16px] md:text-[17px] leading-relaxed text-gray-600 ">
                     {section.content}
                   </div>
                 </section>

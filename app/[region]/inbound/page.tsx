@@ -61,7 +61,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
               Discover the <br />
               <span className="text-[#ee2229]">Soul of India</span>
             </h1>
-            <p className="text-[20px] md:text-[24px] font-light max-w-2xl mx-auto mb-10 text-white/90">
+            <p className="text-[20px] md:text-[24px]  max-w-2xl mx-auto mb-10 text-white/90">
               Curated inbound travel experiences for international travelers. Heritage, Luxury, and Spirituality await you.
             </p>
             <button
@@ -84,7 +84,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
               A Gateway to <br />
               <span className="text-[#ee2229]">Authentic India</span>
             </h2>
-            <div className="space-y-6 text-gray-600 text-[18px] font-light leading-relaxed">
+            <div className="space-y-6 text-gray-600 text-[18px]  leading-relaxed">
               <p>
                 At Madura Travel, we understand that visiting India is more than just a tripâ€”it's a spiritual and cultural awakening. Our dedicated inbound division specializes in handling international clients with the highest standards of hospitality.
               </p>
@@ -137,7 +137,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
                   {svc.icon}
                 </div>
                 <h3 className="text-[20px]  text-[#191974] mb-3 ">{svc.title}</h3>
-                <p className="text-gray-500 font-light leading-relaxed text-[15px]">{svc.desc}</p>
+                <p className="text-gray-500  leading-relaxed text-[15px]">{svc.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -183,7 +183,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
                 {item.icon}
               </div>
               <h4 className="text-[18px]  mb-2  tracking-tight">{item.title}</h4>
-              <p className="text-white/50 text-[14px] font-light leading-relaxed">{item.desc}</p>
+              <p className="text-white/50 text-[14px]  leading-relaxed">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -206,7 +206,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
                 <div className="flex gap-1 mb-6 text-[#ee2229]">
                   {[...Array(5)].map((_, idx) => <Star key={idx} className="w-4 h-4 fill-current" />)}
                 </div>
-                <p className="text-gray-600 font-light italic leading-relaxed text-[17px] mb-8">"{t.quote}"</p>
+                <p className="text-gray-600  italic leading-relaxed text-[17px] mb-8">"{t.quote}"</p>
                 <div>
                   <p className="text-[#191974]  text-[18px]">{t.name}</p>
                   <p className="text-[#ee2229] text-[11px] font-bold  tracking-widest mt-1">{t.loc}</p>
@@ -226,7 +226,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
             <div className="relative z-10">
               <div className="text-center mb-12">
                 <h2 className="text-[32px] md:text-[42px]   tracking-tighter mb-4">Plan Your Indian Journey</h2>
-                <p className="text-white/60 font-light max-w-lg mx-auto">Tell us where you want to go and our specialists will contact you.</p>
+                <p className="text-white/60  max-w-lg mx-auto">Tell us where you want to go and our specialists will contact you.</p>
               </div>
 
               <form className="grid grid-cols-1 md:grid-cols-2 gap-6">

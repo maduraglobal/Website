@@ -40,7 +40,7 @@ function FeaturedTourCard({ tour, region }: { tour: any, region: string }) {
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
         <div className="absolute top-3 left-3">
-          <span className="bg-black/40 backdrop-blur-md text-white text-[9px]  px-3 py-1.5 rounded-full border border-white/20 uppercase tracking-widest">
+          <span className="bg-black/40 backdrop-blur-md text-white text-[9px]  px-3 py-1.5 rounded-full border border-white/20  tracking-widest">
             {tour.duration}
           </span>
         </div>
@@ -83,7 +83,7 @@ function FeaturedTourCard({ tour, region }: { tour: any, region: string }) {
               Details
             </Link>
             <button
-              className="book-now-btn relative overflow-hidden group/btn bg-linear-to-r from-[#191974] to-[#1e1e8a] text-white py-3 rounded-2xl text-[11px]  uppercase tracking-widest shadow-[0_10px_20px_rgba(25,25,116,0.2)] hover:shadow-[0_15px_30px_rgba(238,34,41,0.3)] hover:from-[#ee2229] hover:to-[#ff454b] transition-all active:scale-95 flex items-center justify-center gap-2"
+              className="book-now-btn relative overflow-hidden group/btn bg-linear-to-r from-[#191974] to-[#1e1e8a] text-white py-3 rounded-2xl text-[11px]   tracking-widest shadow-[0_10px_20px_rgba(25,25,116,0.2)] hover:shadow-[0_15px_30px_rgba(238,34,41,0.3)] hover:from-[#ee2229] hover:to-[#ff454b] transition-all active:scale-95 flex items-center justify-center gap-2"
               data-package={tour.title}
               data-price={tour.base_price_inr || '0'}
               data-original-price={tour.base_price_inr ? Math.round(tour.base_price_inr * 1.15) : '0'}
@@ -255,7 +255,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
             </div>
 
             <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer">
-              <label className="text-[10px]  tracking-widest text-[#ee2229] mb-0.5 uppercase">Going To</label>
+              <label className="text-[10px]  tracking-widest text-[#ee2229] mb-0.5 ">Going To</label>
               <div className="flex items-center justify-between w-full">
                 <input
                   suppressHydrationWarning
@@ -270,7 +270,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
             </div>
 
             <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer relative">
-              <label className="text-[10px]  tracking-widest text-[#ee2229] mb-0.5 uppercase">Month</label>
+              <label className="text-[10px]  tracking-widest text-[#ee2229] mb-0.5 ">Month</label>
               <div className="relative w-full flex items-center justify-between">
                 <select
                   suppressHydrationWarning
@@ -291,7 +291,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               <button
                 suppressHydrationWarning
                 onClick={handleSearch}
-                className="w-full lg:w-[120px] bg-[#ee2229] hover:bg-[#191974] text-white  py-3 px-6 rounded-full transition-all shadow-md active:scale-95 text-[13px] tracking-widest flex items-center justify-center gap-2 uppercase"
+                className="w-full lg:w-[120px] bg-[#ee2229] hover:bg-[#191974] text-white  py-3 px-6 rounded-full transition-all shadow-md active:scale-95 text-[13px] tracking-widest flex items-center justify-center gap-2 "
               >
                 <span>Search</span>
               </button>
@@ -309,7 +309,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-8">
             <h2 className="text-[16px]  text-[#191974] mb-2 tracking-tight">Top Destinations</h2>
-            <p className="text-[16px] text-black font-light">Discover the world&apos;s most sought-after holiday spots.</p>
+            <p className="text-[16px] text-black ">Discover the world&apos;s most sought-after holiday spots.</p>
           </div>
 
           <div className="flex overflow-x-auto gap-4 lg:gap-5 pb-6 custom-scrollbar snap-x snap-mandatory">
@@ -332,7 +332,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                   <p className="text-white text-[20px] leading-tight tracking-tight">{card.name}</p>
                 </div>
                 <div className="absolute bottom-4 left-4 right-4 text-left">
-                  <p className="text-white/70 text-[10px] font-bold tracking-widest uppercase mb-0.5">Starting from</p>
+                  <p className="text-white/70 text-[10px] font-bold tracking-widest  mb-0.5">Starting from</p>
                   <p className="text-white text-[16px] ">{formatRegionalPrice(card.basePrice, region)}</p>
                 </div>
               </Link>
@@ -346,7 +346,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
             <div>
-              <h2 className="text-[16px]  text-[#191974] mb-2 tracking-tight uppercase">Featured Tours</h2>
+              <h2 className="text-[16px]  text-[#191974] mb-2 tracking-tight ">Featured Tours</h2>
               <p className="text-[16px] text-black ">Explore some of our most popular tours selected for you.</p>
             </div>
           </div>
@@ -355,7 +355,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
             {loading ? (
               <div className="py-12 text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#191974] mx-auto mb-4"></div>
-                <p className="text-gray-500 font-bold uppercase tracking-widest text-xs">Finding the best adventures...</p>
+                <p className="text-gray-500 font-bold  tracking-widest text-xs">Finding the best adventures...</p>
               </div>
             ) : errorStatus ? (
               <div className="py-12 text-center bg-red-50 rounded-2xl border border-red-100">
@@ -402,15 +402,15 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               </div>
 
               <div className="mb-8">
-                <p className="text-xl font-light mb-2 text-white/90">
+                <p className="text-xl  mb-2 text-white/90">
                   {offerSlides[activeOffer].details.split('â‚¹')[0]} <span className="text-[#ee2229] ">â‚¹{offerSlides[activeOffer].details.split('â‚¹')[1]}</span>
                 </p>
-                <p className="text-[13px] opacity-60 max-w-md font-medium leading-relaxed uppercase tracking-wider">{offerSlides[activeOffer].desc}</p>
+                <p className="text-[13px] opacity-60 max-w-md font-medium leading-relaxed  tracking-wider">{offerSlides[activeOffer].desc}</p>
               </div>
 
               <button
                 suppressHydrationWarning
-                className="book-now-btn bg-[#ee2229] border border-[#ee2229] hover:bg-transparent text-white px-10 py-3.5 rounded-lg  text-xs uppercase tracking-[0.2em] transition-all transform active:scale-95 shadow-xl shadow-red-500/30"
+                className="book-now-btn bg-[#ee2229] border border-[#ee2229] hover:bg-transparent text-white px-10 py-3.5 rounded-lg  text-xs  tracking-[0.2em] transition-all transform active:scale-95 shadow-xl shadow-red-500/30"
                 data-package={offerSlides[activeOffer].title}
                 data-price={offerSlides[activeOffer].details.split('â‚¹')[1]?.replace(/,/g, '') || '0'}
                 data-original-price={offerSlides[activeOffer].details.split('â‚¹')[1]?.replace(/,/g, '') || '0'}

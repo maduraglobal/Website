@@ -70,7 +70,7 @@ export default function MediaPage({ params }: { params: Promise<{ region: string
             <h1 className="text-[48px] md:text-[72px]  text-[#191974]  tracking-tighter leading-none mb-6">
               Media & <span className="text-[#ee2229]">News</span>
             </h1>
-            <p className="text-[18px] md:text-[22px] text-gray-400 font-light max-w-2xl ">
+            <p className="text-[18px] md:text-[22px] text-gray-400  max-w-2xl ">
               Stay updated with the latest from the world of travel, our corporate milestones, and industry insights.
             </p>
           </motion.div>
@@ -103,7 +103,7 @@ export default function MediaPage({ params }: { params: Promise<{ region: string
               <h2 className="text-[32px] md:text-[42px]  leading-tight mb-6  tracking-tight">
                 The Future of Global Travel: A 2024 Outlook by Madura Travel
               </h2>
-              <p className="text-white/60 font-light text-[17px] leading-relaxed mb-8">
+              <p className="text-white/60  text-[17px] leading-relaxed mb-8">
                 Explore the emerging trends, digital transformations, and the new travel patterns shaping the global tourism landscape this year.
               </p>
               <button className="self-start flex items-center gap-2 text-white   tracking-widest group">
@@ -149,7 +149,7 @@ export default function MediaPage({ params }: { params: Promise<{ region: string
                   {item.title}
                 </h3>
 
-                <p className="text-gray-500 font-light leading-relaxed mb-6 line-clamp-3">
+                <p className="text-gray-500  leading-relaxed mb-6 line-clamp-3">
                   {item.desc}
                 </p>
 

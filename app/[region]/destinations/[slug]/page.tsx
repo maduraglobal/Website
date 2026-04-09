@@ -104,7 +104,7 @@ export default function DestinationPage() {
           <h1 className="text-[32px] md:text-[48px]  mb-4 leading-tight drop-shadow-md">
             {destination.title} Visa Online for Indians
           </h1>
-          <p className="text-[18px] md:text-[22px] font-light drop-shadow-lg opacity-90 max-w-2xl mx-auto leading-tight">
+          <p className="text-[18px] md:text-[22px]  drop-shadow-lg opacity-90 max-w-2xl mx-auto leading-tight">
             {destination.description}
           </p>
         </div>
@@ -114,7 +114,7 @@ export default function DestinationPage() {
       <section className="py-12 max-w-7xl mx-auto px-4">
         <div className="text-center mb-10">
           <h2 className="text-[28px] md:text-[32px]  text-[#191974] mb-2 tracking-tight">Popular {destination.title} Packages</h2>
-          <p className="text-[16px] md:text-[20px] text-gray-400 font-light max-w-2xl mx-auto leading-tight">Explore our most sought-after itineraries.</p>
+          <p className="text-[16px] md:text-[20px] text-gray-400  max-w-2xl mx-auto leading-tight">Explore our most sought-after itineraries.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">

@@ -3,8 +3,10 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { SlidersHorizontal } from 'lucide-react';
 import { formatRegionalPrice } from '@/config/country';
 import FiltersSidebar, { TourFilters } from '@/app/components/tours/FiltersSidebar';
+import FallbackImage from '@/app/components/FallbackImage';
 
 interface Tour {
   id: string;
@@ -135,7 +137,7 @@ export default function ToursListingContent({ initialTours, region }: ToursListi
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto">
-            <span className="text-[12px]  text-gray-300 uppercase tracking-widest whitespace-nowrap">Sort By:</span>
+            <span className="text-[12px]  text-gray-300  tracking-widest whitespace-nowrap">Sort By:</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}

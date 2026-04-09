@@ -37,7 +37,7 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
         </h3>
         <div className="flex gap-4">
           <button onClick={expandAll} className="text-[#ee2229]  text-[10px] hover:text-[#191974] transition-colors tracking-widest uppercase">Expand All</button>
-          <span className="text-gray-100 font-light">|</span>
+          <span className="text-gray-100 ">|</span>
           <button onClick={collapseAll} className="text-[#ee2229]  text-[10px] hover:text-[#191974] transition-colors tracking-widest uppercase">Collapse All</button>
         </div>
       </div>

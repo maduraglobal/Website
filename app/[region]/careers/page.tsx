@@ -46,7 +46,7 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
             <h1 className="text-[52px] md:text-[76px]  text-white  tracking-tighter leading-none mb-6">
               Adventure <span className="text-[#ee2229]">Awaits</span> Your Career
             </h1>
-            <p className="text-[18px] md:text-[22px] text-white/70 font-light mb-10 leading-relaxed">
+            <p className="text-[18px] md:text-[22px] text-white/70  mb-10 leading-relaxed">
               Join a legacy of excellence. At Madura Travel, we don't just plan journeysâ€”we build careers that inspire and innovate in the world of global travel.
             </p>
             <button className="bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white px-10 py-4 rounded-xl font-bold  tracking-widest transition-all">
@@ -69,7 +69,7 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
               <div key={i} className="p-10 rounded-[2.5rem] bg-gray-50 border border-gray-100 hover:border-[#ee2229] transition-all hover:bg-white hover:shadow-2xl hover:shadow-blue-900/5 group text-center">
                 <div className="text-[#ee2229] mb-6 group-hover:scale-110 transition-transform duration-300 flex justify-center">{perk.icon}</div>
                 <h3 className="text-[20px]  text-[#191974] mb-3 ">{perk.title}</h3>
-                <p className="text-gray-500 font-light leading-relaxed text-[15px]">{perk.desc}</p>
+                <p className="text-gray-500  leading-relaxed text-[15px]">{perk.desc}</p>
               </div>
             ))}
           </div>
@@ -114,7 +114,7 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
           <div className="mt-12 text-center bg-[#191974] p-12 rounded-[3rem] text-white shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#ee2229]/20 rounded-full blur-[80px]" />
             <h3 className="text-[28px]   mb-4">Don't see a fit?</h3>
-            <p className="text-white/60 mb-8 max-w-lg mx-auto font-light">We're always looking for travel enthusiasts. Send your resume to our talent team!</p>
+            <p className="text-white/60 mb-8 max-w-lg mx-auto ">We're always looking for travel enthusiasts. Send your resume to our talent team!</p>
             <a href="mailto:careers@maduratravel.com" className="inline-block bg-[#ee2229] text-white px-10 py-4 rounded-xl font-bold  tracking-widest hover:bg-white hover:text-[#191974] transition-all">
               Apply Spontaneously
             </a>

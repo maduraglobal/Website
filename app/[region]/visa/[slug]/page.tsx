@@ -397,7 +397,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                     className="w-full text-left px-5 py-4 flex justify-between items-center text-[15px] hover:bg-gray-50 transition-colors"
                   >
                     <span className={`font-medium ${openFaq === i ? 'text-[#ee2229]' : 'text-[#333]'}`}>{q}</span>
-                    <span className="text-[#ee2229] text-[20px] font-light leading-none">{openFaq === i ? '-' : '+'}</span>
+                    <span className="text-[#ee2229] text-[20px]  leading-none">{openFaq === i ? '-' : '+'}</span>
                   </button>
                   {openFaq === i && (
                     <div className="px-5 pb-5 text-gray-600 text-[14.5px]">

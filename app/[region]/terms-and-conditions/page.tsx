@@ -176,7 +176,7 @@ export default function TermsAndConditions({ params }: { params: Promise<{ regio
             <h1 className="text-[42px] md:text-[56px]   tracking-tight mb-4 leading-none">
               Terms & Conditions
             </h1>
-            <p className="text-[18px] md:text-[22px] font-light text-white/80 max-w-2xl mx-auto">
+            <p className="text-[18px] md:text-[22px]  text-white/80 max-w-2xl mx-auto">
               Please read our travel guidelines and legal terms to ensure a smooth journey with us.
             </p>
             <div className="mt-8 inline-block px-6 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-[14px] font-bold  tracking-widest">
@@ -219,7 +219,7 @@ export default function TermsAndConditions({ params }: { params: Promise<{ regio
                       {section.title}
                     </h2>
                   </div>
-                  <div className="text-[16px] md:text-[17px] leading-relaxed text-gray-600 font-light">
+                  <div className="text-[16px] md:text-[17px] leading-relaxed text-gray-600 ">
                     {section.content}
                   </div>
                 </section>

@@ -45,7 +45,7 @@ export default function OurStoryPage({ params }: { params: Promise<{ region: str
             <h1 className="text-[56px] md:text-[80px]  text-white  tracking-tighter leading-none mb-6">
               Our <span className="text-[#ee2229]">Story</span>
             </h1>
-            <p className="text-[20px] md:text-[24px] text-white/70 font-light max-w-2xl mx-auto  tracking-widest">
+            <p className="text-[20px] md:text-[24px] text-white/70  max-w-2xl mx-auto  tracking-widest">
               From a Visionary Dream to a Global Legacy
             </p>
           </motion.div>
@@ -75,7 +75,7 @@ export default function OurStoryPage({ params }: { params: Promise<{ region: str
               A Trusted Name in <br />
               <span className="text-[#ee2229]">Indian Travel History</span>
             </h2>
-            <div className="space-y-6 text-gray-600 font-light text-[18px] leading-relaxed">
+            <div className="space-y-6 text-gray-600  text-[18px] leading-relaxed">
               <p>
                 Founded on January 17th, 1986, in Egmore, Chennai, <strong>Madura Travel Service (P) Ltd.</strong> has been a cornerstone of the Indian travel industry for nearly four decades.
               </p>
@@ -115,14 +115,14 @@ export default function OurStoryPage({ params }: { params: Promise<{ region: str
           <div className="bg-[#191974] p-12 rounded-[2.5rem] text-white shadow-2xl relative group overflow-hidden">
             <Target className="w-16 h-16 text-[#ee2229] mb-8 group-hover:scale-110 transition-transform" />
             <h3 className="text-[32px]   tracking-tighter mb-4">Our Mission</h3>
-            <p className="text-white/70 text-[18px] font-light leading-relaxed">
+            <p className="text-white/70 text-[18px]  leading-relaxed">
               To provide personalized, high-quality travel and visa services that exceed expectations, ensuring every journey is seamless, safe, and unforgettable for every traveler.
             </p>
           </div>
           <div className="bg-gray-50 p-12 rounded-[2.5rem] border border-gray-100 shadow-xl relative group overflow-hidden">
             <Eye className="w-16 h-16 text-[#ee2229] mb-8 group-hover:scale-110 transition-transform" />
             <h3 className="text-[32px]  text-[#191974]  tracking-tighter mb-4">Our Vision</h3>
-            <p className="text-gray-500 text-[18px] font-light leading-relaxed">
+            <p className="text-gray-500 text-[18px]  leading-relaxed">
               To be the most preferred travel partner globally, recognized for our integrity, innovative solutions, and for connecting people with the diverse beauty of the world.
             </p>
           </div>
@@ -152,7 +152,7 @@ export default function OurStoryPage({ params }: { params: Promise<{ region: str
                   <div className={`p-8 rounded-3xl bg-white shadow-lg border border-gray-100 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                     <span className="text-[32px]  text-[#ee2229] leading-none mb-2 block">{ms.year}</span>
                     <h4 className="text-[20px]  text-[#191974] mb-2 ">{ms.title}</h4>
-                    <p className="text-gray-500 font-light leading-relaxed">{ms.desc}</p>
+                    <p className="text-gray-500  leading-relaxed">{ms.desc}</p>
                   </div>
                 </div>
                 <div className="w-8 h-8 rounded-full bg-[#191974] border-4 border-white shadow-xl z-10 shrink-0 hidden md:block" />

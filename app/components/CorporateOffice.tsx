@@ -49,7 +49,7 @@ export default function CorporateOffice() {
                 </h3>
                 <div className="flex items-start gap-4 text-gray-600">
                   <MapPin className="w-6 h-6 text-[#ee2229] shrink-0 mt-1" />
-                  <p className="text-[16px] leading-relaxed font-light">
+                  <p className="text-[16px] leading-relaxed ">
                     25-3, Gandhi Irwin Road, Egmore,<br />
                     Chennai, Tamil Nadu - 600008, India
                   </p>
@@ -98,7 +98,7 @@ export default function CorporateOffice() {
                     </div>
                     <div className="text-[14px]">
                       <span className="font-bold text-[#191974]">{info.label}:</span>{' '}
-                      <span className="text-gray-600 font-light">{info.value}</span>
+                      <span className="text-gray-600 ">{info.value}</span>
                     </div>
                   </div>
                 ))}

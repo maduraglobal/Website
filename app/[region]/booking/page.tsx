@@ -144,7 +144,7 @@ export default function BookingPage() {
                   </div>
                   <div>
                     <span className="text-[11px]  text-[#ee2229]  tracking-widest mb-1 block">Selected Package</span>
-                    <h3 className="text-[26px] font-light tracking-tight">{tourSlug.replace(/-/g, ' ').toUpperCase()}</h3>
+                    <h3 className="text-[26px]  tracking-tight">{tourSlug.replace(/-/g, ' ').toUpperCase()}</h3>
                   </div>
                 </div>
                 <div className="text-right border-l border-white/10 pl-8 hidden md:block">
@@ -195,7 +195,7 @@ export default function BookingPage() {
                 <svg className="w-12 h-12 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
               </div>
               <h2 className="text-[32px]  text-[#191974] mb-4  tracking-tight text-center">Final Step</h2>
-              <p className="text-[26px] font-light text-gray-400 mb-10 max-w-2xl leading-tight">Authorize a total payment of <strong className="text-[#ee2229] ">{formatRegionalPrice(totalBaseInrPrice, region)}</strong></p>
+              <p className="text-[26px]  text-gray-400 mb-10 max-w-2xl leading-tight">Authorize a total payment of <strong className="text-[#ee2229] ">{formatRegionalPrice(totalBaseInrPrice, region)}</strong></p>
 
               <button
                 onClick={initiatePayment}
@@ -224,7 +224,7 @@ export default function BookingPage() {
                 </div>
               </div>
               <h2 className="text-[32px]  text-[#191974] mb-4  tracking-tighter">Your Journey Begins!</h2>
-              <p className="text-[26px] text-gray-400 font-light mb-12 max-w-2xl leading-tight">
+              <p className="text-[26px] text-gray-400  mb-12 max-w-2xl leading-tight">
                 Booking reference <span className="text-[#ee2229] ">#MAD{Math.floor(Math.random() * 8999) + 1000}</span> is now active.
               </p>
               <button onClick={() => router.push(`/${region}/tours`)} className="bg-[#191974] text-white px-16 py-5 rounded-xl  text-[14px]  tracking-widest hover:bg-[#ee2229] transition-all shadow-xl active:scale-95">

@@ -83,7 +83,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
             <h1 className="text-[48px] md:text-[72px]  text-white  tracking-tighter leading-none mb-6">
               What Our <span className="text-[#ee2229]">Guests Say</span>
             </h1>
-            <p className="text-[18px] md:text-[22px] text-white/60 font-light max-w-2xl mx-auto">
+            <p className="text-[18px] md:text-[22px] text-white/60  max-w-2xl mx-auto">
               Real stories from our global community of travelers. Trust built over 40 years of excellence.
             </p>
 
@@ -129,7 +129,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-[#ee2229] text-[#ee2229]" />)}
               </div>
-              <p className="text-[20px] md:text-[24px] text-gray-600 font-light leading-relaxed italic">
+              <p className="text-[20px] md:text-[24px] text-gray-600  leading-relaxed italic">
                 "Our USA West Coast tour was beyond incredible. Every detail, from the luxury coaches to the perfectly located hotels, was meticulously planned. Madura Travel's legacy of trust is evident in every step they take."
               </p>
               <div className="mt-8 flex items-center gap-3 text-[#191974] font-bold">
@@ -166,7 +166,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
                   {[...Array(t.stars)].map((_, i) => <Star key={i} className="w-4 h-4 fill-[#ee2229] text-[#ee2229]" />)}
                 </div>
 
-                <p className="text-gray-600 font-light leading-relaxed mb-6 italic">
+                <p className="text-gray-600  leading-relaxed mb-6 italic">
                   "{t.quote}"
                 </p>
 

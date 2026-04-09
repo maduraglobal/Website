@@ -27,7 +27,7 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
             <h1 className="text-[48px] md:text-[64px]  text-white  tracking-tighter leading-none mb-6">
               Get in <span className="text-[#ee2229]">Touch</span>
             </h1>
-            <p className="text-[18px] md:text-[22px] text-white/60 font-light max-w-2xl mx-auto ">
+            <p className="text-[18px] md:text-[22px] text-white/60  max-w-2xl mx-auto ">
               Whether you have a specific query or want to plan your next dream vacation, our travel experts are here to help.
             </p>
           </motion.div>
@@ -67,7 +67,7 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-[32px] md:text-[42px]  text-[#191974]  tracking-tighter mb-4">Send us a Message</h2>
-            <p className="text-gray-500 font-light text-[18px]">Fill out the form below and a travel specialist will contact you shortly.</p>
+            <p className="text-gray-500  text-[18px]">Fill out the form below and a travel specialist will contact you shortly.</p>
           </div>
 
           <form className="grid grid-cols-1 md:grid-cols-2 gap-6">

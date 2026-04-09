@@ -48,7 +48,7 @@ const BranchCard = ({ tag, location, name, status, address, phone, email, isInte
     </div>
 
     <div className="space-y-4 mb-8 flex-1">
-      <p className="text-gray-500 text-[14px] leading-relaxed font-light">
+      <p className="text-gray-500 text-[14px] leading-relaxed ">
         {address}
       </p>
 
@@ -117,7 +117,7 @@ export default function BranchLocations() {
             <h2 className="text-[42px] md:text-[52px]  text-[#191974]  tracking-tighter leading-none mb-6 ">
               Our Branches <span className="text-[#ee2229]">Worldwide</span>
             </h2>
-            <p className="text-gray-400 text-[18px] md:text-[22px] font-light max-w-2xl mx-auto">
+            <p className="text-gray-400 text-[18px] md:text-[22px]  max-w-2xl mx-auto">
               Connect with our offices across India and internationally for personalized travel assistance.
             </p>
           </motion.div>
@@ -165,7 +165,7 @@ export default function BranchLocations() {
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#ee2229]/20 rounded-full blur-[80px] translate-x-1/2 -translate-y-1/2" />
           <div className="relative z-10 text-center md:text-left">
             <h3 className="text-[28px]   mb-2">Need immediate assistance?</h3>
-            <p className="text-white/60 font-light text-[17px]">Our global support team is available 24/7 to help you.</p>
+            <p className="text-white/60  text-[17px]">Our global support team is available 24/7 to help you.</p>
           </div>
           <div className="relative z-10 flex flex-col sm:flex-row gap-4">
             <a href="tel:+919092949494" className="bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white px-8 py-4 rounded-xl font-bold  tracking-widest transition-all text-center">

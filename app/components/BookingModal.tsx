@@ -238,7 +238,7 @@ const BookingModal = () => {
                 <h3 className="text-[28px]  text-[#191974] mb-2 ">
                   Booking Initiated!
                 </h3>
-                <p className="text-gray-500 font-light">
+                <p className="text-gray-500 ">
                   Our travel expert will contact you shortly to confirm your itinerary.
                 </p>
               </div>
@@ -348,7 +348,7 @@ const BookingModal = () => {
                       {errors.date && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.date}</p>}
                     </div>
                   </div>
-                  
+
                   {/* Travelers Grid */}
                   <div className="grid grid-cols-3 gap-3 md:gap-5">
                     {/* Adults */}

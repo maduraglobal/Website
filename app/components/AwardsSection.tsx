@@ -56,7 +56,7 @@ export default function AwardsSection() {
           <div className="bg-white rounded-[24px] p-10 shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-gray-100 flex flex-col h-full hover:shadow-[0_25px_50px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-500">
             <div className="mb-8 border-b border-gray-100 pb-5">
               <h3 className="text-[24px] font-bold text-[#191974] tracking-tight">Airline Awards</h3>
-              <p className="text-[14px] text-gray-500 mt-2 font-light">Recognized by the world&apos;s leading carriers</p>
+              <p className="text-[14px] text-gray-500 mt-2 ">Recognized by the world&apos;s leading carriers</p>
             </div>
             <div className="flex-1 flex items-center justify-center bg-[#f7f7ff]/50 rounded-[20px] p-8 border border-white/50">
               <img
@@ -71,7 +71,7 @@ export default function AwardsSection() {
           <div className="bg-white rounded-[24px] p-10 shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-gray-100 flex flex-col h-full hover:shadow-[0_25px_50px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-500">
             <div className="mb-8 border-b border-gray-100 pb-5">
               <h3 className="text-[24px] font-bold text-[#191974] tracking-tight">Our Accreditations</h3>
-              <p className="text-[14px] text-gray-500 mt-2 font-light">Certified by top global tourism boards</p>
+              <p className="text-[14px] text-gray-500 mt-2 ">Certified by top global tourism boards</p>
             </div>
             <div className="flex-1 flex items-center justify-center bg-[#f7f7ff]/50 rounded-[20px] p-8 border border-white/50">
               <img

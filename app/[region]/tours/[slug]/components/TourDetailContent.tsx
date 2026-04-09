@@ -107,7 +107,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 ].map((item, i) => (
                   <div key={i} className="flex flex-col items-center justify-center gap-2 bg-gray-50/50 p-4 rounded-xl border border-gray-100 hover:bg-white hover:shadow-md transition-all text-center group">
                     <item.icon className={`w-5 h-5 ${item.color} group-hover:scale-110 transition-transform`} />
-                    <span className="text-[11px]  text-[#191974] opacity-70 tracking-tighter uppercase">{item.text}</span>
+                    <span className="text-[11px]  text-[#191974] opacity-70 tracking-tighter ">{item.text}</span>
                   </div>
                 ))}
               </div>
@@ -119,7 +119,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 <div className="flex items-center gap-3">
                   <h2 className="text-[24px]  text-[#191974] tracking-tight">Day-Wise Itinerary</h2>
                 </div>
-                <span className="text-[11px]  text-[#ee2229] bg-red-50 border border-red-100 px-3 py-1 rounded-sm tracking-widest uppercase">{tour.duration}</span>
+                <span className="text-[11px]  text-[#ee2229] bg-red-50 border border-red-100 px-3 py-1 rounded-sm tracking-widest ">{tour.duration}</span>
               </div>
               <ItineraryTimeline itinerary={itinerary} />
             </section>
@@ -139,7 +139,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-white border border-gray-100 p-4 rounded-2xl shadow-sm">
-                  <h3 className="text-[12px]  text-[#191974] mb-6 flex items-center gap-2 tracking-widest uppercase border-b border-[#191974]/10 pb-3">
+                  <h3 className="text-[12px]  text-[#191974] mb-6 flex items-center gap-2 tracking-widest  border-b border-[#191974]/10 pb-3">
                     <CheckCircle2 className="w-5 h-5" />
                     Tour Inclusions
                   </h3>
@@ -153,7 +153,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   </ul>
                 </div>
                 <div className="bg-white border border-gray-100 p-4 rounded-2xl shadow-sm">
-                  <h3 className="text-[12px]  text-[#ee2229] mb-6 flex items-center gap-2 tracking-widest uppercase border-b border-red-50 pb-3">
+                  <h3 className="text-[12px]  text-[#ee2229] mb-6 flex items-center gap-2 tracking-widest  border-b border-red-50 pb-3">
                     <AlertCircle className="w-5 h-5" />
                     Tour Exclusions
                   </h3>
@@ -185,7 +185,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   { title: "Currency", text: "Carry sufficient local currency." }
                 ].map((note, i) => (
                   <div key={i} className="flex flex-col gap-1 bg-white/10 p-4 rounded-xl border border-white/10">
-                    <span className="text-[10px]  uppercase text-[#ee2229] tracking-widest">{note.title}</span>
+                    <span className="text-[10px]   text-[#ee2229] tracking-widest">{note.title}</span>
                     <span className="text-[13px] font-bold opacity-90">{note.text}</span>
                   </div>
                 ))}
@@ -201,8 +201,8 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 <table className="w-full text-left ">
                   <thead className="bg-[#191974] text-white">
                     <tr>
-                      <th className="px-6 py-4 text-[11px]  tracking-widest uppercase">No. of Days</th>
-                      <th className="px-6 py-4 text-[11px]  tracking-widest uppercase text-right">Penalty Charges</th>
+                      <th className="px-6 py-4 text-[11px]  tracking-widest ">No. of Days</th>
+                      <th className="px-6 py-4 text-[11px]  tracking-widest  text-right">Penalty Charges</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50 bg-white">
@@ -241,7 +241,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <div>
                       <h4 className="text-[14px]  text-[#191974] mb-1">{up.title}</h4>
                       <p className="text-[12px] text-gray-500 leading-normal mb-3">{up.desc}</p>
-                      <button className="text-[11px]  text-[#ee2229] uppercase tracking-widest hover:underline flex items-center gap-1">Enquire Now <ChevronRight className="w-3 h-3" /></button>
+                      <button className="text-[11px]  text-[#ee2229]  tracking-widest hover:underline flex items-center gap-1">Enquire Now <ChevronRight className="w-3 h-3" /></button>
                     </div>
                   </div>
                 ))}
@@ -251,12 +251,12 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
             {/* Compact Footer */}
             <div className="mt-12 bg-gray-50 rounded-2xl p-8 border border-gray-100 text-center">
               <h3 className="text-[18px]  text-[#191974] mb-2 tracking-tight">The Madura Standard</h3>
-              <p className="text-[14px] font-light text-gray-400 mb-6 uppercase tracking-[0.2em]">Expert travel guidance since 1986.</p>
+              <p className="text-[14px]  text-gray-400 mb-6  tracking-[0.2em]">Expert travel guidance since 1986.</p>
               <div className="flex flex-wrap justify-center gap-10">
                 {["Price Integrity", "Expert Managers", "Curated Hotels"].map((feature, i) => (
                   <div key={feature} className="flex items-center gap-2">
                     <ShieldCheck className="w-4 h-4 text-[#ee2229]" />
-                    <span className="text-[14px]  text-[#191974] uppercase">{feature}</span>
+                    <span className="text-[14px]  text-[#191974] ">{feature}</span>
                   </div>
                 ))}
               </div>

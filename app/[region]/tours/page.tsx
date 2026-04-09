@@ -30,7 +30,7 @@ export default async function ToursListingPage({ params }: { params: Promise<{ r
           <div className="flex flex-col items-center justify-center text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full mb-6 border border-white/10">
               <div className="w-1.5 h-1.5 rounded-full bg-[#ee2229] animate-pulse" />
-              <span className="text-white text-[10px]  uppercase tracking-widest ">Discover the World</span>
+              <span className="text-white text-[10px]   tracking-widest ">Discover the World</span>
             </div>
 
             <h1 className="text-[40px] md:text-[64px]  text-white leading-[1.1] mb-6 tracking-tight">
