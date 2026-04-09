@@ -27,11 +27,11 @@ export default function AwardsSection() {
 
           {/* Main heading */}
           <h1 className="text-center text-[26px] md:text-[36px]  text-[#191974] mb-8  tracking-tight leading-tight">
-            Award &amp; Recognitions
+            Awards &amp; Recognitions
           </h1>
 
           {/* Ministry Badges */}
-          <div className="flex flex-wrap justify-center gap-50 mb-12">
+          <div className="flex flex-wrap justify-center gap-10 mb-12">
             <div className="h-20 flex items-center justify-center transition-all duration-500">
               <img
                 src="/Awardsimages/Incre.png"

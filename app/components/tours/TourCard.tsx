@@ -115,20 +115,20 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
 
             <div className="space-y-2.5 w-full flex flex-col relative z-20 font-inter-tight">
               <Link
-                href={`/${region}/destination/${destinationSlug}/tours/${tour.slug || tour.id}`}
+                href={`/${region}/tours/${tour.slug || tour.id}`}
                 className="w-full block text-center bg-[#ee2229] hover:bg-[#d41c23] text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-red-500/20 transition-all text-[15px]  tracking-wider"
               >
                 Book Now
               </Link>
               <div className="grid grid-cols-2 gap-2 w-full">
                 <Link
-                  href={`/${region}/destination/${destinationSlug}/tours/${tour.slug || tour.id}`}
+                  href={`/${region}/tours/${tour.slug || tour.id}`}
                   className="w-full block text-center border-2 border-gray-100 hover:border-[#191974] hover:text-[#191974] text-gray-700 font-bold py-2.5 px-2 rounded-xl transition-all text-[12px] bg-white  tracking-tighter"
                 >
                   View Details
                 </Link>
                 <Link
-                  href={`/${region}/destination/${destinationSlug}/tours/${tour.slug || tour.id}#enquire`}
+                  href={`/${region}/tours/${tour.slug || tour.id}?enquire=true`}
                   className="w-full block text-center border-2 border-gray-100 hover:border-[#191974] hover:text-[#191974] text-gray-700 font-bold py-2.5 px-2 rounded-xl transition-all text-[12px] bg-white  tracking-tighter"
                 >
                   Enquire

@@ -177,11 +177,11 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           {/* 2. Types of Visas */}
           <div id="types-of-visas" className="pt-2">
             <h2 className="text-[22px] font-medium text-[#191974] mb-6 border-b border-gray-300 pb-2">Types of {destName} Visas for Indians</h2>
-            
+
             {/* Departure Pricing Integration */}
             <div className="mb-10">
               <p className="text-gray-500 italic mb-4">As seats fill, prices increase! So book today!</p>
-              <DeparturePricing 
+              <DeparturePricing
                 cities={pricingCities}
                 dates={pricingDates}
                 selectedCity={selectedCity}
@@ -254,7 +254,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                         {formatRegionalPrice(v.fees, region)}<span className="text-sm font-bold text-gray-400">/–</span>
                       </p>
                     </div>
-                    <button 
+                    <button
                       className="bg-[#191974] hover:bg-[#ee2229] text-white px-6 py-3 rounded-xl font-black text-[12px] uppercase tracking-widest transition-all shadow-xl shadow-blue-900/10 active:scale-95 flex items-center gap-2 group/btn"
                       onClick={() => scrollToId('apply-online')}
                     >
@@ -270,7 +270,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           {/* 3. Google Reviews Banner */}
           <div className="bg-teal-50 border border-teal-100 p-5 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
-              <p className="text-[16px] font-bold text-[#191974]">Antigravity Travels – Reviews</p>
+              <p className="text-[16px] font-bold text-[#191974]">Madura Travel Service – Reviews</p>
               <div className="flex items-center gap-2 mt-1">
                 <span className="font-bold text-teal-800">EXCELLENT</span>
                 <div className="flex text-yellow-500"><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /></div>
@@ -287,7 +287,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             <ul className="space-y-3 mb-4">
               {[
                 "Consulate application fees",
-                "Antigravity Travels service charges",
+                "Madura travel service service charges",
                 "All taxes included"
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
@@ -450,7 +450,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
               <li>Visa issuance is subject to the sole discretion of the Embassy/Consulate.</li>
               <li>The Processing time is strictly dictated by the immigration authorities.</li>
               <li>Fees once paid are entirely non-refundable outside of explicit guarantee frameworks.</li>
-              <li>Antigravity Travels solely acts as a processing facilitator to simplify applications.</li>
+              <li>Madura travel service solely acts as a processing facilitator to simplify applications.</li>
               <li>Any additional document demands from immigration must be fulfilled promptly.</li>
               <li>Price notices are subject to immediate regulatory changes without prior notice.</li>
               <li>Any falsified documents hold the applicant entirely liable.</li>

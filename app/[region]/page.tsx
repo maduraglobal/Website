@@ -10,6 +10,9 @@ import { createClient } from "@/utils/supabase/client";
 import PopupForm from "../components/PopupForm";
 import CorporateOffice from "../components/CorporateOffice";
 import AwardsSection from "../components/AwardsSection";
+import TestimonialsDraggable from "../components/TestimonialsDraggable";
+import TestimonialsDraggableInHero from "../components/TestimonialsDraggableInHero";
+import DraggableTourCards from "../components/DraggableTourCards";
 import { Users, Globe, Award, Star as StarIcon } from "lucide-react";
 
 const supabase = createClient();
@@ -20,45 +23,78 @@ function FeaturedTourCard({ tour, region }: { tour: any, region: string }) {
   const displayImg = (!imgError && tour.image_url) ? tour.image_url : fallbackImg;
 
   return (
-    <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
-      <Link href={`/${region}/tours/${tour.slug}`} className="relative block h-[155px] shrink-0 overflow-hidden">
+    <motion.div 
+      whileHover={{ y: -8, scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      className="bg-white/70 backdrop-blur-md border border-white/20 rounded-[32px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.12)] transition-all duration-500 group flex flex-col h-full relative"
+    >
+      {/* Glow Effect on Hover */}
+      <div className="absolute inset-0 bg-linear-to-br from-[#ee2229]/5 to-[#191974]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+      <Link href={`/${region}/tours/${tour.slug}`} className="relative block h-[180px] shrink-0 overflow-hidden m-2 rounded-[24px]">
         <img
           src={displayImg}
           alt={tour.title}
           onError={() => setImgError(true)}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
-        <div className="absolute bottom-2 left-2">
-          <span className="bg-white/90 backdrop-blur-sm text-[#191974] text-[9px] font-black px-2.5 py-1 rounded-lg">
+        <div className="absolute top-3 left-3">
+          <span className="bg-black/40 backdrop-blur-md text-white text-[9px] font-black px-3 py-1.5 rounded-full border border-white/20 uppercase tracking-widest">
             {tour.duration}
           </span>
         </div>
+        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent " />
       </Link>
-      <div className="p-3.5 flex flex-col flex-1">
-        <p className="text-[9px]  text-[#ee2229] uppercase tracking-widest mb-1">Best Seller</p>
+
+      <div className="p-5 flex flex-col flex-1 relative z-10">
+        <div className="flex items-center gap-2 mb-2">
+           <div className="w-1.5 h-1.5 rounded-full bg-[#ee2229]" />
+           <p className="text-[10px] font-black  text-[#ee2229] uppercase tracking-[0.2em]">Featured Experience</p>
+        </div>
+        
         <Link href={`/${region}/tours/${tour.slug}`}>
-          <p className="text-[16px] font-semibold  text-[#191974] mb-1.5 leading-tight line-clamp-2 hover:text-[#ee2229] transition-colors ">
+          <h3 className="text-[19px] font-black text-[#191974] mb-3 leading-[1.2] line-clamp-2 group-hover:text-[#ee2229] transition-colors">
             {tour.title}
-          </p>
+          </h3>
         </Link>
-        <div className="mt-auto">
-          <div className="flex items-end justify-between mb-3 border-t border-gray-50 pt-3">
+
+        {/* Details list */}
+        <div className="flex flex-wrap gap-2 mb-6">
+           {["Flights", "Visas", "Hotels"].map(tag => (
+             <span key={tag} className="text-[9px] font-bold text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full bg-gray-50/50">{tag}</span>
+           ))}
+        </div>
+
+        <div className="mt-auto border-t border-gray-100 pt-4">
+          <div className="flex items-end justify-between mb-5">
             <div>
-              <p className="text-[8px] text-gray-400 font-bold uppercase mb-0.5">Starting at</p>
-              <p className="text-[17px] font-black text-[#191974]">{formatRegionalPrice(tour.base_price_inr, region)}</p>
+              <p className="text-[9px] text-gray-400 font-bold uppercase mb-1 tracking-widest">Starting at</p>
+              <p className="text-[22px] font-black text-[#191974] tracking-tighter">{formatRegionalPrice(tour.base_price_inr, region)}</p>
             </div>
             <div className="text-right">
-              <p className="text-[8px] font-bold text-[#ee2229] uppercase">EMI</p>
-              <p className="text-[9px] font-black text-[#191974]">₹5,259/mo</p>
+              <p className="text-[9px] font-bold text-[#ee2229] uppercase tracking-widest">Low EMI</p>
+              <p className="text-[10px] font-black text-[#191974]">₹5,259/mo</p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-2">
-            <Link href={`/${region}/tours/${tour.slug}`} className="border border-[#191974] text-[#191974] py-1.5 rounded-lg text-[10px] font-black text-center hover:bg-[#191974]/5 uppercase">Details</Link>
-            <button className="book-now-btn bg-[#191974] text-white py-1.5 rounded-lg text-[10px] font-black hover:bg-[#ee2229] uppercase shadow-lg shadow-blue-500/10" data-package={tour.title}>Book Now</button>
+          
+          <div className="grid grid-cols-2 gap-3">
+            <Link 
+              href={`/${region}/tours/${tour.slug}`} 
+              className="flex items-center justify-center border border-gray-100 text-[#191974] py-3 rounded-2xl text-[11px] font-black hover:bg-gray-50 transition-all uppercase tracking-widest"
+            >
+              Details
+            </Link>
+            <button 
+               className="book-now-btn relative overflow-hidden group/btn bg-linear-to-r from-[#191974] to-[#1e1e8a] text-white py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest shadow-[0_10px_20px_rgba(25,25,116,0.2)] hover:shadow-[0_15px_30px_rgba(238,34,41,0.3)] hover:from-[#ee2229] hover:to-[#ff454b] transition-all active:scale-95 flex items-center justify-center gap-2"
+               data-package={tour.title}
+            >
+              Book Now
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
+            </button>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -177,10 +213,10 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto w-full px-6 lg:px-8 relative z-10 flex-1 flex flex-col lg:flex-row items-center justify-between mt-10">
-          {/* Left Text */}
-          <div className="w-full text-[#191974] space-y-3 mb-6 lg:mb-0">
-            <h1 className="text-[32px] md:text-[56px] font-black font-inter tracking-tight leading-[1.1] text-white drop-shadow-xl text-center lg:text-left mt-6 md:mt-0">
+        <div className="max-w-7xl mx-auto w-full px-6 lg:px-8 relative z-10 flex-1 flex flex-col items-center justify-center mt-10">
+          {/* Centered Text */}
+          <div className="w-full text-[#191974] space-y-3">
+            <h1 className="text-[32px] md:text-[56px] font-black font-inter tracking-tight leading-[1.1] text-white drop-shadow-xl text-center mt-6 md:mt-0">
               The World is Waiting.<br />
               Start Exploring.
             </h1>
@@ -223,7 +259,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               <div className="relative w-full flex items-center justify-between">
                 <select
                   suppressHydrationWarning
-                  className="w-full text-[14px] font-bold text-gray-900 outline-none bg-transparent appearance-none cursor-pointer"
+                  className="w-full text-[14px] font-bold text-gray-400 outline-none bg-transparent appearance-none cursor-pointer"
                 >
                   <option value="">Any Month</option>
                   {["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].map(m => (
@@ -297,26 +333,28 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="w-full">
             {loading ? (
-              <div className="col-span-full py-12 text-center">
+              <div className="py-12 text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#191974] mx-auto mb-4"></div>
                 <p className="text-gray-500 font-bold uppercase tracking-widest text-xs">Finding the best adventures...</p>
               </div>
             ) : errorStatus ? (
-              <div className="col-span-full py-12 text-center bg-red-50 rounded-2xl border border-red-100">
+              <div className="py-12 text-center bg-red-50 rounded-2xl border border-red-100">
                 <p className="text-red-600 font-black mb-1">Something went wrong</p>
                 <p className="text-red-400 text-xs">{errorStatus}</p>
               </div>
             ) : displayTours.length === 0 ? (
-              <div className="col-span-full py-12 text-center bg-blue-50 rounded-2xl border border-blue-100">
+              <div className="py-12 text-center bg-blue-50 rounded-2xl border border-blue-100">
                 <p className="text-[#191974] font-black mb-1">No tours currently listed</p>
                 <p className="text-gray-500 text-xs">Please check back soon.</p>
               </div>
             ) : (
-              displayTours.map((tour, idx) => (
-                <FeaturedTourCard key={idx} tour={tour} region={region} />
-              ))
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+                {displayTours.map((tour, idx) => (
+                  <FeaturedTourCard key={idx} tour={tour} region={region} />
+                ))}
+              </div>
             )}
           </div>
         </div>
@@ -369,69 +407,10 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         </div>
       </section>
 
-
-      {/* <section className="py-12 bg-[#191974] relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-6 relative z-10">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-5xl font-black text-white mb-4 uppercase tracking-tighter">Trusted by Millions Worldwide</h2>
-              <div className="w-20 h-1 bg-[#ee2229] mx-auto rounded-full" />
-            </div>
-
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { val: "4M+", label: "Happy Customers", icon: <Users className="w-6 h-6" /> },
-                { val: "28K+", label: "Destinations", icon: <Globe className="w-6 h-6" /> },
-                { val: "40+", label: "Years Experience", icon: <Award className="w-6 h-6" /> },
-                { val: "10K+", label: "5-Star Ratings", icon: <StarIcon className="w-6 h-6" /> }
-              ].map((stat, idx) => (
-                <div key={idx} className="flex flex-col items-center text-center p-6 rounded-2xl border border-white/5 bg-white/5 backdrop-blur-sm">
-                  <div className="w-12 h-12 bg-[#ee2229] rounded-xl flex items-center justify-center text-white mb-4 shadow-lg shadow-red-500/20">{stat.icon}</div>
-                  <h3 className="text-3xl font-black text-white mb-1 uppercase tracking-tighter">{stat.val}</h3>
-                  <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section> */}
-
       <AwardsSection />
-      {/* 
-      <section className="py-12 bg-white relative">
-        <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
-          <h2 className="text-[24px]  text-[#191974] mb-2  tracking-tight">Why Choose Madura Travel</h2>
-          <p className="text-gray-400 font-bold mb-10 uppercase tracking-widest text-[12px]">Setting the standard for premium global travel.</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { title: "All Inclusive", desc: "Flights, visas, stays, and meals - everything taken care of." },
-              { title: "Expert Support", desc: "Travel with seasoned professionals at every step." },
-              { title: "Premium Stays", desc: "Handpicked 4-star and 5-star properties worldwide." }
-            ].map((feat, idx) => (
-              <div key={idx} className="bg-gray-50 border border-gray-100 p-8 rounded-2xl hover:bg-white hover:shadow-xl transition-all">
-                <h3 className="font-black text-[#191974] mb-2 uppercase text-sm">{feat.title}</h3>
-                <p className="text-xs text-gray-500 font-medium leading-relaxed">{feat.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div> */}
-      {/* </section> */}
-      {/* 
-      <section className="py-20 bg-[#F8F9FF] flex flex-col items-center">
-        <div className="text-center mb-10 px-4">
-          <h2 className="text-2xl font-black text-[#191974] mb-2 uppercase">Guest Testimonials</h2>
-          <p className="text-gray-400 font-bold uppercase tracking-widest text-[11px]">Real experiences from real travelers.</p>
-        </div>
-        <InfiniteMovingCards
-          speed="slow"
-          items={[
-            { quote: "An absolutely luxurious experience. Madura Travel exceeded all my expectations.", name: "Rajesh S.", title: "Europe Explorer" },
-            { quote: "Flawless execution from booking to return. Highly recommended for family trips.", name: "Priya V.", title: "Japan Tour" },
-            { quote: "The tour managers were exceptionally professional and the hotels were fantastic.", name: "Amit K.", title: "Australia Grandeur" },
-            { quote: "Every single day was planned to perfection. A truly premium travel company.", name: "Neha D.", title: "Swiss Escapade" }
-          ]}
-        />
-      </section> */}
-
+      
+      
       <PopupForm />
-    </div >
+    </div>
   );
 }

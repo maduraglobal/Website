@@ -9,6 +9,7 @@ export interface RegionConfig {
   paymentGateway: PaymentGateway;
   dateFormat: string;
   phonePrefix: string;
+  language: string;
   
   // Static multiplier against the base currency (INR for Madura travel model)
   // In production, this would be updated or overridden daily via a Forex API.
@@ -25,6 +26,7 @@ export const countryConfigs: Record<string, RegionConfig> = {
     paymentGateway: 'razorpay',
     dateFormat: 'dd/MM/yyyy',
     phonePrefix: '+91',
+    language: 'English',
     baseExchangeRate: 1.0, 
   },
   'en-au': {
@@ -36,6 +38,7 @@ export const countryConfigs: Record<string, RegionConfig> = {
     paymentGateway: 'stripe',
     dateFormat: 'dd/MM/yyyy',
     phonePrefix: '+61',
+    language: 'English',
     baseExchangeRate: 0.018, // ~ 1 INR = 0.018 AUD
   },
   'en-us': {
@@ -47,6 +50,7 @@ export const countryConfigs: Record<string, RegionConfig> = {
     paymentGateway: 'stripe',
     dateFormat: 'MM/dd/yyyy',
     phonePrefix: '+1',
+    language: 'English',
     baseExchangeRate: 0.012, // ~ 1 INR = 0.012 USD
   }
 };

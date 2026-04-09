@@ -267,7 +267,7 @@ export default function VisaServicesPage() {
               <div className="flex text-[#ee2229] mb-6 gap-1">
                 {[...Array(5)].map((_, i) => <Star key={i} className="w-6 h-6 fill-current" />)}
               </div>
-              <p className="text-gray-600 mb-8 font-medium text-lg leading-relaxed">"Excellent service handling our visas. Everything was communicated clearly, and we got our approvals well before time. Really highly recommend Antigravity travels."</p>
+              <p className="text-gray-600 mb-8 font-medium text-lg leading-relaxed">"Excellent service handling our visas. Everything was communicated clearly, and we got our approvals well before time. Really highly recommend Madura travel service."</p>
               <div className="flex items-center justify-between border-t border-gray-100 pt-6">
                 <h4 className="text-lg font-inter text-[#191974]">Nupur Sawant</h4>
                 <span className="text-[#ee2229] font-inter text-sm tracking-widest  cursor-pointer hover:underline">Read more</span>
@@ -296,7 +296,7 @@ export default function VisaServicesPage() {
             {[
               { city: "Mumbai", addr: "Antigravity HQ, Andheri East, Mumbai, Maharashtra 400059." },
               { city: "Delhi", addr: "Antigravity Towers, Connaught Place, New Delhi 110001." },
-              { city: "Chennai", addr: "Antigravity Travels, T Nagar, Chennai, Tamil Nadu 600017." }
+              { city: "Chennai", addr: "Madura travel service, T Nagar, Chennai, Tamil Nadu 600017." }
             ].map((loc, i) => (
               <div key={i} className="bg-white p-10 rounded-3xl shadow-sm border border-gray-200 hover:border-[#191974]/30 transition-colors">
                 <div className="w-16 h-16 bg-[#191974]/5 text-[#191974] rounded-2xl flex items-center justify-center mb-8 border border-[#191974]/10">

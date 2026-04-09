@@ -6,9 +6,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { countryConfigs } from "../../config/country";
 import LoginPopup from "./LoginPopup";
+import { Globe } from "lucide-react";
 
 const destinations = {
-// ... existing destinations ...
+  // ... existing destinations ...
   "India": ["Andaman", "Assam", "Arunachal pradesh", "Golden Triangle", "Gujarat", "Himachal Pradesh", "Karnataka", "Kashmir", "Kerala", "Maharashtra", "Madhya Pradesh", "North East India", "Orissa", "Rajasthan", "Tamil Nadu", "Telangana", "Goa", "Sikkim", "Delhi", "Uttar Pradesh", "Uttarakhand", "West Bengal"],
   "Mainland Europe": ["Austria", "Belgium", "Finland", "France", "Germany", "Iceland", "Ireland", "Italy", "Luxembourg", "Netherlands", "Norway", "Poland", "Portugal", "Denmark", "Spain", "Sweden", "Switzerland", "United Kingdom", "Vatican City"],
   "Australasia": ["Australia", "New Zealand", "Fiji", "Queensland"],
@@ -25,6 +26,8 @@ const popularDestinations = ["India", "Australia", "Dubai", "Vietnam", "Singapor
 const allDestinations = Object.values(destinations).flat();
 
 type DestinationKey = keyof typeof destinations;
+
+import SidebarFeaturedContent from "./SidebarFeaturedContent";
 
 export default function Navbar() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -224,30 +227,36 @@ export default function Navbar() {
 
             {/* Country Selector */}
             <div className="relative group cursor-pointer z-150">
-              <div className="flex items-center gap-2 border border-gray-100 px-3 py-1.5 rounded-lg font-bold text-[13px] hover:border-gray-200 bg-white">
-                <img
-                  src={getFlagURL(activeCountryConfig.id)}
-                  alt={`${activeCountryConfig.name} flag`}
-                  className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
-                />
-                <div className="flex flex-col leading-none">
-                  <span className="text-[13px] font-black text-[#191974]">{activeCountryConfig.name}</span>
-                  <span className="text-[10px] font-bold text-gray-400">{activeCountryConfig.currencySymbol} {activeCountryConfig.currencyCode}</span>
+              <div className="flex items-center gap-3 border border-gray-100 px-3 py-1.5 rounded-lg font-bold text-[13px] hover:border-gray-200 bg-white transition-all">
+                <div className="flex items-center gap-1.5 border-r border-gray-100 pr-2">
+                  <Globe className="w-4 h-4 text-[#191974]" />
+                  <span className="text-[12px] text-[#191974]">{activeCountryConfig.language}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <img
+                    src={getFlagURL(activeCountryConfig.id)}
+                    alt={`${activeCountryConfig.name} flag`}
+                    className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
+                  />
+                  <div className="flex flex-col leading-none">
+                    <span className="text-[12px] font-black text-[#191974]">{activeCountryConfig.name}</span>
+                    <span className="text-[9px] font-bold text-gray-400">{activeCountryConfig.currencySymbol} {activeCountryConfig.currencyCode}</span>
+                  </div>
                 </div>
                 <svg className="w-2.5 h-2.5 ml-1 opacity-40 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M19 9l-7 7-7-7" /></svg>
               </div>
 
               {/* FLYOUT MENU */}
-              <div className="absolute top-full right-0 mt-1 w-[260px] bg-white shadow-2xl rounded-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-200 overflow-hidden">
+              <div className="absolute top-full right-0 mt-1 w-[280px] bg-white shadow-2xl rounded-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-200 overflow-hidden">
                 <div className="px-4 py-3 border-b border-gray-100 bg-gray-50">
-                  <p className="text-[10px] font-black text-gray-400  tracking-widest">Switch Region & Currency</p>
+                  <p className="text-[10px] font-black text-gray-400  tracking-widest capitalize">Select Region & Language</p>
                 </div>
                 <div className="p-2 flex flex-col gap-1">
                   {Object.values(countryConfigs).map((config) => (
                     <div
                       key={config.id}
                       onClick={() => switchRegion(config.id)}
-                      className={`flex items-center justify-between px-4 py-3 rounded-lg transition-all cursor-pointer ${activeCountryConfig.id === config.id
+                      className={`flex items-center justify-between px-3 py-2.5 rounded-lg transition-all cursor-pointer ${activeCountryConfig.id === config.id
                         ? 'bg-[#191974]/5 border border-[#191974]/10'
                         : 'hover:bg-gray-50 border border-transparent'
                         }`}
@@ -255,8 +264,12 @@ export default function Navbar() {
                       <div className="flex items-center gap-3">
                         <img src={getFlagURL(config.id)} alt={config.name} className="w-6 h-4 object-cover rounded-sm shadow-sm" />
                         <div className="flex flex-col">
-                          <span className="text-[13px] font-black text-[#191974]">{config.name}</span>
-                          <span className="text-[11px] font-bold text-gray-400">{config.currencySymbol} — {config.currencyCode}</span>
+                          <span className="text-[12px] font-black text-[#191974]">{config.name}</span>
+                          <div className="flex items-center gap-2 mt-0.5">
+                            <span className="text-[10px] font-bold text-[#ee2229] uppercase">{config.language}</span>
+                            <span className="text-[10px] text-gray-400">•</span>
+                            <span className="text-[10px] font-bold text-gray-400">{config.currencySymbol} — {config.currencyCode}</span>
+                          </div>
                         </div>
                       </div>
                       {activeCountryConfig.id === config.id
@@ -266,8 +279,8 @@ export default function Navbar() {
                     </div>
                   ))}
                 </div>
-                <div className="bg-[#191974] px-4 py-2 flex items-center justify-center gap-2">
-                  <span className="text-[10px] text-white font-black  tracking-widest">Regional Pricing Active</span>
+                <div className="bg-[#191974] px-4 py-2.5 flex items-center justify-center gap-2">
+                  <span className="text-[9px] text-white font-black  tracking-widest uppercase">Global Pricing Support Active</span>
                 </div>
               </div>
             </div>
@@ -291,208 +304,236 @@ export default function Navbar() {
           SIDEBAR OVERLAY + DRAWER
       ═══════════════════════════════════════════════ */}
 
-      {/* Backdrop */}
+      {/* Backdrop (Dimmed/Blurred) */}
       <div
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-200 transition-opacity duration-300 ${sidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setSidebarOpen(false)}
-        className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-200 transition-opacity duration-300 ${sidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
       />
 
-      {/* Drawer */}
-      <div className={`fixed top-0 right-0 h-full w-[340px] max-w-[90vw] bg-white z-210 shadow-2xl flex flex-col transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      {/* ═══════════════════════════════════════════════
+          SIDEBAR OVERLAY CONTENT (Testimonials + Drawer)
+      ═══════════════════════════════════════════════ */}
+      <div className={`fixed top-0 right-0 h-full flex z-210 transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}>
 
-        {/* Sidebar Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-[#191974] shrink-0">
-          <Link href={`/${currentRegionCode}`} onClick={() => setSidebarOpen(false)}>
-            <Image src="/logo.webp" alt="Madura Travel" width={120} height={38} className="object-contain brightness-0 invert" />
-          </Link>
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-          >
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
-          </button>
+        {/* Testimonials Section (White BG, Left of Sidebar) */}
+        <div className="hidden lg:flex w-[340px] h-full bg-white border-r border-gray-100 flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.05)] overflow-hidden">
+          <SidebarFeaturedContent isVisible={sidebarOpen} />
         </div>
 
-        {/* Scrollable Menu */}
-        <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden">
+        {/* Drawer (Right Sidebar) */}
+        <div className="h-full w-[340px] max-w-[90vw] bg-white flex flex-col shadow-2xl">
 
-          {/* ─── DESTINATIONS ─── */}
-          <div className="border-b border-gray-100">
+          {/* Sidebar Header */}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-[#191974] shrink-0">
+            <Link href={`/${currentRegionCode}`} onClick={() => setSidebarOpen(false)}>
+              <Image src="/logo.webp" alt="Madura Travel" width={120} height={38} className="object-contain brightness-0 invert" />
+            </Link>
             <button
-              onClick={() => toggleSection('destinations')}
-              className="w-full flex items-center justify-between px-6 py-4 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
+              onClick={() => setSidebarOpen(false)}
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
             >
-              <span className="flex items-center gap-3">
-                <svg className="w-4 h-4 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                Destinations
-              </span>
-              <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'destinations' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
-            {expandedSection === 'destinations' && (
-              <div className="pb-2">
-                {/* Region tabs */}
-                <div className="px-4 pb-2 flex flex-col gap-px">
-                  {Object.keys(destinations).map((region) => (
-                    <div key={region}>
-                      <button
-                        onClick={() => setSidebarDestRegion(region as DestinationKey)}
-                        className={`w-full text-left px-4 py-2.5 rounded-lg text-[12px] font-black  tracking-wider flex items-center justify-between transition-all ${sidebarDestRegion === region ? 'bg-[#191974] text-white' : 'text-[#191974]/60 hover:text-[#191974] hover:bg-gray-50'}`}
-                      >
-                        {region}
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg>
-                      </button>
-                      {sidebarDestRegion === region && (
-                        <div className="px-4 pt-1 pb-2 grid grid-cols-2 gap-x-3 gap-y-1">
-                          {destinations[region as DestinationKey].map((place) => (
-                            <Link
-                              key={place}
-                              href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, '-')}`}
-                              onClick={() => setSidebarOpen(false)}
-                              className="text-[12px] text-[#191974] font-bold hover:text-[#ee2229] transition-colors flex items-center gap-1.5 py-1"
-                            >
-                              <span className="w-1 h-1 rounded-full bg-[#ee2229] shrink-0" />
-                              {place}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
+          </div>
+
+          {/* Scrollable Menu */}
+          <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden">
+
+            {/* ─── DESTINATIONS ─── */}
+            <div className="border-b border-gray-100">
+              <button
+                onClick={() => toggleSection('destinations')}
+                className="w-full flex items-center justify-between px-6 py-4 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
+              >
+                <span className="flex items-center gap-3">
+                  <svg className="w-4 h-4 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  Destinations
+                </span>
+                <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'destinations' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
+              </button>
+              {expandedSection === 'destinations' && (
+                <div className="pb-2">
+                  {/* Region tabs */}
+                  <div className="px-4 pb-2 flex flex-col gap-px">
+                    {Object.keys(destinations).map((region) => (
+                      <div key={region}>
+                        <button
+                          onClick={() => setSidebarDestRegion(region as DestinationKey)}
+                          className={`w-full text-left px-4 py-2.5 rounded-lg text-[12px] font-black  tracking-wider flex items-center justify-between transition-all ${sidebarDestRegion === region ? 'bg-[#191974] text-white' : 'text-[#191974]/60 hover:text-[#191974] hover:bg-gray-50'}`}
+                        >
+                          {region}
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg>
+                        </button>
+                        {sidebarDestRegion === region && (
+                          <div className="px-4 pt-1 pb-2 grid grid-cols-2 gap-x-3 gap-y-1">
+                            {destinations[region as DestinationKey].map((place) => (
+                              <Link
+                                key={place}
+                                href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, '-')}`}
+                                onClick={() => setSidebarOpen(false)}
+                                className="text-[12px] text-[#191974] font-bold hover:text-[#ee2229] transition-colors flex items-center gap-1.5 py-1"
+                              >
+                                <span className="w-1 h-1 rounded-full bg-[#ee2229] shrink-0" />
+                                {place}
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* ─── INDIA ─── */}
+            <div className="border-b border-gray-100">
+              <button
+                onClick={() => toggleSection('india')}
+                className="w-full flex items-center justify-between px-6 py-4 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
+              >
+                <span className="flex items-center gap-3">
+                  <span className="text-base">🇮🇳</span>
+                  India
+                </span>
+                <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'india' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
+              </button>
+              {expandedSection === 'india' && (
+                <div className="px-6 pb-4 grid grid-cols-2 gap-x-3 gap-y-1">
+                  {destinations["India"].map((place) => (
+                    <Link
+                      key={place}
+                      href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, '-')}`}
+                      onClick={() => setSidebarOpen(false)}
+                      className="text-[12px] text-[#191974] font-bold hover:text-[#ee2229] transition-colors flex items-center gap-1.5 py-1"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-[#ee2229] shrink-0" />
+                      {place}
+                    </Link>
                   ))}
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+
+            {/* ─── SPECIALITY TOURS ─── */}
+            <div className="border-b border-gray-100">
+              <button
+                onClick={() => toggleSection('speciality')}
+                className="w-full flex items-center justify-between px-6 py-4 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
+              >
+                <span className="flex items-center gap-3">
+                  <svg className="w-4 h-4 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+                  Speciality Tours
+                </span>
+                <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'speciality' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
+              </button>
+              {expandedSection === 'speciality' && (
+                <div className="px-6 pb-3 flex flex-col gap-1">
+                  {["Family Tour", "Group Tour", "Spiritual Tour", "Honeymoon Tour", "Luxury Retreats"].map((tour) => (
+                    <Link
+                      key={tour}
+                      href={`/${currentRegionCode}/tours`}
+                      onClick={() => setSidebarOpen(false)}
+                      className="text-[13px] text-[#191974] font-bold hover:text-[#ee2229] transition-colors flex items-center gap-2 py-1.5"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-[#ee2229] shrink-0" />
+                      {tour}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* ─── SIMPLE LINKS ─── */}
+            {[
+              { label: "Customized Holidays", href: "#", icon: "✈️" },
+              { label: "Visa", href: `/${currentRegionCode}/visa`, icon: "📄" },
+            ].map(({ label, href, icon }) => (
+              <Link
+                key={label}
+                href={href}
+                onClick={() => setSidebarOpen(false)}
+                className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 hover:text-[#ee2229] transition-colors"
+              >
+                <span className="text-base">{icon}</span>
+                {label}
+              </Link>
+            ))}
+
+            {/* ─── COMPANY ─── */}
+            <div className="border-b border-gray-100">
+              <button
+                onClick={() => toggleSection('company')}
+                className="w-full flex items-center justify-between px-6 py-4 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
+              >
+                <span className="flex items-center gap-3">
+                  <svg className="w-4 h-4 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                  Company
+                </span>
+                <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'company' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
+              </button>
+              {expandedSection === 'company' && (
+                <div className="px-6 pb-3 flex flex-col gap-1">
+                  {["Our Story", "Careers", "Testimonials", "Media"].map((item) => (
+                    <Link
+                      key={item}
+                      href={`/${currentRegionCode}/${item.toLowerCase().replace(/ /g, "-")}`}
+                      onClick={() => setSidebarOpen(false)}
+                      className="text-[13px] text-[#191974] font-bold hover:text-[#ee2229] transition-colors flex items-center gap-2 py-1.5"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-[#ee2229] shrink-0" />
+                      {item}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* ─── MORE SIMPLE LINKS ─── */}
+            {[
+              { label: "Inbound", href: `/${currentRegionCode}/inbound`, icon: "🏨" },
+              { label: "Weddings", href: "#", icon: "💍" },
+              { label: "Contact Us", href: `/${currentRegionCode}/contact`, icon: "📞" },
+            ].map(({ label, href, icon }) => (
+              <Link
+                key={label}
+                href={href}
+                onClick={() => setSidebarOpen(false)}
+                className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 hover:text-[#ee2229] transition-colors"
+              >
+                <span className="text-base">{icon}</span>
+                {label}
+              </Link>
+            ))}
+
           </div>
 
-          {/* ─── INDIA ─── */}
-          <div className="border-b border-gray-100">
+          {/* Sidebar Footer */}
+          <div className="shrink-0 bg-gray-50 px-6 py-6 border-t border-gray-100 flex flex-col gap-4">
             <button
-              onClick={() => toggleSection('india')}
-              className="w-full flex items-center justify-between px-6 py-4 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
+              onClick={() => {
+                setSidebarOpen(false);
+                setIsLoginOpen(true);
+              }}
+              className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-200 text-[#191974] font-black text-[12px] uppercase tracking-widest rounded-xl hover:bg-[#191974] hover:text-white transition-all shadow-sm"
             >
-              <span className="flex items-center gap-3">
-                <span className="text-base">🇮🇳</span>
-                India
-              </span>
-              <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'india' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" /></svg>
+              Sign In
             </button>
-            {expandedSection === 'india' && (
-              <div className="px-6 pb-4 grid grid-cols-2 gap-x-3 gap-y-1">
-                {destinations["India"].map((place) => (
-                  <Link
-                    key={place}
-                    href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, '-')}`}
-                    onClick={() => setSidebarOpen(false)}
-                    className="text-[12px] text-[#191974] font-bold hover:text-[#ee2229] transition-colors flex items-center gap-1.5 py-1"
-                  >
-                    <span className="w-1 h-1 rounded-full bg-[#ee2229] shrink-0" />
-                    {place}
-                  </Link>
-                ))}
-              </div>
-            )}
+
+            <div>
+              <p className="text-[10px] text-gray-400 font-black tracking-widest mb-1.5 uppercase">Reach Us</p>
+              <a href="tel:18003135555" className="text-[16px] font-black text-[#191974] hover:text-[#ee2229] transition-colors flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#ee2229]" />
+                1800 313 5555
+              </a>
+              <p className="text-[10px] text-gray-400 mt-0.5 font-bold uppercase tracking-tight">Toll Free · 10AM – 7PM</p>
+            </div>
           </div>
-
-          {/* ─── SPECIALITY TOURS ─── */}
-          <div className="border-b border-gray-100">
-            <button
-              onClick={() => toggleSection('speciality')}
-              className="w-full flex items-center justify-between px-6 py-4 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
-            >
-              <span className="flex items-center gap-3">
-                <svg className="w-4 h-4 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
-                Speciality Tours
-              </span>
-              <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'speciality' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
-            </button>
-            {expandedSection === 'speciality' && (
-              <div className="px-6 pb-3 flex flex-col gap-1">
-                {["Family Tour", "Group Tour", "Spiritual Tour", "Honeymoon Tour", "Luxury Retreats"].map((tour) => (
-                  <Link
-                    key={tour}
-                    href={`/${currentRegionCode}/tours`}
-                    onClick={() => setSidebarOpen(false)}
-                    className="text-[13px] text-[#191974] font-bold hover:text-[#ee2229] transition-colors flex items-center gap-2 py-1.5"
-                  >
-                    <span className="w-1 h-1 rounded-full bg-[#ee2229] shrink-0" />
-                    {tour}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* ─── SIMPLE LINKS ─── */}
-          {[
-            { label: "Customized Holidays", href: "#", icon: "✈️" },
-            { label: "Visa", href: `/${currentRegionCode}/visa`, icon: "📄" },
-          ].map(({ label, href, icon }) => (
-            <Link
-              key={label}
-              href={href}
-              onClick={() => setSidebarOpen(false)}
-              className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 hover:text-[#ee2229] transition-colors"
-            >
-              <span className="text-base">{icon}</span>
-              {label}
-            </Link>
-          ))}
-
-          {/* ─── COMPANY ─── */}
-          <div className="border-b border-gray-100">
-            <button
-              onClick={() => toggleSection('company')}
-              className="w-full flex items-center justify-between px-6 py-4 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
-            >
-              <span className="flex items-center gap-3">
-                <svg className="w-4 h-4 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                Company
-              </span>
-              <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'company' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
-            </button>
-            {expandedSection === 'company' && (
-              <div className="px-6 pb-3 flex flex-col gap-1">
-                {["Our Story", "Careers", "Testimonials", "Media"].map((item) => (
-                  <Link
-                    key={item}
-                    href={`/${currentRegionCode}/${item.toLowerCase().replace(/ /g, "-")}`}
-                    onClick={() => setSidebarOpen(false)}
-                    className="text-[13px] text-[#191974] font-bold hover:text-[#ee2229] transition-colors flex items-center gap-2 py-1.5"
-                  >
-                    <span className="w-1 h-1 rounded-full bg-[#ee2229] shrink-0" />
-                    {item}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* ─── MORE SIMPLE LINKS ─── */}
-          {[
-            { label: "Inbound", href: `/${currentRegionCode}/inbound`, icon: "🏨" },
-            { label: "Weddings", href: "#", icon: "💍" },
-            { label: "Contact Us", href: `/${currentRegionCode}/contact`, icon: "📞" },
-          ].map(({ label, href, icon }) => (
-            <Link
-              key={label}
-              href={href}
-              onClick={() => setSidebarOpen(false)}
-              className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 hover:text-[#ee2229] transition-colors"
-            >
-              <span className="text-base">{icon}</span>
-              {label}
-            </Link>
-          ))}
 
         </div>
-
-        {/* Sidebar Footer */}
-        <div className="shrink-0 bg-gray-50 px-6 py-4 border-t border-gray-100">
-          <p className="text-[10px] text-gray-400 font-black  tracking-widest mb-2">Reach Us</p>
-          <a href="tel:18003135555" className="text-[15px] font-black text-[#191974] hover:text-[#ee2229] transition-colors">1800 313 5555</a>
-          <p className="text-[10px] text-gray-400 mt-0.5">Toll Free · 10AM – 7PM</p>
-        </div>
-
       </div>
     </>
+
   );
 }
