@@ -48,10 +48,7 @@ function FeaturedTourCard({ tour, region }: { tour: any, region: string }) {
       </Link>
 
       <div className="p-4 flex flex-col flex-1 relative z-10">
-        <div className="flex items-center gap-2 mb-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#ee2229]" />
-          <p className="text-[10px]   text-[#ee2229] uppercase tracking-[0.2em]">Featured Experience</p>
-        </div>
+
 
         <Link href={`/${region}/tours/${tour.slug}`}>
           <h3 className="text-[19px]  text-[#191974] mb-3 leading-[1.2] line-clamp-2 group-hover:text-[#ee2229] transition-colors">
@@ -60,13 +57,13 @@ function FeaturedTourCard({ tour, region }: { tour: any, region: string }) {
         </Link>
 
         {/* Details list */}
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-2 mb-3">
           {["Flights", "Visas", "Hotels"].map(tag => (
             <span key={tag} className="text-[9px] font-bold text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full bg-gray-50/50">{tag}</span>
           ))}
         </div>
 
-        <div className="mt-auto border-t border-gray-100 pt-4">
+        <div className="mt-auto border-t border-gray-100 pt-3">
           <div className="flex items-end justify-between mb-5">
             <div>
               <p className="text-[9px] text-gray-400 font-bold uppercase mb-1 tracking-widest">Starting at</p>
@@ -74,7 +71,7 @@ function FeaturedTourCard({ tour, region }: { tour: any, region: string }) {
             </div>
             <div className="text-right">
               <p className="text-[9px] font-bold text-[#ee2229] uppercase tracking-widest">Low EMI</p>
-              <p className="text-[10px]  text-[#191974]">â‚¹5,259/mo</p>
+              <p className="text-[10px]  text-[#191974]">{formatRegionalPrice(tour.base_price_inr ? Math.round(tour.base_price_inr * 1.15 / 12) : 5259, region)}/mo</p>
             </div>
           </div>
 
@@ -88,6 +85,8 @@ function FeaturedTourCard({ tour, region }: { tour: any, region: string }) {
             <button
               className="book-now-btn relative overflow-hidden group/btn bg-linear-to-r from-[#191974] to-[#1e1e8a] text-white py-3 rounded-2xl text-[11px]  uppercase tracking-widest shadow-[0_10px_20px_rgba(25,25,116,0.2)] hover:shadow-[0_15px_30px_rgba(238,34,41,0.3)] hover:from-[#ee2229] hover:to-[#ff454b] transition-all active:scale-95 flex items-center justify-center gap-2"
               data-package={tour.title}
+              data-price={tour.base_price_inr || '0'}
+              data-original-price={tour.base_price_inr ? Math.round(tour.base_price_inr * 1.15) : '0'}
             >
               Book Now
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
@@ -413,6 +412,8 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                 suppressHydrationWarning
                 className="book-now-btn bg-[#ee2229] border border-[#ee2229] hover:bg-transparent text-white px-10 py-3.5 rounded-lg  text-xs uppercase tracking-[0.2em] transition-all transform active:scale-95 shadow-xl shadow-red-500/30"
                 data-package={offerSlides[activeOffer].title}
+                data-price={offerSlides[activeOffer].details.split('â‚¹')[1]?.replace(/,/g, '') || '0'}
+                data-original-price={offerSlides[activeOffer].details.split('â‚¹')[1]?.replace(/,/g, '') || '0'}
               >
                 Book Journey
               </button>

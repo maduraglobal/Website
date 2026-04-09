@@ -80,9 +80,10 @@ export function formatRegionalPrice(baseInrPrice: number | string, region: strin
 
   const convertedPrice = numericPrice * config.baseExchangeRate;
   
-  return new Intl.NumberFormat(config.locale, {
-    style: 'currency',
-    currency: config.currencyCode,
+  const formattedNumber = new Intl.NumberFormat(config.locale, {
+    style: 'decimal',
     maximumFractionDigits: 0,
   }).format(convertedPrice);
+
+  return `${config.currencySymbol}${formattedNumber}`;
 }

@@ -117,6 +117,9 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
               <Link
                 href={`/${region}/tours/${tour.slug || tour.id}`}
                 className="w-full block text-center bg-[#ee2229] hover:bg-[#d41c23] text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-red-500/20 transition-all text-[15px]  tracking-wider"
+                data-package={tour.title}
+                data-price={price?.toString() || '0'}
+                data-original-price={price ? Math.round(price * 1.15).toString() : '0'}
               >
                 Book Now
               </Link>

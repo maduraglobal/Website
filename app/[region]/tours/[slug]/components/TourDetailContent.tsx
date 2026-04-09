@@ -251,12 +251,12 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
             {/* Compact Footer */}
             <div className="mt-12 bg-gray-50 rounded-2xl p-8 border border-gray-100 text-center">
               <h3 className="text-[18px]  text-[#191974] mb-2 tracking-tight">The Madura Standard</h3>
-              <p className="text-[13px] font-light text-gray-400 mb-6 uppercase tracking-[0.2em]">Expert travel guidance since 1985.</p>
+              <p className="text-[14px] font-light text-gray-400 mb-6 uppercase tracking-[0.2em]">Expert travel guidance since 1986.</p>
               <div className="flex flex-wrap justify-center gap-10">
                 {["Price Integrity", "Expert Managers", "Curated Hotels"].map((feature, i) => (
                   <div key={feature} className="flex items-center gap-2">
                     <ShieldCheck className="w-4 h-4 text-[#ee2229]" />
-                    <span className="text-[11px]  text-[#191974] uppercase">{feature}</span>
+                    <span className="text-[14px]  text-[#191974] uppercase">{feature}</span>
                   </div>
                 ))}
               </div>

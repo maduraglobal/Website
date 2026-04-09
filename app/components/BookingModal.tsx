@@ -38,8 +38,8 @@ export const BookingProvider = ({ children }: { children: React.ReactNode }) => 
   const openBooking = (data?: BookingData) => {
     setBookingData(data ?? {
       packageName: 'Custom Holiday Package',
-      discountedPrice: '1,99,999',
-      originalPrice: '2,49,999',
+      discountedPrice: '0',
+      originalPrice: '0',
     });
     setIsOpen(true);
   };
@@ -59,8 +59,8 @@ export const BookingProvider = ({ children }: { children: React.ReactNode }) => 
         e.preventDefault();
         openBooking({
           packageName: byClass.getAttribute('data-package') ?? 'Custom Holiday Package',
-          discountedPrice: byClass.getAttribute('data-price') ?? '1,99,999',
-          originalPrice: byClass.getAttribute('data-original-price') ?? '2,49,999',
+          discountedPrice: byClass.getAttribute('data-price') ?? '0',
+          originalPrice: byClass.getAttribute('data-original-price') ?? '0',
         });
         return;
       }
@@ -76,8 +76,8 @@ export const BookingProvider = ({ children }: { children: React.ReactNode }) => 
           e.preventDefault();
           openBooking({
             packageName: clickedEl.getAttribute('data-package') ?? 'Custom Holiday Package',
-            discountedPrice: clickedEl.getAttribute('data-price') ?? '1,99,999',
-            originalPrice: clickedEl.getAttribute('data-original-price') ?? '2,49,999',
+            discountedPrice: clickedEl.getAttribute('data-price') ?? '0',
+            originalPrice: clickedEl.getAttribute('data-original-price') ?? '0',
           });
         }
       }
@@ -119,7 +119,8 @@ const BookingModal = () => {
     phone: '',
     date: '',
     adults: 1,
-    children: 0
+    children: 0,
+    infants: 0
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -127,7 +128,7 @@ const BookingModal = () => {
   // Reset state when opened
   useEffect(() => {
     if (isOpen) {
-      setFormData({ name: '', email: '', phone: '', date: '', adults: 1, children: 0 });
+      setFormData({ name: '', email: '', phone: '', date: '', adults: 1, children: 0, infants: 0 });
       setErrors({});
       setIsSubmitted(false);
     }
@@ -157,8 +158,9 @@ const BookingModal = () => {
       if (selectedDate < today) newErrors.date = 'Travel date cannot be in the past';
     }
 
-    if (formData.adults < 1) newErrors.adults = 'At least 1 adult is required';
+    if (formData.adults < 1 && formData.children < 1 && formData.infants < 1) newErrors.adults = 'Select travelers';
     if (formData.children < 0) newErrors.children = 'Cannot be negative';
+    if (formData.infants < 0) newErrors.infants = 'Cannot be negative';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -256,12 +258,12 @@ const BookingModal = () => {
                     <div className="flex flex-col leading-none">
                       <span className="text-[10px] text-gray-400 font-bold  mb-1">From</span>
                       <span className="text-[28px]  text-[#ee2229]">
-                        {formatRegionalPrice(bookingData?.discountedPrice ?? '1,99,999', region)}
+                        {bookingData?.discountedPrice === '0' ? 'Price on Request' : formatRegionalPrice(bookingData?.discountedPrice ?? '0', region)}
                       </span>
                     </div>
                     {bookingData?.originalPrice !== '0' && (
                       <span className="text-[16px] text-gray-400 line-through mb-1">
-                        {formatRegionalPrice(bookingData?.originalPrice ?? '2,49,999', region)}
+                        {formatRegionalPrice(bookingData?.originalPrice ?? '0', region)}
                       </span>
                     )}
                   </div>
@@ -345,7 +347,10 @@ const BookingModal = () => {
                       </div>
                       {errors.date && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.date}</p>}
                     </div>
-
+                  </div>
+                  
+                  {/* Travelers Grid */}
+                  <div className="grid grid-cols-3 gap-3 md:gap-5">
                     {/* Adults */}
                     <div className="space-y-1.5">
                       <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
@@ -382,6 +387,25 @@ const BookingModal = () => {
                         />
                       </div>
                       {errors.children && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.children}</p>}
+                    </div>
+
+                    {/* Infants */}
+                    <div className="space-y-1.5">
+                      <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
+                        Infants (0-2 Yrs)
+                      </label>
+                      <div className="relative">
+                        <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <input
+                          name="infants"
+                          value={formData.infants}
+                          onChange={handleChange}
+                          type="number"
+                          min="0"
+                          className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.infants ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
+                        />
+                      </div>
+                      {errors.infants && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.infants}</p>}
                     </div>
                   </div>
 
