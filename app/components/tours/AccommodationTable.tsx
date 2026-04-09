@@ -26,17 +26,17 @@ export default function AccommodationTable({ accommodations }: AccommodationTabl
       <table className="w-full text-left border-collapse">
         <thead className="bg-[#191974] text-white">
           <tr>
-            <th className="px-8 py-5 font-black text-[11px]  tracking-[0.2em] opacity-80">Designated City</th>
-            <th className="px-8 py-5 font-black text-[11px]  tracking-[0.2em] opacity-80">Accommodations Selection</th>
-            <th className="px-8 py-5 font-black text-[11px]  tracking-[0.2em] opacity-80 text-center">Nights</th>
+            <th className="px-6 py-3 font-black text-[11px]  tracking-[0.2em] opacity-80">Designated City</th>
+            <th className="px-6 py-3 font-black text-[11px]  tracking-[0.2em] opacity-80">Accommodations Selection</th>
+            <th className="px-6 py-3 font-black text-[11px]  tracking-[0.2em] opacity-80 text-center">Nights</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-50">
           {displayData.map((item, index) => (
             <tr key={index} className="hover:bg-gray-50/50 transition-colors">
-              <td className="px-8 py-6 font-black text-[#191974] text-[16px]  tracking-tight">{item.city}</td>
-              <td className="px-8 py-6 text-gray-500 text-[14px] font-bold  tracking-tighter opacity-70">{item.hotel}</td>
-              <td className="px-8 py-6 text-[#191974] text-[14px] text-center font-black bg-[#191974]/5">{item.nights}</td>
+              <td className="px-6 py-4 font-black text-[#191974] text-[16px]  tracking-tight">{item.city}</td>
+              <td className="px-6 py-4 text-gray-500 text-[14px] font-bold  tracking-tighter opacity-70">{item.hotel}</td>
+              <td className="px-6 py-4 text-[#191974] text-[14px] text-center font-black bg-[#191974]/5">{item.nights}</td>
             </tr>
           ))}
         </tbody>

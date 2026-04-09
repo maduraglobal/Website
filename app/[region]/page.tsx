@@ -46,7 +46,7 @@ function FeaturedTourCard({ tour, region }: { tour: any, region: string }) {
         <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent " />
       </Link>
 
-      <div className="p-5 flex flex-col flex-1 relative z-10">
+      <div className="p-4 flex flex-col flex-1 relative z-10">
         <div className="flex items-center gap-2 mb-2">
            <div className="w-1.5 h-1.5 rounded-full bg-[#ee2229]" />
            <p className="text-[10px] font-black  text-[#ee2229] uppercase tracking-[0.2em]">Featured Experience</p>
@@ -287,7 +287,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         <InfiniteMovingCards items={logoItems} speed="slow" direction="left" className="bg-transparent w-full" />
       </div>
 
-      <section className="py-12 bg-white overflow-hidden">
+      <section className="py-8 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-8">
             <h2 className="font-inter text-[16px] font-black text-[#191974] mb-2 tracking-tight">Top Destinations</h2>
@@ -324,7 +324,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
       </section>
 
       {/* Featured Tours Section */}
-      <section className="py-12 bg-[#F8F9FF]">
+      <section className="py-8 bg-[#F8F9FF]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
             <div>
@@ -361,7 +361,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
       </section>
 
       {/* Featured Offers Banner Section */}
-      <section className="py-12 bg-white">
+      <section className="py-8 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="relative w-full h-[400px] lg:h-[450px] rounded-[24px] overflow-hidden group shadow-2xl">
             <motion.img

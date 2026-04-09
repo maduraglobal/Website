@@ -36,12 +36,12 @@ export default function DeparturePricing({
 
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-      <div className="p-6 border-b border-gray-50">
+      <div className="p-4 border-b border-gray-50">
         <h3 className="text-[20px] font-inter font-black text-[#191974] mb-1">Select Departure City & Date</h3>
         <p className="text-gray-400 text-[13px] font-medium font-inter">As seats fill, prices increase! Book your tour today.</p>
       </div>
 
-      <div className="p-6 space-y-8">
+      <div className="p-4 space-y-6">
         {/* City Selection */}
         <div className="space-y-4">
           <p className="text-[#191974] text-[14px] font-black uppercase tracking-widest leading-none">Choose Departure City</p>

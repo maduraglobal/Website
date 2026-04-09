@@ -94,7 +94,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
     <div className="font-sans min-h-screen bg-[#f8f9fa] text-[#333] text-[14px] leading-relaxed">
 
       {/* ===== HERO SECTION ===== */}
-      <section className="w-full bg-linear-to-r from-[#191974] to-[#2a2a8a] text-white py-12 px-4 shadow-inner relative overflow-hidden">
+      <section className="w-full bg-linear-to-r from-[#191974] to-[#2a2a8a] text-white py-8 px-4 shadow-inner relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Breadcrumb */}
           <div className="text-[13px] font-medium mb-6 flex items-center gap-2">
@@ -156,7 +156,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
       </div>
 
       {/* ===== MAIN CONTENT LAYOUT ===== */}
-      <div className="max-w-7xl mx-auto px-4 py-10 flex flex-col lg:flex-row gap-10 items-start relative">
+      <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col lg:flex-row gap-8 items-start relative">
 
         {/* LEFT CONTENT COLUMN (70%) */}
         <div className="w-full lg:w-[70%] flex flex-col gap-6 pb-12">

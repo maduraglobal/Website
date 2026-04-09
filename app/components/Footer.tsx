@@ -89,8 +89,8 @@ export default function Footer() {
       <div className="h-1 w-full bg-linear-to-r from-[#ee2229] via-white/20 to-[#ee2229]" />
 
       {/* ── MAIN BODY ── */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
           {/* ── COL 1: Company Info ── */}
           <div className="flex flex-col gap-6 lg:col-span-1">

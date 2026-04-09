@@ -42,31 +42,31 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
         </div>
       </div>
 
-      <div className="relative pl-8 space-y-3 before:content-[''] before:absolute before:left-[10px] before:top-2 before:bottom-2 before:w-px before:bg-gray-100">
+      <div className="relative pl-10 space-y-0 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-gray-100">
         {itinerary.map((item) => (
-          <div key={item.day} className="relative group">
+          <div key={item.day} className="relative">
             {/* Timeline Dot */}
             <div className={cn(
-              "absolute -left-[32px] top-4 w-4 h-4 rounded-full border-2 border-white shadow-md z-10 transition-all duration-300",
-              expandedDays.includes(item.day) ? "bg-[#ee2229]" : "bg-gray-200"
+              "absolute -left-[35px] top-4 w-[16px] h-[16px] rounded-full border-[3px] border-white shadow-sm z-10 transition-all duration-300",
+              expandedDays.includes(item.day) ? "bg-[#ee2229] scale-110" : "bg-gray-300"
             )} />
 
-            {/* Content Card */}
+            {/* Content Item */}
             <div className={cn(
-              "bg-white rounded-xl border transition-all duration-300 overflow-hidden",
-              expandedDays.includes(item.day) ? "border-[#191974]/10 shadow-md" : "border-gray-100 shadow-sm"
+              "transition-all duration-300 border-b border-gray-50 last:border-0",
+              expandedDays.includes(item.day) ? "bg-gray-50/30" : "bg-transparent"
             )}>
               <button
                 onClick={() => toggleDay(item.day)}
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50/50 transition-colors"
+                className="w-full flex items-center justify-between py-4 pr-4 text-left hover:bg-gray-50/80 transition-colors group"
               >
-                <div className="flex items-center gap-5">
-                  <span className="text-[12px] font-black text-[#ee2229] tracking-tighter whitespace-nowrap">Day {item.day}</span>
-                  <h4 className="text-[16px] font-black text-[#191974] font-inter tracking-tight leading-tight">{item.title}</h4>
+                <div className="flex items-baseline gap-4">
+                  <span className="text-[11px] font-black text-[#ee2229] uppercase tracking-widest whitespace-nowrap opacity-80">Day {item.day}</span>
+                  <h4 className="text-[16px] font-black text-[#191974] font-inter tracking-tight leading-tight group-hover:text-[#ee2229] transition-colors">{item.title}</h4>
                 </div>
                 <div className={cn(
-                  "w-8 h-8 rounded-full flex items-center justify-center transition-all",
-                  expandedDays.includes(item.day) ? "text-[#191974] rotate-180" : "text-gray-300"
+                  "shrink-0 transition-all",
+                  expandedDays.includes(item.day) ? "text-[#ee2229] rotate-180" : "text-gray-400"
                 )}>
                   <ChevronDown className="w-4 h-4" strokeWidth={3} />
                 </div>
@@ -74,18 +74,18 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
 
               <div className={cn(
                 "transition-all duration-300 overflow-hidden",
-                expandedDays.includes(item.day) ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+                expandedDays.includes(item.day) ? "max-h-[1500px] opacity-100" : "max-h-0 opacity-0"
               )}>
-                <div className="px-6 pb-6 pt-2 border-t border-gray-50">
-                  <div className="text-[13px] text-gray-500 font-bold tracking-tight leading-relaxed mb-6 whitespace-pre-line opacity-80">
+                <div className="pb-6 pr-6">
+                  <div className="text-[14px] text-gray-600 font-medium leading-relaxed mb-4 whitespace-pre-line">
                     {item.description}
                   </div>
 
                   {item.meals && (
-                    <div className="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-lg border border-gray-100">
-                      <Utensils className="w-4 h-4 text-[#191974] opacity-40" />
-                      <span className="text-[11px] font-black text-[#191974] tracking-widest uppercase opacity-40">Meals:</span>
-                      <span className="text-[12px] text-[#191974] font-bold">{item.meals}</span>
+                    <div className="flex items-center gap-2 text-gray-400">
+                      <Utensils className="w-3.5 h-3.5" />
+                      <span className="text-[11px] font-bold uppercase tracking-widest mr-1">Meals:</span>
+                      <span className="text-[12px] text-gray-600 font-bold">{item.meals}</span>
                     </div>
                   )}
                 </div>

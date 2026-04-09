@@ -15,7 +15,7 @@ import React from "react";
 
 export default function AwardsSection() {
   return (
-    <section className="py-12 bg-white">
+    <section className="py-8 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
 
         {/* ══════════════════════════════════════════════ */}
@@ -31,7 +31,7 @@ export default function AwardsSection() {
           </h5>
 
           {/* Ministry Badges */}
-          <div className="flex flex-wrap justify-center gap-10 mb-12">
+          <div className="flex flex-wrap justify-center gap-10 mb-8">
             <div className="h-20 flex items-center justify-center transition-all duration-500">
               <img
                 src="/Awardsimages/Incre.png"
@@ -80,7 +80,7 @@ export default function AwardsSection() {
           ].map((card) => (
             <div
               key={card.title}
-              className="flex flex-col items-center justify-center gap-3 border border-gray-200 rounded-2xl p-6 bg-white shadow-sm hover:shadow-md hover:border-[#191974]/30 transition-all group"
+              className="flex flex-col items-center justify-center gap-3 border border-gray-200 rounded-2xl p-4 bg-white shadow-sm hover:shadow-md hover:border-[#191974]/30 transition-all group"
             >
               {/* Image – keep it square for a uniform look */}
               <img

@@ -66,7 +66,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
       </div>
 
       {/* Content Area */}
-      <div className="flex-1 p-5 md:p-9 flex flex-col">
+      <div className="flex-1 p-4 md:p-6 flex flex-col">
         <div className="flex flex-col md:flex-row justify-between gap-4 flex-1">
           {/* Main Info */}
           <div className="flex-1 space-y-3">

@@ -510,16 +510,14 @@ export default function Navbar() {
 
           {/* Sidebar Footer */}
           <div className="shrink-0 bg-gray-50 px-6 py-6 border-t border-gray-100 flex flex-col gap-4">
-            <button
-              onClick={() => {
-                setSidebarOpen(false);
-                setIsLoginOpen(true);
-              }}
+            <Link
+              href={`/${currentRegionCode}/login`}
+              onClick={() => setSidebarOpen(false)}
               className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-200 text-[#191974] font-black text-[12px] uppercase tracking-widest rounded-xl hover:bg-[#191974] hover:text-white transition-all shadow-sm"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" /></svg>
-              Sign In
-            </button>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
+              Sign Up
+            </Link>
 
             <div>
               <p className="text-[10px] text-gray-400 font-black tracking-widest mb-1.5 uppercase">Reach Us</p>

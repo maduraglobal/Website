@@ -61,7 +61,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
     <div className="font-arial text-[14px] bg-white text-gray-900">
       <TourTabs tabs={TABS} activeTab={activeTab} onTabChange={scrollToSection} />
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-4">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-[12px] font-bold text-gray-400 mb-8 overflow-x-auto no-scrollbar whitespace-nowrap">
           <Link href={`/${region}`} className="hover:text-[#191974] flex items-center gap-1 group">
@@ -75,7 +75,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Main Content */}
-          <div className="lg:w-2/3 flex flex-col gap-12">
+          <div className="lg:w-2/3 flex flex-col gap-6">
 
             {/* Departure & Pricing Section - NEW */}
             <section id="pricing">
@@ -115,7 +115,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
             {/* 1. ITINERARY SECTION */}
             <section id="itinerary" className="scroll-mt-40">
-              <div className="flex items-center justify-between mb-8 border-b border-gray-100 pb-4">
+              <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-2">
                 <div className="flex items-center gap-3">
                   <h2 className="text-[24px] font-inter font-black text-[#191974] tracking-tight">Day-Wise Itinerary</h2>
                 </div>
@@ -138,7 +138,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 <h2 className="text-[24px] font-inter font-black text-[#191974] tracking-tight">Policies & Information</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm">
+                <div className="bg-white border border-gray-100 p-4 rounded-2xl shadow-sm">
                   <h3 className="text-[12px] font-black text-[#191974] mb-6 flex items-center gap-2 tracking-widest uppercase border-b border-[#191974]/10 pb-3">
                     <CheckCircle2 className="w-5 h-5" />
                     Tour Inclusions
@@ -152,7 +152,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     ))}
                   </ul>
                 </div>
-                <div className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm">
+                <div className="bg-white border border-gray-100 p-4 rounded-2xl shadow-sm">
                   <h3 className="text-[12px] font-black text-[#ee2229] mb-6 flex items-center gap-2 tracking-widest uppercase border-b border-red-50 pb-3">
                     <AlertCircle className="w-5 h-5" />
                     Tour Exclusions
@@ -172,7 +172,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
             </section>
 
             {/* 4. NEED TO KNOW SECTION */}
-            <section id="needtoknow" className="scroll-mt-40 bg-[#191974] px-8 py-10 rounded-2xl text-white relative overflow-hidden">
+            <section id="needtoknow" className="scroll-mt-40 bg-[#191974] px-6 py-6 rounded-2xl text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
               <div className="flex items-center gap-3 mb-6 border-b border-white/10 pb-4 relative z-10">
                 <h2 className="text-[24px] font-inter font-black tracking-tight italic">Important - Need to Know</h2>
