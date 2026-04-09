@@ -143,7 +143,7 @@ export default function LoginPage() {
                 <input
                   required
                   type={showPassword ? "text" : "password"}
-                  placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                  placeholder="Enter your Password"
                   className="w-full border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] focus:ring-2 focus:ring-[#191974]/10 transition-all bg-gray-50 focus:bg-white pr-12"
                   onChange={e => setFormData({ ...formData, password: e.target.value })}
                 />
