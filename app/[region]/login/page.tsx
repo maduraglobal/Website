@@ -39,7 +39,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-background flex">
 
-      {/* Left Panel — Branding */}
+      {/* Left Panel â€” Branding */}
       <div className="hidden lg:flex w-1/2 bg-[#191974] relative overflow-hidden flex-col justify-between p-12">
         {/* Decorative blobs */}
         <div className="absolute top-[-150px] right-[-150px] w-[500px] h-[500px] bg-[#ee2229] opacity-15 rounded-full blur-[140px]"></div>
@@ -49,52 +49,52 @@ export default function LoginPage() {
         {/* Content */}
         <div className="relative z-10">
           <Link href={`/${region}`} className="inline-block mb-16">
-            <span className="text-[28px] font-bold text-white font-inter tracking-tight">Madura Travel</span>
+            <span className="text-[28px] font-bold text-white tracking-tight">Madura Travel</span>
           </Link>
         </div>
 
         <div className="relative z-10 flex-1 flex flex-col justify-center max-w-md">
-          <h1 className="text-[42px] font-bold text-white font-inter leading-tight mb-6">
+          <h1 className="text-[42px] font-bold text-white leading-tight mb-6">
             Welcome Back,<br />Explorer.
           </h1>
-          <p className="text-white/70 text-[16px] font-inter-tight leading-relaxed mb-10">
+          <p className="text-white/70 text-[16px] leading-relaxed mb-10">
             Sign in to manage your bookings, track itineraries, and access exclusive member-only deals on premium international tours.
           </p>
 
           {/* Feature pills */}
           <div className="flex flex-col gap-4">
             {[
-              { icon: "🎫", text: "Manage your bookings in one place" },
-              { icon: "💰", text: "Access member-exclusive pricing" },
-              { icon: "📧", text: "Get personalized recommendations" }
+              { icon: "ðŸŽ«", text: "Manage your bookings in one place" },
+              { icon: "ðŸ’°", text: "Access member-exclusive pricing" },
+              { icon: "ðŸ“§", text: "Get personalized recommendations" }
             ].map((f, i) => (
               <div key={i} className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/10">
                 <span className="text-[20px]">{f.icon}</span>
-                <span className="text-white/90 text-[14px] font-inter-tight font-medium">{f.text}</span>
+                <span className="text-white/90 text-[14px] font-medium">{f.text}</span>
               </div>
             ))}
           </div>
         </div>
 
         <div className="relative z-10">
-          <p className="text-white/40 text-[12px] font-inter-tight">© 2026 Madura Travel. All rights reserved.</p>
+          <p className="text-white/40 text-[12px] ">Â© 2026 Madura Travel. All rights reserved.</p>
         </div>
       </div>
 
-      {/* Right Panel — Login Form */}
+      {/* Right Panel â€” Login Form */}
       <div className="flex-1 flex items-center justify-center p-6 md:p-12">
         <div className="w-full max-w-md">
 
           {/* Mobile Logo */}
           <div className="lg:hidden mb-10 text-center">
             <Link href={`/${region}`} className="inline-block">
-              <span className="text-[24px] font-bold text-[#191974] font-inter">Madura Travel</span>
+              <span className="text-[24px] font-bold text-[#191974] ">Madura Travel</span>
             </Link>
           </div>
 
           <div className="mb-8">
-            <h2 className="text-[32px] font-bold text-[#171717] font-inter mb-2">Sign In</h2>
-            <p className="text-[15px] text-gray-500 font-inter-tight">Enter your credentials to access your account.</p>
+            <h2 className="text-[32px] font-bold text-[#171717] mb-2">Sign In</h2>
+            <p className="text-[15px] text-gray-500 ">Enter your credentials to access your account.</p>
           </div>
 
           {/* Social Login */}
@@ -142,7 +142,7 @@ export default function LoginPage() {
                 <input
                   required
                   type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                   className="w-full border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] focus:ring-2 focus:ring-[#191974]/10 transition-all bg-gray-50 focus:bg-white pr-12"
                   onChange={e => setFormData({ ...formData, password: e.target.value })}
                 />
@@ -162,7 +162,7 @@ export default function LoginPage() {
 
             <div className="flex items-center gap-2">
               <input type="checkbox" id="remember" className="rounded text-[#191974] focus:ring-[#191974] w-4 h-4 cursor-pointer" />
-              <label htmlFor="remember" className="text-[13px] text-gray-600 font-inter-tight cursor-pointer">Remember me for 30 days</label>
+              <label htmlFor="remember" className="text-[13px] text-gray-600 cursor-pointer">Remember me for 30 days</label>
             </div>
 
             <button
@@ -181,7 +181,7 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <p className="text-center text-[14px] text-gray-500 font-inter-tight mt-8">
+          <p className="text-center text-[14px] text-gray-500 mt-8">
             Don&apos;t have an account?{' '}
             <Link href={`/${region}/signup`} className="text-[#191974] font-bold hover:underline">Create Account</Link>
           </p>

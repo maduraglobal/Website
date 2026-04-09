@@ -24,7 +24,7 @@ export default async function AllDestinationsPage() {
     ];
 
   return (
-    <div className="bg-[#f8f9fa] min-h-screen text-[#171717] font-sans">
+    <div className="bg-[#f8f9fa] min-h-screen text-[#171717] ">
 
 
       {/* Header */}
@@ -35,7 +35,7 @@ export default async function AllDestinationsPage() {
           </svg>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h1 className="text-4xl md:text-[65px] font-black mb-4 text-white  tracking-tight font-inter">
+          <h1 className="text-4xl md:text-[65px]  mb-4 text-white  tracking-tight ">
             Explore All Destinations
           </h1>
           <p className="text-[#e2e2e2] text-lg max-w-2xl mx-auto">
@@ -57,7 +57,7 @@ export default async function AllDestinationsPage() {
               <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>
 
               <div className="absolute bottom-6 left-6 right-6">
-                <h3 className="text-2xl font-black text-white font-poppins mb-1">{dest.name}</h3>
+                <h3 className="text-2xl  text-white font-poppins mb-1">{dest.name}</h3>
                 <span className="text-sm font-bold text-[#ee2229] bg-white/10 backdrop-blur-md px-3 py-1 rounded-full  tracking-wider inline-block opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                   View Packages &rarr;
                 </span>

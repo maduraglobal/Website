@@ -63,7 +63,7 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-background flex">
 
-      {/* Left Panel — Branding */}
+      {/* Left Panel â€” Branding */}
       <div className="hidden lg:flex w-1/2 bg-[#191974] relative overflow-hidden flex-col justify-between p-12">
         <div className="absolute top-[-150px] left-[-150px] w-[500px] h-[500px] bg-[#00a1e5] opacity-15 rounded-full blur-[140px]"></div>
         <div className="absolute bottom-[-100px] right-[-100px] w-[400px] h-[400px] bg-[#ee2229] opacity-10 rounded-full blur-[120px]"></div>
@@ -71,51 +71,51 @@ export default function SignupPage() {
 
         <div className="relative z-10">
           <Link href={`/${region}`} className="inline-block mb-16">
-            <span className="text-[28px] font-bold text-white font-inter tracking-tight">Madura Travel</span>
+            <span className="text-[28px] font-bold text-white tracking-tight">Madura Travel</span>
           </Link>
         </div>
 
         <div className="relative z-10 flex-1 flex flex-col justify-center max-w-md">
-          <h1 className="text-[42px] font-bold text-white font-inter leading-tight mb-6">
+          <h1 className="text-[42px] font-bold text-white leading-tight mb-6">
             Start Your<br />Journey Today.
           </h1>
-          <p className="text-white/70 text-[16px] font-inter-tight leading-relaxed mb-10">
+          <p className="text-white/70 text-[16px] leading-relaxed mb-10">
             Create your Madura Travel account and unlock exclusive deals, personalized itineraries, and seamless booking management.
           </p>
 
           <div className="flex flex-col gap-4">
             {[
-              { icon: "✈️", text: "Exclusive member-only tour pricing" },
-              { icon: "🔔", text: "Early access to new destinations" },
-              { icon: "👨‍👩‍👧‍👦", text: "Save traveler profiles for quick booking" },
-              { icon: "🎁", text: "Earn loyalty points on every trip" }
+              { icon: "âœˆï¸", text: "Exclusive member-only tour pricing" },
+              { icon: "ðŸ””", text: "Early access to new destinations" },
+              { icon: "ðŸ‘¨â€ðŸ‘©â€ðŸ‘§â€ðŸ‘¦", text: "Save traveler profiles for quick booking" },
+              { icon: "ðŸŽ", text: "Earn loyalty points on every trip" }
             ].map((f, i) => (
               <div key={i} className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/10">
                 <span className="text-[20px]">{f.icon}</span>
-                <span className="text-white/90 text-[14px] font-inter-tight font-medium">{f.text}</span>
+                <span className="text-white/90 text-[14px] font-medium">{f.text}</span>
               </div>
             ))}
           </div>
         </div>
 
         <div className="relative z-10">
-          <p className="text-white/40 text-[12px] font-inter-tight">© 2026 Madura Travel. All rights reserved.</p>
+          <p className="text-white/40 text-[12px] ">Â© 2026 Madura Travel. All rights reserved.</p>
         </div>
       </div>
 
-      {/* Right Panel — Signup Form */}
+      {/* Right Panel â€” Signup Form */}
       <div className="flex-1 flex items-center justify-center p-6 md:p-12">
         <div className="w-full max-w-lg">
 
           <div className="lg:hidden mb-10 text-center">
             <Link href={`/${region}`} className="inline-block">
-              <span className="text-[24px] font-bold text-[#191974] font-inter">Madura Travel Service</span>
+              <span className="text-[24px] font-bold text-[#191974] ">Madura Travel Service</span>
             </Link>
           </div>
 
           <div className="mb-8">
-            <h2 className="text-[32px] font-bold text-[#171717] font-inter mb-2">Create Account</h2>
-            <p className="text-[15px] text-gray-500 font-inter-tight">Join 500,000+ travelers exploring the world with us.</p>
+            <h2 className="text-[32px] font-bold text-[#171717] mb-2">Create Account</h2>
+            <p className="text-[15px] text-gray-500 ">Join 500,000+ travelers exploring the world with us.</p>
           </div>
 
           {/* Social Signup */}
@@ -159,21 +159,21 @@ export default function SignupPage() {
               <label className="text-[12px] font-bold text-gray-600 tracking-wide  px-1">Phone Number</label>
               <div className="flex gap-2">
                 <select className="border border-gray-200 p-3.5 rounded-xl text-[14px] bg-gray-50 text-gray-700 font-semibold shrink-0 w-[90px] outline-none focus:border-[#191974] focus:ring-2 focus:ring-[#191974]/10 focus:bg-white cursor-pointer transition-all appearance-none text-center">
-                  <option value="+91">🇮🇳 +91</option>
-                  <option value="+1">🇺🇸 +1</option>
-                  <option value="+44">🇬🇧 +44</option>
-                  <option value="+61">🇦🇺 +61</option>
-                  <option value="+65">🇸🇬 +65</option>
-                  <option value="+971">🇦🇪 +971</option>
-                  <option value="+81">🇯🇵 +81</option>
-                  <option value="+49">🇩🇪 +49</option>
-                  <option value="+33">🇫🇷 +33</option>
-                  <option value="+41">🇨🇭 +41</option>
-                  <option value="+86">🇨🇳 +86</option>
-                  <option value="+60">🇲🇾 +60</option>
-                  <option value="+66">🇹🇭 +66</option>
-                  <option value="+977">🇳🇵 +977</option>
-                  <option value="+94">🇱🇰 +94</option>
+                  <option value="+91">ðŸ‡®ðŸ‡³ +91</option>
+                  <option value="+1">ðŸ‡ºðŸ‡¸ +1</option>
+                  <option value="+44">ðŸ‡¬ðŸ‡§ +44</option>
+                  <option value="+61">ðŸ‡¦ðŸ‡º +61</option>
+                  <option value="+65">ðŸ‡¸ðŸ‡¬ +65</option>
+                  <option value="+971">ðŸ‡¦ðŸ‡ª +971</option>
+                  <option value="+81">ðŸ‡¯ðŸ‡µ +81</option>
+                  <option value="+49">ðŸ‡©ðŸ‡ª +49</option>
+                  <option value="+33">ðŸ‡«ðŸ‡· +33</option>
+                  <option value="+41">ðŸ‡¨ðŸ‡­ +41</option>
+                  <option value="+86">ðŸ‡¨ðŸ‡³ +86</option>
+                  <option value="+60">ðŸ‡²ðŸ‡¾ +60</option>
+                  <option value="+66">ðŸ‡¹ðŸ‡­ +66</option>
+                  <option value="+977">ðŸ‡³ðŸ‡µ +977</option>
+                  <option value="+94">ðŸ‡±ðŸ‡° +94</option>
                 </select>
                 <input required type="tel" placeholder="98765 43210" className="flex-1 border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] focus:ring-2 focus:ring-[#191974]/10 bg-gray-50 focus:bg-white transition-all" onChange={e => setFormData({ ...formData, phone: e.target.value })} />
               </div>
@@ -210,7 +210,7 @@ export default function SignupPage() {
 
             <div className="flex items-start gap-2">
               <input type="checkbox" id="terms" checked={agreed} onChange={e => setAgreed(e.target.checked)} className="rounded text-[#191974] focus:ring-[#191974] w-4 h-4 cursor-pointer mt-0.5" />
-              <label htmlFor="terms" className="text-[13px] text-gray-600 font-inter-tight cursor-pointer leading-snug">
+              <label htmlFor="terms" className="text-[13px] text-gray-600 cursor-pointer leading-snug">
                 I agree to the <Link href="#" className="text-[#191974] font-bold hover:underline">Terms of Service</Link> and <Link href="#" className="text-[#191974] font-bold hover:underline">Privacy Policy</Link>
               </label>
             </div>
@@ -231,7 +231,7 @@ export default function SignupPage() {
             </button>
           </form>
 
-          <p className="text-center text-[14px] text-gray-500 font-inter-tight mt-8">
+          <p className="text-center text-[14px] text-gray-500 mt-8">
             Already have an account?{' '}
             <Link href={`/${region}/login`} className="text-[#191974] font-bold hover:underline">Sign In</Link>
           </p>

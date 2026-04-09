@@ -113,6 +113,26 @@ const BookingModal = () => {
   const pathname = usePathname();
   const region = (pathname?.split('/')[1] ?? 'en-in').toLowerCase();
 
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    date: '',
+    adults: 1,
+    children: 0
+  });
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Reset state when opened
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({ name: '', email: '', phone: '', date: '', adults: 1, children: 0 });
+      setErrors({});
+      setIsSubmitted(false);
+    }
+  }, [isOpen]);
+
   // ESC key
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -122,8 +142,32 @@ const BookingModal = () => {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [closeBooking]);
 
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    if (!formData.name.trim()) newErrors.name = 'Full name is required';
+    if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) newErrors.email = 'Valid email is required';
+    if (!formData.phone.match(/^\+?[\d\s-]{10,}$/)) newErrors.phone = 'Valid phone number is required';
+
+    if (!formData.date) {
+      newErrors.date = 'Travel date is required';
+    } else {
+      const selectedDate = new Date(formData.date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDate < today) newErrors.date = 'Travel date cannot be in the past';
+    }
+
+    if (formData.adults < 1) newErrors.adults = 'At least 1 adult is required';
+    if (formData.children < 0) newErrors.children = 'Cannot be negative';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
@@ -133,6 +177,19 @@ const BookingModal = () => {
         closeBooking();
       }, 3000);
     }, 1500);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error for field on change
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrs = { ...prev };
+        delete newErrs[name];
+        return newErrs;
+      });
+    }
   };
 
   return (
@@ -176,7 +233,7 @@ const BookingModal = () => {
                 <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
                   <CheckCircle className="w-10 h-10 text-green-500" />
                 </div>
-                <h3 className="text-[28px] font-black text-[#191974] mb-2 ">
+                <h3 className="text-[28px]  text-[#191974] mb-2 ">
                   Booking Initiated!
                 </h3>
                 <p className="text-gray-500 font-light">
@@ -187,18 +244,18 @@ const BookingModal = () => {
               /* ── Form state ── */
               <div className="flex flex-col max-h-[90vh] overflow-y-auto">
                 {/* Header */}
-                <div className="p-8 md:p-10 bg-gray-50 border-b border-gray-100 sticky top-0">
-                  <p className="text-[#ee2229] text-[11px] font-black  tracking-[0.2em] mb-1">
+                <div className="p-8 md:p-10 bg-gray-50 border-b border-gray-100 sticky top-0 z-10">
+                  <p className="text-[#ee2229] text-[11px]   tracking-[0.2em] mb-1">
                     Book Your Experience
                   </p>
-                  <h2 className="text-[22px] md:text-[26px] font-black text-[#191974] leading-tight mb-4  tracking-tighter pr-10">
+                  <h2 className="text-[22px] md:text-[26px]  text-[#191974] leading-tight mb-4  tracking-tighter pr-10">
                     {bookingData?.packageName ?? 'Tour Package'}
                   </h2>
 
                   <div className="flex items-end gap-3">
                     <div className="flex flex-col leading-none">
                       <span className="text-[10px] text-gray-400 font-bold  mb-1">From</span>
-                      <span className="text-[28px] font-black text-[#ee2229]">
+                      <span className="text-[28px]  text-[#ee2229]">
                         {formatRegionalPrice(bookingData?.discountedPrice ?? '1,99,999', region)}
                       </span>
                     </div>
@@ -215,99 +272,116 @@ const BookingModal = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {/* Full Name */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-black text-[#191974]  tracking-widest ml-1">
+                      <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
                         Full Name
                       </label>
                       <div className="relative">
                         <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
-                          required
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
                           type="text"
                           placeholder="John Doe"
-                          className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#191974] outline-none transition-all text-[15px]"
+                          className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.name ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
                         />
                       </div>
+                      {errors.name && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.name}</p>}
                     </div>
 
                     {/* Email */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-black text-[#191974]  tracking-widest ml-1">
+                      <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
                         Email Address
                       </label>
                       <div className="relative">
                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
-                          required
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
                           type="email"
                           placeholder="john@example.com"
-                          className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#191974] outline-none transition-all text-[15px]"
+                          className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.email ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
                         />
                       </div>
+                      {errors.email && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.email}</p>}
                     </div>
 
                     {/* Phone */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-black text-[#191974]  tracking-widest ml-1">
+                      <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
                         Phone Number
                       </label>
                       <div className="relative">
                         <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
-                          required
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
                           type="tel"
                           placeholder="+91 00000 00000"
-                          className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#191974] outline-none transition-all text-[15px]"
+                          className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.phone ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
                         />
                       </div>
+                      {errors.phone && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.phone}</p>}
                     </div>
 
                     {/* Travel Date */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-black text-[#191974]  tracking-widest ml-1">
+                      <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
                         Travel Date
                       </label>
                       <div className="relative">
                         <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
-                          required
+                          name="date"
+                          value={formData.date}
+                          onChange={handleChange}
                           type="date"
-                          className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#191974] outline-none transition-all text-[15px]"
+                          min={new Date().toISOString().split("T")[0]}
+                          className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.date ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
                         />
                       </div>
+                      {errors.date && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.date}</p>}
                     </div>
 
                     {/* Adults */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-black text-[#191974]  tracking-widest ml-1">
+                      <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
                         Adults (12+ Yrs)
                       </label>
                       <div className="relative">
                         <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
-                          required
+                          name="adults"
+                          value={formData.adults}
+                          onChange={handleChange}
                           type="number"
                           min="1"
-                          defaultValue="1"
-                          className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#191974] outline-none transition-all text-[15px]"
+                          className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.adults ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
                         />
                       </div>
+                      {errors.adults && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.adults}</p>}
                     </div>
 
                     {/* Children */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-black text-[#191974]  tracking-widest ml-1">
+                      <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
                         Children (2–12 Yrs)
                       </label>
                       <div className="relative">
                         <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
-                          required
+                          name="children"
+                          value={formData.children}
+                          onChange={handleChange}
                           type="number"
                           min="0"
-                          defaultValue="0"
-                          className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#191974] outline-none transition-all text-[15px]"
+                          className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.children ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
                         />
                       </div>
+                      {errors.children && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.children}</p>}
                     </div>
                   </div>
 
@@ -316,7 +390,7 @@ const BookingModal = () => {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full bg-[#191974] hover:bg-[#ee2229] disabled:bg-gray-400 text-white font-black py-4 rounded-full  tracking-[0.25em] transition-all flex items-center justify-center gap-3 group shadow-xl"
+                      className="w-full bg-[#191974] hover:bg-[#ee2229] disabled:bg-gray-400 text-white  py-4 rounded-full  tracking-[0.25em] transition-all flex items-center justify-center gap-3 group shadow-xl"
                     >
                       {isLoading ? (
                         <span className="flex items-center gap-2">
@@ -343,3 +417,4 @@ const BookingModal = () => {
     </AnimatePresence>
   );
 };
+

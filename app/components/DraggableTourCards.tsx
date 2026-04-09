@@ -50,17 +50,17 @@ export default function DraggableTourCards({ children }: { children: React.React
           );
         })}
       </AnimatePresence>
-      
+
       {/* Help Hint */}
       <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-3">
-         <div className="w-10 h-1 bg-gray-100 rounded-full overflow-hidden">
-            <motion.div 
-              animate={{ x: ["-100%", "100%"] }} 
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              className="w-full h-full bg-[#ee2229]" 
-            />
-         </div>
-         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Swipe Cards to Explore</span>
+        <div className="w-10 h-1 bg-gray-100 rounded-full overflow-hidden">
+          <motion.div
+            animate={{ x: ["-100%", "100%"] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            className="w-full h-full bg-[#ee2229]"
+          />
+        </div>
+        <span className="text-[10px]  text-gray-400 uppercase tracking-widest">Swipe Cards to Explore</span>
       </div>
     </div>
   );

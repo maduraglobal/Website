@@ -77,11 +77,11 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
               <span className="text-xs font-semibold text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded">All Inclusive</span>
             </div>
 
-            <h3 className="text-base md:text-[19px] font-black text-[#171717] font-inter leading-tight group-hover:text-[#191974] transition-colors">
+            <h3 className="text-base md:text-[19px]  text-[#171717] leading-tight group-hover:text-[#191974] transition-colors">
               {tour.title}
             </h3>
 
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[14px] text-gray-600 font-arial">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[14px] text-gray-600 ">
               <span className="flex items-center gap-1.5 font-bold"><Clock className="w-4 h-4 text-gray-400" /> {tour.duration_days || 6} Days</span>
               <span className="w-1 h-1 rounded-full bg-gray-300" />
               <span className="flex items-center gap-1.5 font-bold"><MapPin className="w-4 h-4 text-gray-400" /> {tour.cities_count || 4} Cities</span>
@@ -90,8 +90,8 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
             </div>
 
             <div className="pt-2">
-              <p className="text-[14px] font-black text-[#191974] mb-2  tracking-tight">Tour Highlights:</p>
-              <ul className="text-[14px] text-gray-600 space-y-1 font-arial">
+              <p className="text-[14px]  text-[#191974] mb-2  tracking-tight">Tour Highlights:</p>
+              <ul className="text-[14px] text-gray-600 space-y-1 ">
                 {(tour.highlights || ['Premium Accommodation', 'Sightseeing Transfers', 'All Meals Included']).slice(0, 3).map((hl: string, i: number) => (
                   <li key={i} className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
@@ -105,15 +105,15 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
           {/* Pricing & CTA */}
           <div className="md:w-56 shrink-0 flex flex-col justify-end md:items-end border-t md:border-t-0 md:border-l border-gray-100 pt-4 md:pt-0 md:pl-6">
             <div className="text-left md:text-right w-full mb-4 md:mb-6">
-              <p className="text-[10px] text-gray-400  font-black tracking-widest mb-1">Starting From</p>
+              <p className="text-[10px] text-gray-400   tracking-widest mb-1">Starting From</p>
               <div className="flex md:flex-col items-baseline md:items-end gap-2 md:gap-0">
-                <span className="text-2xl font-black text-[#171717] font-inter">{formatPrice(price)}</span>
-                <span className="text-[11px] text-gray-500 font-arial">per person on twin sharing</span>
+                <span className="text-2xl  text-[#171717] ">{formatPrice(price)}</span>
+                <span className="text-[11px] text-gray-500 ">per person on twin sharing</span>
               </div>
-              <p className="text-[13px] font-black text-[#ee2229] mt-2 bg-red-50 inline-block px-2 py-0.5 rounded italic">EMI from {formatPrice(emi)}/mo</p>
+              <p className="text-[13px]  text-[#ee2229] mt-2 bg-red-50 inline-block px-2 py-0.5 rounded italic">EMI from {formatPrice(emi)}/mo</p>
             </div>
 
-            <div className="space-y-2.5 w-full flex flex-col relative z-20 font-inter-tight">
+            <div className="space-y-2.5 w-full flex flex-col relative z-20 ">
               <Link
                 href={`/${region}/tours/${tour.slug || tour.id}`}
                 className="w-full block text-center bg-[#ee2229] hover:bg-[#d41c23] text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-red-500/20 transition-all text-[15px]  tracking-wider"

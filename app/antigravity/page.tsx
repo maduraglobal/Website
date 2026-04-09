@@ -39,7 +39,7 @@ export default function AntigravityTourDetail() {
   }, []);
 
   return (
-    <div className="bg-[#05050A] text-gray-200 min-h-screen font-sans selection:bg-purple-500/30">
+    <div className="bg-[#05050A] text-gray-200 min-h-screen selection:bg-purple-500/30">
       {/* Dynamic Background Glows */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px]"></div>
@@ -62,7 +62,7 @@ export default function AntigravityTourDetail() {
         <div className="flex items-center gap-6">
           <div className="hidden md:block text-right">
             <p className="text-sm text-gray-400">Starting from</p>
-            <p className="text-lg font-bold text-white">₹44,000</p>
+            <p className="text-lg font-bold text-white">â‚¹44,000</p>
           </div>
           <button className="bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-6 py-2 rounded-full font-semibold transition-all shadow-[0_0_15px_rgba(168,85,247,0.4)]">
             Book Now
@@ -115,7 +115,7 @@ export default function AntigravityTourDetail() {
                     <img src="https://i.pravatar.cc/100?img=33" alt="Traveler" className="w-12 h-12 rounded-full border-2 border-purple-500/50" />
                     <div>
                       <p className="text-sm italic text-gray-300">"The most surreal & effortlessly planned trip I've ever taken. A true premium experience."</p>
-                      <p className="text-xs font-semibold text-purple-400 mt-1">— Ananya R.</p>
+                      <p className="text-xs font-semibold text-purple-400 mt-1">â€” Ananya R.</p>
                     </div>
                   </div>
                 </div>
@@ -365,11 +365,11 @@ export default function AntigravityTourDetail() {
                       <span className="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded font-bold border border-green-500/20">20% OFF</span>
                     </div>
                     <div className="flex items-end gap-3">
-                      <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight">₹44,000</h2>
-                      <span className="text-gray-500 line-through text-lg pb-1">₹55,000</span>
+                      <h2 className="text-4xl md:text-5xl  text-white tracking-tight">â‚¹44,000</h2>
+                      <span className="text-gray-500 line-through text-lg pb-1">â‚¹55,000</span>
                     </div>
                     <p className="text-sm text-purple-400 mt-2 font-medium flex items-center gap-1">
-                      <Sparkles className="w-4 h-4" /> No Cost EMI starts at ₹4,284/month
+                      <Sparkles className="w-4 h-4" /> No Cost EMI starts at â‚¹4,284/month
                     </p>
                   </div>
 
@@ -390,14 +390,14 @@ export default function AntigravityTourDetail() {
                         <div className="absolute top-0 right-0 left-0 bg-purple-500 text-[9px] font-bold text-white text-center py-0.5 ">Lowest</div>
                         <span className="text-gray-300 text-xs mt-3">Dec</span>
                         <span className="text-xl font-bold text-white">12</span>
-                        <span className="text-[10px] text-green-400 mt-1">₹44k</span>
+                        <span className="text-[10px] text-green-400 mt-1">â‚¹44k</span>
                       </button>
                       {/* Other Dates */}
                       {[15, 22, 28].map(day => (
                         <button key={day} className="shrink-0 w-24 p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex flex-col items-center justify-center">
                           <span className="text-gray-400 text-xs">Dec</span>
                           <span className="text-xl font-bold text-gray-200">{day}</span>
-                          <span className="text-[10px] text-gray-400 mt-1">₹46k</span>
+                          <span className="text-[10px] text-gray-400 mt-1">â‚¹46k</span>
                         </button>
                       ))}
                     </div>
@@ -428,14 +428,14 @@ export default function AntigravityTourDetail() {
                     <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=150" alt="Kashmir" className="w-16 h-16 rounded-xl object-cover transition-transform group-hover:scale-105" />
                     <div>
                       <h5 className="text-sm font-bold text-white group-hover:text-purple-400 transition-colors">Kashmir Paradise</h5>
-                      <p className="text-xs text-gray-400">5 Days • ₹42,000</p>
+                      <p className="text-xs text-gray-400">5 Days â€¢ â‚¹42,000</p>
                     </div>
                   </div>
                   <div className="flex gap-4 items-center group cursor-pointer">
                     <img src="https://images.unsplash.com/photo-1614531341773-3bff8b7cb3fc?auto=format&fit=crop&q=80&w=150" alt="Leh" className="w-16 h-16 rounded-xl object-cover transition-transform group-hover:scale-105" />
                     <div>
                       <h5 className="text-sm font-bold text-white group-hover:text-purple-400 transition-colors">Leh Ladakh Adventure</h5>
-                      <p className="text-xs text-gray-400">8 Days • ₹58,000</p>
+                      <p className="text-xs text-gray-400">8 Days â€¢ â‚¹58,000</p>
                     </div>
                   </div>
                 </div>

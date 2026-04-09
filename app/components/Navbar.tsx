@@ -89,7 +89,7 @@ export default function Navbar() {
     <>
       <div className="w-full flex flex-col fixed top-0 left-0 z-100 shadow-md">
 
-        {/* 🔷 TOP HEADER */}
+        {/* ðŸ”· TOP HEADER */}
         <div className="bg-white text-[#191974] px-4 lg:px-8 py-3 flex items-center justify-between">
 
           {/* Logo */}
@@ -105,9 +105,9 @@ export default function Navbar() {
           </Link>
 
           {/* Right side: Search + Phone + Login + Country + Hamburger */}
-          <div className="flex items-center gap-4 font-inter">
+          <div className="flex items-center gap-4 ">
 
-            {/* 🔍 SEARCH BAR */}
+            {/* ðŸ” SEARCH BAR */}
             <div className="relative w-56 hidden sm:block">
               <input
                 type="text"
@@ -121,7 +121,7 @@ export default function Navbar() {
               {isOpen && (
                 <div className="absolute w-full bg-white shadow-2xl rounded-xl mt-2 z-50 border border-gray-100 overflow-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                   <div className="px-4 py-2 border-b border-gray-50">
-                    <p className="text-[10px] font-black text-gray-400  tracking-widest">
+                    <p className="text-[10px]  text-gray-400  tracking-widest">
                       {query.trim().length === 0 ? "Popular Destinations" : "Search Results"}
                     </p>
                   </div>
@@ -154,7 +154,7 @@ export default function Navbar() {
               {/* Phone Numbers Dropdown */}
               <div className="absolute top-full right-0 mt-2 w-[320px] bg-white shadow-2xl rounded-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-200 z-200 overflow-hidden">
                 <div className="px-5 py-3.5 border-b border-gray-100 bg-gray-50">
-                  <p className="text-[13px] font-black text-[#191974]  tracking-widest">Contact Us</p>
+                  <p className="text-[13px]  text-[#191974]  tracking-widest">Contact Us</p>
                 </div>
                 <div className="px-5 py-4 flex flex-col gap-4">
                   <div className="flex items-start gap-3">
@@ -162,8 +162,8 @@ export default function Navbar() {
                       <svg className="w-3.5 h-3.5 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                     </div>
                     <div className="flex flex-col gap-0.5">
-                      <p className="text-[10px] font-black text-gray-400  tracking-wider">Call us </p>
-                      <a href="tel:18003135555" className="text-[16px] font-black text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
+                      <p className="text-[10px]  text-gray-400  tracking-wider">Call us </p>
+                      <a href="tel:18003135555" className="text-[16px]  text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -171,9 +171,9 @@ export default function Navbar() {
                       <svg className="w-3.5 h-3.5 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
                     </div>
                     <div className="flex flex-col gap-0.5">
-                      <p className="text-[10px] font-black text-gray-400  tracking-wider">You can also call us on</p>
-                      <a href="tel:+919092949494" className="text-[15px] font-black text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
-                      {/* <a href="tel:+914422101697" className="text-[15px] font-black text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 44 2210 1697</a> */}
+                      <p className="text-[10px]  text-gray-400  tracking-wider">You can also call us on</p>
+                      <a href="tel:+919092949494" className="text-[15px]  text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
+                      {/* <a href="tel:+914422101697" className="text-[15px]  text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 44 2210 1697</a> */}
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -181,14 +181,14 @@ export default function Navbar() {
                       <svg className="w-3.5 h-3.5 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     </div>
                     <div className="flex flex-col gap-1">
-                      <p className="text-[10px] font-black text-gray-400  tracking-wider">Foreign Nationals / NRIs Travelling</p>
+                      <p className="text-[10px]  text-gray-400  tracking-wider">Foreign Nationals / NRIs Travelling</p>
                       <div>
                         <p className="text-[10px] text-gray-400 font-semibold">Within India</p>
-                        <a href="tel:+919152004511" className="text-[15px] font-black text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
+                        <a href="tel:+919152004511" className="text-[15px]  text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
                       </div>
                       <div>
                         <p className="text-[10px] text-gray-400 font-semibold">Outside India</p>
-                        <a href="tel:+918879972221" className="text-[15px] font-black text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 434 500 743</a>
+                        <a href="tel:+918879972221" className="text-[15px]  text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 434 500 743</a>
                       </div>
                     </div>
                   </div>
@@ -212,12 +212,12 @@ export default function Navbar() {
                     <div className="w-7 h-7 rounded-full bg-[#191974]/8 flex items-center justify-center shrink-0">
                       <svg className="w-3.5 h-3.5 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     </div>
-                    <p className="text-[13px] text-gray-500 font-semibold">Business hours <span className="font-black text-[#191974]">10AM – 7PM</span></p>
+                    <p className="text-[13px] text-gray-500 font-semibold">Business hours <span className=" text-[#191974]">10AM â€“ 7PM</span></p>
                   </div>
                 </div>
                 <div className="bg-[#191974] px-4 py-2.5 flex items-center justify-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                  <span className="text-[10px] text-white font-black  tracking-widest">24/7 Support Active</span>
+                  <span className="text-[10px] text-white   tracking-widest">24/7 Support Active</span>
                 </div>
               </div>
             </div>
@@ -239,7 +239,7 @@ export default function Navbar() {
                     className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
                   />
                   <div className="flex flex-col leading-none">
-                    <span className="text-[12px] font-black text-[#191974]">{activeCountryConfig.name}</span>
+                    <span className="text-[12px]  text-[#191974]">{activeCountryConfig.name}</span>
                     <span className="text-[9px] font-bold text-gray-400">{activeCountryConfig.currencySymbol} {activeCountryConfig.currencyCode}</span>
                   </div>
                 </div>
@@ -249,7 +249,7 @@ export default function Navbar() {
               {/* FLYOUT MENU */}
               <div className="absolute top-full right-0 mt-1 w-[280px] bg-white shadow-2xl rounded-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-200 overflow-hidden">
                 <div className="px-4 py-3 border-b border-gray-100 bg-gray-50">
-                  <p className="text-[10px] font-black text-gray-400  tracking-widest capitalize">Select Region & Language</p>
+                  <p className="text-[10px]  text-gray-400  tracking-widest capitalize">Select Region & Language</p>
                 </div>
                 <div className="p-2 flex flex-col gap-1">
                   {Object.values(countryConfigs).map((config) => (
@@ -264,11 +264,11 @@ export default function Navbar() {
                       <div className="flex items-center gap-3">
                         <img src={getFlagURL(config.id)} alt={config.name} className="w-6 h-4 object-cover rounded-sm shadow-sm" />
                         <div className="flex flex-col">
-                          <span className="text-[12px] font-black text-[#191974]">{config.name}</span>
+                          <span className="text-[12px]  text-[#191974]">{config.name}</span>
                           <div className="flex items-center gap-2 mt-0.5">
                             <span className="text-[10px] font-bold text-[#ee2229] uppercase">{config.language}</span>
-                            <span className="text-[10px] text-gray-400">•</span>
-                            <span className="text-[10px] font-bold text-gray-400">{config.currencySymbol} — {config.currencyCode}</span>
+                            <span className="text-[10px] text-gray-400">â€¢</span>
+                            <span className="text-[10px] font-bold text-gray-400">{config.currencySymbol} â€” {config.currencyCode}</span>
                           </div>
                         </div>
                       </div>
@@ -280,12 +280,12 @@ export default function Navbar() {
                   ))}
                 </div>
                 <div className="bg-[#191974] px-4 py-2.5 flex items-center justify-center gap-2">
-                  <span className="text-[9px] text-white font-black  tracking-widest uppercase">Global Pricing Support Active</span>
+                  <span className="text-[9px] text-white   tracking-widest uppercase">Global Pricing Support Active</span>
                 </div>
               </div>
             </div>
 
-            {/* ☰ HAMBURGER BUTTON */}
+            {/* â˜° HAMBURGER BUTTON */}
             <button
               onClick={() => setSidebarOpen(true)}
               className="flex flex-col justify-center items-center w-10 h-10 rounded-lg border border-gray-200 hover:border-[#191974] hover:bg-gray-50 transition-all gap-1.5 shrink-0"
@@ -300,9 +300,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ═══════════════════════════════════════════════
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
           SIDEBAR OVERLAY + DRAWER
-      ═══════════════════════════════════════════════ */}
+      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
 
       {/* Backdrop (Dimmed/Blurred) */}
       <div
@@ -310,9 +310,9 @@ export default function Navbar() {
         onClick={() => setSidebarOpen(false)}
       />
 
-      {/* ═══════════════════════════════════════════════
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
           SIDEBAR OVERLAY CONTENT (Testimonials + Drawer)
-      ═══════════════════════════════════════════════ */}
+      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
       <div className={`fixed top-0 right-0 h-full flex z-210 transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}>
 
         {/* Testimonials Section (White BG, Left of Sidebar) */}
@@ -339,11 +339,11 @@ export default function Navbar() {
           {/* Scrollable Menu */}
           <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden">
 
-            {/* ─── DESTINATIONS ─── */}
+            {/* â”€â”€â”€ DESTINATIONS â”€â”€â”€ */}
             <div className="border-b border-gray-100">
               <button
                 onClick={() => toggleSection('destinations')}
-                className="w-full flex items-center justify-between px-6 py-4 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
+                className="w-full flex items-center justify-between px-6 py-4 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
               >
                 <span className="flex items-center gap-3">
                   <svg className="w-4 h-4 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -359,7 +359,7 @@ export default function Navbar() {
                       <div key={region}>
                         <button
                           onClick={() => setSidebarDestRegion(region as DestinationKey)}
-                          className={`w-full text-left px-4 py-2.5 rounded-lg text-[12px] font-black  tracking-wider flex items-center justify-between transition-all ${sidebarDestRegion === region ? 'bg-[#191974] text-white' : 'text-[#191974]/60 hover:text-[#191974] hover:bg-gray-50'}`}
+                          className={`w-full text-left px-4 py-2.5 rounded-lg text-[12px]   tracking-wider flex items-center justify-between transition-all ${sidebarDestRegion === region ? 'bg-[#191974] text-white' : 'text-[#191974]/60 hover:text-[#191974] hover:bg-gray-50'}`}
                         >
                           {region}
                           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg>
@@ -386,14 +386,14 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* ─── INDIA ─── */}
+            {/* â”€â”€â”€ INDIA â”€â”€â”€ */}
             <div className="border-b border-gray-100">
               <button
                 onClick={() => toggleSection('india')}
-                className="w-full flex items-center justify-between px-6 py-4 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
+                className="w-full flex items-center justify-between px-6 py-4 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
               >
                 <span className="flex items-center gap-3">
-                  <span className="text-base">🇮🇳</span>
+                  <span className="text-base">ðŸ‡®ðŸ‡³</span>
                   India
                 </span>
                 <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'india' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
@@ -415,11 +415,11 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* ─── SPECIALITY TOURS ─── */}
+            {/* â”€â”€â”€ SPECIALITY TOURS â”€â”€â”€ */}
             <div className="border-b border-gray-100">
               <button
                 onClick={() => toggleSection('speciality')}
-                className="w-full flex items-center justify-between px-6 py-4 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
+                className="w-full flex items-center justify-between px-6 py-4 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
               >
                 <span className="flex items-center gap-3">
                   <svg className="w-4 h-4 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
@@ -444,27 +444,27 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* ─── SIMPLE LINKS ─── */}
+            {/* â”€â”€â”€ SIMPLE LINKS â”€â”€â”€ */}
             {[
-              { label: "Customized Holidays", href: "#", icon: "✈️" },
-              { label: "Visa", href: `/${currentRegionCode}/visa`, icon: "📄" },
+              { label: "Customized Holidays", href: "#", icon: "âœˆï¸" },
+              { label: "Visa", href: `/${currentRegionCode}/visa`, icon: "ðŸ“„" },
             ].map(({ label, href, icon }) => (
               <Link
                 key={label}
                 href={href}
                 onClick={() => setSidebarOpen(false)}
-                className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 hover:text-[#ee2229] transition-colors"
+                className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 hover:text-[#ee2229] transition-colors"
               >
                 <span className="text-base">{icon}</span>
                 {label}
               </Link>
             ))}
 
-            {/* ─── COMPANY ─── */}
+            {/* â”€â”€â”€ COMPANY â”€â”€â”€ */}
             <div className="border-b border-gray-100">
               <button
                 onClick={() => toggleSection('company')}
-                className="w-full flex items-center justify-between px-6 py-4 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
+                className="w-full flex items-center justify-between px-6 py-4 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
               >
                 <span className="flex items-center gap-3">
                   <svg className="w-4 h-4 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
@@ -489,17 +489,17 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* ─── MORE SIMPLE LINKS ─── */}
+            {/* â”€â”€â”€ MORE SIMPLE LINKS â”€â”€â”€ */}
             {[
-              { label: "Inbound", href: `/${currentRegionCode}/inbound`, icon: "🏨" },
-              { label: "Weddings", href: "#", icon: "💍" },
-              { label: "Contact Us", href: `/${currentRegionCode}/contact`, icon: "📞" },
+              { label: "Inbound", href: `/${currentRegionCode}/inbound`, icon: "ðŸ¨" },
+              { label: "Weddings", href: "#", icon: "ðŸ’" },
+              { label: "Contact Us", href: `/${currentRegionCode}/contact`, icon: "ðŸ“ž" },
             ].map(({ label, href, icon }) => (
               <Link
                 key={label}
                 href={href}
                 onClick={() => setSidebarOpen(false)}
-                className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 text-[#191974] font-black text-[13px]  tracking-widest hover:bg-gray-50 hover:text-[#ee2229] transition-colors"
+                className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 hover:text-[#ee2229] transition-colors"
               >
                 <span className="text-base">{icon}</span>
                 {label}
@@ -513,19 +513,19 @@ export default function Navbar() {
             <Link
               href={`/${currentRegionCode}/login`}
               onClick={() => setSidebarOpen(false)}
-              className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-200 text-[#191974] font-black text-[12px] uppercase tracking-widest rounded-xl hover:bg-[#191974] hover:text-white transition-all shadow-sm"
+              className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-200 text-[#191974]  text-[12px] uppercase tracking-widest rounded-xl hover:bg-[#191974] hover:text-white transition-all shadow-sm"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
               Sign Up
             </Link>
 
             <div>
-              <p className="text-[10px] text-gray-400 font-black tracking-widest mb-1.5 uppercase">Reach Us</p>
-              <a href="tel:18003135555" className="text-[16px] font-black text-[#191974] hover:text-[#ee2229] transition-colors flex items-center gap-2">
+              <p className="text-[10px] text-gray-400  tracking-widest mb-1.5 uppercase">Reach Us</p>
+              <a href="tel:18003135555" className="text-[16px]  text-[#191974] hover:text-[#ee2229] transition-colors flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#ee2229]" />
                 1800 313 5555
               </a>
-              <p className="text-[10px] text-gray-400 mt-0.5 font-bold uppercase tracking-tight">Toll Free · 10AM – 7PM</p>
+              <p className="text-[10px] text-gray-400 mt-0.5 font-bold uppercase tracking-tight">Toll Free Â· 10AM â€“ 7PM</p>
             </div>
           </div>
 

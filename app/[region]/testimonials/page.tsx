@@ -66,8 +66,8 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
   ];
 
   return (
-    <div className="min-h-screen bg-white font-inter">
-      {/* ── HERO SECTION ── */}
+    <div className="min-h-screen bg-white ">
+      {/* â”€â”€ HERO SECTION â”€â”€ */}
       <section className="pt-40 pb-20 bg-[#191974] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#ee2229] rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2" />
@@ -80,7 +80,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-[48px] md:text-[72px] font-black text-white  tracking-tighter leading-none mb-6">
+            <h1 className="text-[48px] md:text-[72px]  text-white  tracking-tighter leading-none mb-6">
               What Our <span className="text-[#ee2229]">Guests Say</span>
             </h1>
             <p className="text-[18px] md:text-[22px] text-white/60 font-light max-w-2xl mx-auto">
@@ -90,7 +90,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
             <div className="flex flex-wrap justify-center gap-10 mt-12">
               {stats.map((s, i) => (
                 <div key={i} className="text-center">
-                  <p className="text-[36px] font-black text-white leading-none mb-1">{s.val}</p>
+                  <p className="text-[36px]  text-white leading-none mb-1">{s.val}</p>
                   <p className="text-[12px] text-white/40  tracking-widest font-bold">{s.label}</p>
                 </div>
               ))}
@@ -99,7 +99,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
         </div>
       </section>
 
-      {/* ── FEATURED TESTIMONIAL ── */}
+      {/* â”€â”€ FEATURED TESTIMONIAL â”€â”€ */}
       <section className="py-24 px-6 relative -mt-16 z-20">
         <div className="max-w-5xl mx-auto">
           <motion.div
@@ -120,7 +120,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
                   <CheckCircle className="w-5 h-5" />
                 </div>
               </div>
-              <h3 className="text-[24px] font-black text-[#191974]">Vikram Sathya</h3>
+              <h3 className="text-[24px]  text-[#191974]">Vikram Sathya</h3>
               <p className="text-gray-400 font-bold  tracking-widest text-[11px]">USA Grand Tour</p>
             </div>
 
@@ -141,7 +141,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
         </div>
       </section>
 
-      {/* ── TESTIMONIALS GRID ── */}
+      {/* â”€â”€ TESTIMONIALS GRID â”€â”€ */}
       <section className="py-24 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -157,7 +157,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
                 <div className="flex items-center gap-4 mb-6">
                   <Image src={t.image} alt={t.name} width={60} height={60} className="rounded-2xl grayscale group-hover:grayscale-0 transition-all" />
                   <div>
-                    <p className="text-[17px] font-black text-[#191974] leading-none mb-1">{t.name}</p>
+                    <p className="text-[17px]  text-[#191974] leading-none mb-1">{t.name}</p>
                     <p className="text-[11px] text-[#ee2229] font-bold  tracking-widest">{t.role}</p>
                   </div>
                 </div>
@@ -179,7 +179,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
           </div>
 
           <div className="text-center mt-20">
-            <button className="bg-transparent border-2 border-[#191974] text-[#191974] px-10 py-4 rounded-full font-black  tracking-widest hover:bg-[#191974] hover:text-white transition-all">
+            <button className="bg-transparent border-2 border-[#191974] text-[#191974] px-10 py-4 rounded-full   tracking-widest hover:bg-[#191974] hover:text-white transition-all">
               Load More Stories
             </button>
           </div>

@@ -173,7 +173,7 @@ export default function TermsAndConditions({ params }: { params: Promise<{ regio
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-[42px] md:text-[56px] font-black  tracking-tight mb-4 font-inter leading-none">
+            <h1 className="text-[42px] md:text-[56px]   tracking-tight mb-4 leading-none">
               Terms & Conditions
             </h1>
             <p className="text-[18px] md:text-[22px] font-light text-white/80 max-w-2xl mx-auto">
@@ -193,7 +193,7 @@ export default function TermsAndConditions({ params }: { params: Promise<{ regio
           {/* Sidebar Navigation */}
           <aside className="hidden lg:block w-72 shrink-0">
             <div className="sticky top-32 space-y-1">
-              <h3 className="text-[12px] font-black text-[#ee2229]  tracking-widest mb-4 px-4">Sections</h3>
+              <h3 className="text-[12px]  text-[#ee2229]  tracking-widest mb-4 px-4">Sections</h3>
               {sections.map((section) => (
                 <a
                   key={section.id}
@@ -215,11 +215,11 @@ export default function TermsAndConditions({ params }: { params: Promise<{ regio
                     <div className="w-12 h-12 rounded-2xl bg-red-50 flex items-center justify-center border border-red-100">
                       {section.icon}
                     </div>
-                    <h2 className="text-[24px] md:text-[28px] font-black text-[#191974]  tracking-tight leading-none">
+                    <h2 className="text-[24px] md:text-[28px]  text-[#191974]  tracking-tight leading-none">
                       {section.title}
                     </h2>
                   </div>
-                  <div className="text-[16px] md:text-[17px] leading-relaxed text-gray-600 font-inter-tight font-light">
+                  <div className="text-[16px] md:text-[17px] leading-relaxed text-gray-600 font-light">
                     {section.content}
                   </div>
                 </section>
@@ -229,7 +229,7 @@ export default function TermsAndConditions({ params }: { params: Promise<{ regio
             {/* Footer Note */}
             <div className="mt-24 pt-12 border-t border-gray-100 text-center">
               <p className="text-gray-400 text-[14px]">
-                © {new Date().getFullYear()} Madura Travel Service (P) Ltd. All Rights Reserved.
+                Â© {new Date().getFullYear()} Madura Travel Service (P) Ltd. All Rights Reserved.
               </p>
             </div>
           </div>

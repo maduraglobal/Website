@@ -77,7 +77,7 @@ export default function PopupForm() {
             {/* Right Form Side */}
             <div className="md:w-[55%] p-8 md:p-12 flex flex-col justify-center">
               <div className="mb-8">
-                <h2 className="text-[28px] md:text-[34px] font-black leading-tight text-[#191974] mb-3 font-poppins">
+                <h2 className="text-[28px] md:text-[34px]  leading-tight text-[#191974] mb-3 font-poppins">
                   Join a community of <br />
                   <span className="text-[#ee2229]">4M+ happy guests</span>
                 </h2>
@@ -123,7 +123,7 @@ export default function PopupForm() {
 
                 <button
                   type="submit"
-                  className="w-full bg-[#f4a021] hover:bg-[#e89410] text-black font-black py-4.5 rounded-2xl text-[16px] transition-all shadow-xl shadow-orange-500/20 active:scale-[0.98] mt-4  tracking-widest"
+                  className="w-full bg-[#f4a021] hover:bg-[#e89410] text-black  py-4.5 rounded-2xl text-[16px] transition-all shadow-xl shadow-orange-500/20 active:scale-[0.98] mt-4  tracking-widest"
                 >
                   Send Enquiry
                 </button>

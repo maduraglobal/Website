@@ -141,7 +141,7 @@ export const ImagesSlider = ({
       {/* Background/Loading Placeholder */}
       {!areImagesLoaded && (
         <div className="absolute inset-0 bg-gray-900 z-10 animate-pulse flex items-center justify-center">
-          <span className="text-white/20 text-sm font-inter">Loading Scenery...</span>
+          <span className="text-white/20 text-sm ">Loading Scenery...</span>
         </div>
       )}
 

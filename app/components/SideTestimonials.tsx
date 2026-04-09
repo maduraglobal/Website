@@ -34,9 +34,9 @@ export default function SideTestimonials() {
   return (
     <>
       {/* 🔷 FIXED SIDEBAR */}
-      <div 
+      <div
         className={cn(
-          "fixed top-24 left-0 h-[calc(100vh-120px)] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] z-[90] flex items-center",
+          "fixed top-24 left-0 h-[calc(100vh-120px)] transition-all duration-500 ease-in-out z-90 flex items-center",
           isOpen ? "w-80 translate-x-0" : "w-12 -translate-x-2"
         )}
       >
@@ -47,45 +47,45 @@ export default function SideTestimonials() {
           {/* Header */}
           <div className="px-6 w-full mb-8">
             <div className="flex items-center gap-2 mb-1">
-               <MessageSquareText className="w-4 h-4 text-[#ee2229]" />
-               <span className="text-[10px] font-black text-[#ee2229] uppercase tracking-widest">Guest Voices</span>
+              <MessageSquareText className="w-4 h-4 text-[#ee2229]" />
+              <span className="text-[10px]  text-[#ee2229] uppercase tracking-widest">Guest Voices</span>
             </div>
-            <h3 className="text-xl font-black text-[#191974] uppercase tracking-tighter">Testimonials</h3>
+            <h3 className="text-xl  text-[#191974] uppercase tracking-tighter">Testimonials</h3>
           </div>
 
           {/* Draggable Stack Container */}
           <div className="flex-1 w-full px-4 relative flex items-center justify-center">
             <DraggableCardContainer className="relative h-full w-full flex items-center justify-center">
               {testimonials.map((testimonial, idx) => (
-                <DraggableCardBody 
-                  key={idx} 
+                <DraggableCardBody
+                  key={idx}
                   className={cn(
                     "absolute w-64 min-h-[320px] p-0 flex flex-col bg-white border border-gray-50 shadow-xl rounded-2xl overflow-hidden",
-                    idx === 0 && "rotate-[-2deg]",
-                    idx === 1 && "rotate-[1deg] translate-y-4",
-                    idx === 2 && "rotate-[-1deg] translate-y-8"
+                    idx === 0 && "-rotate-2",
+                    idx === 1 && "rotate-1 translate-y-4",
+                    idx === 2 && "-rotate-1 translate-y-8"
                   )}
                 >
                   <div className="h-24 w-full relative overflow-hidden shrink-0">
-                     <img
+                    <img
                       src={testimonial.image}
                       alt={testimonial.title}
                       className="pointer-events-none w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent flex items-end p-3">
-                       <p className="text-white font-black text-[9px] uppercase tracking-wider">{testimonial.title}</p>
+                      <p className="text-white  text-[9px] uppercase tracking-wider">{testimonial.title}</p>
                     </div>
                   </div>
-                  
+
                   <div className="p-4 flex flex-col flex-1">
                     <Quote className="w-5 h-5 text-[#ee2229] mb-2 opacity-20" />
                     <p className="text-[12px] text-[#191974] font-medium italic leading-relaxed mb-4 line-clamp-5">
                       "{testimonial.quote}"
                     </p>
-                    
+
                     <div className="mt-auto pt-3 border-t border-gray-50">
-                      <p className="font-black text-[#191974] text-[12px]">{testimonial.name}</p>
-                      <p className="text-[7px] text-[#ee2229] font-black uppercase tracking-widest mt-0.5">Verified Traveler</p>
+                      <p className=" text-[#191974] text-[12px]">{testimonial.name}</p>
+                      <p className="text-[7px] text-[#ee2229]  uppercase tracking-widest mt-0.5">Verified Traveler</p>
                     </div>
                   </div>
                 </DraggableCardBody>
@@ -97,7 +97,7 @@ export default function SideTestimonials() {
         </div>
 
         {/* 🔷 TOGGLE BUTTON */}
-        <button 
+        <button
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
             "absolute -right-5 w-10 h-10 bg-white border border-gray-100 rounded-full shadow-lg flex items-center justify-center text-[#191974] hover:bg-[#ee2229] hover:text-white transition-all z-10",

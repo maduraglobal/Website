@@ -82,8 +82,8 @@ export default function BookingWidget({
           </div>
 
           <ul className="flex flex-col gap-3 mb-6 text-[14px] font-semibold text-gray-700">
-            <li className="flex items-center gap-2"><div className="w-5 h-5 rounded-full bg-[#191974]/10 text-[#191974] flex items-center justify-center">✓</div> Free Cancellation (48hrs)</li>
-            <li className="flex items-center gap-2"><div className="w-5 h-5 rounded-full bg-[#191974]/10 text-[#191974] flex items-center justify-center">✓</div> Zero Hidden Charges</li>
+            <li className="flex items-center gap-2"><div className="w-5 h-5 rounded-full bg-[#191974]/10 text-[#191974] flex items-center justify-center">âœ“</div> Free Cancellation (48hrs)</li>
+            <li className="flex items-center gap-2"><div className="w-5 h-5 rounded-full bg-[#191974]/10 text-[#191974] flex items-center justify-center">âœ“</div> Zero Hidden Charges</li>
           </ul>
 
           <button onClick={handleBookNow} className="w-full bg-[#191974] hover:bg-[#d61e24] text-white py-3.5 rounded-xl font-bold text-[16px] transition-colors shadow-sm">
@@ -136,7 +136,7 @@ export default function BookingWidget({
             <svg className="w-8 h-8 text-[#82c341]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
           </div>
           <h3 className="font-bold text-[20px] text-[#171717] mb-1">Booking Initialized!</h3>
-          <p className="text-[13px] text-gray-500 mb-6 font-inter-tight">ID: {bookingObj.id} <br /> Status: <span className="font-bold text-orange-500 ">{bookingObj.status}</span></p>
+          <p className="text-[13px] text-gray-500 mb-6 ">ID: {bookingObj.id} <br /> Status: <span className="font-bold text-orange-500 ">{bookingObj.status}</span></p>
 
           <button className="w-full bg-[#171717] hover:bg-black text-white py-3.5 rounded-xl font-bold text-[14px] transition-colors">
             Proceed to Payment Gateway

@@ -24,7 +24,7 @@ export default function TourTabs({ tabs, activeTab, onTabChange }: TourTabsProps
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={cn(
-                "py-3 px-1 border-b-2 font-black text-[13px] tracking-widest transition-all duration-500 whitespace-nowrap font-inter active:scale-95",
+                "py-4 md:py-3 px-3 md:px-1 border-b-2  text-[13px] tracking-widest transition-all duration-500 whitespace-nowrap active:scale-95 min-h-[48px] md:min-h-0",
                 activeTab === tab.id
                   ? "border-[#ee2229] text-[#ee2229] opacity-100"
                   : "border-transparent text-[#191974] hover:text-[#ee2229] hover:opacity-100 opacity-60"

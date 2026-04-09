@@ -19,138 +19,187 @@ const experts = [
 export default function VisaServicesPage() {
   const params = useParams();
   const region = params?.region as string || "india";
-  const [activeContinent, setActiveContinent] = useState("Asia");
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeContinent, setActiveContinent] = useState("All");
 
-  const filteredDestinations = destinations.filter(dest =>
-    dest.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const continents = ["All", "Asia", "Europe", "Americas", "Africa", "Oceania"];
+
+  const filteredDestinations = destinations.filter(dest => {
+    const matchesSearch = dest.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesContinent = activeContinent === "All" || dest.continent === activeContinent;
+    return matchesSearch && matchesContinent;
+  });
+
+  const resetFilters = () => {
+    setSearchQuery("");
+    setActiveContinent("All");
+  };
 
   return (
-    <div className="font-sans min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       {/* 1. HERO SECTION */}
-      <section className="bg-[#191974] pt-16 pb-12 px-4 relative overflow-hidden flex-1">
+      <section className="bg-[#191974] pt-24 pb-16 px-4 relative overflow-hidden flex-1">
         <div className="max-w-6xl mx-auto text-center relative z-10 pt-10">
-          <h5 className="text-white text-3xl md:text-5xl font-inter mb-8 tracking-tight leading-tight">
-            Choose Destination.<br /> We'll Handle the Visa
+          <h5 className="text-white text-3xl md:text-6xl  mb-8 tracking-tight leading-tight">
+            Choose Destination.<br /> We'll Handle the <span className="text-[#ee2229]">Visa</span>
           </h5>
 
           {/* Search Bar */}
-          <div className="max-w-4xl mx-auto flex flex-col md:flex-row bg-white rounded-xl md:rounded-full p-1.5 mb-6 shadow-2xl overflow-hidden">
-            <div className="flex-1 flex items-center px-4 py-3 border-b md:border-b-0 md:border-r border-gray-100">
-              <MapPin className="text-[#ee2229] w-4 h-4 mr-2 shrink-0" />
+          <div className="max-w-4xl mx-auto flex flex-col md:flex-row bg-white rounded-2xl md:rounded-full p-2 mb-8 shadow-2xl overflow-hidden">
+            <div className="flex-1 flex items-center px-6 py-4 border-b md:border-b-0 md:border-r border-gray-100">
+              <MapPin className="text-[#ee2229] w-5 h-5 mr-3 shrink-0" />
               <div className="flex flex-col items-start text-left">
-                <span className="text-[9px] font-bold text-gray-400">Citizen of</span>
-                <input type="text" value="India" readOnly className="w-full text-[#191974] font-black p-0 border-none outline-none bg-transparent" />
+                <span className="text-[10px]  text-gray-400 uppercase tracking-widest ">Citizen of</span>
+                <input type="text" value="India" readOnly className="w-full text-[#191974]  p-0 border-none outline-none bg-transparent" />
               </div>
             </div>
-            <div className="flex-[1.5] flex items-center px-4 py-3">
-              <Search className="text-[#ee2229] w-4 h-4 mr-2 shrink-0" />
+            <div className="flex-[1.5] flex items-center px-6 py-4">
+              <Search className="text-[#ee2229] w-5 h-5 mr-3 shrink-0" />
               <div className="flex flex-col items-start w-full text-left">
-                <span className="text-[9px] font-bold text-gray-400">Travelling to</span>
+                <span className="text-[10px]  text-gray-400 uppercase tracking-widest ">Travelling to</span>
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Enter country name..."
-                  className="w-full text-[#191974] font-black p-0 border-none outline-none bg-transparent placeholder-gray-300"
+                  className="w-full text-[#191974]  p-0 border-none outline-none bg-transparent placeholder-gray-300"
                 />
               </div>
             </div>
-            <button className="bg-[#ee2229] hover:bg-[#d11e24] active:scale-95 text-white font-black py-4 px-10 rounded-lg md:rounded-full transition-all tracking-widest text-xs uppercase shadow-lg shadow-red-500/20">
+            <button className="bg-[#ee2229] hover:bg-[#191974] active:scale-95 text-white  py-4 px-12 rounded-xl md:rounded-full transition-all tracking-[0.2em] text-[13px] uppercase shadow-xl shadow-red-500/20">
               SEARCH
             </button>
           </div>
 
-          {/* Badge */}
-          <div className="inline-block bg-[#F59E0B]/15 border border-[#F59E0B]/30 backdrop-blur-md rounded-full px-6 py-3">
-            <p className="text-[#FBBF24] font-bold text-sm flex items-center gap-2 tracking-widest ">
-              <CheckCircle2 className="w-5 h-5 fill-current text-[#ee2229]" />
-              99.2% Visas Delivered On Time
+          {/* Trust Badge */}
+          <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-8 py-4">
+            <div className="flex -space-x-3">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="w-8 h-8 rounded-full border-2 border-[#191974] bg-gray-200 overflow-hidden">
+                  <img src={`https://ui-avatars.com/api/?name=User+${i}&background=random`} alt="user" />
+                </div>
+              ))}
+            </div>
+            <p className="text-white/80 font-bold text-[13px] tracking-wide">
+              <span className="text-white ">99.2%</span> Visas Delivered On Time
             </p>
           </div>
         </div>
 
-        {/* Background Graphic elements */}
-        <div className="absolute top-0 right-0 opacity-10 w-96 h-96 bg-white rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+        {/* Abstract shapes */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-red-500/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
       </section>
 
       {/* 2. POPULAR DESTINATIONS */}
-      <section className="py-12 px-4 bg-white">
+      <section className="py-16 px-4 bg-white min-h-[600px]">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-black text-[#191974] mb-1 text-center">Popular Destinations</h2>
-          <p className="text-gray-400 text-center mb-10 font-medium text-sm">Select your next travel destination</p>
+          <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+            <div className="text-center md:text-left">
+              <h2 className="text-[32px] md:text-[42px]  text-[#191974] leading-tight ">Explore Destinations</h2>
+              <p className="text-gray-400 mt-2 font-medium">Find visa requirements for your next journey.</p>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {filteredDestinations.map((dest, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-              >
-                <Link
-                  href={`/${region}/visa/${dest.name.toLowerCase().replace(/ /g, '-')}`}
-                  className="group relative rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 cursor-pointer block h-[440px] bg-white"
+            {/* Continent Filter Tabs */}
+            <div className="flex flex-wrap justify-center gap-2 bg-gray-50 p-1.5 rounded-2xl border border-gray-100">
+              {continents.map((continent) => (
+                <button
+                  key={continent}
+                  onClick={() => setActiveContinent(continent)}
+                  className={`px-5 py-2.5 rounded-xl text-[12px]  uppercase tracking-widest transition-all ${activeContinent === continent
+                    ? 'bg-white text-[#ee2229] shadow-md shadow-black/5 border border-gray-100'
+                    : 'text-gray-400 hover:text-[#191974]'
+                    }`}
                 >
-                  {/* Background Image */}
-                  <div className="absolute inset-0">
-                    <img
-                      src={dest.image}
-                      alt={dest.name}
-                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent opacity-90 group-hover:from-black transition-all"></div>
-                  </div>
-
-                  {/* Visa Type Badge */}
-                  <div className="absolute top-6 right-6 z-10">
-                    <div className="bg-white/10 backdrop-blur-md border border-white/20 text-white text-[9px] font-inter tracking-widest px-3 py-1.5 rounded-full ">
-                      {dest.type}
-                    </div>
-                  </div>
-
-                  {/* Content Overlay */}
-                  <div className="absolute inset-0 p-8 flex flex-col justify-end text-white z-10">
-                    {/* Flag Icon */}
-                    <div className="flex justify-center mb-4 transform group-hover:-translate-y-2 transition-transform duration-500">
-                      <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-2xl">
-                        <img
-                          src={`https://flagcdn.com/w160/${dest.flag}.png`}
-                          alt={dest.name}
-                          className="w-full h-full object-cover shadow-inner"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Country Name */}
-                    <h3 className="text-2xl font-serif  tracking-widest text-center mb-6 drop-shadow-xl">
-                      {dest.name}
-                    </h3>
-
-                    {/* Info Grid */}
-                    <div className="grid grid-cols-2 gap-y-4 gap-x-4 border-t border-white/10 pt-6 mb-8">
-                      <div className="text-center">
-                        <p className="text-[9px]  font-inter tracking-widest text-white/40 mb-1">Validity</p>
-                        <p className="text-[12px] font-inter  text-white/90">{dest.valid}</p>
-                      </div>
-                      <div className="text-center border-l border-white/10">
-                        <p className="text-[9px]  font-inter tracking-widest text-white/40 mb-1">Start From</p>
-                        <p className="text-[12px] font-inter  text-[#ee2229]">₹{dest.price}</p>
-                      </div>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="space-y-4">
-                      <div className="bg-[#ee2229] hover:bg-[#ff333a] text-white py-3.5 rounded-2xl text-center font-inter text-xs tracking-[0.2em] transition-all shadow-xl shadow-red-500/20 active:scale-95">
-                        GET START NOW
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+                  {continent}
+                </button>
+              ))}
+            </div>
           </div>
+
+          {filteredDestinations.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredDestinations.map((dest, i) => (
+                <motion.div
+                  key={dest.slug}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
+                >
+                  <Link
+                    href={`/${region}/visa/${dest.slug}`}
+                    className="group relative rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 cursor-pointer block h-[450px] bg-white"
+                  >
+                    {/* Background Image */}
+                    <div className="absolute inset-0">
+                      <img
+                        src={dest.image}
+                        alt={dest.name}
+                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent opacity-90 group-hover:from-black transition-all"></div>
+                    </div>
+
+                    {/* Visa Type Badge */}
+                    <div className="absolute top-6 right-6 z-10">
+                      <div className="bg-white/10 backdrop-blur-md border border-white/20 text-white text-[9px]  tracking-widest px-4 py-2 rounded-full uppercase">
+                        {dest.type}
+                      </div>
+                    </div>
+
+                    {/* Content Overlay */}
+                    <div className="absolute inset-0 p-8 flex flex-col justify-end text-white z-10">
+                      <div className="flex justify-center mb-6 transform group-hover:-translate-y-2 transition-transform duration-500">
+                        <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-2xl">
+                          <img
+                            src={`https://flagcdn.com/w160/${dest.flag}.png`}
+                            alt={dest.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      </div>
+
+                      <h3 className="text-3xl  tracking-tight text-center mb-6 drop-shadow-xl uppercase">
+                        {dest.name}
+                      </h3>
+
+                      <div className="grid grid-cols-2 gap-y-4 gap-x-4 border-t border-white/10 pt-6 mb-8">
+                        <div className="text-center">
+                          <p className="text-[10px]  tracking-widest text-white/40 uppercase mb-1">Validity</p>
+                          <p className="text-[13px]  text-white/90">{dest.valid}</p>
+                        </div>
+                        <div className="text-center border-l border-white/10">
+                          <p className="text-[10px]  tracking-widest text-white/40 uppercase mb-1">Starting Price</p>
+                          <p className="text-[13px]  text-[#ee2229]">â‚¹{dest.price}</p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div className="bg-[#ee2229] group-hover:bg-[#191974] text-white py-4 rounded-2xl text-center  text-[11px] tracking-[0.2em] transition-all shadow-xl shadow-red-500/10 active:scale-95 uppercase">
+                          Get Started Now
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            /* Empty State */
+            <div className="py-24 text-center bg-gray-50 rounded-[48px] border border-dashed border-gray-200">
+              <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-sm">
+                <Globe className="w-10 h-10 text-gray-200" />
+              </div>
+              <h3 className="text-[22px]  text-[#191974] mb-3 tracking-tight">No destinations found</h3>
+              <p className="text-gray-400 font-medium mb-10 max-w-md mx-auto">We couldn&apos;t find any visa services matching your criteria. Try adjusting your search or continent selection.</p>
+              <button
+                onClick={resetFilters}
+                className="bg-[#191974] hover:bg-[#ee2229] text-white px-10 py-4 rounded-full  text-[13px] uppercase tracking-widest transition-all shadow-xl shadow-blue-900/10 active:scale-95"
+              >
+                Reset Filters
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -159,7 +208,7 @@ export default function VisaServicesPage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 gap-6">
             <div className="text-center md:text-left">
-              <h2 className="text-3xl lg:text-4xl font-inter text-[#191974]">Meet Our Visa Experts</h2>
+              <h2 className="text-3xl lg:text-4xl text-[#191974]">Meet Our Visa Experts</h2>
               <p className="text-gray-500 mt-3 font-medium text-lg">Professionals dedicated to securing your visa smoothly</p>
             </div>
             <div className="hidden md:flex gap-3">
@@ -178,9 +227,9 @@ export default function VisaServicesPage() {
                 <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-6 border-4 border-gray-50 shadow-inner">
                   <img src={expert.img} className="w-full h-full object-cover" alt={expert.name} />
                 </div>
-                <h4 className="text-xl font-inter text-[#191974] mb-1">{expert.name}</h4>
+                <h4 className="text-xl text-[#191974] mb-1">{expert.name}</h4>
                 <p className="text-sm text-gray-500 font-bold tracking-wide  mb-4">{expert.role}</p>
-                <p className="text-xs font-inter text-[#ee2229] bg-red-50 inline-block px-4 py-1.5 rounded-lg border border-red-100">{expert.exp} Experience</p>
+                <p className="text-xs text-[#ee2229] bg-red-50 inline-block px-4 py-1.5 rounded-lg border border-red-100">{expert.exp} Experience</p>
               </div>
             ))}
           </div>
@@ -190,7 +239,7 @@ export default function VisaServicesPage() {
       {/* 4. HOW IT WORKS */}
       <section className="py-12 px-4 bg-[#FAF8F5]">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl font-black text-[#191974] text-center mb-12 leading-tight">Applying Is This Simple</h2>
+          <h2 className="text-3xl lg:text-4xl  text-[#191974] text-center mb-12 leading-tight">Applying Is This Simple</h2>
 
           <div className="relative">
             {/* Line connecting the steps (desktop) */}
@@ -200,34 +249,34 @@ export default function VisaServicesPage() {
               {/* Step 1 */}
               <div className="text-center group">
                 <div className="w-24 h-24 mx-auto rounded-full bg-white border-[6px] border-gray-200 group-hover:border-[#191974] flex items-center justify-center transition-colors mb-6 shadow-md relative group-hover:-translate-y-2 transform duration-300">
-                  <span className="text-3xl font-inter text-[#191974]">1</span>
+                  <span className="text-3xl text-[#191974]">1</span>
                 </div>
                 <div className="w-14 h-14 mx-auto bg-[#191974]/5 rounded-2xl flex items-center justify-center mb-5 text-[#191974]">
                   <CreditCard className="w-6 h-6" />
                 </div>
-                <h4 className="text-xl font-inter text-[#191974] mb-3 leading-tight">Submit documents <br />& pay online</h4>
+                <h4 className="text-xl text-[#191974] mb-3 leading-tight">Submit documents <br />& pay online</h4>
               </div>
 
               {/* Step 2 (Active) */}
               <div className="text-center group">
                 <div className="w-24 h-24 mx-auto rounded-full bg-[#ee2229] border-[6px] border-[#ee2229]/20 flex items-center justify-center mb-6 shadow-xl shadow-[#ee2229]/30 relative -translate-y-2">
-                  <span className="text-3xl font-inter text-white">2</span>
+                  <span className="text-3xl text-white">2</span>
                 </div>
                 <div className="w-14 h-14 mx-auto bg-[#ee2229]/10 rounded-2xl flex items-center justify-center mb-5 text-[#ee2229]">
                   <ShieldCheck className="w-6 h-6" />
                 </div>
-                <h4 className="text-xl font-inter text-[#191974] mb-3 leading-tight">We verify & process <br />your Visa application</h4>
+                <h4 className="text-xl text-[#191974] mb-3 leading-tight">We verify & process <br />your Visa application</h4>
               </div>
 
               {/* Step 3 */}
               <div className="text-center group">
                 <div className="w-24 h-24 mx-auto rounded-full bg-white border-[6px] border-gray-200 group-hover:border-[#191974] flex items-center justify-center transition-colors mb-6 shadow-md relative group-hover:-translate-y-2 transform duration-300">
-                  <span className="text-3xl font-inter text-[#191974]">3</span>
+                  <span className="text-3xl text-[#191974]">3</span>
                 </div>
                 <div className="w-14 h-14 mx-auto bg-[#191974]/5 rounded-2xl flex items-center justify-center mb-5 text-[#191974]">
                   <Map className="w-6 h-6" />
                 </div>
-                <h4 className="text-xl font-inter text-[#191974] mb-3 leading-tight">Receive Visa <br />documents</h4>
+                <h4 className="text-xl text-[#191974] mb-3 leading-tight">Receive Visa <br />documents</h4>
               </div>
             </div>
           </div>
@@ -237,7 +286,7 @@ export default function VisaServicesPage() {
       {/* 5. WHY CHOOSE US */}
       <section className="py-12 px-4 bg-white border-y border-gray-100">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-black text-[#191974] text-center mb-10">Why Choose Us</h2>
+          <h2 className="text-3xl  text-[#191974] text-center mb-10">Why Choose Us</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-12">
             {[
               { icon: Globe, title: "Visa Services for 180+ Countries" },
@@ -251,7 +300,7 @@ export default function VisaServicesPage() {
                 <div className="bg-[#191974] group-hover:bg-[#ee2229] group-hover:-translate-y-2 transition-all duration-300 w-20 h-20 rounded-[1.25rem] flex items-center justify-center text-white mb-5 shadow-xl shadow-gray-200">
                   <usp.icon className="w-8 h-8" />
                 </div>
-                <p className="text-sm md:text-base font-inter text-[#191974] whitespace-pre-line leading-snug">{usp.title}</p>
+                <p className="text-sm md:text-base text-[#191974] whitespace-pre-line leading-snug">{usp.title}</p>
               </div>
             ))}
           </div>
@@ -261,7 +310,7 @@ export default function VisaServicesPage() {
       {/* 6. CUSTOMER REVIEWS */}
       <section className="py-24 px-4 bg-[#f8f9fa]">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl font-inter text-[#191974] text-center mb-16">What Customers Say About Us</h2>
+          <h2 className="text-3xl lg:text-4xl text-[#191974] text-center mb-16">What Customers Say About Us</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div className="bg-white p-10 rounded-4xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow">
               <div className="flex text-[#ee2229] mb-6 gap-1">
@@ -269,8 +318,8 @@ export default function VisaServicesPage() {
               </div>
               <p className="text-gray-600 mb-8 font-medium text-lg leading-relaxed">"Excellent service handling our visas. Everything was communicated clearly, and we got our approvals well before time. Really highly recommend Madura travel service."</p>
               <div className="flex items-center justify-between border-t border-gray-100 pt-6">
-                <h4 className="text-lg font-inter text-[#191974]">Nupur Sawant</h4>
-                <span className="text-[#ee2229] font-inter text-sm tracking-widest  cursor-pointer hover:underline">Read more</span>
+                <h4 className="text-lg text-[#191974]">Nupur Sawant</h4>
+                <span className="text-[#ee2229] text-sm tracking-widest  cursor-pointer hover:underline">Read more</span>
               </div>
             </div>
 
@@ -280,8 +329,8 @@ export default function VisaServicesPage() {
               </div>
               <p className="text-gray-600 mb-8 font-medium text-lg leading-relaxed">"Super fast and flawless process. The team provided checklist for required documents explicitly. My Australia visa was perfectly arranged without any hiccups."</p>
               <div className="flex items-center justify-between border-t border-gray-100 pt-6">
-                <h4 className="text-lg font-inter text-[#191974]">Mayur Waman</h4>
-                <span className="text-[#ee2229] font-inter text-sm tracking-widest  cursor-pointer hover:underline">Read more</span>
+                <h4 className="text-lg text-[#191974]">Mayur Waman</h4>
+                <span className="text-[#ee2229] text-sm tracking-widest  cursor-pointer hover:underline">Read more</span>
               </div>
             </div>
           </div>
@@ -291,7 +340,7 @@ export default function VisaServicesPage() {
       {/* 7. VISIT US / LOCATIONS */}
       <section className="py-24 px-4 bg-[#FAF8F5] border-t border-gray-200">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl font-inter text-[#191974] text-center mb-16">Visit Us</h2>
+          <h2 className="text-3xl lg:text-4xl text-[#191974] text-center mb-16">Visit Us</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { city: "Mumbai", addr: "Antigravity HQ, Andheri East, Mumbai, Maharashtra 400059." },
@@ -302,9 +351,9 @@ export default function VisaServicesPage() {
                 <div className="w-16 h-16 bg-[#191974]/5 text-[#191974] rounded-2xl flex items-center justify-center mb-8 border border-[#191974]/10">
                   <Building2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-inter text-[#191974] mb-4">{loc.city}</h3>
+                <h3 className="text-2xl text-[#191974] mb-4">{loc.city}</h3>
                 <p className="text-gray-500 text-base font-medium mb-8 leading-relaxed">{loc.addr}</p>
-                <p className="text-[#191974] font-inter text-xs  tracking-widest flex items-center gap-2 hover:text-[#ee2229] cursor-pointer group">
+                <p className="text-[#191974] text-xs  tracking-widest flex items-center gap-2 hover:text-[#ee2229] cursor-pointer group">
                   View on Google Maps <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </p>
               </div>
@@ -316,7 +365,7 @@ export default function VisaServicesPage() {
       {/* 8. COUNTRY DIRECTORY FOOTER */}
       <section className="py-20 px-4 bg-white border-t border-gray-200">
         <div className="max-w-7xl mx-auto">
-          <h3 className="text-xl font-inter text-gray-300 mb-10 text-center  tracking-[0.3em]">Global Visa Directory</h3>
+          <h3 className="text-xl text-gray-300 mb-10 text-center  tracking-[0.3em]">Global Visa Directory</h3>
 
           {/* Tabs */}
           <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 border-b border-gray-100 mb-12">
@@ -324,7 +373,7 @@ export default function VisaServicesPage() {
               <button
                 key={continent}
                 onClick={() => setActiveContinent(continent)}
-                className={`pb-5 text-sm font-inter tracking-widest  transition-all relative ${activeContinent === continent ? 'text-[#ee2229]' : 'text-gray-400 hover:text-[#191974]'}`}
+                className={`pb-5 text-sm tracking-widest  transition-all relative ${activeContinent === continent ? 'text-[#ee2229]' : 'text-gray-400 hover:text-[#191974]'}`}
               >
                 {continent}
                 {activeContinent === continent && (
@@ -339,7 +388,7 @@ export default function VisaServicesPage() {
             {activeContinent === "Asia" && (
               <>
                 <div>
-                  <h4 className="font-inter text-[#191974] tracking-widest  text-xs mb-6">East Asia</h4>
+                  <h4 className="text-[#191974] tracking-widest  text-xs mb-6">East Asia</h4>
                   <ul className="space-y-4 font-bold text-[#191974]/60">
                     <li><Link href={`/${region}/visa/japan`} className="hover:text-[#ee2229] transition-colors">Japan Visa</Link></li>
                     <li><Link href={`/${region}/visa/china`} className="hover:text-[#ee2229] transition-colors">China Visa</Link></li>
@@ -349,7 +398,7 @@ export default function VisaServicesPage() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-inter text-[#191974] tracking-widest  text-xs mb-6">Southeast Asia</h4>
+                  <h4 className="text-[#191974] tracking-widest  text-xs mb-6">Southeast Asia</h4>
                   <ul className="space-y-4 font-bold text-[#191974]/60">
                     <li><Link href={`/${region}/visa/singapore`} className="hover:text-[#ee2229] transition-colors">Singapore Visa</Link></li>
                     <li><Link href={`/${region}/visa/malaysia`} className="hover:text-[#ee2229] transition-colors">Malaysia Visa</Link></li>
@@ -361,7 +410,7 @@ export default function VisaServicesPage() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-inter text-[#191974] tracking-widest  text-xs mb-6">West & Central Asia</h4>
+                  <h4 className="text-[#191974] tracking-widest  text-xs mb-6">West & Central Asia</h4>
                   <ul className="space-y-4 font-bold text-[#191974]/60">
                     <li><Link href={`/${region}/visa/united-arab-emirates`} className="hover:text-[#ee2229] transition-colors">UAE Visa</Link></li>
                     <li><Link href={`/${region}/visa/oman`} className="hover:text-[#ee2229] transition-colors">Oman Visa</Link></li>
@@ -373,7 +422,7 @@ export default function VisaServicesPage() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-inter text-[#191974] tracking-widest  text-xs mb-6">South Asia</h4>
+                  <h4 className="text-[#191974] tracking-widest  text-xs mb-6">South Asia</h4>
                   <ul className="space-y-4 font-bold text-[#191974]/60">
                     <li><Link href={`/${region}/visa/sri-lanka`} className="hover:text-[#ee2229] transition-colors">Sri Lanka Visa</Link></li>
                     <li><Link href={`/${region}/visa/russia`} className="hover:text-[#ee2229] transition-colors">Russia Visa</Link></li>
@@ -384,7 +433,7 @@ export default function VisaServicesPage() {
             {activeContinent === "Europe" && (
               <>
                 <div>
-                  <h4 className="font-inter text-[#191974] tracking-widest  text-xs mb-6">Western Europe</h4>
+                  <h4 className="text-[#191974] tracking-widest  text-xs mb-6">Western Europe</h4>
                   <ul className="space-y-4 font-bold text-[#191974]/60">
                     <li><Link href={`/${region}/visa/france`} className="hover:text-[#ee2229] transition-colors">France Visa</Link></li>
                     <li><Link href={`/${region}/visa/netherlands`} className="hover:text-[#ee2229] transition-colors">Netherlands Visa</Link></li>
@@ -393,14 +442,14 @@ export default function VisaServicesPage() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-inter text-[#191974] tracking-widest  text-xs mb-6">British Isles</h4>
+                  <h4 className="text-[#191974] tracking-widest  text-xs mb-6">British Isles</h4>
                   <ul className="space-y-4 font-bold text-[#191974]/60">
                     <li><Link href={`/${region}/visa/united-kingdom`} className="hover:text-[#ee2229] transition-colors">United Kingdom Visa</Link></li>
                     <li><Link href={`/${region}/visa/ireland`} className="hover:text-[#ee2229] transition-colors">Ireland Visa</Link></li>
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-inter text-[#191974] tracking-widest  text-xs mb-6">Southern Europe</h4>
+                  <h4 className="text-[#191974] tracking-widest  text-xs mb-6">Southern Europe</h4>
                   <ul className="space-y-4 font-bold text-[#191974]/60">
                     <li><Link href={`/${region}/visa/spain`} className="hover:text-[#ee2229] transition-colors">Spain Visa</Link></li>
                     <li><Link href={`/${region}/visa/greece`} className="hover:text-[#ee2229] transition-colors">Greece Visa</Link></li>
@@ -412,7 +461,7 @@ export default function VisaServicesPage() {
             {activeContinent === "North America" && (
               <>
                 <div>
-                  <h4 className="font-inter text-[#191974] tracking-widest  text-xs mb-6">Major Destinations</h4>
+                  <h4 className="text-[#191974] tracking-widest  text-xs mb-6">Major Destinations</h4>
                   <ul className="space-y-4 font-bold text-[#191974]/60">
                     <li><Link href={`/${region}/visa/united-states`} className="hover:text-[#ee2229] transition-colors">United States Visa</Link></li>
                     <li><Link href={`/${region}/visa/canada`} className="hover:text-[#ee2229] transition-colors">Canada Visa</Link></li>
@@ -423,7 +472,7 @@ export default function VisaServicesPage() {
             {activeContinent === "Australia" && (
               <>
                 <div>
-                  <h4 className="font-inter text-[#191974] tracking-widest  text-xs mb-6">Oceania</h4>
+                  <h4 className="text-[#191974] tracking-widest  text-xs mb-6">Oceania</h4>
                   <ul className="space-y-4 font-bold text-[#191974]/60">
                     <li><Link href={`/${region}/visa/australia`} className="hover:text-[#ee2229] transition-colors">Australia Visa</Link></li>
                     <li><Link href={`/${region}/visa/new-zealand`} className="hover:text-[#ee2229] transition-colors">New Zealand Visa</Link></li>
@@ -434,7 +483,7 @@ export default function VisaServicesPage() {
             {activeContinent === "Africa" && (
               <>
                 <div>
-                  <h4 className="font-inter text-[#191974] tracking-widest  text-xs mb-6">Sub-Saharan Africa</h4>
+                  <h4 className="text-[#191974] tracking-widest  text-xs mb-6">Sub-Saharan Africa</h4>
                   <ul className="space-y-4 font-bold text-[#191974]/60">
                     <li><Link href={`/${region}/visa/south-africa`} className="hover:text-[#ee2229] transition-colors">South Africa Visa</Link></li>
                     <li><Link href={`/${region}/visa/kenya`} className="hover:text-[#ee2229] transition-colors">Kenya Visa</Link></li>
@@ -442,7 +491,7 @@ export default function VisaServicesPage() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-inter text-[#191974] tracking-widest  text-xs mb-6">North Africa</h4>
+                  <h4 className="text-[#191974] tracking-widest  text-xs mb-6">North Africa</h4>
                   <ul className="space-y-4 font-bold text-[#191974]/60">
                     <li><Link href={`/${region}/visa/egypt`} className="hover:text-[#ee2229] transition-colors">Egypt Visa</Link></li>
                     <li><Link href={`/${region}/visa/morocco`} className="hover:text-[#ee2229] transition-colors">Morocco Visa</Link></li>

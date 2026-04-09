@@ -23,8 +23,8 @@ export default function OurStoryPage({ params }: { params: Promise<{ region: str
   ];
 
   return (
-    <div className="min-h-screen bg-white font-inter">
-      {/* ── HERO BANNER ── */}
+    <div className="min-h-screen bg-white ">
+      {/* â”€â”€ HERO BANNER â”€â”€ */}
       <section className="relative pt-40 pb-24 bg-[#191974] overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <Image
@@ -42,7 +42,7 @@ export default function OurStoryPage({ params }: { params: Promise<{ region: str
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-[56px] md:text-[80px] font-black text-white  tracking-tighter leading-none mb-6">
+            <h1 className="text-[56px] md:text-[80px]  text-white  tracking-tighter leading-none mb-6">
               Our <span className="text-[#ee2229]">Story</span>
             </h1>
             <p className="text-[20px] md:text-[24px] text-white/70 font-light max-w-2xl mx-auto  tracking-widest">
@@ -52,7 +52,7 @@ export default function OurStoryPage({ params }: { params: Promise<{ region: str
         </div>
       </section>
 
-      {/* ── COMPANY INTRODUCTION (Kesar Style Split) ── */}
+      {/* â”€â”€ COMPANY INTRODUCTION (Kesar Style Split) â”€â”€ */}
       <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-1/2">
@@ -64,14 +64,14 @@ export default function OurStoryPage({ params }: { params: Promise<{ region: str
                 className="group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute bottom-8 left-8 bg-white p-6 rounded-2xl shadow-xl">
-                <p className="text-[32px] font-black text-[#191974] leading-none">Est. 1986</p>
+                <p className="text-[32px]  text-[#191974] leading-none">Est. 1986</p>
                 <p className="text-[#ee2229] font-bold  tracking-widest text-[12px] mt-1">Founding Year</p>
               </div>
             </div>
           </div>
 
           <div className="lg:w-1/2 space-y-8">
-            <h2 className="text-[36px] md:text-[48px] font-black text-[#191974]  tracking-tighter leading-tight">
+            <h2 className="text-[36px] md:text-[48px]  text-[#191974]  tracking-tighter leading-tight">
               A Trusted Name in <br />
               <span className="text-[#ee2229]">Indian Travel History</span>
             </h2>
@@ -90,7 +90,7 @@ export default function OurStoryPage({ params }: { params: Promise<{ region: str
         </div>
       </section>
 
-      {/* ── STATS SECTION ── */}
+      {/* â”€â”€ STATS SECTION â”€â”€ */}
       <section className="py-20 bg-gray-50 border-y border-gray-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
@@ -99,7 +99,7 @@ export default function OurStoryPage({ params }: { params: Promise<{ region: str
                 <div className="w-14 h-14 bg-white rounded-2xl shadow-lg flex items-center justify-center text-[#ee2229] mx-auto mb-4 group-hover:-rotate-6 transition-transform">
                   {stat.icon}
                 </div>
-                <p className="text-[42px] font-black text-[#191974] leading-none mb-2">{stat.val}</p>
+                <p className="text-[42px]  text-[#191974] leading-none mb-2">{stat.val}</p>
                 <p className="text-[12px] text-gray-400 font-bold  tracking-widest">{stat.label}</p>
               </div>
             ))}
@@ -107,21 +107,21 @@ export default function OurStoryPage({ params }: { params: Promise<{ region: str
         </div>
       </section>
 
-      {/* ── MISSION & VISION ── */}
+      {/* â”€â”€ MISSION & VISION â”€â”€ */}
       <section className="py-24 px-6 bg-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-red-50 rounded-full blur-[100px] translate-x-1/2 -translate-y-1/2" />
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10">
           <div className="bg-[#191974] p-12 rounded-[2.5rem] text-white shadow-2xl relative group overflow-hidden">
             <Target className="w-16 h-16 text-[#ee2229] mb-8 group-hover:scale-110 transition-transform" />
-            <h3 className="text-[32px] font-black  tracking-tighter mb-4">Our Mission</h3>
+            <h3 className="text-[32px]   tracking-tighter mb-4">Our Mission</h3>
             <p className="text-white/70 text-[18px] font-light leading-relaxed">
               To provide personalized, high-quality travel and visa services that exceed expectations, ensuring every journey is seamless, safe, and unforgettable for every traveler.
             </p>
           </div>
           <div className="bg-gray-50 p-12 rounded-[2.5rem] border border-gray-100 shadow-xl relative group overflow-hidden">
             <Eye className="w-16 h-16 text-[#ee2229] mb-8 group-hover:scale-110 transition-transform" />
-            <h3 className="text-[32px] font-black text-[#191974]  tracking-tighter mb-4">Our Vision</h3>
+            <h3 className="text-[32px]  text-[#191974]  tracking-tighter mb-4">Our Vision</h3>
             <p className="text-gray-500 text-[18px] font-light leading-relaxed">
               To be the most preferred travel partner globally, recognized for our integrity, innovative solutions, and for connecting people with the diverse beauty of the world.
             </p>
@@ -129,11 +129,11 @@ export default function OurStoryPage({ params }: { params: Promise<{ region: str
         </div>
       </section>
 
-      {/* ── TIMELINE JOURNEY ── */}
+      {/* â”€â”€ TIMELINE JOURNEY â”€â”€ */}
       <section className="py-24 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-[36px] font-black text-[#191974]  tracking-tighter mb-4">Our Growth Journey</h2>
+            <h2 className="text-[36px]  text-[#191974]  tracking-tighter mb-4">Our Growth Journey</h2>
             <div className="w-20 h-1.5 bg-[#ee2229] mx-auto rounded-full" />
           </div>
 
@@ -150,8 +150,8 @@ export default function OurStoryPage({ params }: { params: Promise<{ region: str
               >
                 <div className="w-full md:w-1/2 text-center md:text-right">
                   <div className={`p-8 rounded-3xl bg-white shadow-lg border border-gray-100 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
-                    <span className="text-[32px] font-black text-[#ee2229] leading-none mb-2 block">{ms.year}</span>
-                    <h4 className="text-[20px] font-black text-[#191974] mb-2 ">{ms.title}</h4>
+                    <span className="text-[32px]  text-[#ee2229] leading-none mb-2 block">{ms.year}</span>
+                    <h4 className="text-[20px]  text-[#191974] mb-2 ">{ms.title}</h4>
                     <p className="text-gray-500 font-light leading-relaxed">{ms.desc}</p>
                   </div>
                 </div>

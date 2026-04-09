@@ -138,7 +138,7 @@ export default function Footer() {
                 className="h-6 opacity-30 hover:opacity-60 transition-opacity"
                 alt="ISO Certified"
               />
-              <span className="text-[10px] font-black border border-white/20 hover:border-white/50 px-2 py-1 rounded tracking-widest text-white/30 hover:text-white/60 transition-all ">
+              <span className="text-[10px]  border border-white/20 hover:border-white/50 px-2 py-1 rounded tracking-widest text-white/30 hover:text-white/60 transition-all ">
                 TAFI
               </span>
             </div>
@@ -146,7 +146,7 @@ export default function Footer() {
 
           {/* ── COL 2: Top Destinations ── */}
           <div className="flex flex-col gap-5">
-            <h4 className="text-[11px] font-black  tracking-[0.2em] text-[#ee2229]">
+            <h4 className="text-[11px]   tracking-[0.2em] text-[#ee2229]">
               Top Destinations
             </h4>
             <div className="grid grid-cols-2 gap-x-4 gap-y-3">
@@ -174,7 +174,7 @@ export default function Footer() {
 
           {/* ── COL 3: Discover Us ── */}
           <div className="flex flex-col gap-5">
-            <h4 className="text-[11px] font-black  tracking-[0.2em] text-[#ee2229]">
+            <h4 className="text-[11px]   tracking-[0.2em] text-[#ee2229]">
               Discover Us
             </h4>
             <ul className="flex flex-col gap-3">
@@ -194,7 +194,7 @@ export default function Footer() {
 
           {/* ── COL 4: Contact Info ── */}
           <div className="flex flex-col gap-5">
-            <h4 className="text-[11px] font-black  tracking-[0.2em] text-[#ee2229]">
+            <h4 className="text-[11px]   tracking-[0.2em] text-[#ee2229]">
               Get In Touch
             </h4>
 
@@ -289,7 +289,7 @@ export default function Footer() {
         <button
           onClick={() => window.dispatchEvent(new Event("openPopup"))}
           suppressHydrationWarning
-          className="bg-[#ee2229] hover:bg-[#d11e24] active:scale-95 text-white px-5 py-3 md:px-6 md:py-3.5 rounded-full font-black text-[13px] md:text-[14px] shadow-2xl shadow-[#ee2229]/30 flex items-center gap-2 transition-all hover:-translate-y-0.5 group"
+          className="bg-[#ee2229] hover:bg-[#d11e24] active:scale-95 text-white px-5 py-3 md:px-6 md:py-3.5 rounded-full  text-[13px] md:text-[14px] shadow-2xl shadow-[#ee2229]/30 flex items-center gap-2 transition-all hover:-translate-y-0.5 group"
         >
           <svg className="w-4 h-4 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />

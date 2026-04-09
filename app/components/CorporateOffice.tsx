@@ -37,14 +37,14 @@ export default function CorporateOffice() {
               Our Headquarters
             </div>
 
-            <h2 className="text-[36px] md:text-[48px] font-black text-[#191974] leading-tight mb-4 font-inter">
+            <h2 className="text-[36px] md:text-[48px]  text-[#191974] leading-tight mb-4 ">
               Corporate Office
             </h2>
 
             <div className="space-y-8 mt-4">
               {/* Company Identity */}
               <div>
-                <h3 className="text-[20px] font-bold text-[#191974] mb-2 font-inter">
+                <h3 className="text-[20px] font-bold text-[#191974] mb-2 ">
                   Madura Travel Service (P) Ltd
                 </h3>
                 <div className="flex items-start gap-4 text-gray-600">

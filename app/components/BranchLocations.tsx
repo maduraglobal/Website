@@ -30,7 +30,7 @@ const BranchCard = ({ tag, location, name, status, address, phone, email, isInte
     className="bg-white rounded-4xl p-8 shadow-xl shadow-blue-900/5 border border-gray-100 flex flex-col h-full group transition-all hover:shadow-2xl hover:shadow-blue-900/10"
   >
     <div className="flex justify-between items-start mb-6">
-      <span className={`px-4 py-1.5 rounded-full text-[10px] font-black  tracking-widest ${isInternational ? 'bg-[#ee2229] text-white' : 'bg-[#191974]/10 text-[#191974]'}`}>
+      <span className={`px-4 py-1.5 rounded-full text-[10px]   tracking-widest ${isInternational ? 'bg-[#ee2229] text-white' : 'bg-[#191974]/10 text-[#191974]'}`}>
         {tag}
       </span>
       <div className="flex items-center gap-2 px-3 py-1 bg-green-50 rounded-full">
@@ -44,7 +44,7 @@ const BranchCard = ({ tag, location, name, status, address, phone, email, isInte
         <MapPin className="w-4 h-4" />
         <span className="text-[12px] font-bold  tracking-wider">{location}</span>
       </div>
-      <h3 className="text-[22px] font-black text-[#191974] leading-tight group-hover:text-[#ee2229] transition-colors">{name}</h3>
+      <h3 className="text-[22px]  text-[#191974] leading-tight group-hover:text-[#ee2229] transition-colors">{name}</h3>
     </div>
 
     <div className="space-y-4 mb-8 flex-1">
@@ -65,7 +65,7 @@ const BranchCard = ({ tag, location, name, status, address, phone, email, isInte
     </div>
 
     <div className="pt-6 border-t border-gray-50 flex items-center justify-between">
-      <button className="flex items-center gap-2 text-[#191974] font-black  tracking-widest text-[12px] hover:text-[#ee2229] transition-colors group/btn">
+      <button className="flex items-center gap-2 text-[#191974]   tracking-widest text-[12px] hover:text-[#ee2229] transition-colors group/btn">
         Office Details
         <ExternalLink className="w-4 h-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
       </button>
@@ -83,9 +83,9 @@ export default function BranchLocations() {
     {
       tag: "Branch Office",
       location: "Chennai",
-      name: "Madura Travel service – Chennai HQ",
+      name: "Madura Travel service â€“ Chennai HQ",
       status: "OPEN",
-      address: "25-3, Gandhi Irwin Road, Egmore, Chennai, Tamil Nadu – 600008",
+      address: "25-3, Gandhi Irwin Road, Egmore, Chennai, Tamil Nadu â€“ 600008",
       phone: "+91 44 28192002",
       email: "mail@maduratravel.com"
     },
@@ -95,7 +95,7 @@ export default function BranchLocations() {
     {
       tag: "International Office",
       location: "Sydney, Australia",
-      name: "Madura Travel Service – Sydney",
+      name: "Madura Travel Service â€“ Sydney",
       status: "OPEN",
       address: "Sydney,Australia",
       phone: "+61 434 500 743",
@@ -114,7 +114,7 @@ export default function BranchLocations() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-[42px] md:text-[52px] font-black text-[#191974]  tracking-tighter leading-none mb-6 font-inter">
+            <h2 className="text-[42px] md:text-[52px]  text-[#191974]  tracking-tighter leading-none mb-6 ">
               Our Branches <span className="text-[#ee2229]">Worldwide</span>
             </h2>
             <p className="text-gray-400 text-[18px] md:text-[22px] font-light max-w-2xl mx-auto">
@@ -128,7 +128,7 @@ export default function BranchLocations() {
           <div className="flex items-center gap-4 mb-10">
             <div className="flex items-center gap-3 bg-white px-6 py-2.5 rounded-2xl shadow-sm border border-gray-100">
               <img src="https://flagcdn.com/w40/in.png" alt="India" className="w-6 h-4 object-cover rounded-xs" />
-              <h3 className="text-[14px] font-black text-[#191974]  tracking-widest">India Branches</h3>
+              <h3 className="text-[14px]  text-[#191974]  tracking-widest">India Branches</h3>
             </div>
             <div className="flex-1 h-px bg-gray-200" />
           </div>
@@ -144,7 +144,7 @@ export default function BranchLocations() {
           <div className="flex items-center gap-4 mb-10">
             <div className="flex items-center gap-3 bg-white px-6 py-2.5 rounded-2xl shadow-sm border border-gray-100">
               <Globe2 className="w-5 h-5 text-[#ee2229]" />
-              <h3 className="text-[14px] font-black text-[#191974]  tracking-widest">International Branches</h3>
+              <h3 className="text-[14px]  text-[#191974]  tracking-widest">International Branches</h3>
             </div>
             <div className="flex-1 h-px bg-gray-200" />
           </div>
@@ -164,7 +164,7 @@ export default function BranchLocations() {
         >
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#ee2229]/20 rounded-full blur-[80px] translate-x-1/2 -translate-y-1/2" />
           <div className="relative z-10 text-center md:text-left">
-            <h3 className="text-[28px] font-black  mb-2">Need immediate assistance?</h3>
+            <h3 className="text-[28px]   mb-2">Need immediate assistance?</h3>
             <p className="text-white/60 font-light text-[17px]">Our global support team is available 24/7 to help you.</p>
           </div>
           <div className="relative z-10 flex flex-col sm:flex-row gap-4">

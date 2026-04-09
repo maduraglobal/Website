@@ -37,8 +37,8 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
   ];
 
   return (
-    <div className="min-h-screen bg-white font-inter">
-      {/* ── HERO SECTION ── */}
+    <div className="min-h-screen bg-white ">
+      {/* â”€â”€ HERO SECTION â”€â”€ */}
       <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
@@ -57,7 +57,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-[56px] md:text-[84px] font-black  tracking-tighter leading-none mb-6 drop-shadow-2xl">
+            <h1 className="text-[56px] md:text-[84px]   tracking-tighter leading-none mb-6 drop-shadow-2xl">
               Discover the <br />
               <span className="text-[#ee2229]">Soul of India</span>
             </h1>
@@ -65,7 +65,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
               Curated inbound travel experiences for international travelers. Heritage, Luxury, and Spirituality await you.
             </p>
             <button
-              className="book-now-btn bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white px-12 py-5 rounded-xl font-black  tracking-widest transition-all shadow-2xl"
+              className="book-now-btn bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white px-12 py-5 rounded-xl   tracking-widest transition-all shadow-2xl"
               data-package="Soul of India - Heritage Tour"
               data-price="1,49,999"
               data-original-price="1,89,999"
@@ -76,17 +76,17 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
         </div>
       </section>
 
-      {/* ── ABOUT INBOUND SERVICES ── */}
+      {/* â”€â”€ ABOUT INBOUND SERVICES â”€â”€ */}
       <section className="py-24 px-6 bg-white">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-1/2 space-y-8">
-            <h2 className="text-[36px] md:text-[48px] font-black text-[#191974]  tracking-tighter leading-tight">
+            <h2 className="text-[36px] md:text-[48px]  text-[#191974]  tracking-tighter leading-tight">
               A Gateway to <br />
               <span className="text-[#ee2229]">Authentic India</span>
             </h2>
             <div className="space-y-6 text-gray-600 text-[18px] font-light leading-relaxed">
               <p>
-                At Madura Travel, we understand that visiting India is more than just a trip—it's a spiritual and cultural awakening. Our dedicated inbound division specializes in handling international clients with the highest standards of hospitality.
+                At Madura Travel, we understand that visiting India is more than just a tripâ€”it's a spiritual and cultural awakening. Our dedicated inbound division specializes in handling international clients with the highest standards of hospitality.
               </p>
               <p>
                 From the ivory-white majesty of the Taj Mahal to the serene backwaters of Kerala, we provide end-to-end support to ensure your journey through the Indian subcontinent is smooth, safe, and deeply enriching.
@@ -94,11 +94,11 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
             </div>
             <div className="grid grid-cols-2 gap-8 pt-4">
               <div className="border-l-4 border-[#ee2229] pl-6">
-                <p className="text-[32px] font-black text-[#191974]">40+</p>
+                <p className="text-[32px]  text-[#191974]">40+</p>
                 <p className="text-[12px] text-gray-400 font-bold  tracking-widest">Years Expertise</p>
               </div>
               <div className="border-l-4 border-[#ee2229] pl-6">
-                <p className="text-[32px] font-black text-[#191974]">Government</p>
+                <p className="text-[32px]  text-[#191974]">Government</p>
                 <p className="text-[12px] text-gray-400 font-bold  tracking-widest">Approved Agent</p>
               </div>
             </div>
@@ -118,11 +118,11 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
         </div>
       </section>
 
-      {/* ── SERVICES SECTION ── */}
+      {/* â”€â”€ SERVICES SECTION â”€â”€ */}
       <section className="py-24 px-6 bg-gray-50 border-y border-gray-100">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-[36px] font-black text-[#191974]  tracking-tighter mb-4">Our Premium Services</h2>
+            <h2 className="text-[36px]  text-[#191974]  tracking-tighter mb-4">Our Premium Services</h2>
             <div className="w-20 h-1.5 bg-[#ee2229] mx-auto rounded-full" />
           </div>
 
@@ -136,7 +136,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
                 <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-[#ee2229] mb-6 group-hover:bg-[#191974] group-hover:text-white transition-all">
                   {svc.icon}
                 </div>
-                <h3 className="text-[20px] font-black text-[#191974] mb-3 ">{svc.title}</h3>
+                <h3 className="text-[20px]  text-[#191974] mb-3 ">{svc.title}</h3>
                 <p className="text-gray-500 font-light leading-relaxed text-[15px]">{svc.desc}</p>
               </motion.div>
             ))}
@@ -144,11 +144,11 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
         </div>
       </section>
 
-      {/* ── POPULAR DESTINATIONS ── */}
+      {/* â”€â”€ POPULAR DESTINATIONS â”€â”€ */}
       <section className="py-24 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-[36px] font-black text-[#191974]  tracking-tighter mb-4">Iconic Landmarks</h2>
+            <h2 className="text-[36px]  text-[#191974]  tracking-tighter mb-4">Iconic Landmarks</h2>
             <p className="text-gray-400 font-bold  tracking-widest text-[13px]">The best of India waiting for you</p>
           </div>
 
@@ -158,7 +158,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
                 <Image src={dest.img} alt={dest.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
-                  <h4 className="text-white text-[22px] font-black leading-tight mb-1">{dest.title}</h4>
+                  <h4 className="text-white text-[22px]  leading-tight mb-1">{dest.title}</h4>
                   <p className="text-white/60 text-[12px]  font-bold tracking-widest">{dest.loc}</p>
                 </div>
               </div>
@@ -167,7 +167,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
         </div>
       </section>
 
-      {/* ── WHY CHOOSE US ── */}
+      {/* â”€â”€ WHY CHOOSE US â”€â”€ */}
       <section className="py-24 bg-[#191974] px-6 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#ee2229]/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
 
@@ -182,18 +182,18 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
               <div className="w-16 h-16 bg-[#ee2229] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-[#ee2229]/20">
                 {item.icon}
               </div>
-              <h4 className="text-[18px] font-black mb-2  tracking-tight">{item.title}</h4>
+              <h4 className="text-[18px]  mb-2  tracking-tight">{item.title}</h4>
               <p className="text-white/50 text-[14px] font-light leading-relaxed">{item.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ── */}
+      {/* â”€â”€ TESTIMONIALS â”€â”€ */}
       <section className="py-24 px-6 bg-gray-50">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-[36px] font-black text-[#191974]  tracking-tighter mb-4">Guest Experiences</h2>
+            <h2 className="text-[36px]  text-[#191974]  tracking-tighter mb-4">Guest Experiences</h2>
             <p className="text-gray-400 font-bold  tracking-widest text-[13px]">Stories from across the globe</p>
           </div>
 
@@ -208,7 +208,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
                 </div>
                 <p className="text-gray-600 font-light italic leading-relaxed text-[17px] mb-8">"{t.quote}"</p>
                 <div>
-                  <p className="text-[#191974] font-black text-[18px]">{t.name}</p>
+                  <p className="text-[#191974]  text-[18px]">{t.name}</p>
                   <p className="text-[#ee2229] text-[11px] font-bold  tracking-widest mt-1">{t.loc}</p>
                 </div>
               </div>
@@ -217,7 +217,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
         </div>
       </section>
 
-      {/* ── CONTACT / ENQUIRY ── */}
+      {/* â”€â”€ CONTACT / ENQUIRY â”€â”€ */}
       <section className="py-24 px-6 bg-white relative">
         <div className="max-w-4xl mx-auto">
           <div className="bg-[#191974] rounded-[3rem] p-8 md:p-16 text-white shadow-2xl relative overflow-hidden">
@@ -225,7 +225,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
 
             <div className="relative z-10">
               <div className="text-center mb-12">
-                <h2 className="text-[32px] md:text-[42px] font-black  tracking-tighter mb-4">Plan Your Indian Journey</h2>
+                <h2 className="text-[32px] md:text-[42px]   tracking-tighter mb-4">Plan Your Indian Journey</h2>
                 <p className="text-white/60 font-light max-w-lg mx-auto">Tell us where you want to go and our specialists will contact you.</p>
               </div>
 
@@ -239,7 +239,7 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
                   <option>Interested in... Luxury Retreat</option>
                   <option>Interested in... Wildlife Adventure</option>
                 </select>
-                <button className="bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white py-5 rounded-xl font-black  tracking-[0.2em] md:col-span-2 transition-all flex items-center justify-center gap-3 mt-4">
+                <button className="bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white py-5 rounded-xl   tracking-[0.2em] md:col-span-2 transition-all flex items-center justify-center gap-3 mt-4">
                   Send Inquiry
                   <Send className="w-5 h-5" />
                 </button>

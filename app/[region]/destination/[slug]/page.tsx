@@ -64,7 +64,7 @@ export default async function DestinationToursPage({ params }: { params: Promise
   }
 
   return (
-    <div className="bg-[#f8f9fa] min-h-screen text-[#171717] font-sans">
+    <div className="bg-[#f8f9fa] min-h-screen text-[#171717] ">
 
 
       <DestinationHeader
@@ -72,18 +72,18 @@ export default async function DestinationToursPage({ params }: { params: Promise
         totalTours={tours.length}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 font-arial">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 ">
 
         {/* Breadcrumb / Layout Top */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div className="text-[14px] text-gray-500 font-medium lowercase tracking-wide">
             <span className="hover:text-[#ee2229] cursor-pointer">Home</span> /
             <span className="hover:text-[#ee2229] cursor-pointer ml-1">Destinations</span> /
-            <span className="text-[#191974] font-black ml-1 capitalize">{destName}</span>
+            <span className="text-[#191974]  ml-1 capitalize">{destName}</span>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-[14px] font-black text-[#191974]  tracking-tighter">Sort By:</span>
+            <span className="text-[14px]  text-[#191974]  tracking-tighter">Sort By:</span>
             <select className="bg-white border border-gray-200 text-[14px] rounded-lg focus:ring-[#191974] focus:border-[#191974] block p-2.5 font-bold text-[#191974]">
               <option>Recommended</option>
               <option>Price: Low to High</option>
@@ -105,11 +105,11 @@ export default async function DestinationToursPage({ params }: { params: Promise
 
             {/* Active Filters Display */}
             <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4 overflow-x-auto">
-              <span className="text-[12px] font-black text-[#191974] shrink-0  tracking-widest font-inter">Active Filters:</span>
-              <span className="bg-[#191974] text-white px-4 py-2 rounded-lg text-xs font-black shrink-0 flex items-center gap-2  tracking-tighter font-inter-tight">
-                {destName} <button className="ml-1 text-white/40 hover:text-white transition-colors">×</button>
+              <span className="text-[12px]  text-[#191974] shrink-0  tracking-widest ">Active Filters:</span>
+              <span className="bg-[#191974] text-white px-4 py-2 rounded-lg text-xs  shrink-0 flex items-center gap-2  tracking-tighter ">
+                {destName} <button className="ml-1 text-white/40 hover:text-white transition-colors">Ã—</button>
               </span>
-              <button className="text-[11px] font-black text-[#ee2229] ml-auto shrink-0 hover:underline  tracking-widest font-inter">Clear All</button>
+              <button className="text-[11px]  text-[#ee2229] ml-auto shrink-0 hover:underline  tracking-widest ">Clear All</button>
             </div>
 
             {/* Tour Cards Grid */}
@@ -120,14 +120,14 @@ export default async function DestinationToursPage({ params }: { params: Promise
             </div>
 
             {/* Pagination Component */}
-            <div className="py-12 flex justify-center font-inter">
+            <div className="py-12 flex justify-center ">
               <div className="flex items-center gap-3">
                 <button className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-[#191974] transition-all shadow-sm">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
                 </button>
-                <button className="w-12 h-12 rounded-xl bg-[#191974] text-white flex items-center justify-center font-black shadow-xl shadow-[#191974]/20 scale-110">1</button>
-                <button className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center font-black text-gray-500 hover:border-[#191974] hover:text-[#191974] transition-all shadow-sm">2</button>
-                <button className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center font-black text-gray-500 hover:border-[#191974] hover:text-[#191974] transition-all shadow-sm">3</button>
+                <button className="w-12 h-12 rounded-xl bg-[#191974] text-white flex items-center justify-center  shadow-xl shadow-[#191974]/20 scale-110">1</button>
+                <button className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center  text-gray-500 hover:border-[#191974] hover:text-[#191974] transition-all shadow-sm">2</button>
+                <button className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center  text-gray-500 hover:border-[#191974] hover:text-[#191974] transition-all shadow-sm">3</button>
                 <button className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-[#191974] transition-all shadow-sm">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
                 </button>

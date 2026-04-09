@@ -30,15 +30,15 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
   const collapseAll = () => setExpandedDays([]);
 
   return (
-    <div className="flex flex-col gap-4 font-arial">
+    <div className="flex flex-col gap-4 ">
       <div className="flex justify-between items-center border-b border-gray-100 pb-4">
-        <h3 className="text-[14px] font-black text-gray-300 tracking-widest uppercase">
+        <h3 className="text-[14px]  text-gray-300 tracking-widest uppercase">
           {itinerary.length} Phases
         </h3>
         <div className="flex gap-4">
-          <button onClick={expandAll} className="text-[#ee2229] font-black text-[10px] hover:text-[#191974] transition-colors tracking-widest uppercase">Expand All</button>
+          <button onClick={expandAll} className="text-[#ee2229]  text-[10px] hover:text-[#191974] transition-colors tracking-widest uppercase">Expand All</button>
           <span className="text-gray-100 font-light">|</span>
-          <button onClick={collapseAll} className="text-[#ee2229] font-black text-[10px] hover:text-[#191974] transition-colors tracking-widest uppercase">Collapse All</button>
+          <button onClick={collapseAll} className="text-[#ee2229]  text-[10px] hover:text-[#191974] transition-colors tracking-widest uppercase">Collapse All</button>
         </div>
       </div>
 
@@ -61,8 +61,8 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
                 className="w-full flex items-center justify-between py-4 pr-4 text-left hover:bg-gray-50/80 transition-colors group"
               >
                 <div className="flex items-baseline gap-4">
-                  <span className="text-[11px] font-black text-[#ee2229] uppercase tracking-widest whitespace-nowrap opacity-80">Day {item.day}</span>
-                  <h4 className="text-[16px] font-black text-[#191974] font-inter tracking-tight leading-tight group-hover:text-[#ee2229] transition-colors">{item.title}</h4>
+                  <span className="text-[11px]  text-[#ee2229] uppercase tracking-widest whitespace-nowrap opacity-80">Day {item.day}</span>
+                  <h4 className="text-[16px]  text-[#191974] tracking-tight leading-tight group-hover:text-[#ee2229] transition-colors">{item.title}</h4>
                 </div>
                 <div className={cn(
                   "shrink-0 transition-all",

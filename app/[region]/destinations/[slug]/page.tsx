@@ -92,19 +92,19 @@ export default function DestinationPage() {
   }
 
   if (!destination) {
-    return <div className="p-20 text-center font-arial text-[14px]">Destination not found.</div>;
+    return <div className="p-20 text-center text-[14px]">Destination not found.</div>;
   }
 
   return (
-    <div className="bg-white min-h-screen font-arial text-[14px]">
+    <div className="bg-white min-h-screen text-[14px]">
       {/* DESTINATION HERO */}
       <section className={`relative w-full h-[45vh] min-h-[350px] flex items-center justify-center bg-linear-to-tr ${destination.heroImage} overflow-hidden`}>
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto text-white">
-          <h1 className="text-[32px] md:text-[48px] font-black font-inter mb-4 leading-tight drop-shadow-md">
+          <h1 className="text-[32px] md:text-[48px]  mb-4 leading-tight drop-shadow-md">
             {destination.title} Visa Online for Indians
           </h1>
-          <p className="text-[18px] md:text-[22px] font-inter font-light drop-shadow-lg opacity-90 max-w-2xl mx-auto leading-tight">
+          <p className="text-[18px] md:text-[22px] font-light drop-shadow-lg opacity-90 max-w-2xl mx-auto leading-tight">
             {destination.description}
           </p>
         </div>
@@ -113,8 +113,8 @@ export default function DestinationPage() {
       {/* RELATED TOURS */}
       <section className="py-12 max-w-7xl mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="text-[28px] md:text-[32px] font-black font-inter text-[#191974] mb-2 tracking-tight">Popular {destination.title} Packages</h2>
-          <p className="text-[16px] md:text-[20px] text-gray-400 font-inter font-light max-w-2xl mx-auto leading-tight">Explore our most sought-after itineraries.</p>
+          <h2 className="text-[28px] md:text-[32px]  text-[#191974] mb-2 tracking-tight">Popular {destination.title} Packages</h2>
+          <p className="text-[16px] md:text-[20px] text-gray-400 font-light max-w-2xl mx-auto leading-tight">Explore our most sought-after itineraries.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -122,24 +122,24 @@ export default function DestinationPage() {
             <div key={tour.id} className="group relative flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all">
               <Link href={`/${region}/tours/${tour.slug}`} className="absolute inset-0 z-20"></Link>
               <div className={`h-64 w-full relative overflow-hidden flex items-center justify-center bg-linear-to-tr ${tour.imgColor}`}>
-                <div className="absolute top-5 left-5 bg-[#ee2229] text-white px-3 py-1 rounded-sm text-[11px] font-black tracking-widest  shadow-xl z-20">
+                <div className="absolute top-5 left-5 bg-[#ee2229] text-white px-3 py-1 rounded-sm text-[11px]  tracking-widest  shadow-xl z-20">
                   {tour.tags[0]}
                 </div>
               </div>
               <div className="p-8 flex flex-col flex-1">
-                <span className="text-[12px] font-black text-[#ee2229] mb-4  tracking-widest flex items-center font-inter-tight">
+                <span className="text-[12px]  text-[#ee2229] mb-4  tracking-widest flex items-center ">
                   <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   {tour.duration}
                 </span>
 
-                <h3 className="text-[20px] font-bold font-inter text-[#191974] mb-8 leading-snug group-hover:text-[#ee2229] transition-colors">
+                <h3 className="text-[20px] font-bold text-[#191974] mb-8 leading-snug group-hover:text-[#ee2229] transition-colors">
                   {tour.title}
                 </h3>
 
                 <div className="mt-auto pt-6 border-t border-gray-100 flex justify-between items-end">
                   <div className="flex flex-col">
                     <span className="text-[10px] text-gray-400 font-bold  tracking-widest mb-1">Total Price</span>
-                    <span className="font-black text-[24px] text-[#191974] tracking-tighter">
+                    <span className=" text-[24px] text-[#191974] tracking-tighter">
                       {formatRegionalPrice(tour.baseInrPrice, region)}
                     </span>
                   </div>
@@ -156,8 +156,8 @@ export default function DestinationPage() {
       {/* SEO Section (Mock) */}
       <section className="bg-gray-50 py-24 border-t border-gray-100 relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <h3 className="text-[26px] font-black font-inter text-[#191974] mb-6  tracking-wider">Why Choose This Destination?</h3>
-          <p className="text-[14px] text-gray-600 leading-relaxed font-arial max-w-2xl mx-auto">
+          <h3 className="text-[26px]  text-[#191974] mb-6  tracking-wider">Why Choose This Destination?</h3>
+          <p className="text-[14px] text-gray-600 leading-relaxed max-w-2xl mx-auto">
             Booking a trip to {destination.title} with our specialized platform ensures a hassle-free and fully immersive experience. We partner with local experts to provide hidden gems alongside popular attractions.
           </p>
         </div>

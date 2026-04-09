@@ -91,7 +91,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
   const tabs = ["Types Of Visas", "Documents", "Process", "Why Choose Us", "Sample Visa", "FAQs", "Embassy", "Visit Us"];
 
   return (
-    <div className="font-sans min-h-screen bg-[#f8f9fa] text-[#333] text-[14px] leading-relaxed">
+    <div className="min-h-screen bg-[#f8f9fa] text-[#333] text-[14px] leading-relaxed">
 
       {/* ===== HERO SECTION ===== */}
       <section className="w-full bg-linear-to-r from-[#191974] to-[#2a2a8a] text-white py-8 px-4 shadow-inner relative overflow-hidden">
@@ -105,7 +105,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             <span className="text-[#ee2229]">{destName} Visa</span>
           </div>
 
-          <h1 className="text-[32px] md:text-[56px] font-black font-inter mb-4 leading-tight drop-shadow-md">
+          <h1 className="text-[32px] md:text-[56px]  mb-4 leading-tight drop-shadow-md">
             {destName} Visa Online for Indians
           </h1>
 
@@ -121,7 +121,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             <div className="hidden sm:block w-px bg-white/20 h-10 mt-1"></div>
             <div>
               <p className="text-[13px] text-white/70  tracking-widest font-bold mb-1">Starting from</p>
-              <p className="text-[18px] font-bold">{formatRegionalPrice(currentData.startingPrice, region)}/–</p>
+              <p className="text-[18px] font-bold">{formatRegionalPrice(currentData.startingPrice, region)}/â€“</p>
             </div>
           </div>
 
@@ -195,13 +195,13 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
               {visaTypes.map((v, i) => (
                 <div key={i} className="bg-white rounded-[24px] border border-gray-100 shadow-[0_8px_30px_rgba(25,25,116,0.04)] p-6 hover:shadow-[0_20px_50px_rgba(25,25,116,0.12)] transition-all duration-500 group relative flex flex-col">
                   {v.pop && (
-                    <div className="absolute -top-3 right-6 bg-linear-to-r from-amber-400 to-orange-500 text-white text-[10px] font-black px-4 py-1.5 rounded-full shadow-lg shadow-amber-500/20 flex items-center gap-1.5 z-10 uppercase tracking-widest">
+                    <div className="absolute -top-3 right-6 bg-linear-to-r from-amber-400 to-orange-500 text-white text-[10px]  px-4 py-1.5 rounded-full shadow-lg shadow-amber-500/20 flex items-center gap-1.5 z-10 uppercase tracking-widest">
                       <Sparkles className="w-3.5 h-3.5" /> Popular Choice
                     </div>
                   )}
 
                   <div className="mb-6">
-                    <h3 className="text-[19px] font-black text-[#191974] tracking-tight group-hover:text-[#ee2229] transition-colors">{v.name}</h3>
+                    <h3 className="text-[19px]  text-[#191974] tracking-tight group-hover:text-[#ee2229] transition-colors">{v.name}</h3>
                     <div className="w-10 h-1 bg-gray-100 rounded-full mt-2 group-hover:w-16 transition-all duration-500" />
                   </div>
 
@@ -211,7 +211,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                         <Clock className="w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Processing</p>
+                        <p className="text-[10px] text-gray-400  uppercase tracking-widest">Processing</p>
                         <p className="text-[13px] font-bold text-[#191974]">{v.pTime}</p>
                       </div>
                     </div>
@@ -221,7 +221,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                         <Calendar className="w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Stay Period</p>
+                        <p className="text-[10px] text-gray-400  uppercase tracking-widest">Stay Period</p>
                         <p className="text-[13px] font-bold text-[#191974]">{v.stay}</p>
                       </div>
                     </div>
@@ -231,7 +231,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                         <ShieldCheck className="w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Validity</p>
+                        <p className="text-[10px] text-gray-400  uppercase tracking-widest">Validity</p>
                         <p className="text-[13px] font-bold text-[#191974]">{v.valid}</p>
                       </div>
                     </div>
@@ -241,7 +241,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                         <Globe className="w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Entry Type</p>
+                        <p className="text-[10px] text-gray-400  uppercase tracking-widest">Entry Type</p>
                         <p className="text-[13px] font-bold text-[#191974]">{v.entry}</p>
                       </div>
                     </div>
@@ -249,13 +249,13 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
 
                   <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
                     <div>
-                      <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">Starting From</p>
-                      <p className="text-[22px] font-black text-[#191974] leading-none">
-                        {formatRegionalPrice(v.fees, region)}<span className="text-sm font-bold text-gray-400">/–</span>
+                      <p className="text-[10px] text-gray-400  uppercase tracking-widest mb-1">Starting From</p>
+                      <p className="text-[22px]  text-[#191974] leading-none">
+                        {formatRegionalPrice(v.fees, region)}<span className="text-sm font-bold text-gray-400">/â€“</span>
                       </p>
                     </div>
                     <button
-                      className="book-now-btn bg-[#191974] hover:bg-[#ee2229] text-white px-6 py-3 rounded-xl font-black text-[12px] uppercase tracking-widest transition-all shadow-xl shadow-blue-900/10 active:scale-95 flex items-center gap-2 group/btn"
+                      className="book-now-btn bg-[#191974] hover:bg-[#ee2229] text-white px-6 py-3 rounded-xl  text-[12px] uppercase tracking-widest transition-all shadow-xl shadow-blue-900/10 active:scale-95 flex items-center gap-2 group/btn"
                       data-package={`${destName} ${v.name}`}
                       data-price={v.fees}
                       data-original-price={v.fees ? (parseInt(v.fees.replace(/,/g, '')) * 1.5).toLocaleString('en-IN') : "0"}
@@ -272,7 +272,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           {/* 3. Google Reviews Banner */}
           <div className="bg-teal-50 border border-teal-100 p-5 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
-              <p className="text-[16px] font-bold text-[#191974]">Madura Travel Service – Reviews</p>
+              <p className="text-[16px] font-bold text-[#191974]">Madura Travel Service â€“ Reviews</p>
               <div className="flex items-center gap-2 mt-1">
                 <span className="font-bold text-teal-800">EXCELLENT</span>
                 <div className="flex text-yellow-500"><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /></div>
@@ -366,23 +366,23 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           <div id="sample-visa" className="pt-4">
             <h2 className="text-[22px] font-medium text-[#191974] mb-6 border-b border-gray-300 pb-2">{destName} Sample Visa</h2>
             <div className="bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden group">
-               <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-50 flex items-center justify-center p-8">
-                  <img 
-                    src="/images/sample-visa.png" 
-                    alt={`${destName} Sample Visa`}
-                    className="max-w-full max-h-full object-contain shadow-2xl rounded-lg transition-transform duration-700 group-hover:scale-[1.05]"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent pointer-events-none" />
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full border border-gray-100 flex items-center gap-2">
-                     <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
-                     <span className="text-[10px] font-black text-[#191974] uppercase tracking-widest">Official Reference</span>
-                  </div>
-               </div>
-               <div className="p-6 border-t border-gray-50 bg-gray-50/30">
-                  <p className="text-[14px] text-gray-600 leading-relaxed italic">
-                    *This is a reference document to show the format of a processed {destName} Tourist Visa. Your actual visa will contain your personal details and specific validity dates as issued by the immigration authorities.
-                  </p>
-               </div>
+              <div className="relative aspect-4/3 w-full overflow-hidden bg-gray-50 flex items-center justify-center p-8">
+                <img
+                  src="/images/sample-visa.png"
+                  alt={`${destName} Sample Visa`}
+                  className="max-w-full max-h-full object-contain shadow-2xl rounded-lg transition-transform duration-700 group-hover:scale-[1.05]"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent pointer-events-none" />
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full border border-gray-100 flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                  <span className="text-[10px]  text-[#191974] uppercase tracking-widest">Official Reference</span>
+                </div>
+              </div>
+              <div className="p-6 border-t border-gray-50 bg-gray-50/30">
+                <p className="text-[14px] text-gray-600 leading-relaxed italic">
+                  *This is a reference document to show the format of a processed {destName} Tourist Visa. Your actual visa will contain your personal details and specific validity dates as issued by the immigration authorities.
+                </p>
+              </div>
             </div>
           </div>
 
@@ -459,7 +459,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {attractions.map((att, i) => (
                 <div key={i} className="flex gap-4">
-                  <div className="text-[#ee2229] text-[24px] font-black leading-none">{i + 1}.</div>
+                  <div className="text-[#ee2229] text-[24px]  leading-none">{i + 1}.</div>
                   <div>
                     <h3 className="font-bold text-[#191974] text-[16px] mb-1">{att.title}</h3>
                     <p className="text-[13px] text-gray-600">{att.desc}</p>
@@ -520,7 +520,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
               ].map((o, i) => (
                 <div key={i} className="min-w-[200px] bg-white border border-gray-200 p-4 rounded-lg shadow-sm snap-start hover:shadow-md transition-shadow cursor-pointer">
                   <p className="font-bold text-[14.5px] text-gray-800 mb-2">{o.t} {destName} Visa</p>
-                  <p className="text-[16px] font-black text-[#191974]">{formatRegionalPrice(o.p, region)}/–</p>
+                  <p className="text-[16px]  text-[#191974]">{formatRegionalPrice(o.p, region)}/â€“</p>
                 </div>
               ))}
             </div>
@@ -534,7 +534,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           <div id="apply-online" className="bg-[#191974] rounded-lg shadow-xl overflow-hidden border border-[#2a2a8a]">
             {/* Notice Bar */}
             <div className="bg-[#facc15] text-[#191974] text-center font-bold text-[13px] py-2 px-3">
-              ⏱ It takes less than 2 minutes to Apply
+              â± It takes less than 2 minutes to Apply
             </div>
 
             {/* Apply Form */}
@@ -556,7 +556,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
 
                 <div className="flex justify-between items-center text-white mt-2 border-t border-white/20 pt-4">
                   <span className="text-[15px] font-medium">Total Price:</span>
-                  <span className="text-[22px] font-black">₹0</span>
+                  <span className="text-[22px] ">â‚¹0</span>
                 </div>
 
                 <button
@@ -661,7 +661,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
               <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] ">RuPay</span>
             </div>
             <div className="text-[12px] opacity-40 text-center md:text-right">
-              © 2025 www.antigravitytravels.com All Rights Reserved
+              Â© 2025 www.antigravitytravels.com All Rights Reserved
             </div>
           </div>
         </div>

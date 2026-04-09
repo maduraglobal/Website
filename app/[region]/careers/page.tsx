@@ -23,8 +23,8 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
   ];
 
   return (
-    <div className="min-h-screen bg-white font-inter">
-      {/* ── HERO SECTION ── */}
+    <div className="min-h-screen bg-white ">
+      {/* â”€â”€ HERO SECTION â”€â”€ */}
       <section className="pt-40 pb-24 bg-[#191974] relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <Image
@@ -43,11 +43,11 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
             transition={{ duration: 0.8 }}
             className="max-w-3xl"
           >
-            <h1 className="text-[52px] md:text-[76px] font-black text-white  tracking-tighter leading-none mb-6">
+            <h1 className="text-[52px] md:text-[76px]  text-white  tracking-tighter leading-none mb-6">
               Adventure <span className="text-[#ee2229]">Awaits</span> Your Career
             </h1>
             <p className="text-[18px] md:text-[22px] text-white/70 font-light mb-10 leading-relaxed">
-              Join a legacy of excellence. At Madura Travel, we don't just plan journeys—we build careers that inspire and innovate in the world of global travel.
+              Join a legacy of excellence. At Madura Travel, we don't just plan journeysâ€”we build careers that inspire and innovate in the world of global travel.
             </p>
             <button className="bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white px-10 py-4 rounded-xl font-bold  tracking-widest transition-all">
               View Openings
@@ -56,11 +56,11 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
         </div>
       </section>
 
-      {/* ── WHY JOIN US ── */}
+      {/* â”€â”€ WHY JOIN US â”€â”€ */}
       <section className="py-24 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-[36px] font-black text-[#191974]  tracking-tighter mb-4">Why Madura Travel?</h2>
+            <h2 className="text-[36px]  text-[#191974]  tracking-tighter mb-4">Why Madura Travel?</h2>
             <p className="text-gray-400 font-bold  tracking-widest text-[13px]">Build your future with the travel pioneers</p>
           </div>
 
@@ -68,7 +68,7 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
             {perks.map((perk, i) => (
               <div key={i} className="p-10 rounded-[2.5rem] bg-gray-50 border border-gray-100 hover:border-[#ee2229] transition-all hover:bg-white hover:shadow-2xl hover:shadow-blue-900/5 group text-center">
                 <div className="text-[#ee2229] mb-6 group-hover:scale-110 transition-transform duration-300 flex justify-center">{perk.icon}</div>
-                <h3 className="text-[20px] font-black text-[#191974] mb-3 ">{perk.title}</h3>
+                <h3 className="text-[20px]  text-[#191974] mb-3 ">{perk.title}</h3>
                 <p className="text-gray-500 font-light leading-relaxed text-[15px]">{perk.desc}</p>
               </div>
             ))}
@@ -76,11 +76,11 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
         </div>
       </section>
 
-      {/* ── JOB LISTINGS ── */}
+      {/* â”€â”€ JOB LISTINGS â”€â”€ */}
       <section className="py-24 px-6 bg-gray-50 border-y border-gray-100">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-[36px] font-black text-[#191974]  tracking-tighter mb-4">Current Open Positions</h2>
+            <h2 className="text-[36px]  text-[#191974]  tracking-tighter mb-4">Current Open Positions</h2>
             <div className="w-20 h-1.5 bg-[#ee2229] mx-auto rounded-full" />
           </div>
 
@@ -95,14 +95,14 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
                 className="bg-white p-6 md:p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all flex flex-col md:flex-row md:items-center justify-between gap-6 group"
               >
                 <div>
-                  <h4 className="text-[22px] font-black text-[#191974] mb-2">{job.title}</h4>
+                  <h4 className="text-[22px]  text-[#191974] mb-2">{job.title}</h4>
                   <div className="flex flex-wrap gap-4 text-[13px] text-gray-400 font-bold  tracking-wider">
                     <span className="flex items-center gap-1.5"><Briefcase className="w-4 h-4 text-[#ee2229]" /> {job.dept}</span>
                     <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4 text-[#ee2229]" /> {job.loc}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="px-4 py-1.5 rounded-full bg-gray-50 text-gray-500 text-[11px] font-black  tracking-widest">{job.type}</span>
+                  <span className="px-4 py-1.5 rounded-full bg-gray-50 text-gray-500 text-[11px]   tracking-widest">{job.type}</span>
                   <button className="w-12 h-12 rounded-2xl bg-[#191974] text-white flex items-center justify-center group-hover:bg-[#ee2229] transition-colors">
                     <ArrowRight className="w-5 h-5" />
                   </button>
@@ -113,7 +113,7 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
 
           <div className="mt-12 text-center bg-[#191974] p-12 rounded-[3rem] text-white shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#ee2229]/20 rounded-full blur-[80px]" />
-            <h3 className="text-[28px] font-black  mb-4">Don't see a fit?</h3>
+            <h3 className="text-[28px]   mb-4">Don't see a fit?</h3>
             <p className="text-white/60 mb-8 max-w-lg mx-auto font-light">We're always looking for travel enthusiasts. Send your resume to our talent team!</p>
             <a href="mailto:careers@maduratravel.com" className="inline-block bg-[#ee2229] text-white px-10 py-4 rounded-xl font-bold  tracking-widest hover:bg-white hover:text-[#191974] transition-all">
               Apply Spontaneously
@@ -122,7 +122,7 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
         </div>
       </section>
 
-      {/* ── CULTURE IMAGES ── */}
+      {/* â”€â”€ CULTURE IMAGES â”€â”€ */}
       <section className="py-24 px-6 overflow-hidden">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-7xl mx-auto">
           {[
