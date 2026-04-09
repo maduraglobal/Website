@@ -78,7 +78,7 @@ function FeaturedTourCard({ tour, region }: { tour: any, region: string }) {
           <div className="grid grid-cols-2 gap-3">
             <Link
               href={`/${region}/tours/${tour.slug}`}
-              className="flex items-center justify-center border border-gray-100 text-[#191974] py-3 rounded-2xl text-[11px]  hover:bg-gray-50 transition-all uppercase tracking-widest"
+              className="flex items-center justify-center border border-gray-100 text-[#191974] py-3 rounded-2xl text-[11px]  hover:bg-[#191974] hover:text-white transition-all  tracking-widest"
             >
               Details
             </Link>
