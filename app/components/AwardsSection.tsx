@@ -1,5 +1,6 @@
 "use client";
 
+import { Heading1 } from "lucide-react";
 import React from "react";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -22,16 +23,12 @@ export default function AwardsSection() {
         {/* ══════════════════════════════════════════════ */}
         <div className="mb-8">
           {/* Label badge */}
-          <div className="flex justify-center mb-4">
-            <span className="bg-amber-50 border border-amber-200 text-[#ee2229] text-[12px] font-black  tracking-[0.25em] px-4 py-1.5 rounded-full uppercase">
-              Government Recognitions
-            </span>
-          </div>
+
 
           {/* Main heading */}
-          <h2 className="text-center text-[28px] md:text-[36px] font-black text-[#191974] mb-8  tracking-tight leading-tight">
-            Awards &amp; Recognitions
-          </h2>
+          <h1 className="text-center text-[26px] md:text-[36px]  text-[#191974] mb-8  tracking-tight leading-tight">
+            Award &amp; Recognitions
+          </h1>
 
           {/* Ministry Badges */}
           <div className="flex flex-wrap justify-center gap-50 mb-12">
@@ -54,6 +51,9 @@ export default function AwardsSection() {
 
 
         </div>
+        <h1 className="text-center text-[26px] md:text-[36px]  text-[#191974] mb-8  tracking-tight leading-tight">
+          Government Recognitions
+        </h1>
         {/* ── 4 Award Cards – Image version ── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
@@ -90,12 +90,12 @@ export default function AwardsSection() {
               />
 
               {/* Small label (e.g. “Primary Host”) */}
-              <p className="text-[10px] font-black  tracking-[0.18em] text-[#191974] mb-1">
+              <p className="text-[14px]  text-[#ee2229] mb-1">
                 {card.label}
               </p>
 
               {/* Main title */}
-              <p className="text-[13px] font-bold text-[#191974] text-center leading-snug">
+              <p className="text-[14px]  text-[#191974] text-center leading-snug">
                 {card.title}
               </p>
             </div>
