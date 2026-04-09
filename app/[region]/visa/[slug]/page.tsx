@@ -135,7 +135,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
       </section>
 
       {/* ===== STICKY NAV BAR ===== */}
-      <div className="sticky top-[112px] z-40 bg-[#191974] text-white shadow-xl w-full border-b border-white/10 overflow-x-auto no-scrollbar">
+      <div className="sticky top-[74px] z-40 bg-[#191974] text-white shadow-xl w-full border-b border-white/10 overflow-x-auto no-scrollbar">
         <div className="max-w-7xl mx-auto px-4 flex gap-8 items-center min-w-max">
           {tabs.map((tab) => (
             <button
@@ -255,8 +255,10 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                       </p>
                     </div>
                     <button
-                      className="bg-[#191974] hover:bg-[#ee2229] text-white px-6 py-3 rounded-xl font-black text-[12px] uppercase tracking-widest transition-all shadow-xl shadow-blue-900/10 active:scale-95 flex items-center gap-2 group/btn"
-                      onClick={() => scrollToId('apply-online')}
+                      className="book-now-btn bg-[#191974] hover:bg-[#ee2229] text-white px-6 py-3 rounded-xl font-black text-[12px] uppercase tracking-widest transition-all shadow-xl shadow-blue-900/10 active:scale-95 flex items-center gap-2 group/btn"
+                      data-package={`${destName} ${v.name}`}
+                      data-price={v.fees}
+                      data-original-price={v.fees ? (parseInt(v.fees.replace(/,/g, '')) * 1.5).toLocaleString('en-IN') : "0"}
                     >
                       Apply Now
                       <Zap className="w-3.5 h-3.5 group-hover/btn:fill-current" />
@@ -366,7 +368,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             <div className="bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden group">
                <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-50 flex items-center justify-center p-8">
                   <img 
-                    src="/api/artifacts/sample_visa_image_1775718032111.png" 
+                    src="/images/sample-visa.png" 
                     alt={`${destName} Sample Visa`}
                     className="max-w-full max-h-full object-contain shadow-2xl rounded-lg transition-transform duration-700 group-hover:scale-[1.05]"
                   />
@@ -529,7 +531,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
         {/* RIGHT STICKY SIDEBAR (30%) */}
         <div className="w-full lg:w-[30%] lg:sticky lg:top-[140px] flex flex-col gap-5">
 
-          <div className="bg-[#191974] rounded-lg shadow-xl overflow-hidden border border-[#2a2a8a]">
+          <div id="apply-online" className="bg-[#191974] rounded-lg shadow-xl overflow-hidden border border-[#2a2a8a]">
             {/* Notice Bar */}
             <div className="bg-[#facc15] text-[#191974] text-center font-bold text-[13px] py-2 px-3">
               ⏱ It takes less than 2 minutes to Apply

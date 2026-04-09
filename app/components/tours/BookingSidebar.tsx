@@ -11,6 +11,8 @@ interface BookingSidebarProps {
   emiAmount?: string;
 }
 
+import { useBooking } from '@/app/components/BookingModal';
+
 export default function BookingSidebar({ 
   price = 45000, 
   tourName, 
@@ -18,6 +20,7 @@ export default function BookingSidebar({
   selectedDate = "Select Date",
   emiAmount = "₹5,219"
 }: BookingSidebarProps) {
+  const { openBooking } = useBooking();
   const [formData, setFormData] = useState({
     fullName: '',
     mobileNo: ''
@@ -28,6 +31,22 @@ export default function BookingSidebar({
     console.log('Enquiry for:', tourName, formData);
     alert('Thank you! Our travel expert will contact you within 24 hours.');
     setFormData({ fullName: '', mobileNo: '' });
+  };
+
+  const handleEnquire = () => {
+    openBooking({
+      packageName: `${selectedCity} to ${tourName} Enquiry`,
+      discountedPrice: price.toString(),
+      originalPrice: (price * 1.2).toString(),
+    });
+  };
+
+  const handleBookNow = () => {
+    openBooking({
+      packageName: `${tourName} - ${selectedCity} Departure`,
+      discountedPrice: price.toString(),
+      originalPrice: (price * 1.2).toString(),
+    });
   };
 
   return (
@@ -101,13 +120,13 @@ export default function BookingSidebar({
           {/* Dual CTAs */}
           <div className="grid grid-cols-2 gap-3">
             <button 
-              onClick={() => alert("Opening enquiry form...")}
+              onClick={handleEnquire}
               className="w-full bg-white border-2 border-[#191974] text-[#191974] font-black py-3.5 rounded-lg text-[13px] tracking-widest transition-all hover:bg-gray-50 active:scale-95 uppercase font-inter"
             >
               Enquire
             </button>
             <button 
-              onClick={() => alert("Selecting guests & rooms...")}
+              onClick={handleBookNow}
               className="w-full bg-[#ffcc00] border-2 border-[#ffcc00] text-[#191974] font-black py-3.5 rounded-lg text-[13px] tracking-widest transition-all hover:bg-[#ffbb00] active:scale-95 uppercase font-inter shadow-lg shadow-yellow-500/10"
             >
               Book Now

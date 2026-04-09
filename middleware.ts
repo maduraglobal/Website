@@ -4,22 +4,45 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   
-  // If requesting the root path, redirect to the default region
-  if (pathname === '/') {
-    return NextResponse.redirect(new URL('/en-in', request.url))
-  }
-
-  // Short-code aliases: /in → /en-in, /au → /en-au, /us → /en-us
+  // 1. Short-code aliases: /in → /en-in, /au → /en-au, /us → /en-us
   const shortCodes: Record<string, string> = {
     '/in':  'en-in',
     '/au':  'en-au',
     '/us':  'en-us',
   }
+  
   for (const [short, full] of Object.entries(shortCodes)) {
     if (pathname === short || pathname.startsWith(short + '/')) {
-      const rest = pathname.slice(short.length) // e.g. "" or "/tours"
-      return NextResponse.redirect(new URL(`/${full}${rest}`, request.url))
+      const rest = pathname.slice(short.length)
+      const response = NextResponse.redirect(new URL(`/${full}${rest}`, request.url))
+      // Update cookie to persist manual selection via shortcode
+      response.cookies.set('user-region', full, { maxAge: 60 * 60 * 24 * 365, path: '/' })
+      return response
     }
+  }
+
+  // 2. Root path redirection with IP/Cookie detection
+  if (pathname === '/') {
+    // Priority: Cookie (User selection) > IP detection > Default (India)
+    let targetRegion = request.cookies.get('user-region')?.value;
+
+    if (!targetRegion) {
+      // IP Detection (Vercel specific header or geo data)
+      const countryCode = request.headers.get('x-vercel-ip-country') || (request as any).geo?.country;
+      
+      const countryToRegion: Record<string, string> = {
+        'IN': 'en-in',
+        'AU': 'en-au',
+        'US': 'en-us',
+      }
+      
+      targetRegion = countryCode ? (countryToRegion[countryCode.toUpperCase()] || 'en-in') : 'en-in';
+    }
+
+    const response = NextResponse.redirect(new URL(`/${targetRegion}`, request.url))
+    // Persist detected/decided region in cookie
+    response.cookies.set('user-region', targetRegion, { maxAge: 60 * 60 * 24 * 365, path: '/' })
+    return response
   }
 
   let response = NextResponse.next({
@@ -27,6 +50,17 @@ export async function middleware(request: NextRequest) {
       headers: request.headers,
     },
   })
+
+  // 3. Update cookie if user visits a specific region page directly
+  const supportedRegions = ['en-in', 'en-au', 'en-us'];
+  const firstSegment = pathname.split('/')[1];
+
+  if (supportedRegions.includes(firstSegment)) {
+    const currentCookie = request.cookies.get('user-region')?.value;
+    if (currentCookie !== firstSegment) {
+      response.cookies.set('user-region', firstSegment, { maxAge: 60 * 60 * 24 * 365, path: '/' })
+    }
+  }
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -48,6 +82,10 @@ export async function middleware(request: NextRequest) {
           cookiesToSet.forEach(({ name, value, options }) =>
             response.cookies.set(name, value, options)
           )
+          // Re-apply our custom region cookie if it was set in this request
+          if (supportedRegions.includes(firstSegment)) {
+             response.cookies.set('user-region', firstSegment, { maxAge: 60 * 60 * 24 * 365, path: '/' })
+          }
         },
       },
     }

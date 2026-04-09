@@ -16,7 +16,7 @@ interface TourTabsProps {
 
 export default function TourTabs({ tabs, activeTab, onTabChange }: TourTabsProps) {
   return (
-    <div className="border-b border-gray-100 sticky top-16 bg-white/90 backdrop-blur-xl z-30 transition-all duration-300">
+    <div className="border-b border-gray-100 sticky top-[74px] bg-white/90 backdrop-blur-xl z-30 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4">
         <nav className="flex space-x-8 overflow-x-auto no-scrollbar scroll-smooth">
           {tabs.map((tab) => (
