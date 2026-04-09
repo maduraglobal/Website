@@ -60,7 +60,7 @@ export default function DraggableTourCards({ children }: { children: React.React
             className="w-full h-full bg-[#ee2229]"
           />
         </div>
-        <span className="text-[10px]  text-gray-400 uppercase tracking-widest">Swipe Cards to Explore</span>
+        <span className="text-[10px]  text-gray-400  tracking-widest">Swipe Cards to Explore</span>
       </div>
     </div>
   );

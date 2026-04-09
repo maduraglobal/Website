@@ -41,7 +41,7 @@ export default function AwardsSection() {
               >
                 <img src={card.imgSrc} alt={card.title} className="h-16 w-16 object-contain transition-transform duration-500 group-hover:scale-110" />
                 <div className="text-center">
-                  <p className="text-[11px] font-bold text-[#ee2229] uppercase tracking-widest mb-1">{card.label}</p>
+                  <p className="text-[11px] font-bold text-[#ee2229]  tracking-widest mb-1">{card.label}</p>
                   <p className="text-[14px] font-bold text-[#191974] leading-snug">{card.title}</p>
                 </div>
               </div>

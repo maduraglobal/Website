@@ -48,9 +48,9 @@ export default function SideTestimonials() {
           <div className="px-6 w-full mb-8">
             <div className="flex items-center gap-2 mb-1">
               <MessageSquareText className="w-4 h-4 text-[#ee2229]" />
-              <span className="text-[10px]  text-[#ee2229] uppercase tracking-widest">Guest Voices</span>
+              <span className="text-[10px]  text-[#ee2229]  tracking-widest">Guest Voices</span>
             </div>
-            <h3 className="text-xl  text-[#191974] uppercase tracking-tighter">Testimonials</h3>
+            <h3 className="text-xl  text-[#191974]  tracking-tighter">Testimonials</h3>
           </div>
 
           {/* Draggable Stack Container */}

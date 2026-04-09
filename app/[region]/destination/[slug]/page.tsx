@@ -2,7 +2,6 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import { createClient } from '../../../../utils/supabase/server';
 import DestinationHeader from '@/app/components/tours/DestinationHeader';
-import FiltersSidebar from '@/app/components/tours/FiltersSidebar';
 import TourCard from '@/app/components/tours/TourCard';
 
 interface Tour {
@@ -95,9 +94,29 @@ export default async function DestinationToursPage({ params }: { params: Promise
 
         <div className="flex flex-col lg:flex-row gap-8 items-start">
 
-          {/* Left Sidebar */}
+          {/* Left Sidebar – Static filters for this destination */}
           <div className="w-full lg:w-1/4 shrink-0">
-            <FiltersSidebar />
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <h3 className="text-[14px] font-bold text-[#191974] mb-5 tracking-widest uppercase">Filter Tours</h3>
+              <div className="space-y-4">
+                {["All Tours", "Family", "Honeymoon", "Adventure", "Premium"].map((label) => (
+                  <label key={label} className="flex items-center gap-3 cursor-pointer group">
+                    <input type="checkbox" defaultChecked={label === 'All Tours'} className="w-4 h-4 rounded accent-[#191974]" />
+                    <span className="text-[13px] text-gray-600 group-hover:text-[#191974] transition-colors">{label}</span>
+                  </label>
+                ))}
+              </div>
+              <hr className="my-5 border-gray-100" />
+              <h3 className="text-[14px] font-bold text-[#191974] mb-4 tracking-widest uppercase">Duration</h3>
+              <div className="space-y-3">
+                {["1–3 Days", "4–6 Days", "7–10 Days", "11+ Days"].map((d) => (
+                  <label key={d} className="flex items-center gap-3 cursor-pointer group">
+                    <input type="checkbox" className="w-4 h-4 rounded accent-[#191974]" />
+                    <span className="text-[13px] text-gray-600 group-hover:text-[#191974] transition-colors">{d}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Right Content Area */}

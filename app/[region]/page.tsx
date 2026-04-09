@@ -121,8 +121,9 @@ const offerSlides = [
     title: "Best Of Japan",
     category: "Japan China Korea Taiwan",
     stops: ["Osaka", "Kyoto", "Hiroshima", "Tokyo", "Fuji"],
-    details: "7 Days | 01 May | from Ex-Mumbai â‚¹2,79,000",
-    joiningPrice: "â‚¹2,24,000",
+    detailText: "7 Days | 01 May | from Ex-Mumbai",
+    priceInr: 279000,
+    joiningPriceInr: 224000,
     image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2940&auto=format&fit=crop",
     desc: "Book your own flight tickets and join the tour directly at the first destination and leave from the last destination."
   },
@@ -130,8 +131,9 @@ const offerSlides = [
     title: "European Glories",
     category: "France Switzerland Italy",
     stops: ["Paris", "Lucerne", "Mt. Titlis", "Venice", "Rome"],
-    details: "12 Days | 15 May | from Ex-Mumbai â‚¹4,55,000",
-    joiningPrice: "â‚¹3,90,000",
+    detailText: "12 Days | 15 May | from Ex-Mumbai",
+    priceInr: 455000,
+    joiningPriceInr: 390000,
     image: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=2940&auto=format&fit=crop",
     desc: "Experience the magic of Europe with premium stays and all-inclusive sightseeing."
   },
@@ -139,8 +141,9 @@ const offerSlides = [
     title: "Dubai Grandeur",
     category: "UAE Special",
     stops: ["Dubai City", "Burj Khalifa", "Desert Safari", "Abu Dhabi", "Ferrari World"],
-    details: "6 Days | Weekly | from Ex-Mumbai â‚¹1,12,000",
-    joiningPrice: "â‚¹85,000",
+    detailText: "6 Days | Weekly | from Ex-Mumbai",
+    priceInr: 112000,
+    joiningPriceInr: 85000,
     image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=2940&auto=format&fit=crop",
     desc: "A luxury escape to the city of gold with private transfers and desert adventures."
   }
@@ -403,17 +406,20 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
               <div className="mb-8">
                 <p className="text-xl  mb-2 text-white/90">
-                  {offerSlides[activeOffer].details.split('â‚¹')[0]} <span className="text-[#ee2229] ">â‚¹{offerSlides[activeOffer].details.split('â‚¹')[1]}</span>
+                  {offerSlides[activeOffer].detailText}{' '}
+                  <span className="text-[#ee2229]">
+                    {formatRegionalPrice(offerSlides[activeOffer].priceInr, region)}
+                  </span>
                 </p>
-                <p className="text-[13px] opacity-60 max-w-md font-medium leading-relaxed  tracking-wider">{offerSlides[activeOffer].desc}</p>
+                <p className="text-[13px] opacity-60 max-w-md font-medium leading-relaxed tracking-wider">{offerSlides[activeOffer].desc}</p>
               </div>
 
               <button
                 suppressHydrationWarning
-                className="book-now-btn bg-[#ee2229] border border-[#ee2229] hover:bg-transparent text-white px-10 py-3.5 rounded-lg  text-xs  tracking-[0.2em] transition-all transform active:scale-95 shadow-xl shadow-red-500/30"
+                className="book-now-btn bg-[#ee2229] border border-[#ee2229] hover:bg-transparent text-white px-10 py-3.5 rounded-lg text-xs tracking-[0.2em] transition-all transform active:scale-95 shadow-xl shadow-red-500/30"
                 data-package={offerSlides[activeOffer].title}
-                data-price={offerSlides[activeOffer].details.split('â‚¹')[1]?.replace(/,/g, '') || '0'}
-                data-original-price={offerSlides[activeOffer].details.split('â‚¹')[1]?.replace(/,/g, '') || '0'}
+                data-price={offerSlides[activeOffer].priceInr}
+                data-original-price={offerSlides[activeOffer].joiningPriceInr}
               >
                 Book Journey
               </button>

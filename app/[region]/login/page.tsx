@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
+import { BookCheck, BadgePercent, Sparkles } from 'lucide-react';
 
 export default function LoginPage() {
   const params = useParams();
@@ -64,12 +65,12 @@ export default function LoginPage() {
           {/* Feature pills */}
           <div className="flex flex-col gap-4">
             {[
-              { icon: "ðŸŽ«", text: "Manage your bookings in one place" },
-              { icon: "ðŸ’°", text: "Access member-exclusive pricing" },
-              { icon: "ðŸ“§", text: "Get personalized recommendations" }
+              { icon: BookCheck, text: "Manage your bookings in one place" },
+              { icon: BadgePercent, text: "Access member-exclusive pricing" },
+              { icon: Sparkles, text: "Get personalized recommendations" }
             ].map((f, i) => (
               <div key={i} className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/10">
-                <span className="text-[20px]">{f.icon}</span>
+                <f.icon className="w-5 h-5 text-[#ee2229] shrink-0" />
                 <span className="text-white/90 text-[14px] font-medium">{f.text}</span>
               </div>
             ))}
@@ -77,7 +78,7 @@ export default function LoginPage() {
         </div>
 
         <div className="relative z-10">
-          <p className="text-white/40 text-[12px] ">Â© 2026 Madura Travel. All rights reserved.</p>
+          <p className="text-white/40 text-[12px]">© 2026 Madura Travel. All rights reserved.</p>
         </div>
       </div>
 

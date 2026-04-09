@@ -221,7 +221,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                         <Calendar className="w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-[10px] text-gray-400  uppercase tracking-widest">Stay Period</p>
+                        <p className="text-[10px] text-gray-400   tracking-widest">Stay Period</p>
                         <p className="text-[13px] font-bold text-[#191974]">{v.stay}</p>
                       </div>
                     </div>
@@ -241,7 +241,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                         <Globe className="w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-[10px] text-gray-400  uppercase tracking-widest">Entry Type</p>
+                        <p className="text-[10px] text-gray-400   tracking-widest">Entry Type</p>
                         <p className="text-[13px] font-bold text-[#191974]">{v.entry}</p>
                       </div>
                     </div>
@@ -255,7 +255,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                       </p>
                     </div>
                     <button
-                      className="book-now-btn bg-[#191974] hover:bg-[#ee2229] text-white px-6 py-3 rounded-xl  text-[12px] uppercase tracking-widest transition-all shadow-xl shadow-blue-900/10 active:scale-95 flex items-center gap-2 group/btn"
+                      className="book-now-btn bg-[#191974] hover:bg-[#ee2229] text-white px-6 py-3 rounded-xl  text-[12px]  tracking-widest transition-all shadow-xl shadow-blue-900/10 active:scale-95 flex items-center gap-2 group/btn"
                       data-package={`${destName} ${v.name}`}
                       data-price={v.fees}
                       data-original-price={v.fees ? (parseInt(v.fees.replace(/,/g, '')) * 1.5).toLocaleString('en-IN') : "0"}
@@ -375,7 +375,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                 <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent pointer-events-none" />
                 <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full border border-gray-100 flex items-center gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
-                  <span className="text-[10px]  text-[#191974] uppercase tracking-widest">Official Reference</span>
+                  <span className="text-[10px]  text-[#191974]  tracking-widest">Official Reference</span>
                 </div>
               </div>
               <div className="p-6 border-t border-gray-50 bg-gray-50/30">

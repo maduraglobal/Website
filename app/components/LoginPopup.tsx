@@ -82,7 +82,7 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
                   </div>
                 </div>
 
-                <button className="w-full bg-[#ee2229] hover:bg-[#191974] text-white  py-4 rounded-2xl text-[14px] tracking-widest transition-all shadow-xl shadow-red-500/20 active:scale-95 uppercase ">
+                <button className="w-full bg-[#ee2229] hover:bg-[#191974] text-white  py-4 rounded-2xl text-[14px] tracking-widest transition-all shadow-xl shadow-red-500/20 active:scale-95  ">
                   Continue to Journey
                 </button>
               </div>
@@ -119,7 +119,7 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
                   Don&apos;t have an account?{" "}
                   <button className="text-[#ee2229]  hover:underline underline-offset-4 ml-1">Create Account</button>
                 </p>
-                <button className="mt-4 text-[11px]  text-gray-300 uppercase tracking-widest hover:text-[#191974] transition-colors">
+                <button className="mt-4 text-[11px]  text-gray-300  tracking-widest hover:text-[#191974] transition-colors">
                   Trouble Logging In?
                 </button>
               </div>

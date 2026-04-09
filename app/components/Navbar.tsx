@@ -266,7 +266,7 @@ export default function Navbar() {
                         <div className="flex flex-col">
                           <span className="text-[12px]  text-[#191974]">{config.name}</span>
                           <div className="flex items-center gap-2 mt-0.5">
-                            <span className="text-[10px] font-bold text-[#ee2229] uppercase">{config.language}</span>
+                            <span className="text-[10px] font-bold text-[#ee2229] ">{config.language}</span>
                             <span className="text-[10px] text-gray-400">â€¢</span>
                             <span className="text-[10px] font-bold text-gray-400">{config.currencySymbol} â€” {config.currencyCode}</span>
                           </div>
@@ -280,7 +280,7 @@ export default function Navbar() {
                   ))}
                 </div>
                 <div className="bg-[#191974] px-4 py-2.5 flex items-center justify-center gap-2">
-                  <span className="text-[9px] text-white   tracking-widest uppercase">Global Pricing Support Active</span>
+                  <span className="text-[9px] text-white   tracking-widest ">Global Pricing Support Active</span>
                 </div>
               </div>
             </div>
@@ -513,19 +513,19 @@ export default function Navbar() {
             <Link
               href={`/${currentRegionCode}/login`}
               onClick={() => setSidebarOpen(false)}
-              className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-200 text-[#191974]  text-[12px] uppercase tracking-widest rounded-xl hover:bg-[#191974] hover:text-white transition-all shadow-sm"
+              className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-200 text-[#191974]  text-[12px]  tracking-widest rounded-xl hover:bg-[#191974] hover:text-white transition-all shadow-sm"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
               Sign Up
             </Link>
 
             <div>
-              <p className="text-[10px] text-gray-400  tracking-widest mb-1.5 uppercase">Reach Us</p>
+              <p className="text-[10px] text-gray-400  tracking-widest mb-1.5 ">Reach Us</p>
               <a href="tel:18003135555" className="text-[16px]  text-[#191974] hover:text-[#ee2229] transition-colors flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#ee2229]" />
                 1800 313 5555
               </a>
-              <p className="text-[10px] text-gray-400 mt-0.5 font-bold uppercase tracking-tight">Toll Free Â· 10AM â€“ 7PM</p>
+              <p className="text-[10px] text-gray-400 mt-0.5 font-bold  tracking-tight">Toll Free Â· 10AM â€“ 7PM</p>
             </div>
           </div>
 

@@ -46,11 +46,11 @@ export default function SidebarFeaturedContent({ isVisible }: { isVisible: boole
     )}>
       {/* Header Info */}
       <div className="mb-10 px-2">
-        <h2 className="text-[28px]  text-[#191974] uppercase tracking-tighter leading-none mb-1">
+        <h2 className="text-[28px]  text-[#191974]  tracking-tighter leading-none mb-1">
           Testimonials
         </h2>
         <div className="w-10 h-1 bg-[#ee2229] rounded-full" />
-        <p className="text-gray-400 mt-4 text-[10px] font-bold uppercase tracking-widest">Customer Feedback</p>
+        <p className="text-gray-400 mt-4 text-[10px] font-bold  tracking-widest">Customer Feedback</p>
       </div>
 
       {/* Draggable Stack Container */}
@@ -74,7 +74,7 @@ export default function SidebarFeaturedContent({ isVisible }: { isVisible: boole
                   className="pointer-events-none w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent flex items-end p-4">
-                  <p className="text-white  text-[10px] uppercase tracking-wider">{testimonial.title}</p>
+                  <p className="text-white  text-[10px]  tracking-wider">{testimonial.title}</p>
                 </div>
               </div>
 
@@ -87,7 +87,7 @@ export default function SidebarFeaturedContent({ isVisible }: { isVisible: boole
                 <div className="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between">
                   <div>
                     <p className=" text-[#191974] text-[13px]">{testimonial.name}</p>
-                    <p className="text-[8px] text-[#ee2229]  uppercase tracking-widest mt-0.5">Verified Traveler</p>
+                    <p className="text-[8px] text-[#ee2229]   tracking-widest mt-0.5">Verified Traveler</p>
                   </div>
                   <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center">
                     <StarIcon className="w-3 h-3 text-[#ee2229] fill-[#ee2229]" />
