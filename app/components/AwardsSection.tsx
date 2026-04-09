@@ -26,9 +26,9 @@ export default function AwardsSection() {
 
 
           {/* Main heading */}
-          <h1 className="text-center text-[26px] md:text-[36px]  text-[#191974] mb-8  tracking-tight leading-tight">
+          <h5 className="text-center text-[26px] md:text-[36px]  text-[#191974] mb-8  tracking-tight leading-tight">
             Awards &amp; Recognitions
-          </h1>
+          </h5>
 
           {/* Ministry Badges */}
           <div className="flex flex-wrap justify-center gap-10 mb-12">
@@ -51,9 +51,9 @@ export default function AwardsSection() {
 
 
         </div>
-        <h1 className="text-center text-[26px] md:text-[36px]  text-[#191974] mb-8  tracking-tight leading-tight">
+        <h5 className="text-center text-[26px] md:text-[36px]  text-[#191974] mb-8  tracking-tight leading-tight">
           Government Recognitions
-        </h1>
+        </h5>
         {/* ── 4 Award Cards – Image version ── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[

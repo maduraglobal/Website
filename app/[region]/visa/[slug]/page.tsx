@@ -360,7 +360,31 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             </div>
           </div>
 
-          {/* 7. FAQs */}
+          {/* 7. Sample Visa */}
+          <div id="sample-visa" className="pt-4">
+            <h2 className="text-[22px] font-medium text-[#191974] mb-6 border-b border-gray-300 pb-2">{destName} Sample Visa</h2>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden group">
+               <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-50 flex items-center justify-center p-8">
+                  <img 
+                    src="/api/artifacts/sample_visa_image_1775718032111.png" 
+                    alt={`${destName} Sample Visa`}
+                    className="max-w-full max-h-full object-contain shadow-2xl rounded-lg transition-transform duration-700 group-hover:scale-[1.05]"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent pointer-events-none" />
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full border border-gray-100 flex items-center gap-2">
+                     <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                     <span className="text-[10px] font-black text-[#191974] uppercase tracking-widest">Official Reference</span>
+                  </div>
+               </div>
+               <div className="p-6 border-t border-gray-50 bg-gray-50/30">
+                  <p className="text-[14px] text-gray-600 leading-relaxed italic">
+                    *This is a reference document to show the format of a processed {destName} Tourist Visa. Your actual visa will contain your personal details and specific validity dates as issued by the immigration authorities.
+                  </p>
+               </div>
+            </div>
+          </div>
+
+          {/* 8. FAQs */}
           <div id="faqs" className="pt-4">
             <h2 className="text-[22px] font-medium text-[#191974] mb-6 border-b border-gray-300 pb-2">{destName} Visa FAQs</h2>
             <div className="border border-gray-200 rounded-lg bg-white overflow-hidden shadow-sm">
