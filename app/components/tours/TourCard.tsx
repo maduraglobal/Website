@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { formatRegionalPrice } from '../../../config/country';
 import TourInclusions from './TourInclusions';
+import { Heart, Star, Clock, MapPin, Calendar, CheckCircle2 } from 'lucide-react';
 
 interface TourCardProps {
   tour: any;

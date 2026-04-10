@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { cn } from "@/utils/cn";
 import { Check, Info, TrendingDown } from "lucide-react";
 
+import { formatRegionalPrice } from '@/config/country';
+
 interface DepartureDate {
   id: string;
   date: string;
@@ -22,6 +24,7 @@ interface DeparturePricingProps {
   selectedDateId: string;
   onCityChange: (city: string) => void;
   onDateChange: (dateId: string) => void;
+  region: string;
 }
 
 export default function DeparturePricing({
@@ -30,7 +33,8 @@ export default function DeparturePricing({
   selectedCity,
   selectedDateId,
   onCityChange,
-  onDateChange
+  onDateChange,
+  region
 }: DeparturePricingProps) {
   const currentDates = dates[selectedCity] || [];
 
@@ -98,13 +102,13 @@ export default function DeparturePricing({
                       selectedDateId === d.id ? "text-[#191974]" : "text-gray-400"
                     )}>{d.day}</p>
                     <p className="text-2xl  text-[#191974] leading-none mb-2">{d.date}</p>
-                    <p className="text-[16px]  text-[#191974]">{d.price.toLocaleString('en-IN')}</p>
+                    <p className="text-[16px]  text-[#191974]">{formatRegionalPrice(d.price, region)}</p>
                   </div>
 
                   {d.savings > 0 && (
                     <div className="mt-2 bg-amber-50 text-amber-600 text-[10px] font-bold px-2 py-1 rounded border border-amber-100 flex items-center gap-1">
                       <TrendingDown className="w-3 h-3" />
-                      Save â‚¹{d.savings.toLocaleString('en-IN')}
+                      Save {formatRegionalPrice(d.savings, region)}
                     </div>
                   )}
 
@@ -127,7 +131,7 @@ export default function DeparturePricing({
           <div className="p-4 bg-orange-50 border border-orange-100 rounded-xl flex items-start gap-3">
             <div className="mt-0.5"><Info className="w-4 h-4 text-orange-500" /></div>
             <p className="text-[12px] text-orange-700 leading-relaxed">
-              <span>Save Up To â‚¹15,000</span> With Full Payment Between 180 - 209 Days Before Departure.
+              <span>Save Up To {formatRegionalPrice(15000, region)}</span> With Full Payment Between 180 - 209 Days Before Departure.
               Only one available date left for this route!
             </p>
           </div>

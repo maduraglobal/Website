@@ -121,7 +121,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             <div className="hidden sm:block w-px bg-white/20 h-10 mt-1"></div>
             <div>
               <p className="text-[13px] text-white/70  tracking-widest font-bold mb-1">Starting from</p>
-              <p className="text-[18px] font-bold">{formatRegionalPrice(currentData.startingPrice, region)}/â€“</p>
+              <p className="text-[18px] font-bold">{formatRegionalPrice(currentData.startingPrice, region)}</p>
             </div>
           </div>
 
@@ -188,6 +188,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                 selectedDateId={selectedDateId}
                 onCityChange={setSelectedCity}
                 onDateChange={setSelectedDateId}
+                region={region}
               />
             </div>
 
@@ -251,7 +252,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                     <div>
                       <p className="text-[10px] text-gray-400  uppercase tracking-widest mb-1">Starting From</p>
                       <p className="text-[22px]  text-[#191974] leading-none">
-                        {formatRegionalPrice(v.fees, region)}<span className="text-sm font-bold text-gray-400">/â€“</span>
+                        {formatRegionalPrice(v.fees, region)}
                       </p>
                     </div>
                     <button
@@ -272,7 +273,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           {/* 3. Google Reviews Banner */}
           <div className="bg-teal-50 border border-teal-100 p-5 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
-              <p className="text-[16px] font-bold text-[#191974]">Madura Travel Service â€“ Reviews</p>
+              <p className="text-[16px] font-bold text-[#191974]">Madura Travel Service - Reviews</p>
               <div className="flex items-center gap-2 mt-1">
                 <span className="font-bold text-teal-800">EXCELLENT</span>
                 <div className="flex text-yellow-500"><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /></div>
@@ -520,7 +521,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
               ].map((o, i) => (
                 <div key={i} className="min-w-[200px] bg-white border border-gray-200 p-4 rounded-lg shadow-sm snap-start hover:shadow-md transition-shadow cursor-pointer">
                   <p className="font-bold text-[14.5px] text-gray-800 mb-2">{o.t} {destName} Visa</p>
-                  <p className="text-[16px]  text-[#191974]">{formatRegionalPrice(o.p, region)}/â€“</p>
+                  <p className="text-[16px]  text-[#191974]">{formatRegionalPrice(o.p, region)}</p>
                 </div>
               ))}
             </div>
@@ -534,7 +535,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           <div id="apply-online" className="bg-[#191974] rounded-lg shadow-xl overflow-hidden border border-[#2a2a8a]">
             {/* Notice Bar */}
             <div className="bg-[#facc15] text-[#191974] text-center font-bold text-[13px] py-2 px-3">
-              â± It takes less than 2 minutes to Apply
+              It takes less than 2 minutes to Apply
             </div>
 
             {/* Apply Form */}
@@ -556,7 +557,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
 
                 <div className="flex justify-between items-center text-white mt-2 border-t border-white/20 pt-4">
                   <span className="text-[15px] font-medium">Total Price:</span>
-                  <span className="text-[22px] ">â‚¹0</span>
+                  <span className="text-[22px] ">{formatRegionalPrice(0, region)}</span>
                 </div>
 
                 <button
@@ -661,7 +662,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
               <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] ">RuPay</span>
             </div>
             <div className="text-[12px] opacity-40 text-center md:text-right">
-              Â© 2025 www.antigravitytravels.com All Rights Reserved
+              © 2025 www.antigravitytravels.com All Rights Reserved
             </div>
           </div>
         </div>

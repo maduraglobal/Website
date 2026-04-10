@@ -9,12 +9,12 @@ export default function AwardsSection() {
 
         {/* Existing Government Recognitions & Badges */}
         <div className="mb-16">
-          <h5 className="text-center text-[26px] md:text-[36px] text-[#191974]  mb-8 tracking-tight">
+          <p className="text-center text-[26px] text-[#191974] t">
             Awards &amp; Recognitions
-          </h5>
+          </p>
 
           {/* Ministry Badges */}
-          <div className="flex flex-wrap justify-center gap-10 mb-12">
+          <div className="flex flex-wrap justify-center gap-50 mb-12">
             <div className="h-20 flex items-center justify-center transition-all duration-500 hover:scale-105">
               <img src="/Awardsimages/Incre.png" alt="Incredible India" className="h-full w-auto object-contain" />
             </div>
@@ -55,7 +55,7 @@ export default function AwardsSection() {
           {/* Card 1: Airline Awards */}
           <div className="bg-white rounded-3xl p-10 shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-gray-100 flex flex-col h-full hover:shadow-[0_25px_50px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-500">
             <div className="mb-8 border-b border-gray-100 pb-5">
-              <h3 className="text-[26px]  text-[#191974] ">Airline Awards</h3>
+              <p className="text-[26px]  text-[#191974] ">Airline Awards</p>
               <p className="text-[14px] text-gray-500 mt-2 ">Recognized by the world&apos;s leading carriers</p>
             </div>
             <div className="flex-1 flex items-center justify-center bg-[#f7f7ff]/50 rounded-[20px] p-8 border border-white/50">
@@ -70,7 +70,7 @@ export default function AwardsSection() {
           {/* Card 2: Our Accreditations */}
           <div className="bg-white rounded-3xl p-10 shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-gray-100 flex flex-col h-full hover:shadow-[0_25px_50px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-500">
             <div className="mb-8 border-b border-gray-100 pb-5">
-              <h3 className="text-[26px]  text-[#191974] ">Our Accreditations</h3>
+              <p className="text-[26px]  text-[#191974] ">Our Accreditations</p>
               <p className="text-[14px] text-gray-500 mt-2 ">Certified by top global tourism boards</p>
             </div>
             <div className="flex-1 flex items-center justify-center bg-[#f7f7ff]/50 rounded-[20px] p-8 border border-white/50">
