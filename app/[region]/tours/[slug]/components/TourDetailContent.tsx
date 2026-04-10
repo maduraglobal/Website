@@ -17,6 +17,9 @@ import {
 import { formatRegionalPrice } from '@/config/country';
 import TourMap from '@/app/components/tours/TourMap';
 import FallbackImage from '@/app/components/FallbackImage';
+import { createClient } from '@/utils/supabase/client';
+import { Pencil } from 'lucide-react';
+
 
 interface TourDetailContentProps {
   tour: any;
@@ -35,6 +38,19 @@ const TABS = [
 
 export default function TourDetailContent({ tour, itinerary, region }: TourDetailContentProps) {
   const [activeTab, setActiveTab] = useState('itinerary');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isMapOpen, setIsMapOpen] = useState(false);
+  const supabase = createClient();
+
+
+  React.useEffect(() => {
+    const checkAdmin = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsAdmin(session?.user?.email === 'admin@maduratravel.com');
+    };
+    checkAdmin();
+  }, [supabase]);
+
 
   const scrollToSection = (id: string) => {
     setActiveTab(id);
@@ -80,6 +96,17 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700 flex items-center gap-1">
                   4 Cities <HelpCircle className="w-3 h-3 text-gray-400" />
                 </span>
+                
+                {/* Admin Quick Edit Button */}
+                {isAdmin && (
+                  <Link 
+                    href="/admin/tours"
+                    className="ml-auto flex items-center gap-2 bg-gray-900 text-white px-4 py-1.5 rounded-full text-[12px] font-bold hover:bg-black transition-all shadow-lg animate-bounce hover:animate-none"
+                  >
+                    <Pencil className="w-3.5 h-3.5" />
+                    Edit Tour Details
+                  </Link>
+                )}
               </div>
 
               <div className="flex items-center gap-2 text-[13px] text-gray-600 border-b border-gray-50 pb-4">
@@ -152,8 +179,11 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   <ItineraryTimeline itinerary={itinerary} />
                 </div>
                 <div className="w-full xl:w-[320px] shrink-0 space-y-6">
-                  <div className="relative h-[220px] rounded-[32px] overflow-hidden shadow-xl group cursor-pointer border border-gray-100 ring-4 ring-white ring-offset-2 ring-offset-gray-50">
-                    <TourMap tourTitle={tour.title} />
+                  <div 
+                    onClick={() => setIsMapOpen(true)}
+                    className="relative h-[220px] rounded-[32px] overflow-hidden shadow-xl group cursor-pointer border border-gray-100 ring-4 ring-white ring-offset-2 ring-offset-gray-50 bg-gray-50"
+                  >
+                    <TourMap tourTitle={tour.title} itinerary={itinerary} onPreview={() => setIsMapOpen(true)} />
                     <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-all"></div>
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-gray-50 hover:scale-105 transition-transform">
                       <MapIcon className="w-5 h-5 text-[#ee2229]" />
@@ -480,6 +510,24 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
           </div>
         </div>
       </div>
+      {/* Map Modal Overlay */}
+      {isMapOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12">
+          <div 
+            className="absolute inset-0 bg-[#0a0a1a]/95 backdrop-blur-xl transition-all"
+            onClick={() => setIsMapOpen(false)}
+          />
+          <div className="relative w-full max-w-6xl aspect-square md:aspect-21/9 bg-white rounded-[40px] overflow-hidden shadow-2xl border border-white/10 animate-in zoom-in-95 duration-300">
+             <button 
+                onClick={() => setIsMapOpen(false)}
+                className="absolute top-6 right-6 z-50 w-12 h-12 bg-gray-900/10 hover:bg-gray-900/20 rounded-full flex items-center justify-center text-gray-900 transition-all backdrop-blur-md"
+             >
+                <X className="w-6 h-6" />
+             </button>
+             <TourMap tourTitle={tour.title} itinerary={itinerary} fullsize />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -7,12 +7,28 @@ import { MapPin, Utensils, Camera, Bus, Plane, Bed, Wallet } from 'lucide-react'
 import { formatRegionalPrice } from '../../../config/country';
 import FallbackImage from '@/app/components/FallbackImage';
 
+import { createClient } from '@/utils/supabase/client';
+import { Pencil } from 'lucide-react';
+
 interface VerticalTourCardProps {
   tour: any;
   region: string;
 }
 
+const ADMIN_EMAIL = 'admin@maduratravel.com';
+
 export default function VerticalTourCard({ tour, region }: VerticalTourCardProps) {
+  const [isAdmin, setIsAdmin] = React.useState(false);
+  const supabase = createClient();
+
+  React.useEffect(() => {
+    async function checkAdmin() {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsAdmin(session?.user?.email === ADMIN_EMAIL);
+    }
+    checkAdmin();
+  }, [supabase]);
+
   const price = tour.base_price_inr || tour.price || 345000;
   const emi = Math.round(price / 27); // Example EMI calculation if not provided
   const duration = tour.duration || "12N/13D";
@@ -111,6 +127,19 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
             Book Online
           </button>
         </div>
+
+        {/* Admin Edit Option */}
+        {isAdmin && (
+          <div className="mt-3 pt-3 border-t border-dashed border-gray-200">
+             <Link 
+               href={`/admin/tours`}
+               className="w-full flex items-center justify-center gap-2 py-2 bg-gray-900 text-white rounded-md text-[12px] font-bold hover:bg-black transition-all"
+             >
+               <Pencil className="w-3.5 h-3.5" />
+               Edit as Admin
+             </Link>
+          </div>
+        )}
       </div>
     </motion.div>
   );

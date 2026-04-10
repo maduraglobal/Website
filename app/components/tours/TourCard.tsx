@@ -34,7 +34,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Target Image Area */}
-      <div className="relative w-full md:w-[420px] h-[250px] md:h-auto overflow-hidden shrink-0">
+      <div className="relative w-full md:w-[320px] h-[280px] md:h-auto overflow-hidden shrink-0">
         <motion.img
           initial={false}
           animate={{ scale: isHovered ? 1.05 : 1 }}
@@ -90,21 +90,31 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
               <span className="flex items-center gap-1.5 font-bold"><Calendar className="w-4 h-4 text-gray-400" /> Sep - Dec Dates</span>
             </div>
 
-            <div className="pt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <p className="text-[13px] font-bold text-[#191974] mb-2">Highlights:</p>
-                <ul className="text-[13px] text-gray-600 space-y-1">
-                  {(tour.highlights || ['Premium Accommodation', 'Sightseeing Transfers', 'All Meals Included']).slice(0, 3).map((hl: string, i: number) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
-                      <span className="line-clamp-1">{hl}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="border-l border-gray-100 pl-4">
-                <TourInclusions />
-              </div>
+            <div className="pt-4 flex flex-wrap items-center gap-6 border-t border-gray-50 mt-auto">
+                <div className="flex flex-col items-center gap-1 group/item">
+                    <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#191974] group-hover/item:bg-[#ee2229] group-hover/item:text-white transition-colors">
+                        <Clock className="w-4 h-4" />
+                    </div>
+                    <span className="text-[10px] font-bold text-gray-400">Duration</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 group/item">
+                    <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#191974] group-hover/item:bg-[#ee2229] group-hover/item:text-white transition-colors">
+                        <MapPin className="w-4 h-4" />
+                    </div>
+                    <span className="text-[10px] font-bold text-gray-400">Cities</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 group/item">
+                    <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#191974] group-hover/item:bg-[#ee2229] group-hover/item:text-white transition-colors">
+                        <Calendar className="w-4 h-4" />
+                    </div>
+                    <span className="text-[10px] font-bold text-gray-400">Dates</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 group/item">
+                    <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#191974] group-hover/item:bg-[#ee2229] group-hover/item:text-white transition-colors">
+                        <CheckCircle2 className="w-4 h-4" />
+                    </div>
+                    <span className="text-[10px] font-bold text-gray-400">All-Incl</span>
+                </div>
             </div>
           </div>
 
