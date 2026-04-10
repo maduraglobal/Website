@@ -36,54 +36,70 @@ export default function DestinationToursPage() {
     async function fetchData() {
       if (!slug) return;
       setLoading(true);
-      // Try fetching destination
-      const { data: destination } = await supabase
-        .from('destinations')
-        .select('*')
-        .eq('slug', slug)
-        .single();
-
-      const name = destination?.name || slug.replace(/-/g, ' ');
-      setDestinationName(name);
-
-      // Try fetching tours for this destination
-      let fetchedTours: Tour[] = [];
-      if (destination) {
-        const { data } = await supabase
-          .from('tours')
+      
+      try {
+        // Try fetching destination
+        const { data: destination, error: destError } = await supabase
+          .from('destinations')
           .select('*')
-          .eq('destination_id', destination.id);
-        if (data) fetchedTours = data;
-      }
+          .eq('slug', slug)
+          .maybeSingle();
 
-      // Fallback mock tours if nothing in DB
-      if (!fetchedTours || fetchedTours.length === 0) {
-        const defaultImages = [
-          'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=800',
-          'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&q=80&w=800',
-          'https://images.unsplash.com/photo-1587474260580-5a3d0d80c356?auto=format&fit=crop&q=80&w=800',
-          'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&q=80&w=800',
-          'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&q=80&w=800',
-          'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&q=80&w=800'
-        ];
+        if (destError) {
+          console.error('Error fetching destination:', destError);
+        }
 
-        fetchedTours = Array.from({ length: 6 }).map((_, i) => ({
-          id: `mock-${i}`,
-          title: `${name} Premium Experience ${i + 1}`,
-          slug: `premium-experience-${i + 1}`,
-          price: 35000 + (i * 5000),
-          duration_days: 3 + (i * 2),
-          cities_count: 2 + (i % 3),
-          image_url: defaultImages[i % defaultImages.length],
-          tags: i % 2 === 0 ? ["Family"] : i % 3 === 0 ? ["Premium"] : ["Adventure"],
-          highlights: ['Premium Accommodation', 'Sightseeing Transfers', 'All Meals Included']
-        }));
+        const name = destination?.name || slug.split(':')[0].replace(/-/g, ' ');
+        setDestinationName(name);
+
+        // Try fetching tours for this destination
+        let fetchedTours: Tour[] = [];
+        if (destination) {
+          const { data, error: toursError } = await supabase
+            .from('tours')
+            .select('*')
+            .eq('destination_id', destination.id);
+          
+          if (toursError) {
+            console.error('Error fetching tours:', toursError);
+          } else if (data) {
+            fetchedTours = data;
+          }
+        }
+
+        // Fallback mock tours if nothing in DB
+        if (!fetchedTours || fetchedTours.length === 0) {
+          const defaultImages = [
+            'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1587474260580-5a3d0d80c356?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&q=80&w=800'
+          ];
+
+          fetchedTours = Array.from({ length: 6 }).map((_, i) => ({
+            id: `mock-${i}`,
+            title: `${name} Premium Experience ${i + 1}`,
+            slug: `premium-experience-${i + 1}`,
+            price: 35000 + (i * 5000),
+            duration_days: 3 + (i * 2),
+            cities_count: 2 + (i % 3),
+            image_url: defaultImages[i % defaultImages.length],
+            tags: i % 2 === 0 ? ["Family"] : i % 3 === 0 ? ["Premium"] : ["Adventure"],
+            highlights: ['Premium Accommodation', 'Sightseeing Transfers', 'All Meals Included']
+          }));
+        }
+        setTours(fetchedTours);
+      } catch (err) {
+        console.error('Unexpected error:', err);
+      } finally {
+        setLoading(false);
       }
-      setTours(fetchedTours);
-      setLoading(false);
     }
     fetchData();
   }, [slug, supabase]);
+
 
   const toggleCategory = (cat: string) => {
     if (cat === 'All Tours') {
