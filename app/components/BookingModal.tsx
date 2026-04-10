@@ -428,7 +428,7 @@ const BookingModal = () => {
                         </>
                       )}
                     </button>
-                    <p className="text-[10px] text-gray-400 text-center mt-4 font-medium  tracking-widest">
+                    <p className="text-[10px] text-gray-400 text-center ">
                       By clicking &quot;Confirm Booking&quot; you agree to our Terms &amp; Conditions
                     </p>
                   </div>

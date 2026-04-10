@@ -67,11 +67,11 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
 
   return (
     <div className="min-h-screen bg-white ">
-      {/* â”€â”€ HERO SECTION â”€â”€ */}
+      {/* â”€â”€ HERO SECTION â”€â”€ */}  
       <section className="pt-40 pb-20 bg-[#191974] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#ee2229] rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-white rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
+              <div className="absolute top-0 right-0 w-96 h-96  29] rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-white rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
@@ -80,10 +80,10 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-[48px] md:text-[72px]  text-white  tracking-tighter leading-none mb-6">
+            <h1 className="text-[32px] md:text-[72px]  text-white  tracking-tighter leading-none mb-6">
               What Our <span className="text-[#ee2229]">Guests Say</span>
             </h1>
-            <p className="text-[18px] md:text-[22px] text-white/60  max-w-2xl mx-auto">
+            <p className="text-[26px] md:text-[22px] text-white/60  max-w-2xl mx-auto">
               Real stories from our global community of travelers. Trust built over 40 years of excellence.
             </p>
 
@@ -120,7 +120,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
                   <CheckCircle className="w-5 h-5" />
                 </div>
               </div>
-              <h3 className="text-[24px]  text-[#191974]">Vikram Sathya</h3>
+              <h3 className="text-[26px]  text-[#191974]">Vikram Sathya</h3>
               <p className="text-gray-400 font-bold  tracking-widest text-[11px]">USA Grand Tour</p>
             </div>
 
@@ -129,7 +129,7 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-[#ee2229] text-[#ee2229]" />)}
               </div>
-              <p className="text-[20px] md:text-[24px] text-gray-600  leading-relaxed italic">
+              <p className="text-[14px] md:text-[24px] text-gray-600  leading-relaxed italic">
                 "Our USA West Coast tour was beyond incredible. Every detail, from the luxury coaches to the perfectly located hotels, was meticulously planned. Madura Travel's legacy of trust is evident in every step they take."
               </p>
               <div className="mt-8 flex items-center gap-3 text-[#191974] font-bold">
@@ -157,8 +157,8 @@ export default function TestimonialsPage({ params }: { params: Promise<{ region:
                 <div className="flex items-center gap-4 mb-6">
                   <Image src={t.image} alt={t.name} width={60} height={60} className="rounded-2xl grayscale group-hover:grayscale-0 transition-all" />
                   <div>
-                    <p className="text-[17px]  text-[#191974] leading-none mb-1">{t.name}</p>
-                    <p className="text-[11px] text-[#ee2229] font-bold  tracking-widest">{t.role}</p>
+                    <p className="text-[26px]  text-[#191974] leading-none mb-1">{t.name}</p>
+                    <p className="text-[14px] text-[#ee2229] font-bold  tracking-widest">{t.role}</p>
                   </div>
                 </div>
 

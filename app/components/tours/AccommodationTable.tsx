@@ -26,16 +26,16 @@ export default function AccommodationTable({ accommodations }: AccommodationTabl
       <table className="w-full text-left border-collapse">
         <thead className="bg-[#191974] text-white">
           <tr>
-            <th className="px-6 py-3  text-[11px]  tracking-[0.2em] opacity-80">Designated City</th>
-            <th className="px-6 py-3  text-[11px]  tracking-[0.2em] opacity-80">Accommodations Selection</th>
-            <th className="px-6 py-3  text-[11px]  tracking-[0.2em] opacity-80 text-center">Nights</th>
+            <th className="px-6 py-3  text-[14px]  opacity-80">Designated City</th>
+            <th className="px-6 py-3  text-[14px]   opacity-80">Accommodations Selection</th>
+            <th className="px-6 py-3  text-[14px]   opacity-80 text-center">Nights</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-50">
           {displayData.map((item, index) => (
             <tr key={index} className="hover:bg-gray-50/50 transition-colors">
-              <td className="px-6 py-4  text-[#191974] text-[16px]  tracking-tight">{item.city}</td>
-              <td className="px-6 py-4 text-gray-500 text-[14px] font-bold  tracking-tighter opacity-70">{item.hotel}</td>
+              <td className="px-6 py-4  text-[#191974] text-[14px]  tracking-tight">{item.city}</td>
+              <td className="px-6 py-4 text-gray-500 text-[14px]  opacity-70">{item.hotel}</td>
               <td className="px-6 py-4 text-[#191974] text-[14px] text-center  bg-[#191974]/5">{item.nights}</td>
             </tr>
           ))}
@@ -48,7 +48,7 @@ export default function AccommodationTable({ accommodations }: AccommodationTabl
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <p className="text-[11px] text-[#191974]   tracking-widest opacity-40 leading-relaxed">
+        <p className="text-[14px] text-[#191974]  opacity-40 leading-relaxed">
           Operational Standards: Check-in / Check-out timing is governed by Hotel Policy. Preferred selections are subject to availability and may be substituted with equivalents.
         </p>
       </div>

@@ -104,7 +104,7 @@ export default function Footer() {
               />
             </Link>
 
-            <p className="text-[13px] text-white leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               Founded in 1986, Madura Travel Service Pvt Ltd is a trusted name
               in the travel industry, delivering personalized and reliable travel
               experiences worldwide.
@@ -146,13 +146,13 @@ export default function Footer() {
 
           {/* ── COL 2: Top Destinations ── */}
           <div className="flex flex-col gap-5">
-            <h4 className="text-[11px]   tracking-[0.2em] text-[#ee2229]">
+            <h4 className="text-[26px]  font-inter text-[#ee2229]">
               Top Destinations
             </h4>
             <div className="grid grid-cols-2 gap-x-4 gap-y-3">
               {Object.entries(destinations).map(([continent, places]) => (
                 <div key={continent} className="flex flex-col gap-1.5">
-                  <p className="text-[10px]  tracking-widest text-white/70 font-bold mb-0.5">
+                  <p className="text-[14px]  tracking-widest text-white/70 font-bold mb-0.5">
                     {continent}
                   </p>
                   {places.map((place) => (
@@ -161,7 +161,7 @@ export default function Footer() {
                       href={prefixed(
                         `/destination/${place.toLowerCase().replace(/ /g, "-")}`
                       )}
-                      className="text-[12.5px] text-white hover:text-[#ee2229] transition-colors duration-200 flex items-center gap-1.5 group"
+                      className="text-[14px] text-white hover:text-[#ee2229] transition-colors duration-200 flex items-center gap-1.5 group"
                     >
                       <span className="w-0 group-hover:w-1.5 h-1.5 rounded-full bg-[#ee2229] shrink-0 transition-all duration-200" />
                       {place}
@@ -174,7 +174,7 @@ export default function Footer() {
 
           {/* ── COL 3: Discover Us ── */}
           <div className="flex flex-col gap-5">
-            <h4 className="text-[11px]   tracking-[0.2em] text-[#ee2229]">
+            <h4 className="text-[26px]   font-inter text-[#ee2229]">
               Discover Us
             </h4>
             <ul className="flex flex-col gap-3">
@@ -182,7 +182,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={prefixed(link.href)}
-                    className="text-[13px] text-white hover:text-white transition-colors duration-200 flex items-center gap-2 group"
+                    className="text-[14px] text-white hover:text-white transition-colors duration-200 flex items-center gap-2 group"
                   >
                     <span className="w-0 group-hover:w-2 h-px bg-[#ee2229] transition-all duration-300 shrink-0" />
                     {link.label}
@@ -194,7 +194,7 @@ export default function Footer() {
 
           {/* ── COL 4: Contact Info ── */}
           <div className="flex flex-col gap-5">
-            <h4 className="text-[11px]   tracking-[0.2em] text-[#ee2229]">
+            <h4 className="text-[26px] font-inter  text-[#ee2229]">
               Get In Touch
             </h4>
 
@@ -209,9 +209,9 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px]  tracking-widest text-white font-bold">Call Us</p>
-                  <p className="text-[13px] font-semibold text-white group-hover:text-white transition-colors">+91 90 92 94 94 94</p>
-                  <p className="text-[11px] text-white">Mon–Sat, 9:30AM–6PM</p>
+                  <p className="text-[14px]  tracking-widest text-white font-bold">Call Us</p>
+                  <p className="text-[14px] font-semibold text-white group-hover:text-white transition-colors">+91 90 92 94 94 94</p>
+                  <p className="text-[14px] text-white">Mon–Sat, 9:30AM–6PM</p>
                 </div>
               </a>
 
@@ -225,9 +225,9 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px]  tracking-widest text-white font-bold">Email Us</p>
-                  <p className="text-[13px] font-semibold text-white group-hover:text-white transition-colors">mail@maduratravel.com</p>
-                  <p className="text-[11px] text-white">We reply within 24 hours</p>
+                  <p className="text-[14px]  tracking-widest text-white font-bold">Email Us</p>
+                  <p className="text-[14px] font-semibold text-white group-hover:text-white transition-colors">mail@maduratravel.com</p>
+                  <p className="text-[14px] text-white">We reply within 24 hours</p>
                 </div>
               </a>
 
@@ -238,9 +238,9 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px]  tracking-widest text-white font-bold">Headquarters</p>
-                  <p className="text-[13px] font-semibold text-white">Egmore, Chennai</p>
-                  <p className="text-[11px] text-white">Tamil Nadu – 600 008</p>
+                  <p className="text-[14px]  tracking-widest text-white font-bold">Headquarters</p>
+                  <p className="text-[14px] font-semibold text-white">Egmore, Chennai</p>
+                  <p className="text-[14px] text-white">Tamil Nadu – 600 008</p>
                 </div>
               </div>
             </div>

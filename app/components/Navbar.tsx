@@ -212,7 +212,7 @@ export default function Navbar() {
                     <div className="w-7 h-7 rounded-full bg-[#191974]/8 flex items-center justify-center shrink-0">
                       <svg className="w-3.5 h-3.5 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     </div>
-                    <p className="text-[13px] text-gray-500 font-semibold">Business hours <span className=" text-[#191974]">10AM â€“ 7PM</span></p>
+                    <p className="text-[13px] text-gray-500 font-semibold">Business hours <span className=" text-[#191974]">10 AM - 7 PM</span></p>
                   </div>
                 </div>
                 <div className="bg-[#191974] px-4 py-2.5 flex items-center justify-center gap-2">
@@ -267,8 +267,8 @@ export default function Navbar() {
                           <span className="text-[12px]  text-[#191974]">{config.name}</span>
                           <div className="flex items-center gap-2 mt-0.5">
                             <span className="text-[10px] font-bold text-[#ee2229] ">{config.language}</span>
-                            <span className="text-[10px] text-gray-400">â€¢</span>
-                            <span className="text-[10px] font-bold text-gray-400">{config.currencySymbol} â€” {config.currencyCode}</span>
+                            <span className="text-[10px] text-gray-400">·</span>
+                            <span className="text-[10px] font-bold text-gray-400">{config.currencySymbol} - {config.currencyCode}</span>
                           </div>
                         </div>
                       </div>
@@ -346,7 +346,6 @@ export default function Navbar() {
                 className="w-full flex items-center justify-between px-6 py-4 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
               >
                 <span className="flex items-center gap-3">
-                  <svg className="w-4 h-4 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   Destinations
                 </span>
                 <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'destinations' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
@@ -393,7 +392,6 @@ export default function Navbar() {
                 className="w-full flex items-center justify-between px-6 py-4 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
               >
                 <span className="flex items-center gap-3">
-                  <span className="text-base">ðŸ‡®ðŸ‡³</span>
                   India
                 </span>
                 <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'india' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
@@ -422,7 +420,6 @@ export default function Navbar() {
                 className="w-full flex items-center justify-between px-6 py-4 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
               >
                 <span className="flex items-center gap-3">
-                  <svg className="w-4 h-4 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
                   Speciality Tours
                 </span>
                 <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'speciality' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
@@ -444,30 +441,28 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* â”€â”€â”€ SIMPLE LINKS â”€â”€â”€ */}
+            {/* --- SIMPLE LINKS --- */}
             {[
-              { label: "Customized Holidays", href: "#", icon: "âœˆï¸" },
-              { label: "Visa", href: `/${currentRegionCode}/visa`, icon: "ðŸ“„" },
-            ].map(({ label, href, icon }) => (
+              { label: "Customized Holidays", href: "/en-in/contact" },
+              { label: "Visa", href: `/${currentRegionCode}/visa` },
+            ].map(({ label, href }) => (
               <Link
                 key={label}
                 href={href}
                 onClick={() => setSidebarOpen(false)}
                 className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 hover:text-[#ee2229] transition-colors"
               >
-                <span className="text-base">{icon}</span>
                 {label}
               </Link>
             ))}
 
-            {/* â”€â”€â”€ COMPANY â”€â”€â”€ */}
+            {/* --- COMPANY --- */}
             <div className="border-b border-gray-100">
               <button
                 onClick={() => toggleSection('company')}
                 className="w-full flex items-center justify-between px-6 py-4 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
               >
                 <span className="flex items-center gap-3">
-                  <svg className="w-4 h-4 text-[#ee2229]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                   Company
                 </span>
                 <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'company' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
@@ -489,19 +484,18 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* â”€â”€â”€ MORE SIMPLE LINKS â”€â”€â”€ */}
+            {/* --- MORE SIMPLE LINKS --- */}
             {[
-              { label: "Inbound", href: `/${currentRegionCode}/inbound`, icon: "ðŸ¨" },
-              { label: "Weddings", href: "#", icon: "ðŸ’" },
-              { label: "Contact Us", href: `/${currentRegionCode}/contact`, icon: "ðŸ“ž" },
-            ].map(({ label, href, icon }) => (
+              { label: "Inbound", href: `/${currentRegionCode}/inbound` },
+              { label: "Weddings", href: "#" },
+              { label: "Contact Us", href: `/${currentRegionCode}/contact` },
+            ].map(({ label, href }) => (
               <Link
                 key={label}
                 href={href}
                 onClick={() => setSidebarOpen(false)}
                 className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 hover:text-[#ee2229] transition-colors"
               >
-                <span className="text-base">{icon}</span>
                 {label}
               </Link>
             ))}
@@ -525,7 +519,7 @@ export default function Navbar() {
                 <span className="w-1.5 h-1.5 rounded-full bg-[#ee2229]" />
                 1800 313 5555
               </a>
-              <p className="text-[10px] text-gray-400 mt-0.5 font-bold  tracking-tight">Toll Free Â· 10AM â€“ 7PM</p>
+              <p className="text-[10px] text-gray-400 mt-0.5 font-bold  tracking-tight">Toll Free · 10 AM - 7 PM</p>
             </div>
           </div>
 

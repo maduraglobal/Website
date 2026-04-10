@@ -32,17 +32,15 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
   return (
     <div className="flex flex-col gap-4 ">
       <div className="flex justify-between items-center border-b border-gray-100 pb-4">
-        <h3 className="text-[14px]  text-gray-300 tracking-widest uppercase">
-          {itinerary.length} Phases
-        </h3>
+        
         <div className="flex gap-4">
-          <button onClick={expandAll} className="text-[#ee2229]  text-[10px] hover:text-[#191974] transition-colors tracking-widest uppercase">Expand All</button>
+          <button onClick={expandAll} className="text-[#ee2229]  text-[10px] hover:text-[#191974] transition-colors ">Expand All</button>
           <span className="text-gray-100 ">|</span>
-          <button onClick={collapseAll} className="text-[#ee2229]  text-[10px] hover:text-[#191974] transition-colors tracking-widest uppercase">Collapse All</button>
+          <button onClick={collapseAll} className="text-[#ee2229]  text-[10px] hover:text-[#191974] transition-colors ">Collapse All</button>
         </div>
       </div>
 
-      <div className="relative pl-10 space-y-0 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-gray-100">
+      <div className="relative pl-10 space-y-0 before:content-[''] before:absolute before:left-[14px] before:top-2 before:bottom-2 before:w-[2px] before:bg-gray-100">
         {itinerary.map((item) => (
           <div key={item.day} className="relative">
             {/* Timeline Dot */}

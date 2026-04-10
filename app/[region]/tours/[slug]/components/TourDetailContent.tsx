@@ -6,6 +6,7 @@ import ItineraryTimeline from '@/app/components/tours/ItineraryTimeline';
 import AccommodationTable from '@/app/components/tours/AccommodationTable';
 import BookingSidebar from '@/app/components/tours/BookingSidebar';
 import DeparturePricing from '@/app/components/tours/DeparturePricing';
+import TourInclusions from '@/app/components/tours/TourInclusions';
 import Link from 'next/link';
 import {
   Clock, MapPin, ShieldCheck, FileText, Info, AlertCircle,
@@ -96,7 +97,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
             <section>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1.5 h-6 bg-[#ee2229] rounded-full" />
-                <h2 className="text-[22px]  text-[#191974] tracking-tight italic">Quick Highlights</h2>
+                <p className="text-[26px]  text-[#191974]">Quick Highlights</p>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
@@ -113,13 +114,18 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
               </div>
             </section>
 
+            {/* TOUR INCLUSIONS VISUAL - NEW */}
+            <section className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+              <TourInclusions variant="large" />
+            </section>
+
             {/* 1. ITINERARY SECTION */}
             <section id="itinerary" className="scroll-mt-40">
               <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-2">
                 <div className="flex items-center gap-3">
-                  <h2 className="text-[24px]  text-[#191974] tracking-tight">Day-Wise Itinerary</h2>
+                  <h2 className="text-[26px]  text-[#191974] ">Day-Wise Itinerary</h2>
                 </div>
-                <span className="text-[11px]  text-[#ee2229] bg-red-50 border border-red-100 px-3 py-1 rounded-sm tracking-widest ">{tour.duration}</span>
+                <span className="text-[14px]  text-[#ee2229] bg-red-50 border border-red-100 px-3 py-1 rounded-sm tracking-widest ">{tour.duration}</span>
               </div>
               <ItineraryTimeline itinerary={itinerary} />
             </section>
@@ -127,7 +133,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
             {/* 2. TOUR DETAILS (ACCOMMODATION) SECTION */}
             <section id="details" className="scroll-mt-40 bg-[#f7f7ff]/50 border border-[#191974]/5 px-6 py-8 rounded-2xl">
               <div className="flex items-center gap-3 mb-6 border-b border-[#191974]/10 pb-4">
-                <h2 className="text-[24px]  text-[#191974] tracking-tight">Hotel & Accommodations</h2>
+                <p className="text-[26px]  text-[#191974] tracking-tight">Hotel & Accommodations</p>
               </div>
               <AccommodationTable />
             </section>
@@ -135,14 +141,14 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
             {/* 3. TOUR INFORMATION (INCLUSIONS / EXCLUSIONS) SECTION */}
             <section id="info" className="scroll-mt-40">
               <div className="flex items-center gap-3 mb-8 border-b border-gray-100 pb-4">
-                <h2 className="text-[24px]  text-[#191974] tracking-tight">Policies & Information</h2>
+                <p className="text-[26px]  text-[#191974] ">Policies & Information</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-white border border-gray-100 p-4 rounded-2xl shadow-sm">
-                  <h3 className="text-[12px]  text-[#191974] mb-6 flex items-center gap-2 tracking-widest  border-b border-[#191974]/10 pb-3">
+                  <p className="text-[14px]  text-[#191974]  flex items-center gap-2  border-b border-[#191974]/10 pb-3">
                     <CheckCircle2 className="w-5 h-5" />
                     Tour Inclusions
-                  </h3>
+                  </p>
                   <ul className="space-y-4">
                     {(tour.inclusions || ["Economy class Airfare", "Internal Flights (if any)", "Visa Fees (Selected Countries)", "Daily Breakfast, Lunch & Dinner", "Professional Tour Manager", "Travel Insurance up to 70 yrs"]).map((item: string, i: number) => (
                       <li key={i} className="flex gap-3 text-[13px] text-gray-500 items-start group">
@@ -153,10 +159,10 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   </ul>
                 </div>
                 <div className="bg-white border border-gray-100 p-4 rounded-2xl shadow-sm">
-                  <h3 className="text-[12px]  text-[#ee2229] mb-6 flex items-center gap-2 tracking-widest  border-b border-red-50 pb-3">
+                  <p className="text-[14px]  text-[#ee2229]  flex items-center gap-2   border-b border-red-50 pb-3">
                     <AlertCircle className="w-5 h-5" />
                     Tour Exclusions
-                  </h3>
+                  </p>
                   <ul className="space-y-4">
                     {(tour.exclusions || ["GST (5%) and TCS (as applicable)", "Tips to Local Guides & Drivers", "Personal expenses (laundry, calls)", "Optional sightseeing", "Anything not in inclusions"]).map((item: string, i: number) => (
                       <li key={i} className="flex gap-3 text-[13px] text-gray-400 items-start group">
@@ -175,7 +181,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
             <section id="needtoknow" className="scroll-mt-40 bg-[#191974] px-6 py-6 rounded-2xl text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
               <div className="flex items-center gap-3 mb-6 border-b border-white/10 pb-4 relative z-10">
-                <h2 className="text-[24px]  tracking-tight italic">Important - Need to Know</h2>
+                <h2 className="text-[26px]">Important - Need to Know</h2>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
                 {[
@@ -195,7 +201,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
             {/* 5. CANCELLATION POLICY SECTION */}
             <section id="policy" className="scroll-mt-40">
               <div className="flex items-center gap-3 mb-6 border-b border-gray-100 pb-4">
-                <h2 className="text-[24px]  text-[#191974] tracking-tight">Cancellation Policy</h2>
+                <p className="text-[26px]  text-[#191974] ">Cancellation Policy</p>
               </div>
               <div className="overflow-hidden border border-gray-100 rounded-xl shadow-sm">
                 <table className="w-full text-left ">
@@ -240,8 +246,8 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     </div>
                     <div>
                       <h4 className="text-[14px]  text-[#191974] mb-1">{up.title}</h4>
-                      <p className="text-[12px] text-gray-500 leading-normal mb-3">{up.desc}</p>
-                      <button className="text-[11px]  text-[#ee2229]  tracking-widest hover:underline flex items-center gap-1">Enquire Now <ChevronRight className="w-3 h-3" /></button>
+                      <p className="text-[14px] text-gray-500 leading-normal mb-3">{up.desc}</p>
+                      <button className="text-[14px]  text-[#ee2229]  tracking-widest hover:underline flex items-center gap-1">Enquire Now <ChevronRight className="w-3 h-3" /></button>
                     </div>
                   </div>
                 ))}
@@ -250,8 +256,8 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
             {/* Compact Footer */}
             <div className="mt-12 bg-gray-50 rounded-2xl p-8 border border-gray-100 text-center">
-              <h3 className="text-[18px]  text-[#191974] mb-2 tracking-tight">The Madura Standard</h3>
-              <p className="text-[14px]  text-gray-400 mb-6  tracking-[0.2em]">Expert travel guidance since 1986.</p>
+              <h3 className="text-[26px]  text-[#191974] mb-2 tracking-tight">The Madura Standard</h3>
+              <p className="text-[14px]  text-gray-400 ">Expert travel guidance since 1986.</p>
               <div className="flex flex-wrap justify-center gap-10">
                 {["Price Integrity", "Expert Managers", "Curated Hotels"].map((feature, i) => (
                   <div key={feature} className="flex items-center gap-2">

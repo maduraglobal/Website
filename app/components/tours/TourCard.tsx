@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Calendar, Star, Clock, CheckCircle2, Heart, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import { formatRegionalPrice } from '../../../config/country';
+import TourInclusions from './TourInclusions';
 
 interface TourCardProps {
   tour: any;
@@ -77,7 +77,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
               <span className="text-xs font-semibold text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded">All Inclusive</span>
             </div>
 
-            <h3 className="text-base md:text-[19px]  text-[#171717] leading-tight group-hover:text-[#191974] transition-colors">
+            <h3 className="text-[20px] font-bold text-[#ee2229] leading-tight group-hover:underline transition-all">
               {tour.title}
             </h3>
 
@@ -89,16 +89,21 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
               <span className="flex items-center gap-1.5 font-bold"><Calendar className="w-4 h-4 text-gray-400" /> Sep - Dec Dates</span>
             </div>
 
-            <div className="pt-2">
-              <p className="text-[14px]  text-[#191974] mb-2  tracking-tight">Tour Highlights:</p>
-              <ul className="text-[14px] text-gray-600 space-y-1 ">
-                {(tour.highlights || ['Premium Accommodation', 'Sightseeing Transfers', 'All Meals Included']).slice(0, 3).map((hl: string, i: number) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
-                    <span className="line-clamp-1">{hl}</span>
-                  </li>
-                ))}
-              </ul>
+            <div className="pt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-[13px] font-bold text-[#191974] mb-2">Highlights:</p>
+                <ul className="text-[13px] text-gray-600 space-y-1">
+                  {(tour.highlights || ['Premium Accommodation', 'Sightseeing Transfers', 'All Meals Included']).slice(0, 3).map((hl: string, i: number) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
+                      <span className="line-clamp-1">{hl}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="border-l border-gray-100 pl-4">
+                <TourInclusions />
+              </div>
             </div>
           </div>
 
@@ -116,7 +121,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
             <div className="space-y-2.5 w-full flex flex-col relative z-20 ">
               <Link
                 href={`/${region}/tours/${tour.slug || tour.id}`}
-                className="w-full block text-center bg-[#ee2229] hover:bg-[#d41c23] text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-red-500/20 transition-all text-[15px]  tracking-wider"
+                className="w-full block text-center bg-[#191974] hover:bg-[#ee2229] text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-900/10 transition-all text-[15px]  tracking-wider"
                 data-package={tour.title}
                 data-price={price?.toString() || '0'}
                 data-original-price={price ? Math.round(price * 1.15).toString() : '0'}

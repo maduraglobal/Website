@@ -18,7 +18,7 @@ export default function BookingSidebar({
   tourName,
   selectedCity = "Mumbai",
   selectedDate = "Select Date",
-  emiAmount = "â‚¹5,219"
+  emiAmount = "₹3,750"
 }: BookingSidebarProps) {
   const { openBooking } = useBooking();
   const [formData, setFormData] = useState({
@@ -51,13 +51,13 @@ export default function BookingSidebar({
 
   return (
     <div className="flex flex-col gap-4 relative ">
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden sticky top-[94px]">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden sticky top-23.5">
         <div className="p-5 border-b border-gray-50 bg-gray-50/30">
           <div className="flex items-center gap-2 text-[#191974]">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1" />
             </svg>
-            <h3 className="text-[14px]  uppercase tracking-widest ">Booking Summary</h3>
+            <p className="text-[26px]  ">Booking Summary</p>
           </div>
         </div>
 
@@ -84,9 +84,9 @@ export default function BookingSidebar({
 
           <div className="border-t border-dashed border-gray-200 pt-6 mb-6">
             <div className="flex justify-between items-end mb-1">
-              <span className="text-[13px] text-gray-400  uppercase">Basic Price</span>
-              <span className="text-[24px]  text-[#191974] tracking-tighter leading-none">
-                â‚¹{price.toLocaleString('en-IN')}
+              <span className="text-[14px] text-gray-400 ">Basic Price</span>
+              <span className="text-[26px]  text-[#191974] tracking-tighter leading-none">
+                {price.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}
               </span>
             </div>
             <div className="flex justify-between items-center text-[11px] text-[#191974] font-bold">
@@ -98,12 +98,12 @@ export default function BookingSidebar({
           <div className="mb-8">
             <div className="flex justify-between items-center">
               <div>
-                <p className="text-[12px] text-[#191974] ">EMI Available</p>
-                <span className="text-[11px] text-[#191974] border-b border-gray-400 hover:border-[#191974] cursor-pointer">Check eligibility &rsaquo;</span>
+                <p className="text-[14px] text-[#191974] ">EMI Available</p>
+                <span className="text-[14px] text-[#191974] border-b border-gray-400 hover:border-[#191974] cursor-pointer">Check eligibility &rsaquo;</span>
               </div>
               <div className="text-right">
-                <p className="text-[18px]  text-[#191974] leading-none mb-0.5">{emiAmount}</p>
-                <span className="text-[10px] text-gray-400 font-bold uppercase">/ month</span>
+                <p className="text-[14px]  text-[#191974] leading-none mb-0.5">{emiAmount}</p>
+                <span className="text-[14px] text-gray-400 font-bold ">/ month</span>
               </div>
             </div>
           </div>
@@ -113,7 +113,7 @@ export default function BookingSidebar({
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5.25V3h1.5v2.25H3zm13.125 15.625l-1.062 1.062-1.062-1.062 1.062-1.062 1.062 1.062zm-9.187 0l-1.062 1.062-1.062-1.062 1.062-1.062 1.062 1.062z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.25 18.75V21h1.5v-2.25H2.25zm19.5 0V21h-1.5v-2.25h1.5zM7.5 7.5h9v9h-9v-9zM3.75 3.75v16.5h16.5V3.75H3.75z" /></svg>
               1800 313 5555
               <span className="text-gray-200 mx-1">|</span>
-              <span className="text-[11px] hover:underline cursor-pointer">Locate nearest brand</span>
+              <span className="text-[14px] hover:underline cursor-pointer">Locate nearest brand</span>
             </div>
           </div>
 

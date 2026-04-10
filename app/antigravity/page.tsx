@@ -43,12 +43,12 @@ export default function AntigravityTourDetail() {
       {/* Dynamic Background Glows */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[150px]"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[150px]"></div>
       </div>
 
       {/* Floating Header Summary (Shows on Scroll) */}
       <div
-        className={`fixed top-[112px] left-0 right-0 z-50 transition-all duration-500 transform ${scrolled ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+        className={`fixed top-28 left-0 right-0 z-50 transition-all duration-500 transform ${scrolled ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
           } bg-[#0a0a12]/80 backdrop-blur-xl border-b border-white/5 py-4 px-6 md:px-12 flex justify-between items-center`}
       >
         <div className="flex items-center gap-4">
@@ -72,7 +72,7 @@ export default function AntigravityTourDetail() {
 
       <main className="relative z-10">
         {/* 1. Hero Section */}
-        <section className="relative w-full h-[85vh] min-h-[600px] overflow-hidden">
+        <section className="relative w-full h-[85vh] min-h-150 overflow-hidden">
           {/* Main Hero Background */}
           <div className="absolute inset-0">
             <img
@@ -292,7 +292,7 @@ export default function AntigravityTourDetail() {
                   </button>
                 ))}
               </div>
-              <div className="p-6 md:p-8 min-h-[200px]">
+              <div className="p-6 md:p-8 min-h-50">
                 {activeTab === 'inclusions' && (
                   <ul className="space-y-4 text-gray-300">
                     <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-green-400 shrink-0" /> Premium accommodation in 4-star properties</li>

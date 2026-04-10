@@ -37,14 +37,14 @@ export default function DeparturePricing({
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
       <div className="p-4 border-b border-gray-50">
-        <h3 className="text-[20px]  text-[#191974] mb-1">Select Departure City & Date</h3>
+        <p className="text-[26px]  text-[#191974] mb-1">Select Departure City & Date</p>
         <p className="text-gray-400 text-[13px] font-medium ">As seats fill, prices increase! Book your tour today.</p>
       </div>
 
       <div className="p-4 space-y-6">
         {/* City Selection */}
         <div className="space-y-4">
-          <p className="text-[#191974] text-[14px]  uppercase tracking-widest leading-none">Choose Departure City</p>
+          <p className="text-[#191974] text-[14px] ">Choose Departure City</p>
           <div className="flex flex-wrap gap-3">
             {cities.map((city) => (
               <button
@@ -65,7 +65,7 @@ export default function DeparturePricing({
 
         {/* Date Selection Grid */}
         <div className="space-y-4">
-          <p className="text-[#191974] text-[14px]  uppercase tracking-widest leading-none flex items-center gap-2">
+          <p className="text-[#191974] text-[14px]  flex items-center gap-2">
             Available Dates
             <span className="text-[11px] font-bold bg-blue-50 text-[#191974] px-2 py-0.5 rounded border border-blue-100 normal-case tracking-normal">Early Payment, Extra Savings!</span>
           </p>
@@ -76,7 +76,7 @@ export default function DeparturePricing({
                 key={d.id}
                 onClick={() => onDateChange(d.id)}
                 className={cn(
-                  "relative flex shrink-0 w-[180px] rounded-xl border-2 transition-all p-0 overflow-hidden group",
+                  "relative flex shrink-0 w-50 rounded-xl border-2 transition-all p-0 overflow-hidden group",
                   selectedDateId === d.id
                     ? "border-[#191974] bg-[#191974]/5 shadow-lg shadow-blue-500/5"
                     : "border-gray-100 hover:border-gray-200 bg-white"
@@ -91,14 +91,14 @@ export default function DeparturePricing({
                 </div>
 
                 {/* Main Content */}
-                <div className="flex-1 p-3 text-left flex flex-col justify-between h-full min-h-[110px]">
+                <div className="flex-1 p-3 text-left flex flex-col justify-between h-full min-h-27.5">
                   <div>
                     <p className={cn(
-                      "text-[10px] font-bold uppercase mb-0.5",
+                      "text-[10px]  mb-0.5",
                       selectedDateId === d.id ? "text-[#191974]" : "text-gray-400"
                     )}>{d.day}</p>
                     <p className="text-2xl  text-[#191974] leading-none mb-2">{d.date}</p>
-                    <p className="text-[16px]  text-[#191974]">â‚¹{d.price.toLocaleString('en-IN')}</p>
+                    <p className="text-[16px]  text-[#191974]">{d.price.toLocaleString('en-IN')}</p>
                   </div>
 
                   {d.savings > 0 && (
@@ -127,7 +127,7 @@ export default function DeparturePricing({
           <div className="p-4 bg-orange-50 border border-orange-100 rounded-xl flex items-start gap-3">
             <div className="mt-0.5"><Info className="w-4 h-4 text-orange-500" /></div>
             <p className="text-[12px] text-orange-700 leading-relaxed">
-              <span className="font-bold">Save Up To â‚¹15,000</span> With Full Payment Between 180 - 209 Days Before Departure.
+              <span>Save Up To â‚¹15,000</span> With Full Payment Between 180 - 209 Days Before Departure.
               Only one available date left for this route!
             </p>
           </div>
