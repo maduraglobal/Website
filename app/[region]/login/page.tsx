@@ -17,6 +17,17 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Redirect if already logged in
+  React.useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        router.push('/admin');
+      }
+    };
+    checkUser();
+  }, [supabase, router]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -28,12 +39,12 @@ export default function LoginPage() {
     });
 
     if (authError) {
-      setError(authError.message);
+      setError("Incorrect email or password. Please try again.");
       setLoading(false);
       return;
     }
 
-    router.push(`/${region}`);
+    router.push('/admin');
     router.refresh();
   };
 

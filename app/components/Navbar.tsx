@@ -6,7 +6,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { countryConfigs } from "../../config/country";
 import LoginPopup from "./LoginPopup";
-import { Globe } from "lucide-react";
+import { Globe, ShieldCheck } from "lucide-react";
+import { createClient } from '@/utils/supabase/client';
 
 const destinations = {
   // ... existing destinations ...
@@ -39,7 +40,9 @@ export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [sidebarDestRegion, setSidebarDestRegion] = useState<DestinationKey>("India");
+  const [user, setUser] = useState<any>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const supabase = createClient();
 
   const currentRegionCode = (pathname?.split('/')[1] || 'en-in').toLowerCase();
   const activeCountryConfig = countryConfigs[currentRegionCode] || countryConfigs['en-in'];
@@ -85,11 +88,26 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ''; };
   }, [sidebarOpen]);
 
+  // Handle Session
+  useEffect(() => {
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user || null);
+    };
+    getSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: string, session: any) => {
+      setUser(session?.user || null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [supabase]);
+
   return (
     <>
       <div className="w-full flex flex-col fixed top-0 left-0 z-100 shadow-md">
 
-        {/* ðŸ”· TOP HEADER */}
+        {/* 🔹 TOP HEADER */}
         <div className="bg-white text-[#191974] px-4 lg:px-8 py-3 flex items-center justify-between">
 
           {/* Logo */}
@@ -100,6 +118,7 @@ export default function Navbar() {
               width={160}
               height={50}
               className="object-contain"
+              style={{ height: 'auto' }}
               priority
             />
           </Link>
@@ -117,6 +136,7 @@ export default function Navbar() {
                 onChange={(e) => { setQuery(e.target.value); setIsOpen(true); }}
                 placeholder='Search "Destination"'
                 className="w-full px-4 py-1.5 rounded-full border border-[#191974] text-[13px] outline-none focus:border-[#ee2229] transition-colors"
+                suppressHydrationWarning
               />
               {isOpen && (
                 <div className="absolute w-full bg-white shadow-2xl rounded-xl mt-2 z-50 border border-gray-100 overflow-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
@@ -223,7 +243,9 @@ export default function Navbar() {
             </div>
 
             {/* Login */}
-            <Link href={`/${currentRegionCode}/login`} className="hidden md:block text-[14px] font-bold hover:text-[#ee2229] transition-colors">Login</Link>
+            <Link href={`/${currentRegionCode}/login`} className="hidden md:block text-[14px] font-bold hover:text-[#ee2229] transition-colors">
+              {user ? 'Login' : 'Login'}
+            </Link>
 
             {/* Country Selector */}
             <div className="relative group cursor-pointer z-150">
@@ -290,6 +312,7 @@ export default function Navbar() {
               onClick={() => setSidebarOpen(true)}
               className="flex flex-col justify-center items-center w-10 h-10 rounded-lg border border-gray-200 hover:border-[#191974] hover:bg-gray-50 transition-all gap-1.5 shrink-0"
               aria-label="Open menu"
+              suppressHydrationWarning
             >
               <span className="w-5 h-0.5 bg-[#191974] rounded-full transition-all" />
               <span className="w-5 h-0.5 bg-[#191974] rounded-full transition-all" />
@@ -338,6 +361,14 @@ export default function Navbar() {
 
           {/* Scrollable Menu */}
           <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden">
+
+            {/* User Greeting Section */}
+            <div className="px-6 py-6 mb-2 bg-[#191974]/2 border-b border-gray-100">
+              <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mb-1.5 ">Welcome</p>
+              <h3 className="text-[22px] font-bold text-[#191974] tracking-tight">
+                {user ? `Hello ${user.user_metadata?.full_name || user.email?.split('@')[0] || 'Member'}` : 'Hello Folks'}
+              </h3>
+            </div>
 
             {/* â”€â”€â”€ DESTINATIONS â”€â”€â”€ */}
             <div className="border-b border-gray-100">
@@ -499,6 +530,8 @@ export default function Navbar() {
                 {label}
               </Link>
             ))}
+
+            {/* --- ADMIN OPTIONS REMOVED --- */}
 
           </div>
 

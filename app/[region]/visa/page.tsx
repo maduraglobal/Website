@@ -7,6 +7,7 @@ import { Search, ChevronLeft, ChevronRight, Star, MapPin, CheckCircle2, ShieldCh
 import { motion } from 'framer-motion';
 
 import { destinations } from '@/app/data/visaData';
+import { formatRegionalPrice } from '@/config/country';
 
 // Experts Data
 const experts = [
@@ -128,7 +129,7 @@ export default function VisaServicesPage() {
                 >
                   <Link
                     href={`/${region}/visa/${dest.slug}`}
-                    className="group relative rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 cursor-pointer block h-[450px] bg-white"
+                    className="group relative rounded-[32px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 cursor-pointer block h-[480px] bg-white"
                   >
                     {/* Background Image */}
                     <div className="absolute inset-0">
@@ -137,47 +138,47 @@ export default function VisaServicesPage() {
                         alt={dest.name}
                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent opacity-90 group-hover:from-black transition-all"></div>
+                      <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/30 to-black/10 transition-all"></div>
                     </div>
 
                     {/* Visa Type Badge */}
                     <div className="absolute top-6 right-6 z-10">
-                      <div className="bg-white/10 backdrop-blur-md border border-white/20 text-white text-[9px]  tracking-widest px-4 py-2 rounded-full uppercase">
-                        {dest.type}
+                      <div className="bg-white/10 backdrop-blur-md border border-white/20 text-white text-[9px]  tracking-[0.2em] px-3 py-1.5 rounded-full uppercase">
+                        {dest.type || 'E-VISA'}
                       </div>
                     </div>
 
                     {/* Content Overlay */}
-                    <div className="absolute inset-0 p-8 flex flex-col justify-end text-white z-10">
-                      <div className="flex justify-center mb-6 transform group-hover:-translate-y-2 transition-transform duration-500">
-                        <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-2xl">
+                    <div className="absolute inset-x-0 bottom-0 p-6 flex flex-col items-center text-white z-10">
+                      <div className="mb-4 transform group-hover:-translate-y-2 transition-transform duration-500">
+                        <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-2xl bg-white/20 backdrop-blur-sm p-0.5">
                           <img
                             src={`https://flagcdn.com/w160/${dest.flag}.png`}
                             alt={dest.name}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover rounded-full"
                           />
                         </div>
                       </div>
 
-                      <h3 className="text-3xl  tracking-tight text-center mb-6 drop-shadow-xl ">
+                      <h3 className="text-[24px]  tracking-tight text-center mb-6 drop-shadow-xl ">
                         {dest.name}
                       </h3>
 
-                      <div className="grid grid-cols-2 gap-y-4 gap-x-4 border-t border-white/10 pt-6 mb-8">
+                      <div className="w-full grid grid-cols-2 gap-4 border-t border-white/10 pt-5 mb-6">
                         <div className="text-center">
-                          <p className="text-[10px]  tracking-widest text-white/40  mb-1">Validity</p>
-                          <p className="text-[13px]  text-white/90">{dest.valid}</p>
+                          <p className="text-[9px]  tracking-[0.2em] text-white/40 uppercase mb-1">Validity</p>
+                          <p className="text-[14px] font-bold text-white uppercase">{dest.valid || '30 DAYS'}</p>
                         </div>
                         <div className="text-center border-l border-white/10">
-                          <p className="text-[10px]  tracking-widest text-white/40 mb-1">Starting Price</p>
-                          <p className="text-[13px]  text-[#ee2229]">{dest.price ? `₹${dest.price}` : 'On Request'}</p>
+                          <p className="text-[9px]  tracking-[0.2em] text-white/40 uppercase mb-1">Starting Price</p>
+                          <p className="text-[14px] font-bold text-[#ee2229]">
+                            {dest.price ? formatRegionalPrice(dest.price, region) : 'ON REQUEST'}
+                          </p>
                         </div>
                       </div>
 
-                      <div className="space-y-4">
-                        <div className="bg-[#ee2229] group-hover:bg-[#191974] text-white py-4 rounded-2xl text-center  text-[11px] tracking-[0.2em] transition-all shadow-xl shadow-red-500/10 active:scale-95 uppercase">
-                          Get Started Now
-                        </div>
+                      <div className="w-full bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white py-3.5 rounded-xl text-center  text-[11px] font-bold tracking-[0.2em] transition-all shadow-xl shadow-red-500/20 active:scale-95 uppercase">
+                        Get Started Now
                       </div>
                     </div>
                   </Link>

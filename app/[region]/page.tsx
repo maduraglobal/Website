@@ -15,90 +15,11 @@ import TestimonialsDraggable from "../components/TestimonialsDraggable";
 import TestimonialsDraggableInHero from "../components/TestimonialsDraggableInHero";
 import { Users, Globe, Award, Star as StarIcon } from "lucide-react";
 import TourInclusions from "../components/tours/TourInclusions";
+import TourCard from "../components/tours/TourCard";
 
 const supabase = createClient();
 
-function FeaturedTourCard({ tour, region }: { tour: any, region: string }) {
-  const [imgError, setImgError] = React.useState(false);
-  const fallbackImg = "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800";
-  const displayImg = (!imgError && tour.image_url) ? tour.image_url : fallbackImg;
 
-  return (
-    <motion.div
-      whileHover={{ y: -8, scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="bg-white/70 backdrop-blur-md border border-white/20 rounded-4xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.12)] transition-all duration-500 group flex flex-col h-full relative"
-    >
-      {/* Glow Effect on Hover */}
-      <div className="absolute inset-0 bg-linear-to-br from-[#ee2229]/5 to-[#191974]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-      <Link href={`/${region}/tours/${tour.slug}`} className="relative block h-45 shrink-0 overflow-hidden m-2 rounded-3xl">
-        <img
-          src={displayImg}
-          alt={tour.title}
-          onError={() => setImgError(true)}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-        />
-        <div className="absolute top-3 left-3">
-          <span className="bg-black/40 backdrop-blur-md text-white text-[9px]  px-3 py-1.5 rounded-full border border-white/20  tracking-widest">
-            {tour.duration}
-          </span>
-        </div>
-        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent " />
-      </Link>
-
-      <div className="p-4 flex flex-col flex-1 relative z-10">
-
-
-        <Link href={`/${region}/tours/${tour.slug}`}>
-          <h3 className="text-[18px] font-bold text-[#ee2229] leading-tight mb-2 group-hover:underline">
-            {tour.title}
-          </h3>
-        </Link>
-
-        {/* Details list */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {["Flights", "Hotels"].map(tag => (
-            <span key={tag} className="text-[10px] font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-md">{tag}</span>
-          ))}
-        </div>
-
-        {/* Tour Inclusions Icons */}
-        <TourInclusions className="mb-4" />
-
-        <div className="border-t border-gray-100 pt-4">
-          <div className="flex items-end justify-between mb-4">
-            <div>
-              <p className="text-[14px] text-gray-400 ">Starting at</p>
-              <p className="text-[26px] font-bold text-[#191974] tracking-tight">{formatRegionalPrice(tour.base_price_inr, region)}</p>
-            </div>
-            <div className="text-right">
-              <p className="text-[10px] font-bold text-[#ee2229] uppercase tracking-widest">Low EMI</p>
-              <p className="text-[12px] font-bold text-[#191974]">{formatRegionalPrice(tour.base_price_inr ? Math.round(tour.base_price_inr * 1.15 / 12) : 5259, region)}/mo</p>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between gap-2">
-            <Link
-              href={`/${region}/tours/${tour.slug}`}
-              className="flex-1 text-center text-[#191974] font-bold text-[14px] hover:underline"
-            >
-              Details
-            </Link>
-            <button
-              className="book-now-btn flex-[1.5] bg-[#191974] hover:bg-[#ee2229] text-white py-3.5 rounded-full text-[14px] font-bold transition-all active:scale-95 shadow-lg shadow-blue-900/10 flex items-center justify-center"
-              data-package={tour.title}
-              data-price={tour.base_price_inr || '0'}
-              data-original-price={tour.base_price_inr ? Math.round(tour.base_price_inr * 1.15) : '0'}
-            >
-              Book Now
-            </button>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
 
 const heroSlides = [
   {
@@ -181,7 +102,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         const { data, error } = await supabase
           .from('tours')
           .select('*')
-          .limit(4)
+          .limit(3)
           .order('rating', { ascending: false });
 
         if (error) {
@@ -373,9 +294,9 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                 <p className="text-gray-500 text-xs">Please check back soon.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                 {displayTours.map((tour, idx) => (
-                  <FeaturedTourCard key={idx} tour={tour} region={region} />
+                  <TourCard key={idx} tour={tour} destinationSlug={tour.slug} region={region} />
                 ))}
               </div>
             )}
