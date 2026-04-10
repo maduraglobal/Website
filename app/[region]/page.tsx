@@ -16,6 +16,7 @@ import TestimonialsDraggableInHero from "../components/TestimonialsDraggableInHe
 import { Users, Globe, Award, Star as StarIcon } from "lucide-react";
 import TourInclusions from "../components/tours/TourInclusions";
 import TourCard from "../components/tours/TourCard";
+import VerticalTourCard from "../components/tours/VerticalTourCard";
 
 const supabase = createClient();
 
@@ -296,7 +297,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                 {displayTours.map((tour, idx) => (
-                  <TourCard key={idx} tour={tour} destinationSlug={tour.slug} region={region} />
+                  <VerticalTourCard key={idx} tour={tour} region={region} />
                 ))}
               </div>
             )}

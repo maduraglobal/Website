@@ -1,8 +1,7 @@
 "use client";
-
-import React, { useState } from 'react';
+import React from 'react';
 import { cn } from '@/utils/cn';
-import { ChevronDown, Utensils } from 'lucide-react';
+import { Dot } from 'lucide-react';
 
 type ItineraryDay = {
   day: number;
@@ -16,82 +15,42 @@ interface ItineraryTimelineProps {
 }
 
 export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps) {
-  const [expandedDays, setExpandedDays] = useState<number[]>([1]);
-
-  const toggleDay = (day: number) => {
-    setExpandedDays(prev =>
-      prev.includes(day)
-        ? prev.filter(d => d !== day)
-        : [...prev, day]
-    );
+  // Hardcoded dates for demo matching the image "04 Jun, 26"
+  const getDayDate = (dayIdx: number) => {
+    const baseDate = 4;
+    return `${baseDate + dayIdx < 10 ? '0' : ''}${baseDate + dayIdx} Jun, 26`;
   };
 
-  const expandAll = () => setExpandedDays(itinerary.map(i => i.day));
-  const collapseAll = () => setExpandedDays([]);
-
   return (
-    <div className="flex flex-col gap-4 ">
-      <div className="flex justify-between items-center border-b border-gray-100 pb-4">
-        
-        <div className="flex gap-4">
-          <button onClick={expandAll} className="text-[#ee2229]  text-[10px] hover:text-[#191974] transition-colors ">Expand All</button>
-          <span className="text-gray-100 ">|</span>
-          <button onClick={collapseAll} className="text-[#ee2229]  text-[10px] hover:text-[#191974] transition-colors ">Collapse All</button>
-        </div>
-      </div>
+    <div className="flex flex-col gap-0 relative pl-4 lg:pl-0">
+      {/* Vertical Line */}
+      <div className="absolute left-[7px] top-6 bottom-6 w-[2px] bg-gray-100 z-0"></div>
 
-      <div className="relative pl-10 space-y-0 before:content-[''] before:absolute before:left-[14px] before:top-2 before:bottom-2 before:w-[2px] before:bg-gray-100">
-        {itinerary.map((item) => (
-          <div key={item.day} className="relative">
-            {/* Timeline Dot */}
-            <div className={cn(
-              "absolute -left-[35px] top-4 w-[16px] h-[16px] rounded-full border-[3px] border-white shadow-sm z-10 transition-all duration-300",
-              expandedDays.includes(item.day) ? "bg-[#ee2229] scale-110" : "bg-gray-300"
-            )} />
+      {itinerary.map((item, idx) => (
+        <div key={item.day} className="relative pb-10 group">
+          {/* Timeline Dot */}
+          <div className={cn(
+            "absolute left-0 top-[6px] w-[16px] h-[16px] rounded-full border-2 border-white shadow-sm z-10 transition-all duration-300",
+            idx === 0 ? "bg-[#191974]" : "bg-gray-200 group-hover:bg-[#191974]"
+          )}></div>
 
-            {/* Content Item */}
-            <div className={cn(
-              "transition-all duration-300 border-b border-gray-50 last:border-0",
-              expandedDays.includes(item.day) ? "bg-gray-50/30" : "bg-transparent"
+          {/* Content */}
+          <div className="pl-8 space-y-1">
+            <p className="text-[13px] text-gray-500 font-medium">
+              Day {item.day} / {getDayDate(idx)}
+            </p>
+            <h4 className={cn(
+               "text-[16px] font-bold leading-tight group-hover:underline transition-all cursor-pointer",
+               idx === 0 ? "text-[#191974]" : "text-gray-900"
             )}>
-              <button
-                onClick={() => toggleDay(item.day)}
-                className="w-full flex items-center justify-between py-4 pr-4 text-left hover:bg-gray-50/80 transition-colors group"
-              >
-                <div className="flex items-baseline gap-4">
-                  <span className="text-[11px]  text-[#ee2229] uppercase tracking-widest whitespace-nowrap opacity-80">Day {item.day}</span>
-                  <h4 className="text-[16px]  text-[#191974] tracking-tight leading-tight group-hover:text-[#ee2229] transition-colors">{item.title}</h4>
-                </div>
-                <div className={cn(
-                  "shrink-0 transition-all",
-                  expandedDays.includes(item.day) ? "text-[#ee2229] rotate-180" : "text-gray-400"
-                )}>
-                  <ChevronDown className="w-4 h-4" strokeWidth={3} />
-                </div>
-              </button>
-
-              <div className={cn(
-                "transition-all duration-300 overflow-hidden",
-                expandedDays.includes(item.day) ? "max-h-[1500px] opacity-100" : "max-h-0 opacity-0"
-              )}>
-                <div className="pb-6 pr-6">
-                  <div className="text-[14px] text-gray-600 font-medium leading-relaxed mb-4 whitespace-pre-line">
-                    {item.description}
-                  </div>
-
-                  {item.meals && (
-                    <div className="flex items-center gap-2 text-gray-400">
-                      <Utensils className="w-3.5 h-3.5" />
-                      <span className="text-[11px] font-bold uppercase tracking-widest mr-1">Meals:</span>
-                      <span className="text-[12px] text-gray-600 font-bold">{item.meals}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
+              {item.title} <span className="font-normal text-gray-400 ml-1">(1 Night)</span>
+            </h4>
+            
+            {/* Description only shows if it's the first day in this slim view, or we can make it toggleable. 
+                Matching the image closely - it shows just the titles in a list. */}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 }

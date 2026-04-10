@@ -63,7 +63,7 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-background flex">
 
-      {/* Left Panel â€” Branding */}
+      {/* Left Panel — Branding */}
       <div className="hidden lg:flex w-1/2 bg-[#191974] relative overflow-hidden flex-col justify-between p-12">
         <div className="absolute top-[-150px] left-[-150px] w-[500px] h-[500px] bg-[#00a1e5] opacity-15 rounded-full blur-[140px]"></div>
         <div className="absolute bottom-[-100px] right-[-100px] w-[400px] h-[400px] bg-[#ee2229] opacity-10 rounded-full blur-[120px]"></div>
@@ -85,10 +85,10 @@ export default function SignupPage() {
 
           <div className="flex flex-col gap-4">
             {[
-              { icon: "âœˆï¸", text: "Exclusive member-only tour pricing" },
-              { icon: "ðŸ””", text: "Early access to new destinations" },
-              { icon: "ðŸ‘¨â€ðŸ‘©â€ðŸ‘§â€ðŸ‘¦", text: "Save traveler profiles for quick booking" },
-              { icon: "ðŸŽ", text: "Earn loyalty points on every trip" }
+              { icon: "✈️", text: "Exclusive member-only tour pricing" },
+              { icon: "🔔", text: "Early access to new destinations" },
+              { icon: "👨‍👩‍👧‍👦", text: "Save traveler profiles for quick booking" },
+              { icon: "🎁", text: "Earn loyalty points on every trip" }
             ].map((f, i) => (
               <div key={i} className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/10">
                 <span className="text-[20px]">{f.icon}</span>
@@ -99,11 +99,11 @@ export default function SignupPage() {
         </div>
 
         <div className="relative z-10">
-          <p className="text-white/40 text-[12px] ">Â© 2026 Madura Travel. All rights reserved.</p>
+          <p className="text-white/40 text-[12px] ">© 2026 Madura Travel. All rights reserved.</p>
         </div>
       </div>
 
-      {/* Right Panel â€” Signup Form */}
+      {/* Right Panel — Signup Form */}
       <div className="flex-1 flex items-center justify-center p-6 md:p-12">
         <div className="w-full max-w-lg">
 
@@ -158,22 +158,22 @@ export default function SignupPage() {
             <div className="flex flex-col gap-1.5">
               <label className="text-[12px] font-bold text-gray-600 tracking-wide  px-1">Phone Number</label>
               <div className="flex gap-2">
-                <select className="border border-gray-200 p-3.5 rounded-xl text-[14px] bg-gray-50 text-gray-700 font-semibold shrink-0 w-[90px] outline-none focus:border-[#191974] focus:ring-2 focus:ring-[#191974]/10 focus:bg-white cursor-pointer transition-all appearance-none text-center">
-                  <option value="+91">ðŸ‡®ðŸ‡³ +91</option>
-                  <option value="+1">ðŸ‡ºðŸ‡¸ +1</option>
-                  <option value="+44">ðŸ‡¬ðŸ‡§ +44</option>
-                  <option value="+61">ðŸ‡¦ðŸ‡º +61</option>
-                  <option value="+65">ðŸ‡¸ðŸ‡¬ +65</option>
-                  <option value="+971">ðŸ‡¦ðŸ‡ª +971</option>
-                  <option value="+81">ðŸ‡¯ðŸ‡µ +81</option>
-                  <option value="+49">ðŸ‡©ðŸ‡ª +49</option>
-                  <option value="+33">ðŸ‡«ðŸ‡· +33</option>
-                  <option value="+41">ðŸ‡¨ðŸ‡­ +41</option>
-                  <option value="+86">ðŸ‡¨ðŸ‡³ +86</option>
-                  <option value="+60">ðŸ‡²ðŸ‡¾ +60</option>
-                  <option value="+66">ðŸ‡¹ðŸ‡­ +66</option>
-                  <option value="+977">ðŸ‡³ðŸ‡µ +977</option>
-                  <option value="+94">ðŸ‡±ðŸ‡° +94</option>
+                <select className="border border-gray-200 p-3.5 rounded-xl text-[14px] bg-gray-50 text-gray-700 font-semibold shrink-0 w-[95px] outline-none focus:border-[#191974] focus:ring-2 focus:ring-[#191974]/10 focus:bg-white cursor-pointer transition-all appearance-none text-center">
+                  <option value="+91">IN +91</option>
+                  <option value="+1">US +1</option>
+                  <option value="+44">UK +44</option>
+                  <option value="+61">AU +61</option>
+                  <option value="+65">SG +65</option>
+                  <option value="+971">AE +971</option>
+                  <option value="+81">JP +81</option>
+                  <option value="+49">DE +49</option>
+                  <option value="+33">FR +33</option>
+                  <option value="+41">CH +41</option>
+                  <option value="+86">CN +86</option>
+                  <option value="+60">MY +60</option>
+                  <option value="+66">TH +66</option>
+                  <option value="+977">NP +977</option>
+                  <option value="+94">LK +94</option>
                 </select>
                 <input required type="tel" placeholder="98765 43210" className="flex-1 border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] focus:ring-2 focus:ring-[#191974]/10 bg-gray-50 focus:bg-white transition-all" onChange={e => setFormData({ ...formData, phone: e.target.value })} />
               </div>

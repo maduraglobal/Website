@@ -1,18 +1,19 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import TourTabs from '@/app/components/tours/TourTabs';
 import ItineraryTimeline from '@/app/components/tours/ItineraryTimeline';
 import AccommodationTable from '@/app/components/tours/AccommodationTable';
-import BookingSidebar from '@/app/components/tours/BookingSidebar';
 import DeparturePricing from '@/app/components/tours/DeparturePricing';
 import TourInclusions from '@/app/components/tours/TourInclusions';
 import Link from 'next/link';
 import {
-  Clock, MapPin, ShieldCheck, FileText, Info, AlertCircle,
-  CheckCircle2, Star, Calendar, Users, Camera, ChevronRight, Home,
-  ArrowUpCircle, Zap, Plane, Gem, Check, X
+  Clock, MapPin, CheckCircle2, Star, Calendar, Users, Camera, ChevronRight,
+  Plane, Check, X, Utensils, Phone, MessageCircle, Heart, Download, Mail, Share2,
+  Map as MapIcon, HelpCircle, Bed, Bus, Shield
 } from 'lucide-react';
+import { formatRegionalPrice } from '@/config/country';
+import TourMap from '@/app/components/tours/TourMap';
 
 interface TourDetailContentProps {
   tour: any;
@@ -29,24 +30,8 @@ const TABS = [
   { id: 'upgrades', label: 'Upgrades' },
 ];
 
-const MOCK_CITIES = ["Mumbai", "Bangalore", "Chennai", "Cochin", "Hyderabad", "Delhi", "Kolkata"];
-const MOCK_DATES: Record<string, any[]> = MOCK_CITIES.reduce((acc, city) => {
-  acc[city] = [
-    { id: `${city}-1`, day: "THU", date: "15", month: "Oct", year: "2026", price: 536000, savings: 15000, isLowest: true },
-    { id: `${city}-2`, day: "SAT", date: "22", month: "Oct", year: "2026", price: 541000, savings: 10000 },
-    { id: `${city}-3`, day: "TUE", date: "05", month: "Nov", year: "2026", price: 529000, savings: 15000 },
-    { id: `${city}-4`, day: "FRI", date: "18", month: "Nov", year: "2026", price: 536000, savings: 5000 },
-  ];
-  return acc;
-}, {} as Record<string, any[]>);
-
 export default function TourDetailContent({ tour, itinerary, region }: TourDetailContentProps) {
   const [activeTab, setActiveTab] = useState('itinerary');
-  const [selectedCity, setSelectedCity] = useState(MOCK_CITIES[0]);
-  const [selectedDateId, setSelectedDateId] = useState(MOCK_DATES[MOCK_CITIES[0]][0].id);
-
-  const selectedDateObj = MOCK_DATES[selectedCity].find(d => d.id === selectedDateId);
-  const formattedDate = selectedDateObj ? `${selectedDateObj.date} ${selectedDateObj.month} ${selectedDateObj.year}` : "Select Date";
 
   const scrollToSection = (id: string) => {
     setActiveTab(id);
@@ -58,227 +43,304 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
     }
   };
 
+  const cityList = tour.cities?.split('▶') || ["Hanoi", "Halong Bay", "Hoi An", "Da Nang"];
+
   return (
-    <div className="text-[14px] bg-white text-gray-900">
-      <TourTabs tabs={TABS} activeTab={activeTab} onTabChange={scrollToSection} />
-
-      <div className="max-w-7xl mx-auto px-4 py-4">
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-[12px] font-bold text-gray-400 mb-8 overflow-x-auto no-scrollbar whitespace-nowrap">
-          <Link href={`/${region}`} className="hover:text-[#191974] flex items-center gap-1 group">
-            <Home className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" /> Home
-          </Link>
-          <ChevronRight className="w-3 h-3 opacity-30" />
-          <Link href={`/${region}/tours`} className="hover:text-[#191974]">Tours</Link>
-          <ChevronRight className="w-3 h-3 opacity-30" />
-          <span className="text-[#191974]">{tour.title}</span>
-        </nav>
-
+    <div className="bg-white min-h-screen pb-20">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Main 2-Column Grid */}
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Main Content */}
-          <div className="lg:w-2/3 flex flex-col gap-6">
 
-            {/* Departure & Pricing Section - NEW */}
-            <section id="pricing">
-              <DeparturePricing
-                cities={MOCK_CITIES}
-                dates={MOCK_DATES}
-                selectedCity={selectedCity}
-                selectedDateId={selectedDateId}
-                region={region}
-                onCityChange={(city) => {
-                  setSelectedCity(city);
-                  setSelectedDateId(MOCK_DATES[city][0].id);
-                }}
-                onDateChange={setSelectedDateId}
-              />
-            </section>
-
-            {/* TOUR HIGHLIGHTS */}
-            <section>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-1.5 h-6 bg-[#ee2229] rounded-full" />
-                <p className="text-[26px]  text-[#191974]">Quick Highlights</p>
+          {/* LEFT COLUMN (2/3) */}
+          <div className="lg:w-2/3 space-y-8">
+            {/* Badges & Title Section */}
+            <div className="space-y-4 pt-6">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="bg-[#ee2229] text-white text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1 uppercase">
+                  GROUP TOUR <span className="bg-white/20 px-1 rounded">ASPV</span>
+                </span>
+                <span className="text-gray-500 text-[12px] font-medium flex items-center gap-1 uppercase tracking-wider">
+                  Experience
+                </span>
+                <span className="text-gray-500 text-[12px] font-medium flex items-center gap-1 uppercase tracking-wider">
+                  <CheckCircle2 className="w-3 h-3 text-green-500" /> Culture
+                </span>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+
+              <h1 className="text-[36px] font-bold text-gray-900 leading-tight">
+                {tour.title}
+              </h1>
+
+              <div className="flex items-center gap-4 text-[13px] font-medium">
+                <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700">{tour.duration || "5 Days"}</span>
+                <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700">1 Country</span>
+                <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700 flex items-center gap-1">
+                  4 Cities <HelpCircle className="w-3 h-3 text-gray-400" />
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 text-[13px] text-gray-600 border-b border-gray-50 pb-4">
+                <MapPin className="w-4 h-4 text-[#ee2229]" />
+                <span className="flex items-center gap-2 flex-wrap">
+                  Vietnam Hanoi (1N) <span className="text-gray-300">---&gt;</span> Halong (1N) <span className="text-gray-300">---&gt;</span> Hoi An <span className="text-gray-300">---&gt;</span> Da Nang (2N)
+                </span>
+              </div>
+
+              <button
+                onClick={() => scrollToSection('itinerary')}
+                className="text-[#191974] font-bold text-[14px] flex items-center gap-1 hover:underline"
+              >
+                View day-wise tour itinerary <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Tour Includes Icons Row (Image 2 style) */}
+            <div className="py-8 border-t border-gray-100">
+              <h3 className="text-[14px] font-bold text-gray-900 mb-6 uppercase tracking-wider">Tour Includes</h3>
+              <div className="grid grid-cols-3 md:grid-cols-6 gap-8">
                 {[
-                  { icon: Camera, text: "Scenic Visuals", color: "text-blue-500" },
-                  { icon: Users, text: "Group Experience", color: "text-purple-500" },
-                  { icon: ShieldCheck, text: "A-Grade Safety", color: "text-[#191974]" },
-                  { icon: Star, text: "Premium Service", color: "text-amber-500" }
+                  { icon: Bed, label: "Hotel" },
+                  { icon: Utensils, label: "Meals" },
+                  { icon: Plane, label: "Flight" },
+                  { icon: Camera, label: "Sightseeing" },
+                  { icon: Bus, label: "Transport" },
+                  { icon: Shield, label: "Visa" },
                 ].map((item, i) => (
-                  <div key={i} className="flex flex-col items-center justify-center gap-2 bg-gray-50/50 p-4 rounded-xl border border-gray-100 hover:bg-white hover:shadow-md transition-all text-center group">
-                    <item.icon className={`w-5 h-5 ${item.color} group-hover:scale-110 transition-transform`} />
-                    <span className="text-[11px]  text-[#191974] opacity-70 tracking-tighter ">{item.text}</span>
+                  <div key={i} className="flex flex-col items-center gap-2 text-center group cursor-pointer">
+                    <div className="w-14 h-14 bg-gray-50 border border-gray-100 rounded-2xl flex items-center justify-center text-[#191974] group-hover:bg-[#191974] group-hover:text-white transition-all">
+                      <item.icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-[10px] font-bold text-gray-400 ">{item.label}</span>
                   </div>
                 ))}
               </div>
-            </section>
-
-            {/* TOUR INCLUSIONS VISUAL - NEW */}
-            <section className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-              <TourInclusions variant="large" />
-            </section>
-
-            {/* 1. ITINERARY SECTION */}
-            <section id="itinerary" className="scroll-mt-40">
-              <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-2">
-                <div className="flex items-center gap-3">
-                  <h2 className="text-[26px]  text-[#191974] ">Day-Wise Itinerary</h2>
+              <div className="mt-8 p-5 rounded-2xl border border-blue-50 bg-blue-50/20 flex items-start gap-4">
+                <div className="w-10 h-10 bg-white shadow-sm rounded-full flex items-center justify-center text-blue-600 shrink-0">
+                  <Users className="w-5 h-5" />
                 </div>
-                <span className="text-[14px]  text-[#ee2229] bg-red-50 border border-red-100 px-3 py-1 rounded-sm tracking-widest ">{tour.duration}</span>
+                <p className="text-[13px] text-gray-700 font-medium leading-relaxed">
+                  Tour includes the services of Veena World's Tour Manager.
+                </p>
               </div>
-              <ItineraryTimeline itinerary={itinerary} />
-            </section>
+            </div>
 
-            {/* 2. TOUR DETAILS (ACCOMMODATION) SECTION */}
-            <section id="details" className="scroll-mt-40 bg-[#f7f7ff]/50 border border-[#191974]/5 px-6 py-8 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6 border-b border-[#191974]/10 pb-4">
-                <p className="text-[26px]  text-[#191974] tracking-tight">Hotel & Accommodations</p>
-              </div>
-              <AccommodationTable />
-            </section>
+            {/* Content Tabs */}
+            <div className="sticky top-[80px] z-40 bg-white">
+              <TourTabs tabs={TABS} activeTab={activeTab} onTabChange={scrollToSection} />
+            </div>
 
-            {/* 3. TOUR INFORMATION (INCLUSIONS / EXCLUSIONS) SECTION */}
-            <section id="info" className="scroll-mt-40">
-              <div className="flex items-center gap-3 mb-8 border-b border-gray-100 pb-4">
-                <p className="text-[26px]  text-[#191974] ">Policies & Information</p>
+            {/* Section: Itinerary (Day Wise) */}
+            <section id="itinerary" className="pt-16 space-y-6">
+              <div className="flex items-center justify-between border-b border-gray-50 pb-6">
+                <h2 className="text-[28px] font-bold text-gray-900">Itinerary <span className="text-gray-400 font-normal text-[14px] lowercase">(Day Wise)</span></h2>
+                <button className="text-[#191974] font-bold text-[14px] hover:underline flex items-center gap-1">View all days <ChevronRight className="w-4 h-4" /></button>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white border border-gray-100 p-4 rounded-2xl shadow-sm">
-                  <p className="text-[14px]  text-[#191974]  flex items-center gap-2  border-b border-[#191974]/10 pb-3">
-                    <CheckCircle2 className="w-5 h-5" />
-                    Tour Inclusions
-                  </p>
-                  <ul className="space-y-4">
-                    {(tour.inclusions || ["Economy class Airfare", "Internal Flights (if any)", "Visa Fees (Selected Countries)", "Daily Breakfast, Lunch & Dinner", "Professional Tour Manager", "Travel Insurance up to 70 yrs"]).map((item: string, i: number) => (
-                      <li key={i} className="flex gap-3 text-[13px] text-gray-500 items-start group">
-                        <Check className="w-4 h-4 text-[#191974] mt-0.5 shrink-0" />
-                        <span className="font-bold opacity-80 group-hover:text-[#191974] transition-colors">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="bg-white border border-gray-100 p-4 rounded-2xl shadow-sm">
-                  <p className="text-[14px]  text-[#ee2229]  flex items-center gap-2   border-b border-red-50 pb-3">
-                    <AlertCircle className="w-5 h-5" />
-                    Tour Exclusions
-                  </p>
-                  <ul className="space-y-4">
-                    {(tour.exclusions || ["GST (5%) and TCS (as applicable)", "Tips to Local Guides & Drivers", "Personal expenses (laundry, calls)", "Optional sightseeing", "Anything not in inclusions"]).map((item: string, i: number) => (
-                      <li key={i} className="flex gap-3 text-[13px] text-gray-400 items-start group">
-                        <div className="w-4 h-4 flex items-center justify-center mt-0.5 shrink-0">
-                          <X className="w-3.5 h-3.5 text-red-500" strokeWidth={3} />
-                        </div>
-                        <span className="font-bold opacity-70 group-hover:text-red-500 transition-colors">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+
+              <div className="bg-orange-50/40 p-5 rounded-2xl border border-orange-100 flex items-center justify-between shadow-sm">
+                <div className="flex items-center gap-3 text-[14px] text-gray-700 flex-wrap">
+                  <span className="px-3 py-1 bg-white rounded-lg border border-orange-200 text-orange-700 font-bold text-[12px]">Notice</span>
+                  Viewing itinerary for <span className="font-bold underline decoration-dotted">04 Jun 2026 from Mumbai</span>
+                  <button className="ml-4 text-[#191974] flex items-center gap-1 font-bold bg-white px-3 py-1 rounded-full border border-gray-200 hover:bg-gray-50 shadow-sm transition-all"><MapIcon className="w-3.5 h-3.5" /> Change Departure Date</button>
                 </div>
               </div>
-            </section>
 
-            {/* 4. NEED TO KNOW SECTION */}
-            <section id="needtoknow" className="scroll-mt-40 bg-[#191974] px-6 py-6 rounded-2xl text-white relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
-              <div className="flex items-center gap-3 mb-6 border-b border-white/10 pb-4 relative z-10">
-                <h2 className="text-[26px]">Important - Need to Know</h2>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
-                {[
-                  { title: "Weather", text: "Check local forecast before packing." },
-                  { title: "Documents", text: "Carry valid Passport & Visa copies." },
-                  { title: "Arrival", text: "Reach the airport 4 hours prior." },
-                  { title: "Currency", text: "Carry sufficient local currency." }
-                ].map((note, i) => (
-                  <div key={i} className="flex flex-col gap-1 bg-white/10 p-4 rounded-xl border border-white/10">
-                    <span className="text-[10px]   text-[#ee2229] tracking-widest">{note.title}</span>
-                    <span className="text-[13px] font-bold opacity-90">{note.text}</span>
+              <div className="flex flex-col xl:flex-row gap-10 mt-10">
+                <div className="flex-1">
+                  <ItineraryTimeline itinerary={itinerary} />
+                </div>
+                <div className="w-full xl:w-[320px] shrink-0 space-y-6">
+                  <div className="relative h-[220px] rounded-[32px] overflow-hidden shadow-xl group cursor-pointer border border-gray-100 ring-4 ring-white ring-offset-2 ring-offset-gray-50">
+                    <TourMap tourTitle={tour.title} />
+                    <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-all"></div>
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-gray-50 hover:scale-105 transition-transform">
+                      <MapIcon className="w-5 h-5 text-[#ee2229]" />
+                      <span className="text-[14px] font-bold text-[#191974]">Map View</span>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </section>
-
-            {/* 5. CANCELLATION POLICY SECTION */}
-            <section id="policy" className="scroll-mt-40">
-              <div className="flex items-center gap-3 mb-6 border-b border-gray-100 pb-4">
-                <p className="text-[26px]  text-[#191974] ">Cancellation Policy</p>
-              </div>
-              <div className="overflow-hidden border border-gray-100 rounded-xl shadow-sm">
-                <table className="w-full text-left ">
-                  <thead className="bg-[#191974] text-white">
-                    <tr>
-                      <th className="px-6 py-4 text-[11px]  tracking-widest ">No. of Days</th>
-                      <th className="px-6 py-4 text-[11px]  tracking-widest  text-right">Penalty Charges</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-50 bg-white">
+                  <div className="grid grid-cols-2 gap-4">
                     {[
-                      { days: "61 Days & More", penalty: "₹10,000 /-" },
-                      { days: "46 - 60 Days", penalty: "25% of Tour Cost" },
-                      { days: "31 - 45 Days", penalty: "50% of Tour Cost" },
-                      { days: "Less than 30 Days", penalty: "100% (No Refund)" }
-                    ].map((row, idx) => (
-                      <tr key={idx} className={row.days.includes("Less") ? "bg-red-50/50" : ""}>
-                        <td className="px-6 py-4 text-[13px] text-[#191974] ">{row.days}</td>
-                        <td className="px-6 py-4 text-[13px]  text-[#191974] text-right">{row.penalty}</td>
-                      </tr>
+                      { icon: Share2, label: "Send Itinerary" },
+                      { icon: Download, label: "Print Itinerary" },
+                      { icon: Mail, label: "Email Itinerary" },
+                      { icon: MapIcon, label: "Compare Tour" }
+                    ].map((act, i) => (
+                      <div key={i} className="flex flex-col items-center justify-center gap-3 p-5 bg-white border border-gray-100 rounded-2xl hover:border-[#191974] hover:shadow-lg transition-all cursor-pointer group text-center">
+                        <div className="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center text-gray-400 group-hover:text-[#191974] transition-colors">
+                          <act.icon className="w-5 h-5" />
+                        </div>
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-tight">{act.label}</span>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
-              </div>
-            </section>
-
-            {/* 6. UPGRADES SECTION - NEW */}
-            <section id="upgrades" className="scroll-mt-40">
-              <div className="flex items-center gap-3 mb-8 border-b border-gray-100 pb-4">
-                <h2 className="text-[24px]  text-[#191974] tracking-tight">Available Upgrades</h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[
-                  { title: "Business Class Airfare", icon: Plane, desc: "Experience luxury travel with premium seats and hospitality." },
-                  { title: "Private Transfers", icon: Zap, desc: "Skip the group coach and travel in your own private vehicle." },
-                  { title: "Room Upgrades", icon: Gem, desc: "Upgrade to Junior Suites or Beachfront villas locally." },
-                  { title: "Prime Seats", icon: ArrowUpCircle, desc: "Book front-row seats in the group coach for better views." }
-                ].map((up, i) => (
-                  <div key={i} className="flex gap-4 p-5 bg-white border border-gray-100 rounded-2xl hover:border-[#191974]/30 hover:shadow-xl transition-all group">
-                    <div className="w-12 h-12 rounded-xl bg-[#191974]/5 flex items-center justify-center shrink-0 group-hover:bg-[#ee2229]/10 transition-colors">
-                      <up.icon className="w-6 h-6 text-[#191974] group-hover:text-[#ee2229]" />
-                    </div>
-                    <div>
-                      <h4 className="text-[14px]  text-[#191974] mb-1">{up.title}</h4>
-                      <p className="text-[14px] text-gray-500 leading-normal mb-3">{up.desc}</p>
-                      <button className="text-[14px]  text-[#ee2229]  tracking-widest hover:underline flex items-center gap-1">Enquire Now <ChevronRight className="w-3 h-3" /></button>
-                    </div>
                   </div>
-                ))}
+                </div>
+              </div>
+
+              <div className="mt-12 bg-gray-50 p-8 rounded-[32px] space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-[18px] font-bold text-gray-900">Know, before you book</h3>
+                  <button className="text-[#191974] font-bold text-[14px] underline">Read More</button>
+                </div>
+                <div className="text-[13px] text-gray-600 space-y-3 leading-relaxed">
+                  <p><span className="font-bold text-gray-900">Please note:</span> Airline: On group tours, we generally fly with airlines that are group-friendly.</p>
+                  <p>Group tours are based on economy class, if you wish to travel by Premium Economy / Business Class / First Class, we can arrange the same at an additional cost subject to availability.</p>
+                </div>
               </div>
             </section>
 
-            {/* Compact Footer */}
-            <div className="mt-12 bg-gray-50 rounded-2xl p-8 border border-gray-100 text-center">
-              <h3 className="text-[26px]  text-[#191974] mb-2 tracking-tight">The Madura Standard</h3>
-              <p className="text-[14px]  text-gray-400 ">Expert travel guidance since 1986.</p>
-              <div className="flex flex-wrap justify-center gap-10">
-                {["Price Integrity", "Expert Managers", "Curated Hotels"].map((feature, i) => (
-                  <div key={feature} className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-[#ee2229]" />
-                    <span className="text-[14px]  text-[#191974] ">{feature}</span>
+            {/* Section: Accommodation (Image 4 Style) */}
+            <section id="details" className="pt-24 space-y-8">
+              <h2 className="text-[28px] font-bold text-gray-900">Tour details <span className="text-[14px] font-normal text-gray-400 ml-2 italic">Best facilities with no added cost.</span></h2>
+              <div className="bg-white rounded-[24px] border border-gray-200 overflow-hidden shadow-2xl">
+                <div className="flex border-b border-gray-200 overflow-x-auto bg-gray-50/30">
+                  {['Flight Details', 'Accommodation Details', 'Reporting & Dropping'].map((label, i) => (
+                    <button key={i} className={`flex-1 px-8 py-6 text-[14px] font-bold whitespace-nowrap transition-all ${i === 1 ? 'bg-[#191974] text-white' : 'text-gray-500 hover:text-[#191974] hover:bg-white'}`}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+                <div className="p-8">
+                  <AccommodationTable />
+                </div>
+              </div>
+            </section>
+
+            {/* Section: Information (Image 5 Style) */}
+            <section id="info" className="pt-24 space-y-8">
+              <h2 className="text-[28px] font-bold text-gray-900">Tour Information <span className="text-[14px] font-normal text-gray-400 ml-2 italic">Read this to prepare for your tour in the best way!</span></h2>
+              <div className="bg-white rounded-[24px] border border-gray-200 overflow-hidden shadow-2xl">
+                <div className="flex border-b border-gray-200 overflow-x-auto bg-gray-50/30">
+                  {['Tour Inclusions', 'Tour Exclusions', 'Advance Preparation'].map((label, i) => (
+                    <button key={i} className={`flex-1 px-8 py-6 text-[14px] font-bold whitespace-nowrap transition-all ${i === 0 ? 'bg-[#191974] text-white' : 'text-gray-500 hover:text-[#191974] hover:bg-white'}`}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+                <div className="p-10">
+                  <TourInclusions />
+                </div>
+              </div>
+            </section>
+
+          </div>
+
+          {/* RIGHT COLUMN (1/3) - SIDEBAR */}
+          <div className="lg:w-1/3 space-y-8 lg:sticky lg:top-[120px] h-fit pt-6">
+            {/* Testimonial Sidebar Card */}
+            <div className="bg-white p-8 rounded-[32px] border border-gray-100 shadow-xl space-y-8 relative overflow-hidden group hover:shadow-2xl transition-all ring-1 ring-gray-100">
+              <div className="flex items-center justify-between">
+                <div className="flex gap-2">
+                  <div className="w-8 h-8 rounded-full border border-gray-100 flex items-center justify-center text-gray-300 hover:bg-gray-50 cursor-pointer transition-all"><ChevronRight className="w-4 h-4 rotate-180" /></div>
+                  <div className="w-8 h-8 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 hover:bg-gray-50 cursor-pointer transition-all"><ChevronRight className="w-4 h-4" /></div>
+                </div>
+              </div>
+
+              <p className="text-[15px] text-gray-600 leading-[1.7] italic font-medium">
+                "We Enjoyed the trip...tour manager shreyash was extremely helpful and good natured person .. we would love to do more trips in future with veena world looking forward to it and good hospitality ..."
+              </p>
+
+              <div className="flex items-center justify-between pt-6 border-t border-gray-50">
+                <div>
+                  <p className="text-[14px] font-bold text-gray-900 leading-none mb-1">Manisha</p>
+                  <p className="text-[11px] text-gray-400 font-medium">Travelled Dec 22, 2025</p>
+                </div>
+                <div className="flex items-center gap-3 text-right">
+                  <div>
+                    <p className="text-[12px] font-bold text-gray-900 leading-none mb-1">Shreyas Sawant</p>
+                    <p className="text-[10px] text-gray-400 font-medium">Tour Manager</p>
+                  </div>
+                  <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center overflow-hidden border-2 border-white shadow-lg">
+                    <img src="https://i.pravatar.cc/100?img=12" alt="Avatar" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Main Price Card */}
+            <div className="bg-white rounded-[40px] border border-gray-100 shadow-2xl overflow-hidden ring-1 ring-gray-100">
+              {/* Top Section */}
+              <div className="p-10 space-y-6">
+                <div className="flex items-center justify-between p-4 bg-gray-50/50 rounded-2xl border border-gray-100">
+                  <div>
+                    <p className="text-[15px] font-bold text-[#191974]">Mumbai to Mumbai</p>
+                    <p className="text-[11px] text-gray-400 uppercase tracking-widest">Starts from</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">All-inclusive tour</p>
+                    <p className="text-[12px] text-gray-900 font-bold underline decoration-[#ee2229]">Mumbai to Mumbai</p>
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[42px] font-bold text-gray-900 tracking-tight leading-none">
+                    {formatRegionalPrice(tour.price || 105000, region)}
+                  </p>
+                  <p className="text-[12px] text-gray-400 font-medium pl-1">per person on twin sharing</p>
+                </div>
+              </div>
+
+              {/* Middle Section (Dark Blue) */}
+              <div className="bg-[#191974] p-8 space-y-8">
+                <p className="text-center text-white/50 text-[12px] font-medium tracking-wide">Secure your spot with our Best Price Guarantee.</p>
+
+                <button className="w-full bg-[#ffd600] hover:bg-[#ffea00] text-gray-900 py-5 rounded-[24px] font-bold text-[18px] transition-all transform active:scale-95 shadow-2xl flex items-center justify-center ring-4 ring-white/10">
+                  Dates & Prices
+                </button>
+
+                <div className="flex items-center justify-between pt-2">
+                  <button className="text-[13px] font-bold text-white flex items-center gap-2 hover:text-[#ffd600] transition-colors">
+                    EMI starts at <span className="text-[#ffd600] underline">₹10,224/mo</span> <ChevronRight className="w-4 h-4 bg-white/10 rounded-full" />
+                  </button>
+                  <button className="text-[13px] font-bold text-white flex items-center gap-2 hover:text-[#ffd600] transition-colors group">
+                    Pricing Table <ChevronRight className="w-4 h-4 bg-white/10 rounded-full group-hover:bg-[#ffd600] group-hover:text-gray-900" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Bottom Quick Actions Icons */}
+              <div className="p-6 grid grid-cols-4 gap-4 bg-white">
+                {[
+                  { icon: Heart, label: "Wishlist" },
+                  { icon: Download, label: "Download" },
+                  { icon: Mail, label: "Email" },
+                  { icon: Share2, label: "Share" }
+                ].map((act, i) => (
+                  <div key={i} className="flex flex-col items-center gap-2 cursor-pointer group">
+                    <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-gray-400 group-hover:bg-[#ee2229]/10 group-hover:text-[#ee2229] transition-all">
+                      <act.icon className="w-5 h-5" />
+                    </div>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{act.label}</span>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
 
-          {/* Sidebar */}
-          <div className="lg:w-1/3">
-            <BookingSidebar
-              tourName={tour.title}
-              price={selectedDateObj?.price || tour.price || 45000}
-              selectedCity={selectedCity}
-              selectedDate={formattedDate}
-              emiAmount={selectedDateObj ? `₹${(Math.round(selectedDateObj.price / 12)).toLocaleString('en-IN')}` : "₹5,219"}
-            />
+            {/* Want us to call you? Lead Form Box */}
+            <div className="bg-gray-900 p-10 rounded-[40px] shadow-2xl space-y-8 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700"></div>
+              <div className="relative z-10 space-y-2">
+                <h3 className="text-[24px] font-bold text-white">Need Help?</h3>
+                <p className="text-white/50 text-[14px]">Our experts are ready to call you back within 15 minutes.</p>
+              </div>
+              <div className="relative z-10 space-y-4">
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-white/40 uppercase tracking-widest ml-1">Full Name</label>
+                  <input type="text" placeholder="e.g. John Doe" className="w-full bg-white/10 border border-white/10 rounded-2xl px-5 py-4 text-[15px] text-white placeholder-white/20 outline-none focus:border-[#ffd600] focus:ring-1 focus:ring-[#ffd600] transition-all" />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-white/40 uppercase tracking-widest ml-1">Phone Number</label>
+                  <div className="flex gap-2">
+                    <div className="flex items-center gap-2 border border-white/10 rounded-2xl px-4 py-4 bg-white/10">
+                      <img src="https://flagcdn.com/w20/in.png" alt="IN" className="w-5 h-4 rounded-sm" />
+                      <span className="text-[15px] font-bold text-white">+91</span>
+                    </div>
+                    <input type="text" placeholder="Mobile Number" className="flex-1 bg-white/10 border border-white/10 rounded-2xl px-5 py-4 text-[15px] text-white placeholder-white/20 outline-none focus:border-[#ffd600] focus:ring-1 focus:ring-[#ffd600] transition-all" />
+                  </div>
+                </div>
+                <button className="w-full bg-[#ffd600] text-gray-900 py-5 rounded-2xl flex items-center justify-center gap-3 font-bold text-[16px] hover:bg-[#ffea00] active:scale-95 transition-all shadow-xl shadow-yellow-500/10 mt-6">
+                  <Phone className="w-5 h-5" /> Let's Talk!
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

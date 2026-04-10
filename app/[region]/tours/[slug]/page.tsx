@@ -61,55 +61,33 @@ export default async function TourDetailPage({ params }: { params: Promise<{ reg
 
   return (
     <div className="bg-white min-h-screen text-[#191974] text-[14px]">
-      {/* 1. Breadcrumbs & Title Section */}
-      <div className="bg-white border-b border-gray-50">
-        <div className="max-w-7xl mx-auto px-4 py-10">
-          <div className="flex items-center gap-2 text-[11px] text-gray-300  mb-6  tracking-widest">
-            <Link href={`/${region}`} className="hover:text-[#ee2229] transition-colors">Home</Link>
-            <span className="opacity-30">/</span>
-            <Link href={`/${region}/tours`} className="hover:text-[#ee2229] transition-colors">Tours</Link>
-            <span className="opacity-30">/</span>
-            <span className="text-[#ee2229] ">{currentTour.title}</span>
-          </div>
-
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-            <div className="flex-1">
-
-              <p className="text-[32px]  text-[#191974] leading-tight  ">
-                {currentTour.title}
-              </p>
-              <div className="flex items-center gap-8 mt-4">
-                <span className="text-[14px]  text-[#ee2229]  tracking-widest flex items-center gap-2 ">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                  {currentTour.duration}
-                </span>
-                <div className="flex items-center gap-1.5">
-                  {[1, 2, 3, 4, 5].map((s) => (
-                    <svg key={s} className="w-4 h-4 text-[#ee2229] fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                  ))}
-                  <span className="text-[11px]  text-gray-300 ml-2 tracking-widest ">(4.9 Rated)</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
+      {/* 1. Breadcrumb - Moved higher and simplified */}
+      <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="flex items-center gap-2 text-[12px] text-gray-500">
+          <Link href={`/${region}`} className="hover:text-[#ee2229]">Home</Link>
+          <span className="text-gray-300">&gt;</span>
+          <Link href={`/${region}/tours`} className="hover:text-[#ee2229]">World</Link>
+          <span className="text-gray-300">&gt;</span>
+          <Link href={`/${region}/tours`} className="hover:text-[#ee2229]">South East Asia</Link>
+          <span className="text-gray-300">&gt;</span>
+          <span className="font-bold">{currentTour.title}</span>
         </div>
       </div>
 
-      {/* 2. Panoramic Hero Image */}
-      <div className="w-full h-[50vh] min-h-[450px] relative overflow-hidden">
-        <FallbackImage
-          src={validImgUrl}
-          fallbackSrc="/images/img-8.jpg"
-          alt={currentTour.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-linear-to-t from-[#191974]/60 to-transparent"></div>
+      {/* 2. Panoramic Hero Image - Responsive and rounded corners */}
+      <div className="max-w-7xl mx-auto px-4 mb-4">
+        <div className="w-full h-[300px] md:h-[450px] relative overflow-hidden rounded-2xl shadow-sm">
+          <FallbackImage
+            src={validImgUrl}
+            fallbackSrc="/images/img-8.jpg"
+            alt={currentTour.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
       </div>
 
       {/* 3. Interactive Content Section (Tabs + Main + Sidebar) */}
       <TourDetailContent tour={currentTour} itinerary={itinerary} region={region} />
-
     </div>
   );
 }
