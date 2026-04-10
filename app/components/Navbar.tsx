@@ -366,8 +366,18 @@ export default function Navbar() {
             <div className="px-6 py-6 mb-2 bg-[#191974]/2 border-b border-gray-100">
               <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mb-1.5 ">Welcome</p>
               <h3 className="text-[22px] font-bold text-[#191974] tracking-tight">
-                {user ? `Hello ${user.user_metadata?.full_name || user.email?.split('@')[0] || 'Member'}` : 'Hello Folks'}
+                {user ? `Hello ${user.user_metadata?.first_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Member'}!` : 'Hello Folks'}
               </h3>
+              {user?.email === 'admin@maduratravel.com' && (
+                <Link 
+                  href="/admin" 
+                  onClick={() => setSidebarOpen(false)}
+                  className="inline-flex items-center gap-2 mt-3 text-[11px] font-bold text-[#ee2229] bg-red-50 px-4 py-1.5 rounded-full border border-red-100 animate-pulse"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  ADMIN PANEL ACCESSIBLE
+                </Link>
+              )}
             </div>
 
             {/* â”€â”€â”€ DESTINATIONS â”€â”€â”€ */}
@@ -531,7 +541,17 @@ export default function Navbar() {
               </Link>
             ))}
 
-            {/* --- ADMIN OPTIONS REMOVED --- */}
+            {/* --- ADMIN OPTIONS --- */}
+            {user?.email === 'admin@maduratravel.com' && (
+               <Link
+                 href="/admin"
+                 onClick={() => setSidebarOpen(false)}
+                 className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 text-[#ee2229] font-bold text-[13px] tracking-widest hover:bg-red-50 transition-colors"
+               >
+                 <ShieldCheck className="w-5 h-5" />
+                 Admin Dashboard
+               </Link>
+            )}
 
           </div>
 

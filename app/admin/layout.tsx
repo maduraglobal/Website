@@ -11,11 +11,21 @@ import {
   Bell
 } from 'lucide-react';
 
-export default function AdminLayout({
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
+
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user || user.email !== 'admin@maduratravel.com') {
+    redirect('/en-in/login'); // Fallback to login if not admin
+  }
+
   return (
     <div className="min-h-screen bg-[#F8F9FA] flex">
       {/* Sidebar */}

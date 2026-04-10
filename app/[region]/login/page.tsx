@@ -22,7 +22,11 @@ export default function LoginPage() {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        router.push('/admin');
+        if (session.user.email === 'admin@maduratravel.com') {
+          router.push('/admin');
+        } else {
+          router.push(`/${region}`);
+        }
       }
     };
     checkUser();
@@ -44,7 +48,12 @@ export default function LoginPage() {
       return;
     }
 
-    router.push('/admin');
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user?.email === 'admin@maduratravel.com') {
+      router.push('/admin');
+    } else {
+      router.push(`/${region}`);
+    }
     router.refresh();
   };
 

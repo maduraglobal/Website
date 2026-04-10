@@ -375,7 +375,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
              </div>
              <div className="relative group rounded-[32px] overflow-hidden border-8 border-gray-100 shadow-2xl bg-gray-50">
                 <img 
-                  src="/visa_sample_document_1775818570503.png" 
+                  src="/images/sample-visa.png" 
                   alt="Sample Visa Sticker/E-Visa" 
                   className="w-full h-auto transition-all duration-700"
                 />
