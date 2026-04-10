@@ -105,7 +105,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             <span className="text-[#ee2229]">{destName} Visa</span>
           </div>
 
-          <h1 className="text-[32px] md:text-[56px]  mb-4 leading-tight drop-shadow-md">
+          <h1 className="text-[32px]  leading-tight drop-shadow-md">
             {destName} Visa Online for Indians
           </h1>
 

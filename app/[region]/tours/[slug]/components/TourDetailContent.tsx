@@ -85,6 +85,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 dates={MOCK_DATES}
                 selectedCity={selectedCity}
                 selectedDateId={selectedDateId}
+                region={region}
                 onCityChange={(city) => {
                   setSelectedCity(city);
                   setSelectedDateId(MOCK_DATES[city][0].id);
@@ -213,7 +214,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   </thead>
                   <tbody className="divide-y divide-gray-50 bg-white">
                     {[
-                      { days: "61 Days & More", penalty: "â‚¹10,000 /-" },
+                      { days: "61 Days & More", penalty: "₹10,000 /-" },
                       { days: "46 - 60 Days", penalty: "25% of Tour Cost" },
                       { days: "31 - 45 Days", penalty: "50% of Tour Cost" },
                       { days: "Less than 30 Days", penalty: "100% (No Refund)" }
@@ -276,7 +277,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
               price={selectedDateObj?.price || tour.price || 45000}
               selectedCity={selectedCity}
               selectedDate={formattedDate}
-              emiAmount={selectedDateObj ? `â‚¹${(Math.round(selectedDateObj.price / 12)).toLocaleString('en-IN')}` : "â‚¹5,219"}
+              emiAmount={selectedDateObj ? `₹${(Math.round(selectedDateObj.price / 12)).toLocaleString('en-IN')}` : "₹5,219"}
             />
           </div>
         </div>
