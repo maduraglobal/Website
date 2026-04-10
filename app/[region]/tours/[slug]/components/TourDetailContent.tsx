@@ -67,9 +67,9 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 </span>
               </div>
 
-              <h1 className="text-[36px] font-bold text-gray-900 leading-tight">
+              <p className="text-[36px] font-bold text-gray-900 leading-tight">
                 {tour.title}
-              </h1>
+              </p>
 
               <div className="flex items-center gap-4 text-[13px] font-medium">
                 <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700">{tour.duration || "5 Days"}</span>

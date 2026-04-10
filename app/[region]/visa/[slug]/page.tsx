@@ -105,22 +105,31 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             <span className="text-[#ee2229]">{destName.toUpperCase()} VISA</span>
           </div>
 
-          <h1 className="text-[32px] font-black leading-tight mb-4 max-w-2xl">
+          <p className="text-[32px]  leading-tight mb-4 max-w-2xl">
             {destName} Visa Online for Indian Citizens
-          </h1>
+          </p>
 
-          <div className="inline-flex bg-[#12803c] text-white font-bold px-4 py-1.5 rounded-full text-[12px] items-center gap-2 mb-8 shadow-xl">
-            <CheckCircle2 className="w-4 h-4" /> 99.2% Approval Rate
+          <div className="flex flex-wrap items-center gap-4 mb-8">
+            <div className="inline-flex bg-[#12803c] text-white font-bold px-4 py-1.5 rounded-full text-[12px] items-center gap-2 shadow-xl">
+              <CheckCircle2 className="w-4 h-4" /> 99.2% Approval Rate
+            </div>
+            <div className={`inline-flex ${currentData.startingPrice === "0" ? 'bg-amber-500' : 'bg-blue-600'} text-white font-bold px-4 py-1.5 rounded-full text-[12px] items-center gap-2 shadow-xl uppercase tracking-widest`}>
+              <Star className="w-4 h-4" /> {currentData.startingPrice === "0" ? 'Visa Free entry' : 'E-Visa Required'}
+            </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-12 mb-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
             <div className="space-y-1">
               <p className="text-[11px] text-white/50 uppercase tracking-[0.2em] font-black">Processing time</p>
-              <p className="text-[20px] font-bold">{visaTypes[0]?.pTime || 'Up to 5 days'}</p>
+              <p className="text-[20px] font-bold">{visaTypes[0]?.pTime || '5-7 Days'}</p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-[11px] text-white/50 uppercase tracking-[0.2em] font-black">Stay Period</p>
+              <p className="text-[20px] font-bold">{visaTypes[0]?.stay || '30 Days'}</p>
             </div>
             <div className="space-y-1">
               <p className="text-[11px] text-white/50 uppercase tracking-[0.2em] font-black">Starting from</p>
-              <p className="text-[20px] font-bold text-[#ee2229]">{formatRegionalPrice(currentData.startingPrice, region)}</p>
+              <p className="text-[20px] font-bold text-[#ee2229]">{currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(currentData.startingPrice, region)}</p>
             </div>
           </div>
 
@@ -198,7 +207,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                     <h3 className="text-[22px] font-bold text-[#191974] group-hover:text-[#ee2229] transition-colors">{v.name}</h3>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-8 mb-10">
+                  <div className="grid grid-cols-2 gap-y-8 gap-x-4 mb-10">
                     <div className="space-y-1">
                       <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Processing</p>
                       <div className="flex items-center gap-2 text-[#191974] font-bold">
@@ -213,13 +222,27 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                         <span>{v.valid}</span>
                       </div>
                     </div>
+                    <div className="space-y-1">
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Stay</p>
+                      <div className="flex items-center gap-2 text-[#191974] font-bold">
+                        <Calendar className="w-4 h-4 text-[#ee2229]" />
+                        <span>{v.stay}</span>
+                      </div>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Entry</p>
+                      <div className="flex items-center gap-2 text-[#191974] font-bold">
+                        <Globe className="w-4 h-4 text-[#ee2229]" />
+                        <span>{v.entry}</span>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="mt-auto pt-8 border-t border-gray-50 flex items-end justify-between">
                     <div>
                       <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Fee Starts</p>
                       <p className="text-[28px] font-black text-[#191974] leading-none">
-                        {formatRegionalPrice(v.fees, region)}
+                        {v.fees === "0" ? 'FREE' : formatRegionalPrice(v.fees, region)}
                       </p>
                     </div>
                     <button
@@ -277,7 +300,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           <div id="faqs" className="space-y-8">
             <h2 className="text-[26px] font-bold text-[#191974]">Common Questions</h2>
             <div className="space-y-3">
-              {faqs.slice(0, 6).map((q, i) => (
+              {faqs.slice(0, 10).map((q, i) => (
                 <div key={i} className="bg-white border border-gray-100 rounded-[12px] overflow-hidden hover:border-[#191974]/30 transition-all">
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
@@ -294,6 +317,143 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* 6. Process Selection */}
+          <div id="process" className="space-y-8 pt-4">
+            <h2 className="text-[26px] font-bold text-[#191974]">Application Process</h2>
+            <div className="relative space-y-4">
+              {[
+                { title: "Share Requirements", desc: "Our experts will guide you on the specific documentation needed for your visa type.", icon: FileText },
+                { title: "Verification", desc: "We meticulously review your documents to ensure 100% compliance with immigration rules.", icon: ShieldCheck },
+                { title: "Submission", desc: "We handle the entire submission process through authorized channels.", icon: Globe },
+                { title: "Visa Approval", desc: "Receive your approved visa directly on your email & WhatsApp.", icon: CheckCircle2 }
+              ].map((step, i) => (
+                <div key={i} className="flex gap-6 items-start relative pb-8 last:pb-0 group">
+                  {i !== 3 && <div className="absolute left-7 top-14 bottom-0 w-0.5 bg-gray-100 group-hover:bg-[#ee2229]/20 transition-colors"></div>}
+                  <div className="w-14 h-14 rounded-2xl bg-[#191974]/5 flex items-center justify-center text-[#191974] shrink-0 group-hover:bg-[#ee2229] group-hover:text-white transition-all shadow-sm">
+                    <step.icon className="w-6 h-6" />
+                  </div>
+                  <div className="pt-2">
+                    <p className="text-[12px] text-[#ee2229] font-black tracking-widest uppercase mb-1">Step 0{i+1}</p>
+                    <h4 className="text-[18px] font-bold text-[#191974] mb-2">{step.title}</h4>
+                    <p className="text-gray-500 font-medium leading-relaxed">{step.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 7. Why Choose Us */}
+          <div id="why-choose-us" className="space-y-8 pt-4">
+             <h2 className="text-[26px] font-bold text-[#191974]">Why Trust Madura Travel?</h2>
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[
+                  { title: "20+ Years Experience", desc: "Successfully processed over 5 lakh visas with a specialized focus on tourist and business travel.", icon: Star },
+                  { title: "Real-time Support", desc: "Dedicated visa experts available from 9 AM to 9 PM to answer all your queries.", icon: MessageCircle },
+                  { title: "Authorized Agent", desc: "Official partner for major consulates, ensuring faster processing and better transparency.", icon: Building2 },
+                  { title: "Highest Success Rate", desc: "Maintaining a consistent 99.2% approval rate through rigorous document vetting.", icon: CheckCircle2 }
+                ].map((item, i) => (
+                  <div key={i} className="p-8 rounded-[24px] bg-white border border-gray-100 hover:shadow-xl transition-all group">
+                     <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center text-[#ee2229] mb-6 group-hover:bg-[#ee2229] group-hover:text-white transition-all">
+                        <item.icon className="w-6 h-6" />
+                     </div>
+                     <h4 className="text-[18px] font-bold text-[#191974] mb-3">{item.title}</h4>
+                     <p className="text-gray-500 font-medium leading-relaxed text-[13px]">{item.desc}</p>
+                  </div>
+                ))}
+             </div>
+          </div>
+
+          {/* 8. Sample Visa */}
+          <div id="sample-visa" className="space-y-8 pt-4">
+             <div className="flex items-center justify-between">
+                <h2 className="text-[26px] font-bold text-[#191974]">Sample {destName} Visa</h2>
+                <div className="flex items-center gap-2 text-[12px] font-bold text-gray-400">
+                   <ShieldCheck className="w-4 h-4" /> SECURE DOCUMENT
+                </div>
+             </div>
+             <div className="relative group rounded-[32px] overflow-hidden border-8 border-gray-100 shadow-2xl bg-gray-50">
+                <img 
+                  src="/visa_sample_document_1775818570503.png" 
+                  alt="Sample Visa Sticker/E-Visa" 
+                  className="w-full h-auto transition-all duration-700"
+                />
+                <div className="absolute inset-0 bg-[#191974]/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                   <div className="bg-white px-8 py-3 rounded-full font-bold text-[#191974] shadow-2xl scale-90 group-hover:scale-100 transition-transform flex items-center gap-2">
+                      <ExternalLink className="w-4 h-4" /> VIEW FULL SAMPLE
+                   </div>
+                </div>
+                {/* Overlay details */}
+                <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-xl p-8 rounded-3xl border border-white/20 shadow-2xl">
+                   <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-[#12803c]/10 rounded-2xl flex items-center justify-center text-[#12803c]">
+                         <FileText className="w-6 h-6" />
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-[12px] text-[#ee2229] font-black tracking-widest uppercase">Verified Document Template</p>
+                        <p className="text-[#191974] font-bold text-[15px]">This is an accurate sample of the {destName} Tourist Visa.</p>
+                        <p className="text-gray-500 font-medium text-[13px] leading-relaxed">Your actual visa will be issued by the respective consulate. It will contain your personal details and a secure QR code for verification at immigration counters.</p>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+
+          {/* 9. Embassy Section */}
+          <div id="embassy" className="space-y-8 pt-4">
+             <h2 className="text-[26px] font-bold text-[#191974]">{destName} Consulate & Embassy</h2>
+             <div className="bg-[#191974] rounded-[32px] overflow-hidden text-white flex flex-col md:flex-row shadow-2xl">
+                <div className="p-10 md:w-1/2 space-y-6">
+                   <div className="inline-block bg-white/10 px-4 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest text-white/70">Principal Mission</div>
+                   <h4 className="text-[24px] font-bold leading-tight">Embassy of {destName} - New Delhi</h4>
+                   <div className="space-y-4 opacity-70 font-medium">
+                      <div className="flex gap-4">
+                         <MapPin className="w-5 h-5 shrink-0 text-[#ee2229]" />
+                         <p>Chanakyapuri, Diplomatic Enclave, New Delhi - 110021, India</p>
+                      </div>
+                      <div className="flex gap-4">
+                         <Phone className="w-5 h-5 shrink-0 text-[#ee2229]" />
+                         <p>Tel: +91-11-2301-0000</p>
+                      </div>
+                      <div className="flex gap-4">
+                         <Clock className="w-5 h-5 shrink-0 text-[#ee2229]" />
+                         <p>Mon - Fri: 09:00 AM - 04:00 PM</p>
+                      </div>
+                   </div>
+                </div>
+                <div className="md:w-1/2 relative min-h-[300px] overflow-hidden bg-gray-800">
+                   <iframe 
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14013.978875886915!2d77.17513511598715!3d28.58498875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd39572c6769%3A0xe7448db55aa0a69b!2sChanakyapuri%2C%20New%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1712745000000!5m2!1sen!2sin" 
+                      className="absolute inset-0 w-full h-full border-0 grayscale invert opacity-50 contrast-125"
+                      allowFullScreen 
+                      loading="lazy"
+                   />
+                </div>
+             </div>
+          </div>
+
+          {/* 10. Visit Us */}
+          <div id="visit-us" className="space-y-8 pt-4">
+             <div className="flex items-center justify-between">
+                <h2 className="text-[26px] font-bold text-[#191974]">Our Presence In India</h2>
+                <button className="text-[12px] font-black text-[#ee2229] uppercase tracking-widest border border-[#ee2229]/20 px-6 py-2 rounded-full hover:bg-red-50 transition-all flex items-center gap-2">
+                   View All Branches <ChevronRight className="w-4 h-4" />
+                </button>
+             </div>
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  { city: "Mumbai (Head Office)", loc: "Fort, South Mumbai" },
+                  { city: "New Delhi", loc: "Connaught Place" },
+                  { city: "Bangalore", loc: "Indiranagar" }
+                ].map((branch, i) => (
+                  <div key={i} className="p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#191974]/20 transition-all text-center space-y-2">
+                     <p className="text-[16px] font-bold text-[#191974]">{branch.city}</p>
+                     <p className="text-[12px] text-gray-500 font-medium uppercase tracking-widest">{branch.loc}</p>
+                     <p className="text-[11px] text-[#ee2229] font-black pt-2 uppercase tracking-tight">Visit Branch →</p>
+                  </div>
+                ))}
+             </div>
           </div>
 
         </div>

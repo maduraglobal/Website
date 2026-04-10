@@ -13,7 +13,7 @@ import {
   Map as MapIcon, HelpCircle, Bed, Bus, Shield
 } from 'lucide-react';
 import { formatRegionalPrice } from '@/config/country';
-import TourMap from '../../../../components/tours/TourMap';
+import TourMap from '@/app/components/tours/TourMap';
 
 interface TourDetailContentProps {
   tour: any;
