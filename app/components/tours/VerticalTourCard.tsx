@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { MapPin, Utensils, Camera, Bus, Plane, Bed, Wallet } from 'lucide-react';
 import { formatRegionalPrice } from '../../../config/country';
+import FallbackImage from '@/app/components/FallbackImage';
 
 interface VerticalTourCardProps {
   tour: any;
@@ -25,12 +26,14 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
       viewport={{ once: true }}
       className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-gray-100"
     >
+
       {/* Image Container */}
       <div className="relative h-64 overflow-hidden">
-        <img
+        <FallbackImage
           src={tour.image_url || 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=800'}
+          fallbackSrc="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=800"
           alt={tour.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
         
         {/* Top Left Initials Badge */}

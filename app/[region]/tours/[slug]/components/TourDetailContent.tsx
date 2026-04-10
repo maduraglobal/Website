@@ -6,14 +6,17 @@ import ItineraryTimeline from '@/app/components/tours/ItineraryTimeline';
 import AccommodationTable from '@/app/components/tours/AccommodationTable';
 import DeparturePricing from '@/app/components/tours/DeparturePricing';
 import TourInclusions from '@/app/components/tours/TourInclusions';
+import UpgradesSection from '@/app/components/tours/UpgradesSection';
 import Link from 'next/link';
 import {
   Clock, MapPin, CheckCircle2, Star, Calendar, Users, Camera, ChevronRight,
   Plane, Check, X, Utensils, Phone, MessageCircle, Heart, Download, Mail, Share2,
-  Map as MapIcon, HelpCircle, Bed, Bus, Shield
+  Map as MapIcon, HelpCircle, Bed, Bus, Shield, CloudRain, Navigation, FileText,
+  CreditCard, AlertCircle, Zap, ArrowRight, ThumbsUp
 } from 'lucide-react';
 import { formatRegionalPrice } from '@/config/country';
 import TourMap from '@/app/components/tours/TourMap';
+import FallbackImage from '@/app/components/FallbackImage';
 
 interface TourDetailContentProps {
   tour: any;
@@ -221,6 +224,123 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
               </div>
             </section>
 
+            {/* Section: Need to Know */}
+            <section id="needtoknow" className="pt-24 space-y-8">
+              <div>
+                <h2 className="text-[28px] font-bold text-gray-900">Need to Know</h2>
+                <p className="text-[14px] text-gray-400 italic mt-1">Things to consider before the trip!</p>
+              </div>
+
+              <div className="space-y-8">
+                {/* Weather */}
+                <div className="bg-blue-50/40 border border-blue-100 rounded-2xl p-6 space-y-3">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                      <CloudRain className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <h3 className="text-[16px] font-bold text-gray-900">Weather</h3>
+                  </div>
+                  <ul className="space-y-2 text-[14px] text-gray-600">
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0" />Warm & humid with tropical rains, unexpected showers during the day</li>
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0" />For detailed information about weather kindly visit <a href="https://www.accuweather.com" target="_blank" className="text-[#191974] underline font-medium">www.accuweather.com</a></li>
+                  </ul>
+                </div>
+
+                {/* Transport */}
+                <div className="bg-orange-50/40 border border-orange-100 rounded-2xl p-6 space-y-4">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center">
+                      <Navigation className="w-5 h-5 text-orange-600" />
+                    </div>
+                    <h3 className="text-[16px] font-bold text-gray-900">Transport</h3>
+                  </div>
+
+                  <div className="space-y-3">
+                    <p className="text-[13px] font-bold text-gray-700">Air Travel:</p>
+                    <ul className="space-y-2 text-[14px] text-gray-600">
+                      <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#ee2229] mt-2 shrink-0" /><span>Mumbai – Hanoi // Hanoi – Da Nang // Da Nang – Mumbai</span></li>
+                      <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#ee2229] mt-2 shrink-0" /><span>We use combination of Airlines like Indigo, Akasa Air, Air India, Air India Express, Nok Air, Air Asia, Viet Air, Malindo Airlines, Batik Air, Malaysian Airlines, Singapore Airlines, etc.</span></li>
+                    </ul>
+                  </div>
+                  <div className="space-y-3 pt-2 border-t border-orange-100">
+                    <p className="text-[13px] font-bold text-gray-700">Coach Travel:</p>
+                    <ul className="space-y-2 text-[14px] text-gray-600">
+                      <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#ee2229] mt-2 shrink-0" />A/C coach – Seating capacity depends upon group size</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Documents Required */}
+                <div className="bg-green-50/40 border border-green-100 rounded-2xl p-6 space-y-3">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                      <FileText className="w-5 h-5 text-green-600" />
+                    </div>
+                    <h3 className="text-[16px] font-bold text-gray-900">Documents Required for Travel</h3>
+                  </div>
+                  <ul className="space-y-2 text-[14px] text-gray-600">
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />Original passport with minimum 6 months validity from the date of tour arrival along with sufficient blank pages for visa</li>
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />A valid Tourist Visa for the duration of the tour</li>
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />For all Schengen countries passport validity should not exceed more than 10 years</li>
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />Handwritten passport is not acceptable</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            {/* Section: Cancellation Policy */}
+            <section id="policy" className="pt-24 space-y-8">
+              <h2 className="text-[28px] font-bold text-gray-900">Cancellation Policy &amp; Payment Terms</h2>
+
+              <div className="bg-blue-50/30 border border-blue-100 rounded-2xl p-5 flex flex-wrap items-center gap-6">
+                <div>
+                  <p className="text-[14px] text-[#191974] font-bold">Mumbai departure, 04 Jun 2026.</p>
+                </div>
+                <button className="flex items-center gap-2 text-[13px] font-bold text-gray-700 border border-gray-200 bg-white px-4 py-2 rounded-full hover:border-[#191974] transition-all">
+                  <Calendar className="w-4 h-4" /> Change Departure Date
+                </button>
+              </div>
+
+              <div className="space-y-2 text-[14px] text-gray-700">
+                <p><span className="font-bold">Tour Price:</span> {formatRegionalPrice(tour.price || 105000, region)} / per person on twin sharing</p>
+                <p className="text-gray-400 text-[13px]">Cancellation charges rise closer to departure, with the exact amount deducted shown.</p>
+              </div>
+
+              <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+                {[
+                  { pct: 10,  amount: 10500,  range: '121–900 days prior', dates: '17 Dec 2023 – 03 Feb 2026', color: 'border-green-500',  badge: 'bg-green-100 text-green-700' },
+                  { pct: 15,  amount: 15750,  range: '91–120 days prior',  dates: '04 Feb 2026 – 05 Mar 2026', color: 'border-green-400',  badge: 'bg-green-100 text-green-600' },
+                  { pct: 20,  amount: 21000,  range: '61–90 days prior',   dates: '06 Mar 2026 – 04 Apr 2026', color: 'border-green-300',  badge: 'bg-green-50 text-green-600' },
+                  { pct: 30,  amount: 31500,  range: '46–60 days prior',   dates: '05 Apr 2026 – 19 Apr 2026', color: 'border-yellow-400', badge: 'bg-yellow-100 text-yellow-700' },
+                  { pct: 40,  amount: 42000,  range: '31–45 days prior',   dates: '20 Apr 2026 – 04 May 2026', color: 'border-yellow-500', badge: 'bg-yellow-100 text-yellow-700' },
+                  { pct: 50,  amount: 52500,  range: '16–30 days prior',   dates: '05 May 2026 – 19 May 2026', color: 'border-orange-400', badge: 'bg-orange-100 text-orange-700' },
+                  { pct: 75,  amount: 78750,  range: '6–15 days prior',    dates: '20 May 2026 – 29 May 2026', color: 'border-orange-500', badge: 'bg-orange-100 text-orange-700' },
+                  { pct: 100, amount: 105000, range: '0–5 days prior',     dates: '30 May 2026 – 04 Jun 2026', color: 'border-red-500',    badge: 'bg-red-100 text-red-700' },
+                ].map((row, i) => (
+                  <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 p-5 border-b border-gray-50 last:border-b-0 border-l-4 ${row.color} hover:bg-gray-50/50 transition-all`}>
+                    <div className="flex-1 min-w-0">
+                      <span className="font-bold text-[15px] text-gray-900">{formatRegionalPrice(row.amount, region)}</span>
+                      <span className="text-[13px] text-gray-500 ml-2">({row.pct}% deduction from tour amount)</span>
+                    </div>
+                    <div className="flex items-center gap-4 text-[13px] shrink-0">
+                      <span className={`px-3 py-1 rounded-full font-bold text-[11px] ${row.badge}`}>{row.range}</span>
+                      <span className="text-gray-400 hidden sm:block">{row.dates}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Section: Upgrades */}
+            <section id="upgrades" className="pt-24 space-y-8">
+              <div>
+                <h2 className="text-[28px] font-bold text-gray-900">Upgrades Available</h2>
+                <p className="text-[14px] text-gray-400 italic mt-1">Want luxury? Add luxury at minimum cost!</p>
+              </div>
+
+              <UpgradesSection />
+            </section>
+
           </div>
 
           {/* RIGHT COLUMN (1/3) - SIDEBAR */}
@@ -228,6 +348,17 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
             {/* Testimonial Sidebar Card */}
             <div className="bg-white p-8 rounded-[32px] border border-gray-100 shadow-xl space-y-8 relative overflow-hidden group hover:shadow-2xl transition-all ring-1 ring-gray-100">
               <div className="flex items-center justify-between">
+                <div className="relative">
+                  <div className="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center overflow-hidden">
+                    <FallbackImage 
+                      src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=100&auto=format&fit=crop" 
+                      fallbackSrc="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=100&auto=format&fit=crop"
+                      alt="Paris" 
+                      className="w-full h-full object-cover opacity-50" 
+                    />
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-gray-900 flex items-center justify-center text-[8px] font-bold">1</div>
+                </div>
                 <div className="flex gap-2">
                   <div className="w-8 h-8 rounded-full border border-gray-100 flex items-center justify-center text-gray-300 hover:bg-gray-50 cursor-pointer transition-all"><ChevronRight className="w-4 h-4 rotate-180" /></div>
                   <div className="w-8 h-8 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 hover:bg-gray-50 cursor-pointer transition-all"><ChevronRight className="w-4 h-4" /></div>
@@ -249,7 +380,12 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <p className="text-[10px] text-gray-400 font-medium">Tour Manager</p>
                   </div>
                   <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center overflow-hidden border-2 border-white shadow-lg">
-                    <img src="https://i.pravatar.cc/100?img=12" alt="Avatar" className="w-full h-full object-cover" />
+                    <FallbackImage 
+                      src="https://i.pravatar.cc/100?img=12" 
+                      fallbackSrc="https://ui-avatars.com/api/?name=TM&background=f3f4f6&color=191974"
+                      alt="Avatar" 
+                      className="w-full h-full object-cover" 
+                    />
                   </div>
                 </div>
               </div>

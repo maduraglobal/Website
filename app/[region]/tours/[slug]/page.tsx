@@ -79,7 +79,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ reg
         <div className="w-full h-[300px] md:h-[450px] relative overflow-hidden rounded-2xl shadow-sm">
           <FallbackImage
             src={validImgUrl}
-            fallbackSrc="/images/img-8.jpg"
+            fallbackSrc="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1200&auto=format&fit=crop"
             alt={currentTour.title}
             className="w-full h-full object-cover"
           />
