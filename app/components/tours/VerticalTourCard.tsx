@@ -35,7 +35,7 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
           alt={tour.title}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
-        
+
         {/* Top Left Initials Badge */}
         <div className="absolute top-3 left-3 w-8 h-8 bg-[#ee2229] rounded-full flex items-center justify-center border-2 border-white shadow-sm">
           <span className="text-white text-[10px] font-bold">{initials}</span>
@@ -86,11 +86,11 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
               </p>
             </div>
             <div className="text-right">
-              <div className="flex items-center justify-end gap-1 text-blue-600 mb-0.5">
+              <div className="flex items-center justify-end gap-1 text-[#191974] mb-0.5">
                 <Wallet className="w-3.5 h-3.5" />
-                <p className="text-[10px] font-bold">EMI from</p>
+                <p className="text-[14px] ">EMI from</p>
               </div>
-              <p className="text-[11px] text-blue-600 font-bold leading-none">
+              <p className="text-[14px] text-[#191974] font-bold leading-none">
                 {formatRegionalPrice(emi, region)}/month
               </p>
             </div>
