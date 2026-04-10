@@ -96,10 +96,10 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700 flex items-center gap-1">
                   4 Cities <HelpCircle className="w-3 h-3 text-gray-400" />
                 </span>
-                
+
                 {/* Admin Quick Edit Button */}
                 {isAdmin && (
-                  <Link 
+                  <Link
                     href="/admin/tours"
                     className="ml-auto flex items-center gap-2 bg-gray-900 text-white px-4 py-1.5 rounded-full text-[12px] font-bold hover:bg-black transition-all shadow-lg animate-bounce hover:animate-none"
                   >
@@ -179,7 +179,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   <ItineraryTimeline itinerary={itinerary} />
                 </div>
                 <div className="w-full xl:w-[320px] shrink-0 space-y-6">
-                  <div 
+                  <div
                     onClick={() => setIsMapOpen(true)}
                     className="relative h-[220px] rounded-[32px] overflow-hidden shadow-xl group cursor-pointer border border-gray-100 ring-4 ring-white ring-offset-2 ring-offset-gray-50 bg-gray-50"
                   >
@@ -192,17 +192,50 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     {[
-                      { icon: Share2, label: "Send Itinerary" },
-                      { icon: Download, label: "Print Itinerary" },
-                      { icon: Mail, label: "Email Itinerary" },
-                      { icon: MapIcon, label: "Compare Tour" }
+                      {
+                        icon: Share2,
+                        label: "Send Itinerary",
+                        onClick: () => {
+                          if (navigator.share) {
+                            navigator.share({
+                              title: tour.title,
+                              text: `Check out this amazing tour: ${tour.title}`,
+                              url: window.location.href,
+                            }).catch(() => { });
+                          } else {
+                            navigator.clipboard.writeText(window.location.href);
+                            alert("Link copied to clipboard!");
+                          }
+                        }
+                      },
+                      {
+                        icon: Download,
+                        label: "Print Itinerary",
+                        onClick: () => window.print()
+                      },
+                      {
+                        icon: Mail,
+                        label: "Email Itinerary",
+                        onClick: () => {
+                          window.location.href = `mailto:?subject=Itinerary: ${tour.title}&body=Check out this tour at: ${window.location.href}`;
+                        }
+                      },
+                      {
+                        icon: MapIcon,
+                        label: "Compare Tour",
+                        onClick: () => alert("Tour added to comparison list!")
+                      }
                     ].map((act, i) => (
-                      <div key={i} className="flex flex-col items-center justify-center gap-3 p-5 bg-white border border-gray-100 rounded-2xl hover:border-[#191974] hover:shadow-lg transition-all cursor-pointer group text-center">
+                      <button
+                        key={i}
+                        onClick={act.onClick}
+                        className="flex flex-col items-center justify-center gap-3 p-5 bg-white border border-gray-100 rounded-2xl hover:border-[#191974] hover:shadow-lg transition-all cursor-pointer group text-center outline-none focus:ring-2 focus:ring-[#191974]/20"
+                      >
                         <div className="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center text-gray-400 group-hover:text-[#191974] transition-colors">
                           <act.icon className="w-5 h-5" />
                         </div>
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-tight">{act.label}</span>
-                      </div>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -338,14 +371,14 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
               <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
                 {[
-                  { pct: 10,  amount: 10500,  range: '121–900 days prior', dates: '17 Dec 2023 – 03 Feb 2026', color: 'border-green-500',  badge: 'bg-green-100 text-green-700' },
-                  { pct: 15,  amount: 15750,  range: '91–120 days prior',  dates: '04 Feb 2026 – 05 Mar 2026', color: 'border-green-400',  badge: 'bg-green-100 text-green-600' },
-                  { pct: 20,  amount: 21000,  range: '61–90 days prior',   dates: '06 Mar 2026 – 04 Apr 2026', color: 'border-green-300',  badge: 'bg-green-50 text-green-600' },
-                  { pct: 30,  amount: 31500,  range: '46–60 days prior',   dates: '05 Apr 2026 – 19 Apr 2026', color: 'border-yellow-400', badge: 'bg-yellow-100 text-yellow-700' },
-                  { pct: 40,  amount: 42000,  range: '31–45 days prior',   dates: '20 Apr 2026 – 04 May 2026', color: 'border-yellow-500', badge: 'bg-yellow-100 text-yellow-700' },
-                  { pct: 50,  amount: 52500,  range: '16–30 days prior',   dates: '05 May 2026 – 19 May 2026', color: 'border-orange-400', badge: 'bg-orange-100 text-orange-700' },
-                  { pct: 75,  amount: 78750,  range: '6–15 days prior',    dates: '20 May 2026 – 29 May 2026', color: 'border-orange-500', badge: 'bg-orange-100 text-orange-700' },
-                  { pct: 100, amount: 105000, range: '0–5 days prior',     dates: '30 May 2026 – 04 Jun 2026', color: 'border-red-500',    badge: 'bg-red-100 text-red-700' },
+                  { pct: 10, amount: 10500, range: '121–900 days prior', dates: '17 Dec 2023 – 03 Feb 2026', color: 'border-green-500', badge: 'bg-green-100 text-green-700' },
+                  { pct: 15, amount: 15750, range: '91–120 days prior', dates: '04 Feb 2026 – 05 Mar 2026', color: 'border-green-400', badge: 'bg-green-100 text-green-600' },
+                  { pct: 20, amount: 21000, range: '61–90 days prior', dates: '06 Mar 2026 – 04 Apr 2026', color: 'border-green-300', badge: 'bg-green-50 text-green-600' },
+                  { pct: 30, amount: 31500, range: '46–60 days prior', dates: '05 Apr 2026 – 19 Apr 2026', color: 'border-yellow-400', badge: 'bg-yellow-100 text-yellow-700' },
+                  { pct: 40, amount: 42000, range: '31–45 days prior', dates: '20 Apr 2026 – 04 May 2026', color: 'border-yellow-500', badge: 'bg-yellow-100 text-yellow-700' },
+                  { pct: 50, amount: 52500, range: '16–30 days prior', dates: '05 May 2026 – 19 May 2026', color: 'border-orange-400', badge: 'bg-orange-100 text-orange-700' },
+                  { pct: 75, amount: 78750, range: '6–15 days prior', dates: '20 May 2026 – 29 May 2026', color: 'border-orange-500', badge: 'bg-orange-100 text-orange-700' },
+                  { pct: 100, amount: 105000, range: '0–5 days prior', dates: '30 May 2026 – 04 Jun 2026', color: 'border-red-500', badge: 'bg-red-100 text-red-700' },
                 ].map((row, i) => (
                   <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 p-5 border-b border-gray-50 last:border-b-0 border-l-4 ${row.color} hover:bg-gray-50/50 transition-all`}>
                     <div className="flex-1 min-w-0">
@@ -380,11 +413,11 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
               <div className="flex items-center justify-between">
                 <div className="relative">
                   <div className="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center overflow-hidden">
-                    <FallbackImage 
-                      src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=100&auto=format&fit=crop" 
+                    <FallbackImage
+                      src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=100&auto=format&fit=crop"
                       fallbackSrc="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=100&auto=format&fit=crop"
-                      alt="Paris" 
-                      className="w-full h-full object-cover opacity-50" 
+                      alt="Paris"
+                      className="w-full h-full object-cover opacity-50"
                     />
                   </div>
                   <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-gray-900 flex items-center justify-center text-[8px] font-bold">1</div>
@@ -410,11 +443,11 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <p className="text-[10px] text-gray-400 font-medium">Tour Manager</p>
                   </div>
                   <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center overflow-hidden border-2 border-white shadow-lg">
-                    <FallbackImage 
-                      src="https://i.pravatar.cc/100?img=12" 
+                    <FallbackImage
+                      src="https://i.pravatar.cc/100?img=12"
                       fallbackSrc="https://ui-avatars.com/api/?name=TM&background=f3f4f6&color=191974"
-                      alt="Avatar" 
-                      className="w-full h-full object-cover" 
+                      alt="Avatar"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 </div>
@@ -501,7 +534,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <input type="text" placeholder="Mobile Number" className="flex-1 bg-white/10 border border-white/10 rounded-2xl px-5 py-4 text-[15px] text-white placeholder-white/20 outline-none focus:border-[#ffd600] focus:ring-1 focus:ring-[#ffd600] transition-all" />
                   </div>
                 </div>
-                <button className="w-full bg-[#ffd600] text-gray-900 py-5 rounded-2xl flex items-center justify-center gap-3 font-bold text-[16px] hover:bg-[#ffea00] active:scale-95 transition-all shadow-xl shadow-yellow-500/10 mt-6">
+                <button className="w-full bg-[#ffd600] text-gray-900 py-5 rounded-2xl flex items-center justify-center gap-3 font-bold text-[16px] hover:bg-[#191974] active:scale-95 transition-all shadow-xl shadow-yellow-500/10 mt-6">
                   <Phone className="w-5 h-5" /> Let's Talk!
                 </button>
               </div>
@@ -513,18 +546,18 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
       {/* Map Modal Overlay */}
       {isMapOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12">
-          <div 
+          <div
             className="absolute inset-0 bg-[#0a0a1a]/95 backdrop-blur-xl transition-all"
             onClick={() => setIsMapOpen(false)}
           />
           <div className="relative w-full max-w-6xl aspect-square md:aspect-21/9 bg-white rounded-[40px] overflow-hidden shadow-2xl border border-white/10 animate-in zoom-in-95 duration-300">
-             <button 
-                onClick={() => setIsMapOpen(false)}
-                className="absolute top-6 right-6 z-50 w-12 h-12 bg-gray-900/10 hover:bg-gray-900/20 rounded-full flex items-center justify-center text-gray-900 transition-all backdrop-blur-md"
-             >
-                <X className="w-6 h-6" />
-             </button>
-             <TourMap tourTitle={tour.title} itinerary={itinerary} fullsize />
+            <button
+              onClick={() => setIsMapOpen(false)}
+              className="absolute top-6 right-6 z-50 w-12 h-12 bg-gray-900/10 hover:bg-gray-900/20 rounded-full flex items-center justify-center text-gray-900 transition-all backdrop-blur-md"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <TourMap tourTitle={tour.title} itinerary={itinerary} fullsize />
           </div>
         </div>
       )}
