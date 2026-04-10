@@ -480,16 +480,16 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
               <div className="bg-[#191974] p-8 space-y-8">
                 <p className="text-center text-white/50 text-[12px] font-medium tracking-wide">Secure your spot with our Best Price Guarantee.</p>
 
-                <button className="w-full bg-[#ffd600] hover:bg-[#ffea00] text-gray-900 py-5 rounded-[24px] font-bold text-[18px] transition-all transform active:scale-95 shadow-2xl flex items-center justify-center ring-4 ring-white/10">
+                <button className="w-full bg-[#ee2229] hover:bg-[#ee2229] text-gray-900 py-5 rounded-[24px] font-bold text-[18px] transition-all transform active:scale-95 shadow-2xl flex items-center justify-center ring-4 ring-white/10">
                   Dates & Prices
                 </button>
 
                 <div className="flex items-center justify-between pt-2">
-                  <button className="text-[13px] font-bold text-white flex items-center gap-2 hover:text-[#ffd600] transition-colors">
-                    EMI starts at <span className="text-[#ffd600] underline">₹10,224/mo</span> <ChevronRight className="w-4 h-4 bg-white/10 rounded-full" />
+                  <button className="text-[13px] font-bold text-white flex items-center gap-2 hover:text-[#191974]] transition-colors">
+                    EMI starts at <span className="text-[#ee2229] underline">₹10,224/mo</span> <ChevronRight className="w-4 h-4 bg-white/10 rounded-full" />
                   </button>
-                  <button className="text-[13px] font-bold text-white flex items-center gap-2 hover:text-[#ffd600] transition-colors group">
-                    Pricing Table <ChevronRight className="w-4 h-4 bg-white/10 rounded-full group-hover:bg-[#ffd600] group-hover:text-gray-900" />
+                  <button className="text-[14px]  text-white flex items-center gap-2 hover:text-[#ee2229] transition-colors group">
+                    Pricing Table <ChevronRight className="w-4 h-4 bg-white/10 rounded-full group-hover:bg-[#ee2229] group-hover:text-gray-900" />
                   </button>
                 </div>
               </div>
@@ -513,7 +513,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
             </div>
 
             {/* Want us to call you? Lead Form Box */}
-            <div className="bg-gray-900 p-10 rounded-[40px] shadow-2xl space-y-8 relative overflow-hidden group">
+            <div className="bg-white p-10 rounded-[40px] shadow-2xl space-y-8 relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700"></div>
               <div className="relative z-10 space-y-2">
                 <h3 className="text-[24px] font-bold text-white">Need Help?</h3>
@@ -531,10 +531,10 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                       <img src="https://flagcdn.com/w20/in.png" alt="IN" className="w-5 h-4 rounded-sm" />
                       <span className="text-[15px] font-bold text-white">+91</span>
                     </div>
-                    <input type="text" placeholder="Mobile Number" className="flex-1 bg-white/10 border border-white/10 rounded-2xl px-5 py-4 text-[15px] text-white placeholder-white/20 outline-none focus:border-[#ffd600] focus:ring-1 focus:ring-[#ffd600] transition-all" />
+                    <input type="text" placeholder="Mobile Number" className="flex-1 bg-white/10 border border-white/10 rounded-2xl px-5 py-4 text-[15px] text-white placeholder-white/20 outline-none focus:border-[#191974] focus:ring-1 focus:ring-[#191974] transition-all" />
                   </div>
                 </div>
-                <button className="w-full bg-[#ffd600] text-gray-900 py-5 rounded-2xl flex items-center justify-center gap-3 font-bold text-[16px] hover:bg-[#191974] active:scale-95 transition-all shadow-xl shadow-yellow-500/10 mt-6">
+                <button className="w-full bg-[#191974] text-gray-900 py-5 rounded-2xl flex items-center justify-center gap-3 font-bold text-[16px] hover:bg-[#ee2229] active:scale-95 transition-all shadow-xl  mt-6">
                   <Phone className="w-5 h-5" /> Let's Talk!
                 </button>
               </div>
@@ -545,7 +545,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
       </div>
       {/* Map Modal Overlay */}
       {isMapOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 md:p-12">
           <div
             className="absolute inset-0 bg-[#0a0a1a]/95 backdrop-blur-xl transition-all"
             onClick={() => setIsMapOpen(false)}
