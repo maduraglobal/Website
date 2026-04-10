@@ -149,7 +149,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   <Users className="w-5 h-5" />
                 </div>
                 <p className="text-[13px] text-gray-700 font-medium leading-relaxed">
-                  Tour includes the services of Veena World's Tour Manager.
+                  Tour includes the services of Madura Travel service's Tour Manager.
                 </p>
               </div>
             </div>
@@ -429,7 +429,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
               </div>
 
               <p className="text-[15px] text-gray-600 leading-[1.7] italic font-medium">
-                "We Enjoyed the trip...tour manager shreyash was extremely helpful and good natured person .. we would love to do more trips in future with veena world looking forward to it and good hospitality ..."
+                "We Enjoyed the trip...tour manager shreyash was extremely helpful and good natured person .. we would love to do more trips in future with Madura Travel service looking forward to it and good hospitality ..."
               </p>
 
               <div className="flex items-center justify-between pt-6 border-t border-gray-50">
