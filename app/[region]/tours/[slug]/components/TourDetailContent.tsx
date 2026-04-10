@@ -516,22 +516,22 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
             <div className="bg-white p-10 rounded-[40px] shadow-2xl space-y-8 relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700"></div>
               <div className="relative z-10 space-y-2">
-                <h3 className="text-[24px] font-bold text-white">Need Help?</h3>
-                <p className="text-white/50 text-[14px]">Our experts are ready to call you back within 15 minutes.</p>
+                <h3 className="text-[24px] font-bold text-black">Need Help?</h3>
+                <p className="text-black/50 text-[14px]">Our experts are ready to call you back within 15 minutes.</p>
               </div>
               <div className="relative z-10 space-y-4">
                 <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-white/40 uppercase tracking-widest ml-1">Full Name</label>
-                  <input type="text" placeholder="e.g. John Doe" className="w-full bg-white/10 border border-white/10 rounded-2xl px-5 py-4 text-[15px] text-white placeholder-white/20 outline-none focus:border-[#ffd600] focus:ring-1 focus:ring-[#ffd600] transition-all" />
+                  <label className="text-[11px] font-bold text-black uppercase tracking-widest ml-1">Full Name</label>
+                  <input type="text" placeholder="e.g. John Doe" className="w-full bg-white border border-black rounded-2xl px-5 py-4 text-[15px] text-black placeholder-white/20 outline-none focus:border-[#ffd600] focus:ring-1 focus:ring-[#ffd600] transition-all" />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-white/40 uppercase tracking-widest ml-1">Phone Number</label>
+                  <label className="text-[11px] font-bold text-black uppercase tracking-widest ml-1">Phone Number</label>
                   <div className="flex gap-2">
-                    <div className="flex items-center gap-2 border border-white/10 rounded-2xl px-4 py-4 bg-white/10">
+                    <div className="flex items-center gap-2 border border-black rounded-2xl px-4 py-4 bg-white">
                       <img src="https://flagcdn.com/w20/in.png" alt="IN" className="w-5 h-4 rounded-sm" />
-                      <span className="text-[15px] font-bold text-white">+91</span>
+                      <span className="text-[15px] font-bold text-Black">+91</span>
                     </div>
-                    <input type="text" placeholder="Mobile Number" className="flex-1 bg-white/10 border border-white/10 rounded-2xl px-5 py-4 text-[15px] text-white placeholder-white/20 outline-none focus:border-[#191974] focus:ring-1 focus:ring-[#191974] transition-all" />
+                    <input type="text" placeholder="Mobile Number" className="flex-1 bg-white border border-black rounded-2xl px-5 py-4 text-[15px] text-black placeholder-white/20 outline-none focus:border-[#191974] focus:ring-1 focus:ring-[#191974] transition-all" />
                   </div>
                 </div>
                 <button className="w-full bg-[#191974] text-gray-900 py-5 rounded-2xl flex items-center justify-center gap-3 font-bold text-[16px] hover:bg-[#ee2229] active:scale-95 transition-all shadow-xl  mt-6">
