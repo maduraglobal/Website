@@ -1,12 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
-import { 
-  LayoutDashboard, 
-  Users, 
-  Briefcase, 
-  BarChart3, 
-  Settings, 
-  LogOut, 
+import {
+  LayoutDashboard,
+  Users,
+  Briefcase,
+  BarChart3,
+  Settings,
+  LogOut,
   ChevronRight,
   ShieldCheck,
   User,
@@ -27,7 +27,7 @@ export default async function CRMLayout({
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user || user.email !== 'admin@maduratravel.com') {
-    redirect('/en-in/login'); 
+    redirect('/en-in/login');
   }
 
   return (
@@ -49,11 +49,11 @@ export default async function CRMLayout({
             <LayoutDashboard className="w-5 h-5" />
             Control Center
           </Link>
-          
+
           <div className="pt-4 pb-2 px-4">
             <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Operations</span>
           </div>
-          
+
           <Link href="/crm/bookings" className="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-white/5 hover:text-white rounded-xl transition-all font-medium group">
             <Inbox className="w-5 h-5 group-hover:text-blue-400 transition-colors" />
             Bookings Panel
@@ -109,7 +109,7 @@ export default async function CRMLayout({
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
               <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Server Status: Optimal</span>
             </div>
-            
+
             <button className="relative w-10 h-10 flex items-center justify-center text-gray-400 hover:text-[#0F172A] transition-colors">
               <Bell className="w-5 h-5" />
               <span className="absolute top-2 right-2 w-2 h-2 bg-[#ee2229] rounded-full border-2 border-white"></span>
@@ -119,7 +119,7 @@ export default async function CRMLayout({
                 <span className="text-sm font-bold text-[#0F172A] block leading-none">System Admin</span>
                 <span className="text-[10px] text-blue-600 font-bold uppercase tracking-widest">Superuser</span>
               </div>
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+              <div className="w-11 h-11 rounded-xl bg-linear-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
                 <User className="w-6 h-6" />
               </div>
             </div>

@@ -22,7 +22,7 @@ export default function LoginPage() {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        if (session.user.email === 'admin@maduratravel.com') {
+        if (session.user.email === 'tech1@maduraglobal.com') {
           router.push('/admin');
         } else {
           router.push(`/${region}`);
@@ -50,7 +50,7 @@ export default function LoginPage() {
 
     const { data: { user } } = await supabase.auth.getUser();
 
-    if (user?.email === 'admin@maduratravel.com') {
+    if (user?.email === 'tech1@maduraglobal.com') {
       router.push('/admin');
     } else if (user) {
       // Create a lead in CRM for normal user login

@@ -22,7 +22,7 @@ export default async function AdminLayout({
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user || user.email !== 'admin@maduratravel.com') {
+  if (!user || user.email !== 'tech1@maduraglobal.com') {
     redirect('/en-in/login'); // Fallback to login if not admin
   }
 

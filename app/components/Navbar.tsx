@@ -368,7 +368,7 @@ export default function Navbar() {
               <h3 className="text-[22px] font-bold text-[#191974] tracking-tight">
                 {user ? `Hello ${user.user_metadata?.first_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Member'}!` : 'Hello Folks'}
               </h3>
-              {user?.email === 'admin@maduratravel.com' && (
+              {user?.email === 'tech1@maduraglobal.com' && (
                 <Link 
                   href="/admin" 
                   onClick={() => setSidebarOpen(false)}
@@ -542,7 +542,7 @@ export default function Navbar() {
             ))}
 
             {/* --- ADMIN OPTIONS --- */}
-            {user?.email === 'admin@maduratravel.com' && (
+            {user?.email === 'tech1@maduraglobal.com' && (
                <Link
                  href="/admin"
                  onClick={() => setSidebarOpen(false)}
