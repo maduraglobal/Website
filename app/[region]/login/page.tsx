@@ -49,9 +49,23 @@ export default function LoginPage() {
     }
 
     const { data: { user } } = await supabase.auth.getUser();
+
     if (user?.email === 'admin@maduratravel.com') {
       router.push('/admin');
-    } else {
+    } else if (user) {
+      // Create a lead in CRM for normal user login
+      try {
+        await supabase.from('leads').insert([{
+          email: user.email,
+          first_name: user.user_metadata?.first_name || '',
+          last_name: user.user_metadata?.last_name || '',
+          phone: user.user_metadata?.phone || '',
+          source: 'Website Login',
+          status: 'New'
+        }]);
+      } catch (err) {
+        console.error("Failed to create login lead:", err);
+      }
       router.push(`/${region}`);
     }
     router.refresh();
