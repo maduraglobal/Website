@@ -43,11 +43,21 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
                "text-[16px] font-bold leading-tight group-hover:underline transition-all cursor-pointer",
                idx === 0 ? "text-[#191974]" : "text-gray-900"
             )}>
-              {item.title} <span className="font-normal text-gray-400 ml-1">(1 Night)</span>
+              {item.title}
             </h4>
             
-            {/* Description only shows if it's the first day in this slim view, or we can make it toggleable. 
-                Matching the image closely - it shows just the titles in a list. */}
+            {item.description && (
+              <div className="pt-3 pb-2 text-[14px] text-gray-600 leading-relaxed max-w-2xl">
+                {item.description}
+              </div>
+            )}
+            
+            {item.meals && (
+              <p className="text-[12px] font-bold text-gray-500 uppercase tracking-widest pt-2 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#ee2229]"></span>
+                Meals: <span className="text-gray-900">{item.meals}</span>
+              </p>
+            )}
           </div>
         </div>
       ))}

@@ -18,6 +18,7 @@ import TourInclusions from "../components/tours/TourInclusions";
 import TourCard from "../components/tours/TourCard";
 import VerticalTourCard from "../components/tours/VerticalTourCard";
 import { getDestinations } from "@/utils/crm";
+import { Skeleton, TourCardSkeleton } from "../components/ui/Skeleton";
 
 const supabase = createClient();
 
@@ -273,40 +274,48 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               ref={destScrollRef}
               className="flex overflow-x-auto gap-4 lg:gap-5 pb-6 snap-x snap-mandatory no-scrollbar scroll-smooth"
             >
-              {(topDestinations.length > 0 ? topDestinations : []).map((card, idx) => {
-                const fallbacks = [
-                  '1544620347-c4fd4a3d5957', // Asia
-                  '1513635269975-59663e0ac1ad', // Europe
-                  '1512453979798-5ea266f8880c', // Middle East
-                  '1499856871958-5b9627545d1a', // Paris
-                  '1516026672322-bc52d61a55d5', // Africa
-                  '1528072164453-f4e8ef0d475a'  // Sydney
-                ];
-                const displayImage = card.image_url || card.image || `https://images.unsplash.com/photo-${fallbacks[idx % fallbacks.length]}?auto=format&fit=crop&q=80&w=600`;
-                return (
-                  <Link
-                    key={idx}
-                    href={`/${region}/destinations/${card.slug || card.id}`}
-                    className="relative min-w-[200px] h-[280px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block rounded-2xl border border-gray-100 shrink-0"
-                  >
-                    <img
-                      src={displayImage}
-                      alt={card.name}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-linear-to-b from-black/50 via-transparent to-black/90 pointer-events-none" />
-                    <div className="absolute top-4 left-4 right-4">
-                      <p className="text-white text-[18px] leading-tight tracking-tight font-bold drop-shadow-md">{card.name}</p>
-                    </div>
-                    <div className="absolute bottom-4 left-4 right-4 text-left">
-                      <p className="text-white/60 text-[10px] font-bold tracking-widest mb-0.5 uppercase">Starting from</p>
-                      <p className="text-white text-[15px] font-bold">
-                        {formatRegionalPrice(card.base_price || (25000 + idx * 5000), region)}
-                      </p>
-                    </div>
-                  </Link>
-                );
-              })}
+              {loading ? (
+                Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="relative min-w-[200px] h-[280px] rounded-2xl shrink-0 overflow-hidden bg-gray-50 border border-gray-100">
+                    <Skeleton className="w-full h-full bg-gray-200/50" />
+                  </div>
+                ))
+              ) : (
+                (topDestinations.length > 0 ? topDestinations : []).map((card, idx) => {
+                  const fallbacks = [
+                    '1544620347-c4fd4a3d5957', // Asia
+                    '1513635269975-59663e0ac1ad', // Europe
+                    '1512453979798-5ea266f8880c', // Middle East
+                    '1499856871958-5b9627545d1a', // Paris
+                    '1516026672322-bc52d61a55d5', // Africa
+                    '1528072164453-f4e8ef0d475a'  // Sydney
+                  ];
+                  const displayImage = card.image_url || card.image || `https://images.unsplash.com/photo-${fallbacks[idx % fallbacks.length]}?auto=format&fit=crop&q=80&w=600`;
+                  return (
+                    <Link
+                      key={idx}
+                      href={`/${region}/destinations/${card.slug || card.id}`}
+                      className="relative min-w-[200px] h-[280px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block rounded-2xl border border-gray-100 shrink-0"
+                    >
+                      <img
+                        src={displayImage}
+                        alt={card.name}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-linear-to-b from-black/50 via-transparent to-black/90 pointer-events-none" />
+                      <div className="absolute top-4 left-4 right-4">
+                        <p className="text-white text-[18px] leading-tight tracking-tight font-bold drop-shadow-md">{card.name}</p>
+                      </div>
+                      <div className="absolute bottom-4 left-4 right-4 text-left">
+                        <p className="text-white/60 text-[10px] font-bold tracking-widest mb-0.5 uppercase">Starting from</p>
+                        <p className="text-white text-[15px] font-bold">
+                          {formatRegionalPrice(card.base_price || (25000 + idx * 5000), region)}
+                        </p>
+                      </div>
+                    </Link>
+                  );
+                })
+              )}
             </div>
           </div>
         </div>
@@ -324,9 +333,10 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
           <div className="w-full">
             {loading ? (
-              <div className="py-12 text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#191974] mx-auto mb-4"></div>
-                <p className="text-gray-500 font-bold  tracking-widest text-xs">Finding the best adventures...</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <TourCardSkeleton key={i} />
+                ))}
               </div>
             ) : errorStatus ? (
               <div className="py-12 text-center bg-red-50 rounded-2xl border border-red-100">
