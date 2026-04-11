@@ -43,20 +43,20 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
-    const { error: authError } = await supabase.auth.signInWithPassword({
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
       email: formData.email,
       password: formData.password,
     });
 
-    if (authError) {
+    if (authError || !authData.user) {
       setError("Incorrect email or password. Please try again.");
       setLoading(false);
       return;
     }
 
-    const { data: { user } } = await supabase.auth.getUser();
-
+    const user = authData.user;
     let isAdmin = false;
+
     if (user?.email) {
       const { data } = await supabase.from('admin_users').select('email').eq('email', user.email).single();
       if (data) isAdmin = true;
@@ -64,20 +64,17 @@ export default function LoginPage() {
 
     if (isAdmin) {
       router.push('/admin');
-    } else if (user) {
-      // Create a lead in CRM for normal user login
-      try {
-        await supabase.from('leads').insert([{
-          email: user.email,
-          first_name: user.user_metadata?.first_name || '',
-          last_name: user.user_metadata?.last_name || '',
-          phone: user.user_metadata?.phone || '',
-          source: 'Website Login',
-          status: 'New'
-        }]);
-      } catch (err) {
-        console.error("Failed to create login lead:", err);
-      }
+    } else {
+      // Create a lead in CRM for normal user login (Running asynchronously to speed up login)
+      supabase.from('leads').insert([{
+        email: user.email,
+        first_name: user.user_metadata?.first_name || '',
+        last_name: user.user_metadata?.last_name || '',
+        phone: user.user_metadata?.phone || '',
+        source: 'Website Login',
+        status: 'New'
+      }]).then().catch(err => console.error(err));
+      
       router.push(`/${region}`);
     }
     router.refresh();

@@ -252,9 +252,24 @@ export default function Navbar() {
             </div>
 
             {/* Login */}
-            <Link href={`/${currentRegionCode}/login`} className="hidden md:block text-[14px] font-bold hover:text-[#ee2229] transition-colors">
-              {user ? 'Login' : 'Login'}
-            </Link>
+            {!user ? (
+              <Link href={`/${currentRegionCode}/login`} className="hidden md:block text-[14px] font-bold hover:text-[#ee2229] transition-colors">
+                Log In
+              </Link>
+            ) : (
+              <button 
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  setUser(null);
+                  setIsAdmin(false);
+                  router.push(`/${currentRegionCode}`);
+                  router.refresh();
+                }}
+                className="hidden md:block text-[14px] font-bold hover:text-[#ee2229] transition-colors text-red-500"
+              >
+                Log Out
+              </button>
+            )}
 
             {/* Country Selector */}
             <div className="relative group cursor-pointer z-150">
@@ -585,10 +600,10 @@ export default function Navbar() {
               <Link
                 href={`/${currentRegionCode}/login`}
                 onClick={() => setSidebarOpen(false)}
-                className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-200 text-[#191974]  text-[12px]  tracking-widest rounded-xl hover:bg-[#191974] hover:text-white transition-all shadow-sm"
+                className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-200 text-[#191974]  text-[12px]  tracking-widest rounded-xl hover:bg-[#191974] hover:text-white transition-all shadow-sm font-bold"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
-                Sign Up
+                Sign In
               </Link>
             )}
 
