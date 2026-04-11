@@ -250,7 +250,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
             ].map((card, idx) => (
               <Link
                 key={idx}
-                href={`/${region}/destination/${card.slug}`}
+                href={`/${region}/destinations/${card.slug}`}
                 className="relative min-w-47.5 h-62.5 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block rounded-2xl"
               >
                 <img src={card.image} alt={card.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />

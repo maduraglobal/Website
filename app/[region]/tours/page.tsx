@@ -1,22 +1,19 @@
 import React from 'react';
-import { createClient } from '@/utils/supabase/server';
+import { getTours } from '@/utils/crm';
 import ToursListingContent from './components/ToursListingContent';
 
 export default async function ToursListingPage({ params }: { params: Promise<{ region: string }> }) {
   const { region } = await params;
-  const supabase = await createClient();
-
-  // Fetch Tours from Supabase
-  const { data: tours, error } = await supabase
-    .from('tours')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    console.error('Error fetching tours:', error);
+  
+  // Fetch Tours exclusively from CRM (4.1)
+  let tours: any[] = [];
+  try {
+    // Note: In real app, we might filter by country based on region
+    const countryCode = region.split('-')[1]?.toUpperCase() || 'IN';
+    tours = await getTours({ country: countryCode });
+  } catch (error) {
+    console.error('Error fetching tours from CRM:', error);
   }
-
-  const displayTours = tours || [];
 
   return (
     <div className="bg-white min-h-screen">
@@ -44,7 +41,7 @@ export default async function ToursListingPage({ params }: { params: Promise<{ r
       </div>
 
       {/* 2. Listing and Filtering Content Area */}
-      <ToursListingContent initialTours={displayTours} region={region} />
+      <ToursListingContent initialTours={tours} region={region} />
     </div>
   );
 }

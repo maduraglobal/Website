@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 
 import { destinations } from '@/app/data/visaData';
 import { formatRegionalPrice } from '@/config/country';
+import VisaCard from '@/app/components/visa/VisaCard';
 
 // Experts Data
 const experts = [
@@ -121,68 +122,12 @@ export default function VisaServicesPage() {
           {filteredDestinations.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredDestinations.map((dest, i) => (
-                <motion.div
-                  key={dest.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                >
-                  <Link
-                    href={`/${region}/visa/${dest.slug}`}
-                    className="group relative rounded-[32px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 cursor-pointer block h-[480px] bg-white"
-                  >
-                    {/* Background Image */}
-                    <div className="absolute inset-0">
-                      <img
-                        src={dest.image}
-                        alt={dest.name}
-                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/30 to-black/10 transition-all"></div>
-                    </div>
-
-                    {/* Visa Type Badge */}
-                    <div className="absolute top-6 right-6 z-10">
-                      <div className="bg-white/10 backdrop-blur-md border border-white/20 text-white text-[9px]  tracking-[0.2em] px-3 py-1.5 rounded-full uppercase">
-                        {dest.type || 'E-VISA'}
-                      </div>
-                    </div>
-
-                    {/* Content Overlay */}
-                    <div className="absolute inset-x-0 bottom-0 p-6 flex flex-col items-center text-white z-10">
-                      <div className="mb-4 transform group-hover:-translate-y-2 transition-transform duration-500">
-                        <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-2xl bg-white/20 backdrop-blur-sm p-0.5">
-                          <img
-                            src={`https://flagcdn.com/w160/${dest.flag}.png`}
-                            alt={dest.name}
-                            className="w-full h-full object-cover rounded-full"
-                          />
-                        </div>
-                      </div>
-
-                      <h3 className="text-[24px]  tracking-tight text-center mb-6 drop-shadow-xl ">
-                        {dest.name}
-                      </h3>
-
-                      <div className="w-full grid grid-cols-2 gap-4 border-t border-white/10 pt-5 mb-6">
-                        <div className="text-center">
-                          <p className="text-[9px]  tracking-[0.2em] text-white/40 uppercase mb-1">Validity</p>
-                          <p className="text-[14px] font-bold text-white uppercase">{dest.valid || '30 DAYS'}</p>
-                        </div>
-                        <div className="text-center border-l border-white/10">
-                          <p className="text-[9px]  tracking-[0.2em] text-white/40 uppercase mb-1">Starting Price</p>
-                          <p className="text-[14px] font-bold text-[#ee2229]">
-                            {dest.price ? formatRegionalPrice(dest.price, region) : 'ON REQUEST'}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="w-full bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white py-3.5 rounded-xl text-center  text-[11px] font-bold tracking-[0.2em] transition-all shadow-xl shadow-red-500/20 active:scale-95 uppercase">
-                        Get Started Now
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
+                <VisaCard 
+                  key={dest.slug} 
+                  dest={dest} 
+                  region={region} 
+                  index={i} 
+                />
               ))}
             </div>
           ) : (

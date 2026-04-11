@@ -13,8 +13,10 @@ interface Tour {
   title: string;
   slug: string;
   duration: string;
-  image_url: string;
-  base_price_inr: number;
+  images: string[];
+  price: number;
+  destination: string;
+  itinerary_id: string;
   tags?: string[];
   rating?: number;
 }
@@ -105,8 +107,8 @@ export default function ToursListingContent({ initialTours, region }: ToursListi
 
       return true;
     }).sort((a, b) => {
-      if (sortBy === 'price-low') return a.base_price_inr - b.base_price_inr;
-      if (sortBy === 'price-high') return b.base_price_inr - a.base_price_inr;
+      if (sortBy === 'price-low') return a.price - b.price;
+      if (sortBy === 'price-high') return b.price - a.price;
       if (sortBy === 'rating') return (b.rating || 0) - (a.rating || 0);
       return 0; // default popularity
     });
@@ -158,7 +160,7 @@ export default function ToursListingContent({ initialTours, region }: ToursListi
               <div key={tour.id} className="bg-white border border-gray-100 rounded-[24px] overflow-hidden shadow-sm flex flex-col group transition-all hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] hover:-translate-y-1">
                 <Link href={`/${region}/tours/${tour.slug}`} className="relative h-56 overflow-hidden block">
                   <FallbackImage
-                    src={tour.image_url}
+                    src={tour.images[0]}
                     fallbackSrc="/images/img-8.jpg"
                     alt={tour.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
@@ -191,7 +193,7 @@ export default function ToursListingContent({ initialTours, region }: ToursListi
                       <div className="flex flex-col">
                         <span className="text-[9px] text-gray-400  uppercase tracking-widest mb-1">Starting from</span>
                         <span className="text-[20px]  text-[#191974] tracking-tighter leading-none">
-                          {formatRegionalPrice(tour.base_price_inr, region)}
+                          {formatRegionalPrice(tour.price, region)}
                         </span>
                       </div>
                       <Link

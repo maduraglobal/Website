@@ -92,26 +92,24 @@ export default function ItineraryEditor() {
     setSaveStatus('idle');
 
     try {
-      const { error } = await supabase
-        .from('itineraries')
-        .upsert(
-          days.map(d => ({
-            ...d,
-            tour_id: id,
-            updated_by: 'Admin',
-            updated_at: new Date().toISOString(),
-            version: (versionInfo.version || 1) + 1
-          })),
-          { onConflict: 'id' }
-        );
+      const response = await fetch('/api/tours/update-itinerary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, days }),
+      });
 
-      if (error) throw error;
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Failed to update itinerary');
 
       setSaveStatus('success');
-      setVersionInfo(prev => ({ ...prev, version: prev.version + 1, updated_at: new Date().toISOString() }));
+      setVersionInfo(prev => ({ 
+        ...prev, 
+        version: result.version || prev.version + 1, 
+        updated_at: result.updated_at || new Date().toISOString() 
+      }));
       setTimeout(() => setSaveStatus('idle'), 3000);
     } catch (err) {
-      console.error(err);
+      console.error('Save Error:', err);
       setSaveStatus('error');
     } finally {
       setSaving(false);

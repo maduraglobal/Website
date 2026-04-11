@@ -96,7 +96,7 @@ export default function TourMap({ tourTitle, onPreview, fullsize, itinerary }: T
       <div className={`absolute bottom-0 left-0 right-0 p-8 flex justify-between items-end ${fullsize ? 'bg-linear-to-t from-gray-50 via-transparent to-transparent' : ''}`}>
          <div className="space-y-1">
             <h3 className={`${fullsize ? 'text-gray-900' : 'text-white'} text-[18px] font-bold`}>Interactive Route Explorer</h3>
-            <p className={`${fullsize ? 'text-gray-500' : 'text-white/70'} text-[13px] font-medium`}>Visualizing your journey across {tourTitle}</p>
+            <p className={`${fullsize ? 'text-gray-500' : 'text-white/70'} text-[13px] font-medium`}>Visualizing your itinerary across the region</p>
          </div>
          {!fullsize && (
            <button 

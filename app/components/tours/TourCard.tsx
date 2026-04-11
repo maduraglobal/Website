@@ -39,7 +39,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
           initial={false}
           animate={{ scale: isHovered ? 1.05 : 1 }}
           transition={{ duration: 0.6 }}
-          src={tour.image_url || 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=800'}
+          src={tour.images?.[0] || tour.image_url || 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=800'}
           alt={tour.title}
           className="w-full h-full object-cover"
         />

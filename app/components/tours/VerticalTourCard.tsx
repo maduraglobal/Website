@@ -32,7 +32,6 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
   const price = tour.base_price_inr || tour.price || 345000;
   const emi = Math.round(price / 27); // Example EMI calculation if not provided
   const duration = tour.duration || "12N/13D";
-  const initials = tour.initials || "GZ";
   const slug = tour.slug || tour.id;
 
   return (
@@ -52,10 +51,7 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
 
-        {/* Top Left Initials Badge */}
-        <div className="absolute top-3 left-3 w-8 h-8 bg-[#ee2229] rounded-full flex items-center justify-center border-2 border-white shadow-sm">
-          <span className="text-white text-[10px] font-bold">{initials}</span>
-        </div>
+        {/* Top Left Initials Badge - REMOVED GZ */}
 
         {/* Bottom Left Duration Badge */}
         <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-md shadow-sm">
@@ -63,26 +59,29 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
         </div>
 
         {/* Bottom Right Map Button */}
-        <button className="absolute bottom-3 right-3 bg-black/40 backdrop-blur-sm hover:bg-black/60 text-white px-3 py-1 rounded-md flex items-center gap-1 transition-colors">
+        <Link 
+          href={`/${region}/tours/${slug}#itinerary`}
+          className="absolute bottom-3 right-3 bg-black/40 backdrop-blur-sm hover:bg-black/60 text-white px-3 py-1 rounded-md flex items-center gap-1 transition-colors"
+        >
           <MapPin className="w-3.5 h-3.5" />
           <span className="text-[11px] font-medium">Map</span>
-        </button>
+        </Link>
       </div>
 
       {/* Content Area */}
-      <div className="p-5 flex flex-col flex-1">
-        <p className="text-[11px] text-gray-400 font-medium mb-1">Explorer</p>
-        <h3 className="text-[16px] font-bold text-gray-900 leading-tight mb-3 line-clamp-2 h-10">
+      <div className="px-4 py-3 flex flex-col flex-1">
+        <p className="text-[11px] text-gray-400 font-medium mb-0.5">Explorer</p>
+        <h3 className="text-[16px] font-bold text-gray-900 leading-tight mb-1 line-clamp-2 h-10">
           {tour.title}
         </h3>
 
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-2">
           <p className="text-[12px] text-gray-500">{tour.dates_count || 1} Dates</p>
           <button className="text-[12px] text-gray-500 hover:text-[#ee2229] font-medium">Highlights</button>
         </div>
 
-        <div className="mb-6">
-          <p className="text-[12px] font-semibold text-gray-400 mb-3">Tour Includes</p>
+        <div className="mb-3">
+          <p className="text-[12px] font-semibold text-gray-400 mb-1">Tour Includes</p>
           <div className="flex items-center gap-4">
             <Bed className="w-4 h-4 text-[#ee2229]" />
             <Utensils className="w-4 h-4 text-[#ee2229]" />
@@ -93,7 +92,7 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
         </div>
 
         {/* Pricing Area */}
-        <div className="mt-auto pt-4 border-t border-gray-100 bg-gray-50/30 -mx-5 px-5 py-4">
+        <div className="mt-auto pt-3 border-t border-gray-100 bg-gray-50/30 -mx-5 px-5 py-2">
           <div className="flex justify-between items-end">
             <div>
               <p className="text-[10px] text-gray-500 mb-0.5">All inclusive price starts</p>
@@ -114,7 +113,7 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
         </div>
 
         {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-2 mt-4">
+        <div className="grid grid-cols-2 gap-2 mt-2">
           <Link
             href={`/${region}/tours/${slug}`}
             className="flex items-center justify-center border border-[#ee2229] text-[#ee2229] hover:bg-red-50 py-2.5 rounded-md text-[13px] font-bold transition-all"

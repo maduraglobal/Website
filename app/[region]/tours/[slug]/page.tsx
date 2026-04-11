@@ -1,25 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
-import { createClient } from '@/utils/supabase/server';
+import { getTours, getItineraryByTourId, Tour } from '@/utils/crm';
 import { notFound } from 'next/navigation';
 import TourDetailContent from './components/TourDetailContent';
 import FallbackImage from '@/app/components/FallbackImage';
 
 export default async function TourDetailPage({ params }: { params: Promise<{ region: string, slug: string }> }) {
   const { region, slug } = await params;
-  const supabase = await createClient();
 
-  // Fetch Tour Details from Supabase
-  const { data: tour, error } = await supabase
-    .from('tours')
-    .select('*')
-    .eq('slug', slug)
-    .single();
+  // Fetch Tour Details exclusively from CRM (4.1)
+  const tours = await getTours();
+  const tour = tours.find(t => t.slug === slug);
 
-  let currentTour = tour;
+  let currentTour: Tour | undefined = tour;
   let isMock = false;
 
-  if (error || !currentTour) {
+  if (!currentTour) {
     if (slug.startsWith('premium-experience') || slug.startsWith('mock')) {
       isMock = true;
       currentTour = {
@@ -27,23 +23,23 @@ export default async function TourDetailPage({ params }: { params: Promise<{ reg
         title: `${region.charAt(0).toUpperCase() + region.slice(1)} Premium Tour Showcase`,
         slug: slug,
         duration: '7 Days | 6 Nights',
-        image_url: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=1200',
+        images: ['https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=1200'],
         tags: ["Premium", "Family", "Best Seller"],
-        price: 45000
+        price: 45000,
+        destination: region.toUpperCase(),
+        itinerary_id: 'mock-1'
       };
     } else {
       return notFound();
     }
   }
 
-  // Fetch Itinerary for this tour
-  const { data: itineraryData } = await supabase
-    .from('itineraries')
-    .select('*')
-    .eq('tour_id', currentTour.id)
-    .order('day_number', { ascending: true });
+  if (!currentTour) return notFound(); // Safety guard
 
-  const itinerary = itineraryData?.length ? itineraryData.map(item => ({
+  // Fetch Itinerary exclusively from CRM (4.1)
+  const itineraryData = await getItineraryByTourId(currentTour.id);
+
+  const itinerary = itineraryData?.length ? itineraryData.map((item: any) => ({
     day: item.day_number,
     title: item.title,
     description: item.description,
@@ -55,9 +51,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ reg
     meals: "Breakfast, Lunch, Dinner"
   }));
 
-  const validImgUrl = (currentTour.image_url && typeof currentTour.image_url === 'string' && currentTour.image_url.trim().startsWith('http'))
-    ? currentTour.image_url.trim()
-    : '/images/img-8.jpg';
+  const validImgUrl = currentTour.images?.[0] || '/images/img-8.jpg';
 
   return (
     <div className="bg-white min-h-screen text-[#191974] text-[14px]">

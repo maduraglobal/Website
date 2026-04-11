@@ -4,7 +4,7 @@ import React, { useState, useEffect, createContext, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, Users, Phone, Mail, User, Send, CheckCircle } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { formatRegionalPrice } from '@/config/country';
+import { formatRegionalPrice, getCountryConfig } from '@/config/country';
 
 // ─── Context ────────────────────────────────────────────────────────────────
 
@@ -112,6 +112,7 @@ const BookingModal = () => {
 
   const pathname = usePathname();
   const region = (pathname?.split('/')[1] ?? 'en-in').toLowerCase();
+  const config = getCountryConfig(region);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -322,7 +323,7 @@ const BookingModal = () => {
                           value={formData.phone}
                           onChange={handleChange}
                           type="tel"
-                          placeholder="+91 00000 00000"
+                          placeholder={config.phoneFormat}
                           className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.phone ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
                         />
                       </div>
