@@ -32,25 +32,26 @@ export default function AdminDashboard() {
       {/* Welcome Section */}
       <div className="flex justify-between items-end">
         <div>
-          <h1 className="text-3xl font-bold text-[#191974] mb-2 tracking-tight">System Dashboard</h1>
-          <p className="text-gray-500">Welcome to the Madura Travel Website Admin Panel.</p>
+          <h1 className="text-3xl font-bold text-[#191974] mb-2 tracking-tight">Website Content Manager</h1>
+          <p className="text-gray-500">Manage your tours, itineraries, and visa information content.</p>
         </div>
-        <Link 
-          href="/admin/tours/new"
-          className="bg-[#ee2229] hover:bg-[#d61e24] text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-red-500/20 transition-all hover:-translate-y-0.5"
-        >
-          <Plus className="w-5 h-5" />
-          Create New Tour
-        </Link>
+        <div className="flex gap-4">
+          <Link 
+            href="/admin/tours/new"
+            className="bg-[#ee2229] hover:bg-[#d61e24] text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-red-500/20 transition-all hover:-translate-y-0.5"
+          >
+            <Plus className="w-5 h-5" />
+            Create New Tour
+          </Link>
+        </div>
       </div>
 
       {/* Quick Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {[
           { label: 'Published Tours', value: toursCount, icon: Map, color: 'text-blue-600', bg: 'bg-blue-50' },
+          { label: 'Active Itineraries', value: toursCount, icon: Calendar, color: 'text-purple-600', bg: 'bg-purple-50' },
           { label: 'Visa Destinations', value: '42', icon: CheckCircle2, color: 'text-green-600', bg: 'bg-green-50' },
-          { label: 'Pending Bookings', value: '12', icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50' },
-          { label: 'Support Alerts', value: '3', icon: AlertCircle, color: 'text-red-600', bg: 'bg-red-50' },
         ].map((stat, i) => (
           <div key={i} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
             <div className={`w-12 h-12 ${stat.bg} ${stat.color} rounded-2xl flex items-center justify-center mb-4`}>
@@ -75,7 +76,6 @@ export default function AdminDashboard() {
               {[
                 { title: 'Itinerary Editor', desc: 'Modify day-by-day plans for existing tours.', link: '/admin/tours', icon: Map, color: 'bg-blue-500' },
                 { title: 'Visa Center', desc: 'Update visa requirements and pricing for countries.', link: '/admin/visa', icon: CheckCircle2, color: 'bg-green-500' },
-                { title: 'Lead Management', desc: 'Track and respond to website enquiries.', link: '/admin/leads', icon: ArrowUpRight, color: 'bg-purple-500' },
               ].map((item, i) => (
                 <Link key={i} href={item.link} className="flex items-center gap-6 p-6 hover:bg-gray-50 transition-colors group">
                   <div className={`w-14 h-14 ${item.color} rounded-2xl flex items-center justify-center text-white shrink-0 shadow-lg shadow-gray-200 group-hover:scale-110 transition-transform`}>

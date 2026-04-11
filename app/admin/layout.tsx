@@ -32,8 +32,8 @@ export default async function AdminLayout({
       <aside className="w-64 bg-[#191974] text-white flex flex-col fixed h-full z-50">
         <div className="p-6 border-b border-white/10">
           <Link href="/admin" className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#ee2229] rounded-lg flex items-center justify-center font-bold">M</div>
-            <span className="text-xl font-bold tracking-tight">Admin CMS</span>
+            <div className="w-8 h-8 bg-[#ee2229] rounded-lg flex items-center justify-center font-bold">W</div>
+            <span className="text-xl font-bold tracking-tight">Website Content Manager</span>
           </Link>
         </div>
 

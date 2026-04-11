@@ -91,7 +91,11 @@ export async function middleware(request: NextRequest) {
             },
           })
           cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
+            response.cookies.set(name, value, {
+              ...options,
+              maxAge: undefined,
+              expires: undefined,
+            })
           )
           // Re-apply our custom region cookie if it was set earlier in this middleware
           if (supportedRegions.includes(firstSegment)) {
