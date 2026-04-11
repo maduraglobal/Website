@@ -58,6 +58,18 @@ export default function Navbar() {
     router.push(`/${currentRegionCode}/destination/${place.toLowerCase().replace(/\s+/g, "-")}`);
   };
 
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut();
+    } catch (e) {
+      console.error(e);
+    }
+    setUser(null);
+    setIsAdmin(false);
+    setSidebarOpen(false);
+    window.location.href = `/${currentRegionCode}`;
+  };
+
   const switchRegion = (newRegion: string) => {
     if (!pathname) return;
     const segments = pathname.split('/');
@@ -258,13 +270,7 @@ export default function Navbar() {
               </Link>
             ) : (
               <button 
-                onClick={async () => {
-                  await supabase.auth.signOut();
-                  setUser(null);
-                  setIsAdmin(false);
-                  router.push(`/${currentRegionCode}`);
-                  router.refresh();
-                }}
+                onClick={handleSignOut}
                 className="hidden md:block text-[14px] font-bold hover:text-[#ee2229] transition-colors text-red-500"
               >
                 Log Out
@@ -583,14 +589,7 @@ export default function Navbar() {
           <div className="shrink-0 bg-gray-50 px-6 py-6 border-t border-gray-100 flex flex-col gap-4">
             {user ? (
               <button
-                onClick={async () => {
-                  await supabase.auth.signOut();
-                  setUser(null);
-                  setIsAdmin(false);
-                  setSidebarOpen(false);
-                  router.push(`/${currentRegionCode}`);
-                  router.refresh();
-                }}
+                onClick={handleSignOut}
                 className="w-full flex items-center justify-center gap-2 py-3 bg-red-50 border border-red-100 text-[#ee2229] text-[12px] tracking-widest rounded-xl hover:bg-[#ee2229] hover:text-white transition-all shadow-sm font-bold"
               >
                 <LogOut className="w-4 h-4" />
