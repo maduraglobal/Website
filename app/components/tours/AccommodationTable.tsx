@@ -38,7 +38,7 @@ export default function AccommodationTable() {
         </table>
       </div>
 
-      <div className="text-[12px] text-gray-400 space-y-1 pt-4 border-t border-gray-50 uppercase tracking-widest font-bold">
+      <div className="text-[12px] text-gray-400 space-y-1 pt-4 border-t border-gray-50  tracking-widest font-bold">
         <p>Note:</p>
         <p>• Flight details are tentative only. The airline, departure, arrival times and routing may change.</p>
         <p>• Hotel details are tentative only. The hotel or place of accommodation may change.</p>

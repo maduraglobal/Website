@@ -73,7 +73,7 @@ export default function ToursManagement() {
               <div className="pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity">
                 <TourCard tour={tour} destinationSlug={tour.slug || ''} region="en-in" />
               </div>
-              
+
               {/* Admin Overlay Actions */}
               <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all flex flex-col items-center justify-center gap-3 rounded-xl z-30">
                 <Link
@@ -84,29 +84,29 @@ export default function ToursManagement() {
                   FULL EDIT SYSTEM
                 </Link>
                 <div className="flex gap-2">
-                   <button className="w-10 h-10 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition-all backdrop-blur-md">
-                      <Globe className="w-4 h-4" />
-                   </button>
-                   <button className="w-10 h-10 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition-all backdrop-blur-md">
-                      <Settings2 className="w-4 h-4" />
-                   </button>
+                  <button className="w-10 h-10 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition-all backdrop-blur-md">
+                    <Globe className="w-4 h-4" />
+                  </button>
+                  <button className="w-10 h-10 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition-all backdrop-blur-md">
+                    <Settings2 className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
 
               {/* Status Badge */}
               <div className="absolute top-4 right-4 z-40">
-                 <span className="bg-green-500 text-white text-[9px] font-black px-2 py-1 rounded shadow-lg uppercase tracking-widest">Active</span>
+                <span className="bg-green-500 text-white text-[9px]  px-2 py-1 rounded shadow-lg uppercase tracking-widest">Active</span>
               </div>
             </div>
           ))}
-          
+
           {/* Add New Tour Card Placeholder */}
-          <Link 
-            href="/admin/tours/new" 
+          <Link
+            href="/admin/tours/new"
             className="flex flex-col items-center justify-center gap-4 bg-gray-50 border-4 border-dashed border-gray-200 rounded-xl hover:bg-white hover:border-[#ee2229]/30 transition-all group min-h-[400px]"
           >
             <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-red-50 transition-colors">
-               <Edit3 className="w-8 h-8 text-gray-300 group-hover:text-[#ee2229]" />
+              <Edit3 className="w-8 h-8 text-gray-300 group-hover:text-[#ee2229]" />
             </div>
             <p className="text-gray-400 font-bold uppercase tracking-widest group-hover:text-[#191974]">Create New Tour</p>
           </Link>

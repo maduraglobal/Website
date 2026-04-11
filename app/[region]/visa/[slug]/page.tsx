@@ -120,15 +120,15 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
             <div className="space-y-1">
-              <p className="text-[11px] text-white/50 uppercase tracking-[0.2em] font-black">Processing time</p>
+              <p className="text-[11px] text-white/50 uppercase tracking-[0.2em] ">Processing time</p>
               <p className="text-[20px] font-bold">{visaTypes[0]?.pTime || '5-7 Days'}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-[11px] text-white/50 uppercase tracking-[0.2em] font-black">Stay Period</p>
+              <p className="text-[11px] text-white/50 uppercase tracking-[0.2em] ">Stay Period</p>
               <p className="text-[20px] font-bold">{visaTypes[0]?.stay || '30 Days'}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-[11px] text-white/50 uppercase tracking-[0.2em] font-black">Starting from</p>
+              <p className="text-[11px] text-white/50 uppercase tracking-[0.2em] ">Starting from</p>
               <p className="text-[20px] font-bold text-[#ee2229]">{currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(currentData.startingPrice, region)}</p>
             </div>
           </div>
@@ -241,7 +241,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                   <div className="mt-auto pt-8 border-t border-gray-50 flex items-end justify-between">
                     <div>
                       <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Fee Starts</p>
-                      <p className="text-[28px] font-black text-[#191974] leading-none">
+                      <p className="text-[28px]  text-[#191974] leading-none">
                         {v.fees === "0" ? 'FREE' : formatRegionalPrice(v.fees, region)}
                       </p>
                     </div>
@@ -287,7 +287,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                 "Hotel booking details"
               ].map((doc, i) => (
                 <div key={i} className="flex items-center gap-5 bg-white border border-gray-100 p-6 rounded-2xl hover:border-red-100 transition-all shadow-sm group">
-                  <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-[#191974] font-black pointer-events-none group-hover:bg-[#ee2229] group-hover:text-white transition-colors">
+                  <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-[#191974]  pointer-events-none group-hover:bg-[#ee2229] group-hover:text-white transition-colors">
                     {i + 1}
                   </div>
                   <span className="text-[15px] font-bold text-[#191974]">{doc}</span>
@@ -335,7 +335,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                     <step.icon className="w-6 h-6" />
                   </div>
                   <div className="pt-2">
-                    <p className="text-[12px] text-[#ee2229] font-black tracking-widest uppercase mb-1">Step 0{i + 1}</p>
+                    <p className="text-[12px] text-[#ee2229]  tracking-widest uppercase mb-1">Step 0{i + 1}</p>
                     <h4 className="text-[18px] font-bold text-[#191974] mb-2">{step.title}</h4>
                     <p className="text-gray-500 font-medium leading-relaxed">{step.desc}</p>
                   </div>
@@ -391,7 +391,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                     <FileText className="w-6 h-6" />
                   </div>
                   <div className="space-y-1">
-                    <p className="text-[12px] text-[#ee2229] font-black tracking-widest uppercase">Verified Document Template</p>
+                    <p className="text-[12px] text-[#ee2229]  tracking-widest uppercase">Verified Document Template</p>
                     <p className="text-[#191974] font-bold text-[15px]">This is an accurate sample of the {destName} Tourist Visa.</p>
                     <p className="text-gray-500 font-medium text-[13px] leading-relaxed">Your actual visa will be issued by the respective consulate. It will contain your personal details and a secure QR code for verification at immigration counters.</p>
                   </div>
@@ -437,7 +437,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           <div id="visit-us" className="space-y-8 pt-4">
             <div className="flex items-center justify-between">
               <h2 className="text-[26px] font-bold text-[#191974]">Our Presence In India</h2>
-              <button className="text-[12px] font-black text-[#ee2229] uppercase tracking-widest border border-[#ee2229]/20 px-6 py-2 rounded-full hover:bg-red-50 transition-all flex items-center gap-2">
+              <button className="text-[12px]  text-[#ee2229] uppercase tracking-widest border border-[#ee2229]/20 px-6 py-2 rounded-full hover:bg-red-50 transition-all flex items-center gap-2">
                 View All Branches <ChevronRight className="w-4 h-4" />
               </button>
             </div>
@@ -450,7 +450,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                 <div key={i} className="p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#191974]/20 transition-all text-center space-y-2">
                   <p className="text-[16px] font-bold text-[#191974]">{branch.city}</p>
                   <p className="text-[12px] text-gray-500 font-medium uppercase tracking-widest">{branch.loc}</p>
-                  <p className="text-[11px] text-[#ee2229] font-black pt-2 uppercase tracking-tight">Visit Branch →</p>
+                  <p className="text-[11px] text-[#ee2229]  pt-2 uppercase tracking-tight">Visit Branch →</p>
                 </div>
               ))}
             </div>
@@ -467,14 +467,14 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             </div>
             <div className="p-8 space-y-6">
               <div className="space-y-1">
-                <h3 className="text-[22px] font-black text-white">Apply Now</h3>
+                <h3 className="text-[22px]  text-white">Apply Now</h3>
                 <p className="text-white/50 text-[13px] font-medium">Get your visa processed in simple steps.</p>
               </div>
 
               <form className="space-y-3">
                 <input type="email" placeholder="Email Address" className="w-full px-5 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white text-[14px] outline-none focus:border-[#ee2229] transition-colors" />
                 <input type="tel" placeholder="Mobile Number" className="w-full px-5 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white text-[14px] outline-none focus:border-[#ee2229] transition-colors" />
-                <button className="w-full bg-[#ee2229] text-white font-black text-[13px] tracking-widest py-4 rounded-xl mt-4 shadow-xl shadow-red-500/20 active:scale-95 transition-all">
+                <button className="w-full bg-[#ee2229] text-white  text-[13px] tracking-widest py-4 rounded-xl mt-4 shadow-xl shadow-red-500/20 active:scale-95 transition-all">
                   CONTINUE APPLICATION
                 </button>
               </form>
@@ -498,7 +498,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                 </div>
                 <div>
                   <p className="text-[14px] text-black  uppercase tracking-widest">{act.label}</p>
-                  <p className="text-[16px] font-black text-[#191974]">{act.detail}</p>
+                  <p className="text-[16px]  text-[#191974]">{act.detail}</p>
                 </div>
               </div>
             ))}

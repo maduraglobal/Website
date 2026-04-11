@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Users, 
-  Inbox, 
-  TrendingUp, 
-  Briefcase, 
-  ArrowUpRight, 
+import {
+  Users,
+  Inbox,
+  TrendingUp,
+  Briefcase,
+  ArrowUpRight,
   ArrowDownRight,
   Clock,
   CheckCircle2,
@@ -24,7 +24,7 @@ export default function CRMDashboard() {
       {/* Header Section */}
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-4xl font-black text-[#0F172A] mb-2 tracking-tight">Control Center</h1>
+          <h1 className="text-4xl  text-[#0F172A] mb-2 tracking-tight">Control Center</h1>
           <p className="text-gray-500 text-lg">Real-time overview of business operations and transactional data.</p>
         </div>
         <div className="flex gap-3">
@@ -58,7 +58,7 @@ export default function CRMDashboard() {
               </div>
             </div>
             <p className="text-sm font-bold text-gray-400 tracking-widest uppercase mb-1">{stat.label}</p>
-            <h3 className="text-3xl font-black text-[#0F172A]">{loading ? '...' : stat.value}</h3>
+            <h3 className="text-3xl  text-[#0F172A]">{loading ? '...' : stat.value}</h3>
           </div>
         ))}
       </div>
@@ -88,7 +88,7 @@ export default function CRMDashboard() {
                   <div className="flex-1">
                     <div className="flex items-baseline gap-2">
                       <h4 className="text-[15px] font-bold text-[#0F172A]">{item.customer}</h4>
-                      <span className="text-[10px] font-black uppercase tracking-tighter text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded">{item.type}</span>
+                      <span className="text-[10px]  uppercase tracking-tighter text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded">{item.type}</span>
                     </div>
                     <p className="text-sm text-gray-500">{item.tour}</p>
                   </div>
@@ -115,7 +115,7 @@ export default function CRMDashboard() {
               </div>
               <h3 className="text-2xl font-bold mb-3">Revenue Projection</h3>
               <p className="text-slate-400 text-sm mb-8 leading-relaxed">Estimated Q3 growth based on current lead conversion rates and seasonal trends.</p>
-              <button className="w-full bg-white text-[#0F172A] py-4 rounded-xl text-sm font-black transition-all hover:scale-[1.02] active:scale-95 shadow-lg">
+              <button className="w-full bg-white text-[#0F172A] py-4 rounded-xl text-sm  transition-all hover:scale-[1.02] active:scale-95 shadow-lg">
                 View Full Analysis
               </button>
             </div>

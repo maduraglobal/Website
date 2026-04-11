@@ -31,7 +31,7 @@ export default function RevenueDashboard() {
         ].map((stat, i) => (
           <div key={i} className="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
             <p className="text-sm font-bold text-gray-400 tracking-widest uppercase mb-2">{stat.label}</p>
-            <h3 className={`text-3xl font-black ${stat.color}`}>{stat.value}</h3>
+            <h3 className={`text-3xl  ${stat.color}`}>{stat.value}</h3>
           </div>
         ))}
       </div>
