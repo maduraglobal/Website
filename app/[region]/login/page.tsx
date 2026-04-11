@@ -22,7 +22,13 @@ export default function LoginPage() {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        if (session.user.email === 'tech1@maduraglobal.com') {
+        let isAdmin = false;
+        if (session.user.email) {
+          const { data } = await supabase.from('admin_users').select('email').eq('email', session.user.email).single();
+          if (data) isAdmin = true;
+        }
+
+        if (isAdmin) {
           router.push('/admin');
         } else {
           router.push(`/${region}`);
@@ -50,7 +56,13 @@ export default function LoginPage() {
 
     const { data: { user } } = await supabase.auth.getUser();
 
-    if (user?.email === 'tech1@maduraglobal.com') {
+    let isAdmin = false;
+    if (user?.email) {
+      const { data } = await supabase.from('admin_users').select('email').eq('email', user.email).single();
+      if (data) isAdmin = true;
+    }
+
+    if (isAdmin) {
       router.push('/admin');
     } else if (user) {
       // Create a lead in CRM for normal user login

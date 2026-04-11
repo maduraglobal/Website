@@ -26,7 +26,13 @@ export default async function CRMLayout({
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user || user.email !== 'admin@maduratravel.com') {
+  let isAdmin = false;
+  if (user?.email) {
+    const { data } = await supabase.from('admin_users').select('email').eq('email', user.email).single();
+    if (data) isAdmin = true;
+  }
+
+  if (!user || !isAdmin) {
     redirect('/en-in/login');
   }
 

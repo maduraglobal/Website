@@ -41,6 +41,7 @@ export default function Navbar() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [sidebarDestRegion, setSidebarDestRegion] = useState<DestinationKey>("India");
   const [user, setUser] = useState<any>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const supabase = createClient();
 
@@ -90,14 +91,22 @@ export default function Navbar() {
 
   // Handle Session
   useEffect(() => {
+    const checkAdmin = async (email: string | undefined) => {
+      if (!email) return false;
+      const { data } = await supabase.from('admin_users').select('email').eq('email', email).single();
+      return !!data;
+    };
+
     const getSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user || null);
+      setIsAdmin(await checkAdmin(session?.user?.email));
     };
     getSession();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: string, session: any) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event: string, session: any) => {
       setUser(session?.user || null);
+      setIsAdmin(await checkAdmin(session?.user?.email));
     });
 
     return () => subscription.unsubscribe();
@@ -368,7 +377,7 @@ export default function Navbar() {
               <h3 className="text-[22px] font-bold text-[#191974] tracking-tight">
                 {user ? `Hello ${user.user_metadata?.first_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Member'}!` : 'Hello Folks'}
               </h3>
-              {user?.email === 'tech1@maduraglobal.com' && (
+              {isAdmin && (
                 <Link 
                   href="/admin" 
                   onClick={() => setSidebarOpen(false)}
@@ -542,7 +551,7 @@ export default function Navbar() {
             ))}
 
             {/* --- ADMIN OPTIONS --- */}
-            {user?.email === 'tech1@maduraglobal.com' && (
+            {isAdmin && (
                <Link
                  href="/admin"
                  onClick={() => setSidebarOpen(false)}
