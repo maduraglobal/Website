@@ -38,18 +38,18 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
       <section className="py-12 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { icon: <Phone className="w-6 h-6 text-[#ee2229]" />, title: "Call Us", detail: "+91 44 28192002", sub: "Available Mon-Sat 9:30 AM - 6 PM" },
+            { icon: <Phone className="w-6 h-6 text-[#ee2229]" />, title: "Call Us", detail: "+91 90929 49494", sub: "Available Mon-Sat 9:30 AM - 7 PM" },
             { icon: <Mail className="w-6 h-6 text-[#ee2229]" />, title: "Email Us", detail: "mail@maduratravel.com", sub: "We'll get back within 24 hours" },
-            { icon: <Clock className="w-6 h-6 text-[#ee2229]" />, title: "Emergency", detail: "+91 90929 49494", sub: "24/7 WhatsApp Support" }
+            { icon: <Clock className="w-6 h-6 text-[#ee2229]" />, title: "whatsapp", detail: "+91 90929 49494", sub: "24/7 WhatsApp Support" }
           ].map((item, idx) => (
-            <div key={idx} className="flex items-center gap-5 p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:shadow-xl hover:shadow-blue-900/5 transition-all">
+            <div key={idx} className="flex items-center gap-5 p-6 rounded-2xl bg-black border border-gray-100 hover:shadow-xl hover:shadow-blue-900/5 transition-all">
               <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0">
                 {item.icon}
               </div>
               <div>
                 <h3 className="text-[14px] font-bold text-gray-400  tracking-widest mb-1">{item.title}</h3>
-                <p className="text-[18px]  text-[#191974] leading-tight">{item.detail}</p>
-                <p className="text-[12px] text-gray-500 mt-1">{item.sub}</p>
+                <p className="text-[14px]  text-[#191974] leading-tight">{item.detail}</p>
+                <p className="text-[14px] text-gray-500 mt-1">{item.sub}</p>
               </div>
             </div>
           ))}

@@ -443,9 +443,9 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
              </div>
              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
-                  { city: "Mumbai (Head Office)", loc: "Fort, South Mumbai" },
-                  { city: "New Delhi", loc: "Connaught Place" },
-                  { city: "Bangalore", loc: "Indiranagar" }
+                  { city: "Chennai (Head Office)", loc: "Egmore, Chennai" },
+                  { city: "Sydney, Australia", loc: "Madura Global Sydney" },
+                  { city: "Emergency Support", loc: "24/7 Global WhatsApp" }
                 ].map((branch, i) => (
                   <div key={i} className="p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#191974]/20 transition-all text-center space-y-2">
                      <p className="text-[16px] font-bold text-[#191974]">{branch.city}</p>

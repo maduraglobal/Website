@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { formatRegionalPrice } from '@/config/country';
+import FallbackImage from '../FallbackImage';
 
 interface VisaCardProps {
   dest: {
@@ -37,8 +38,9 @@ const VisaCard: React.FC<VisaCardProps> = ({ dest, region, index }) => {
       >
         {/* Optimized Image Container (Aspect Ratio ~4:5 focused) */}
         <div className="absolute inset-x-0 top-0 h-[220px] overflow-hidden">
-          <img
+          <FallbackImage
             src={dest.image}
+            fallbackSrc="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800"
             alt={dest.name}
             className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
           />
@@ -56,8 +58,9 @@ const VisaCard: React.FC<VisaCardProps> = ({ dest, region, index }) => {
         {/* Flag Icon - Reduced Size and Tighter Position */}
         <div className="absolute top-[195px] left-1/2 -translate-x-1/2 z-20">
           <div className="w-12 h-12 rounded-full overflow-hidden border-[3px] border-white shadow-xl bg-white p-0.5">
-            <img
+            <FallbackImage
               src={`https://flagcdn.com/w160/${dest.flag}.png`}
+              fallbackSrc="https://flagcdn.com/w160/un.png"
               alt={dest.name}
               className="w-full h-full object-cover rounded-full"
             />

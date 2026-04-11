@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { getTours, getItineraryByTourId, Tour } from '@/utils/crm';
+import { getToursFromDB, getTourBySlugFromDB, getItineraryByTourIdFromDB } from '@/utils/crm-server';
+import { Tour } from '@/utils/crm';
 import { notFound } from 'next/navigation';
 import TourDetailContent from './components/TourDetailContent';
 import FallbackImage from '@/app/components/FallbackImage';
@@ -9,10 +10,9 @@ export default async function TourDetailPage({ params }: { params: Promise<{ reg
   const { region, slug } = await params;
 
   // Fetch Tour Details exclusively from CRM (4.1)
-  const tours = await getTours();
-  const tour = tours.find(t => t.slug === slug);
-
-  let currentTour: Tour | undefined = tour;
+  const tour = await getTourBySlugFromDB(slug);
+  
+  let currentTour: Tour | undefined = tour || undefined;
   let isMock = false;
 
   if (!currentTour) {
@@ -37,7 +37,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ reg
   if (!currentTour) return notFound(); // Safety guard
 
   // Fetch Itinerary exclusively from CRM (4.1)
-  const itineraryData = await getItineraryByTourId(currentTour.id);
+  const itineraryData = await getItineraryByTourIdFromDB(currentTour.id);
 
   const itinerary = itineraryData?.length ? itineraryData.map((item: any) => ({
     day: item.day_number,

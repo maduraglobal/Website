@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { formatRegionalPrice } from '../../../config/country';
 import TourInclusions from './TourInclusions';
 import { Heart, Star, Clock, MapPin, Calendar, CheckCircle2 } from 'lucide-react';
+import FallbackImage from '../FallbackImage';
 
 interface TourCardProps {
   tour: any;
@@ -35,11 +36,9 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
     >
       {/* Target Image Area */}
       <div className="relative w-full md:w-[320px] h-[280px] md:h-auto overflow-hidden shrink-0">
-        <motion.img
-          initial={false}
-          animate={{ scale: isHovered ? 1.05 : 1 }}
-          transition={{ duration: 0.6 }}
-          src={tour.images?.[0] || tour.image_url || 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=800'}
+        <FallbackImage
+          src={tour.images?.[0] || tour.image_url}
+          fallbackSrc="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=800"
           alt={tour.title}
           className="w-full h-full object-cover"
         />

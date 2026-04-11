@@ -81,11 +81,11 @@ const BranchCard = ({ tag, location, name, status, address, phone, email, isInte
 export default function BranchLocations() {
   const indiaBranches: BranchProps[] = [
     {
-      tag: "Branch Office",
+      tag: "Head Office",
       location: "Chennai",
-      name: "Madura Travel service â€“ Chennai HQ",
+      name: "Madura Travel Service (P) Ltd",
       status: "OPEN",
-      address: "25-3, Gandhi Irwin Road, Egmore, Chennai, Tamil Nadu â€“ 600008",
+      address: "25-3, Gandhi Irwin Road, Egmore, Chennai, Tamil Nadu - 600008",
       phone: "+91 44 28192002",
       email: "mail@maduratravel.com"
     },
@@ -95,9 +95,9 @@ export default function BranchLocations() {
     {
       tag: "International Office",
       location: "Sydney, Australia",
-      name: "Madura Travel Service â€“ Sydney",
+      name: "Madura Global - Sydney",
       status: "OPEN",
-      address: "Sydney,Australia",
+      address: "Sydney, NSW, Australia",
       phone: "+61 434 500 743",
       email: "mail@maduraglobal.com",
       isInternational: true

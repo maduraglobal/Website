@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect, useState, use } from "react";
+import React, { useEffect, useState, use, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { formatRegionalPrice } from "../../config/country";
 import { ImagesSlider } from "../components/ui/images-slider";
@@ -13,10 +13,11 @@ import CorporateOffice from "../components/CorporateOffice";
 import AwardsSection from "../components/AwardsSection";
 import TestimonialsDraggable from "../components/TestimonialsDraggable";
 import TestimonialsDraggableInHero from "../components/TestimonialsDraggableInHero";
-import { Users, Globe, Award, Star as StarIcon } from "lucide-react";
+import { Users, Globe, Award, Star as StarIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import TourInclusions from "../components/tours/TourInclusions";
 import TourCard from "../components/tours/TourCard";
 import VerticalTourCard from "../components/tours/VerticalTourCard";
+import { getDestinations } from "@/utils/crm";
 
 const supabase = createClient();
 
@@ -85,12 +86,25 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
   const router = useRouter();
 
   const [displayTours, setDisplayTours] = useState<any[]>([]);
+  const [topDestinations, setTopDestinations] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorStatus, setErrorStatus] = useState<string | null>(null);
   const [activeHero, setActiveHero] = useState(0);
   const [activeOffer, setActiveOffer] = useState(0);
   const [searchTo, setSearchTo] = useState("");
   const [searchMonth, setSearchMonth] = useState("");
+  
+  const destScrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollDest = (direction: 'left' | 'right') => {
+    if (destScrollRef.current) {
+      const scrollAmount = 400;
+      destScrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   const handleNextSlide = () => setActiveHero((p) => (p + 1) % heroSlides.length);
   const handlePrevSlide = () => setActiveHero((p) => (p === 0 ? heroSlides.length - 1 : p - 1));
@@ -111,10 +125,12 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
           setErrorStatus(error.message);
         } else {
           setDisplayTours(data || []);
-          if (!data || data.length === 0) {
-            console.log("No tours found in Supabase 'tours' table.");
-          }
         }
+
+        // Fetch Dynamic Destinations
+        const dests = await getDestinations();
+        setTopDestinations(dests.slice(0, 6));
+
       } catch (err: any) {
         console.error('Fetch error:', err);
         setErrorStatus(err.message);
@@ -239,31 +255,59 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
             <p className="text-[14px] text-black ">Discover the world&apos;s most sought-after holiday spots.</p>
           </div>
 
-          <div className="flex overflow-x-auto gap-4 lg:gap-5 pb-6 custom-scrollbar snap-x snap-mandatory">
-            {[
-              { name: 'Asia', basePrice: 13551, image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=600&auto=format&fit=crop', slug: 'india' },
-              { name: 'Mainland Europe', basePrice: 14511, image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=600&auto=format&fit=crop', slug: 'france' },
-              { name: 'Middle East', basePrice: 21748, image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=600&auto=format&fit=crop', slug: 'dubai' },
-              { name: 'Europe', basePrice: 23887, image: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=600&auto=format&fit=crop', slug: 'italy' },
-              { name: 'Africa', basePrice: 34111, image: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=600&auto=format&fit=crop', slug: 'egypt' },
-              { name: 'Australia & NZ', basePrice: 46175, image: 'https://images.unsplash.com/photo-1528072164453-f4e8ef0d475a?q=80&w=600&auto=format&fit=crop', slug: 'australia' }
-            ].map((card, idx) => (
-              <Link
-                key={idx}
-                href={`/${region}/destinations/${card.slug}`}
-                className="relative min-w-47.5 h-62.5 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block rounded-2xl"
-              >
-                <img src={card.image} alt={card.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-linear-to-b from-black/60 via-transparent to-black/80 pointer-events-none" />
-                <div className="absolute top-4 left-4 right-4">
-                  <p className="text-white text-[20px] leading-tight tracking-tight">{card.name}</p>
-                </div>
-                <div className="absolute bottom-4 left-4 right-4 text-left">
-                  <p className="text-white/70 text-[10px] font-bold tracking-widest  mb-0.5">Starting from</p>
-                  <p className="text-white text-[16px] ">{formatRegionalPrice(card.basePrice, region)}</p>
-                </div>
-              </Link>
-            ))}
+          <div className="relative group">
+            <button 
+              onClick={() => scrollDest('left')}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 backdrop-blur shadow-lg rounded-full flex items-center justify-center text-[#191974] hover:bg-[#ee2229] hover:text-white transition-all -ml-5 opacity-0 group-hover:opacity-100 border border-gray-100"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button 
+              onClick={() => scrollDest('right')}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 backdrop-blur shadow-lg rounded-full flex items-center justify-center text-[#191974] hover:bg-[#ee2229] hover:text-white transition-all -mr-5 opacity-0 group-hover:opacity-100 border border-gray-100"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+
+            <div 
+              ref={destScrollRef}
+              className="flex overflow-x-auto gap-4 lg:gap-5 pb-6 snap-x snap-mandatory no-scrollbar scroll-smooth"
+            >
+              {(topDestinations.length > 0 ? topDestinations : []).map((card, idx) => {
+                const fallbacks = [
+                  '1544620347-c4fd4a3d5957', // Asia
+                  '1513635269975-59663e0ac1ad', // Europe
+                  '1512453979798-5ea266f8880c', // Middle East
+                  '1499856871958-5b9627545d1a', // Paris
+                  '1516026672322-bc52d61a55d5', // Africa
+                  '1528072164453-f4e8ef0d475a'  // Sydney
+                ];
+                const displayImage = card.image_url || card.image || `https://images.unsplash.com/photo-${fallbacks[idx % fallbacks.length]}?auto=format&fit=crop&q=80&w=600`;
+                return (
+                  <Link
+                    key={idx}
+                    href={`/${region}/destinations/${card.slug || card.id}`}
+                    className="relative min-w-[200px] h-[280px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 snap-start cursor-pointer group block rounded-2xl border border-gray-100 shrink-0"
+                  >
+                    <img
+                      src={displayImage}
+                      alt={card.name}
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-b from-black/50 via-transparent to-black/90 pointer-events-none" />
+                    <div className="absolute top-4 left-4 right-4">
+                      <p className="text-white text-[18px] leading-tight tracking-tight font-bold drop-shadow-md">{card.name}</p>
+                    </div>
+                    <div className="absolute bottom-4 left-4 right-4 text-left">
+                      <p className="text-white/60 text-[10px] font-bold tracking-widest mb-0.5 uppercase">Starting from</p>
+                      <p className="text-white text-[15px] font-bold">
+                        {formatRegionalPrice(card.base_price || (25000 + idx * 5000), region)}
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>

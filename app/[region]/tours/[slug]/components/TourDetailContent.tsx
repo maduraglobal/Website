@@ -185,10 +185,17 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   >
                     <TourMap tourTitle={tour.title} itinerary={itinerary} onPreview={() => setIsMapOpen(true)} />
                     <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-all"></div>
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-gray-50 hover:scale-105 transition-transform">
-                      <MapIcon className="w-5 h-5 text-[#ee2229]" />
-                      <span className="text-[14px] font-bold text-[#191974]">Map View</span>
-                    </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const query = tour.destination_name || tour.destination || tour.title;
+                      window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`, '_blank');
+                    }}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-gray-50 hover:scale-105 transition-all z-30 group-hover:shadow-[#ee2229]/20 shadow-xl"
+                  >
+                    <MapIcon className="w-5 h-5 text-[#ee2229]" />
+                    <span className="text-[14px] font-bold text-[#191974]">View in Google Maps</span>
+                  </button>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     {[
@@ -222,8 +229,11 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                       },
                       {
                         icon: MapIcon,
-                        label: "Compare Tour",
-                        onClick: () => alert("Tour added to comparison list!")
+                        label: "View Map",
+                        onClick: () => {
+                          const query = tour.destination_name || tour.destination || tour.title;
+                          window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`, '_blank');
+                        }
                       }
                     ].map((act, i) => (
                       <button

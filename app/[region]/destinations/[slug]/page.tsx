@@ -1,6 +1,6 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { getTours, getDestinationBySlug } from '@/utils/crm';
+import { getToursFromDB, getDestinationBySlugFromDB } from '@/utils/crm-server';
 import DestinationHeader from '@/app/components/tours/DestinationHeader';
 import TourCard from '@/app/components/tours/TourCard';
 import Link from 'next/link';
@@ -17,14 +17,14 @@ export default async function DestinationToursPage({ params }: Props) {
   const { region, slug } = await params;
   
   // 1. Fetch Destination Info from CRM
-  const destination = await getDestinationBySlug(slug);
+  const destination = await getDestinationBySlugFromDB(slug);
   
   if (!destination) {
     return notFound();
   }
 
   // 2. Fetch Tours for this Destination (Relationship logic 4.3)
-  const tours = await getTours({ destination: slug });
+  const tours = await getToursFromDB({ destination: slug });
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen text-[#171717]">
