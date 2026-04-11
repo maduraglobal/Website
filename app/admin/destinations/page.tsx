@@ -18,9 +18,9 @@ export default function DestinationsList() {
       {/* Header */}
       <div className="flex items-center gap-4">
         <h1 className="text-2xl font-normal text-[#1d2327]">Destinations</h1>
-        <button className="px-3 py-1 border border-blue-600/30 text-blue-600 text-sm font-medium rounded hover:bg-blue-50 transition-colors">
+        <Link href="/admin/destinations/new" className="px-3 py-1 border border-blue-600/30 text-blue-600 text-sm font-medium rounded hover:bg-blue-50 transition-colors">
           Add New Hub
-        </button>
+        </Link>
       </div>
 
       <div className="flex items-center gap-4 text-[13px]">
@@ -61,12 +61,12 @@ export default function DestinationsList() {
                 <tr key={item.id} className="hover:bg-gray-50 group transition-colors">
                   <td className="px-4 py-3 align-top"><input type="checkbox" className="mt-1 rounded-sm border-gray-300 cursor-pointer" /></td>
                   <td className="px-4 py-3 align-top">
-                    <Link href={`#`} className={`font-semibold text-blue-700 hover:text-blue-600 transition-colors`}>
+                    <Link href={`/admin/destinations/new`} className={`font-semibold text-blue-700 hover:text-blue-600 transition-colors`}>
                       {item.title}
                     </Link>
                     {item.status === 'Draft' && <span className="ml-2 font-bold text-gray-500">— Draft</span>}
                     <div className="h-5 flex items-center gap-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity text-[12px] pt-1">
-                      <button className="text-blue-600 hover:text-blue-800 hover:underline">Edit Content</button>
+                      <Link href={`/admin/destinations/new`} className="text-blue-600 hover:text-blue-800 hover:underline">Edit Content</Link>
                       <span className="text-gray-300">|</span>
                       <button className="text-red-600 hover:text-red-800 hover:underline">Bin</button>
                     </div>
