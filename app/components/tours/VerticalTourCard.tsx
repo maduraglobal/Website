@@ -59,7 +59,7 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
         </div>
 
         {/* Bottom Right Map Button */}
-        <Link 
+        <Link
           href={`/${region}/tours/${slug}#itinerary`}
           className="absolute bottom-3 right-3 bg-black/40 backdrop-blur-sm hover:bg-black/60 text-white px-3 py-1 rounded-md flex items-center gap-1 transition-colors"
         >
@@ -83,11 +83,11 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
         <div className="mb-3">
           <p className="text-[12px] font-semibold text-gray-400 mb-1">Tour Includes</p>
           <div className="flex items-center gap-4">
-            <Bed className="w-4 h-4 text-[#ee2229]" />
-            <Utensils className="w-4 h-4 text-[#ee2229]" />
-            <Camera className="w-4 h-4 text-[#ee2229]" />
-            <Bus className="w-4 h-4 text-[#ee2229]" />
-            <Plane className="w-4 h-4 text-[#ee2229]" />
+            <Bed className="w-4 h-4 text-[#191974]" />
+            <Utensils className="w-4 h-4 text-[#191974]" />
+            <Camera className="w-4 h-4 text-[#191974]" />
+            <Bus className="w-4 h-4 text-[#191974]" />
+            <Plane className="w-4 h-4 text-[#191974]" />
           </div>
         </div>
 
@@ -130,13 +130,13 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
         {/* Admin Edit Option */}
         {isAdmin && (
           <div className="mt-3 pt-3 border-t border-dashed border-gray-200">
-             <Link 
-               href={`/admin/tours`}
-               className="w-full flex items-center justify-center gap-2 py-2 bg-gray-900 text-white rounded-md text-[12px] font-bold hover:bg-black transition-all"
-             >
-               <Pencil className="w-3.5 h-3.5" />
-               Edit as Admin
-             </Link>
+            <Link
+              href={`/admin/tours`}
+              className="w-full flex items-center justify-center gap-2 py-2 bg-gray-900 text-white rounded-md text-[12px] font-bold hover:bg-black transition-all"
+            >
+              <Pencil className="w-3.5 h-3.5" />
+              Edit as Admin
+            </Link>
           </div>
         )}
       </div>
