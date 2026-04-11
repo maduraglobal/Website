@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { countryConfigs } from "../../config/country";
 import LoginPopup from "./LoginPopup";
-import { Globe, ShieldCheck } from "lucide-react";
+import { Globe, ShieldCheck, LogOut } from "lucide-react";
 import { createClient } from '@/utils/supabase/client';
 
 const destinations = {
@@ -566,14 +566,31 @@ export default function Navbar() {
 
           {/* Sidebar Footer */}
           <div className="shrink-0 bg-gray-50 px-6 py-6 border-t border-gray-100 flex flex-col gap-4">
-            <Link
-              href={`/${currentRegionCode}/login`}
-              onClick={() => setSidebarOpen(false)}
-              className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-200 text-[#191974]  text-[12px]  tracking-widest rounded-xl hover:bg-[#191974] hover:text-white transition-all shadow-sm"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
-              Sign Up
-            </Link>
+            {user ? (
+              <button
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  setUser(null);
+                  setIsAdmin(false);
+                  setSidebarOpen(false);
+                  router.push(`/${currentRegionCode}`);
+                  router.refresh();
+                }}
+                className="w-full flex items-center justify-center gap-2 py-3 bg-red-50 border border-red-100 text-[#ee2229] text-[12px] tracking-widest rounded-xl hover:bg-[#ee2229] hover:text-white transition-all shadow-sm font-bold"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign Out
+              </button>
+            ) : (
+              <Link
+                href={`/${currentRegionCode}/login`}
+                onClick={() => setSidebarOpen(false)}
+                className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-gray-200 text-[#191974]  text-[12px]  tracking-widest rounded-xl hover:bg-[#191974] hover:text-white transition-all shadow-sm"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
+                Sign Up
+              </Link>
+            )}
 
             <div>
               <p className="text-[10px] text-gray-400  tracking-widest mb-1.5 ">Reach Us</p>
