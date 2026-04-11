@@ -55,6 +55,20 @@ export default function SignupPage() {
       return;
     }
 
+    // Create a lead in CRM for the new signup
+    try {
+      await supabase.from('leads').insert([{
+        email: formData.email,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        phone: formData.phone,
+        source: 'Website Signup',
+        status: 'New'
+      }]);
+    } catch (err) {
+      console.error("Failed to create signup lead:", err);
+    }
+
     // Redirect to home or show a verification message
     router.push(`/${region}`);
     router.refresh();
