@@ -66,14 +66,20 @@ export default function LoginPage() {
       router.push('/admin');
     } else {
       // Create a lead in CRM for normal user login (Running asynchronously to speed up login)
-      supabase.from('leads').insert([{
-        email: user.email,
-        first_name: user.user_metadata?.first_name || '',
-        last_name: user.user_metadata?.last_name || '',
-        phone: user.user_metadata?.phone || '',
-        source: 'Website Login',
-        status: 'New'
-      }]).then().catch(err => console.error(err));
+      (async () => {
+        try {
+          await supabase.from('leads').insert([{
+            email: user.email,
+            first_name: user.user_metadata?.first_name || '',
+            last_name: user.user_metadata?.last_name || '',
+            phone: user.user_metadata?.phone || '',
+            source: 'Website Login',
+            status: 'New'
+          }]);
+        } catch (err) {
+          console.error(err);
+        }
+      })();
       
       router.push(`/${region}`);
     }
