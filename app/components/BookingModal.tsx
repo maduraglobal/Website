@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Calendar, Users, Phone, Mail, User, Send, CheckCircle } from 'lucide-react';
+import { X, Calendar, Users, Phone, Mail, User, Send, CheckCircle, Info, Plus, ChevronDown, ChevronRight } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { formatRegionalPrice, getCountryConfig } from '@/config/country';
+import BookingDetailsForm from './tours/BookingDetailsForm';
 
 // ─── Context ────────────────────────────────────────────────────────────────
 
@@ -19,6 +20,7 @@ interface BookingData {
   packageName: string;
   discountedPrice: string;
   originalPrice: string;
+  isDetailed?: boolean;
 }
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
@@ -109,59 +111,41 @@ const BookingModal = () => {
   const { isOpen, closeBooking, bookingData } = useBooking();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [addGST, setAddGST] = useState(false);
 
   const pathname = usePathname();
   const region = (pathname?.split('/')[1] ?? 'en-in').toLowerCase();
   const config = getCountryConfig(region);
 
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
-    date: '',
-    adults: 1,
-    children: 0,
-    infants: 0
+    country: 'India',
+    state: '',
+    gender: '',
+    dob: ''
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Reset state when opened
   useEffect(() => {
     if (isOpen) {
-      setFormData({ name: '', email: '', phone: '', date: '', adults: 1, children: 0, infants: 0 });
+      setFormData({ firstName: '', lastName: '', email: '', phone: '', country: 'India', state: '', gender: '', dob: '' });
       setErrors({});
       setIsSubmitted(false);
     }
   }, [isOpen]);
 
-  // ESC key
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeBooking();
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [closeBooking]);
-
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    if (!formData.name.trim()) newErrors.name = 'Full name is required';
+    if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
+    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
     if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) newErrors.email = 'Valid email is required';
-    if (!formData.phone.match(/^\+?[\d\s-]{10,}$/)) newErrors.phone = 'Valid phone number is required';
-
-    if (!formData.date) {
-      newErrors.date = 'Travel date is required';
-    } else {
-      const selectedDate = new Date(formData.date);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (selectedDate < today) newErrors.date = 'Travel date cannot be in the past';
-    }
-
-    if (formData.adults < 1 && formData.children < 1 && formData.infants < 1) newErrors.adults = 'Select travelers';
-    if (formData.children < 0) newErrors.children = 'Cannot be negative';
-    if (formData.infants < 0) newErrors.infants = 'Cannot be negative';
+    if (!formData.phone.match(/^\+?[\d\s-]{10,}$/)) newErrors.phone = 'Valid phone is required';
+    if (!formData.state) newErrors.state = 'State is required';
+    if (!formData.gender) newErrors.gender = 'Gender is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -182,30 +166,17 @@ const BookingModal = () => {
     }, 1500);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Clear error for field on change
-    if (errors[name]) {
-      setErrors(prev => {
-        const newErrs = { ...prev };
-        delete newErrs[name];
-        return newErrs;
-      });
-    }
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isOpen && (
-        <div
-          key="booking-modal"
-          className="fixed inset-0 flex items-center justify-center p-4"
-          style={{ zIndex: 99999 }}
-        >
-          {/* Backdrop */}
+        <div key="booking-modal" className="fixed inset-0 flex items-center justify-center p-4 z-99999">
           <motion.div
-            key="backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -213,16 +184,12 @@ const BookingModal = () => {
             className="absolute inset-0 bg-[#191974]/40 backdrop-blur-md"
           />
 
-          {/* Modal card */}
           <motion.div
-            key="modal"
-            initial={{ opacity: 0, scale: 0.9, y: 24 }}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 24 }}
-            transition={{ type: 'spring', stiffness: 320, damping: 28 }}
-            className="relative w-full max-w-xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden"
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            className={`relative w-full ${bookingData?.isDetailed ? 'max-w-4xl' : 'max-w-2xl'} bg-white rounded-[2.5rem] shadow-2xl overflow-hidden overflow-y-auto max-h-[95vh] font-inter`}
           >
-            {/* Close button */}
             <button
               onClick={closeBooking}
               className="absolute top-6 right-6 w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-[#191974] hover:bg-[#ee2229] hover:text-white transition-all z-20"
@@ -231,207 +198,203 @@ const BookingModal = () => {
             </button>
 
             {isSubmitted ? (
-              /* ── Success state ── */
-              <div className="p-12 text-center py-24">
+              <div className="p-20 text-center">
                 <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
                   <CheckCircle className="w-10 h-10 text-green-500" />
                 </div>
-                <h3 className="text-[28px]  text-[#191974] mb-2 ">
-                  Booking Initiated!
-                </h3>
-                <p className="text-gray-500 ">
-                  Our travel expert will contact you shortly to confirm your itinerary.
-                </p>
+                <h3 className="text-[28px] font-bold text-[#191974] mb-2">Booking Success!</h3>
+                <p className="text-gray-500">Our travel expert will contact you shortly.</p>
+              </div>
+            ) : bookingData?.isDetailed ? (
+              <div className="p-0">
+                <BookingDetailsForm 
+                  onCountUpdate={() => {}} 
+                />
               </div>
             ) : (
-              /* ── Form state ── */
-              <div className="flex flex-col max-h-[90vh] overflow-y-auto">
-                {/* Header */}
-                <div className="p-8 md:p-10 bg-gray-50 border-b border-gray-100 sticky top-0 z-10">
-                  <p className="text-[#ee2229] text-[11px]   tracking-[0.2em] mb-1">
-                    Book Your Experience
-                  </p>
-                  <h2 className="text-[22px] md:text-[26px]  text-[#191974] leading-tight mb-4  tracking-tighter pr-10">
-                    {bookingData?.packageName ?? 'Tour Package'}
-                  </h2>
-
-                  <div className="flex items-end gap-3">
-                    <div className="flex flex-col leading-none">
-                      <span className="text-[10px] text-gray-400 font-bold  mb-1">From</span>
-                      <span className="text-[28px]  text-[#ee2229]">
-                        {bookingData?.discountedPrice === '0' ? 'Price on Request' : formatRegionalPrice(bookingData?.discountedPrice ?? '0', region)}
-                      </span>
-                    </div>
-                    {bookingData?.originalPrice !== '0' && (
-                      <span className="text-[16px] text-gray-400 line-through mb-1">
-                        {formatRegionalPrice(bookingData?.originalPrice ?? '0', region)}
-                      </span>
-                    )}
+              <div className="p-8 md:p-12">
+                <div className="mb-10">
+                  <div className="bg-red-50 text-[#ee2229] p-4 rounded-xl flex items-center gap-3 mb-8 border border-red-100/50">
+                    <div className="w-5 h-5 rounded-full border-2 border-[#ee2229] flex items-center justify-center font-bold text-[12px]">!</div>
+                    <p className="text-[13px] font-medium tracking-tight">As seats fill, prices increase! Book before it is all sold out.</p>
                   </div>
+
+                  <div className="flex items-center gap-2 mb-2">
+                    <h3 className="text-[20px] font-bold text-[#191974]">Lead traveller details</h3>
+                    <Info className="w-4 h-4 text-blue-500 cursor-pointer" />
+                  </div>
+                  <p className="text-gray-400 text-[14px] font-medium leading-none">Enter details as registered in your identification document</p>
                 </div>
 
-                {/* Form */}
-                <form onSubmit={handleSubmit} className="p-8 md:p-10 space-y-5">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    {/* Full Name */}
-                    <div className="space-y-1.5">
-                      <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
-                        Full Name
-                      </label>
-                      <div className="relative">
-                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          type="text"
-                          placeholder="John Doe"
-                          className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.name ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
-                        />
-                      </div>
-                      {errors.name && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.name}</p>}
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8">
+                    {/* First Name */}
+                    <div className="relative">
+                      <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">First Name*</label>
+                      <input
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        type="text"
+                        placeholder="Enter first name"
+                        className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-[15px] font-medium ${errors.firstName ? 'border-red-500 bg-red-50/20' : 'border-gray-200 focus:border-[#191974]'}`}
+                      />
+                      {errors.firstName && <p className="text-[11px] text-red-500 mt-1 ml-1">{errors.firstName}</p>}
                     </div>
 
-                    {/* Email */}
-                    <div className="space-y-1.5">
-                      <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
-                        Email Address
-                      </label>
-                      <div className="relative">
-                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          type="email"
-                          placeholder="john@example.com"
-                          className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.email ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
-                        />
-                      </div>
-                      {errors.email && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.email}</p>}
+                    {/* Last Name */}
+                    <div className="relative">
+                      <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Last Name*</label>
+                      <input
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        type="text"
+                        placeholder="Enter last name"
+                        className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-[15px] font-medium ${errors.lastName ? 'border-red-500 bg-red-50/20' : 'border-gray-200 focus:border-[#191974]'}`}
+                      />
+                      {errors.lastName && <p className="text-[11px] text-red-500 mt-1 ml-1">{errors.lastName}</p>}
                     </div>
 
-                    {/* Phone */}
-                    <div className="space-y-1.5">
-                      <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
-                        Phone Number
-                      </label>
-                      <div className="relative">
-                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    {/* Mobile Number */}
+                    <div className="relative">
+                      <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Mobile No.*</label>
+                      <div className={`flex rounded-xl border overflow-hidden transition-all ${errors.phone ? 'border-red-500' : 'border-gray-200 focus-within:border-[#191974]'}`}>
+                        <div className="flex items-center gap-2 px-3 bg-gray-50 border-r border-gray-100 cursor-pointer hover:bg-gray-100 transition-colors">
+                          <img src={`https://flagcdn.com/w40/${region === 'en-au' ? 'au' : region === 'en-us' ? 'us' : 'in'}.png`} alt="Flag" className="w-5 h-3.5 object-cover rounded-sm" />
+                          <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
+                        </div>
+                        <div className="flex items-center px-4 bg-gray-50/50 text-gray-500 text-[15px] font-bold border-r border-gray-100">
+                          {region === 'en-au' ? '+61' : region === 'en-us' ? '+1' : '+91'}
+                        </div>
                         <input
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
                           type="tel"
-                          placeholder={config.phoneFormat}
-                          className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.phone ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
+                          placeholder="98844XXXXX"
+                          className="w-full px-4 py-4 outline-none text-[15px] font-medium"
                         />
                       </div>
-                      {errors.phone && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.phone}</p>}
+                      {errors.phone && <p className="text-[11px] text-red-500 mt-1 ml-1">{errors.phone}</p>}
                     </div>
 
-                    {/* Travel Date */}
-                    <div className="space-y-1.5">
-                      <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
-                        Travel Date
-                      </label>
+                    {/* Email */}
+                    <div className="relative">
+                      <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Email ID*</label>
+                      <input
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        type="email"
+                        placeholder="example@mail.com"
+                        className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-[15px] font-medium ${errors.email ? 'border-red-500 bg-red-50/20' : 'border-gray-200 focus:border-[#191974]'}`}
+                      />
+                      {errors.email && <p className="text-[11px] text-red-500 mt-1 ml-1">{errors.email}</p>}
+                    </div>
+
+                    {/* State */}
+                    <div className="relative">
+                      <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">State*</label>
+                      <select
+                        name="state"
+                        value={formData.state}
+                        onChange={handleChange}
+                        className={`w-full px-5 py-4 rounded-xl border outline-none transition-all appearance-none text-[15px] font-medium bg-white ${errors.state ? 'border-red-500' : 'border-gray-200 focus:border-[#191974]'}`}
+                      >
+                        <option value="">Select State</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Karnataka">Karnataka</option>
+                      </select>
+                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                      {errors.state && <p className="text-[11px] text-red-500 mt-1 ml-1 font-bold italic">{errors.state} is required</p>}
+                    </div>
+
+                    {/* Gender */}
+                    <div className="relative">
+                      <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Gender*</label>
+                      <select
+                        name="gender"
+                        value={formData.gender}
+                        onChange={handleChange}
+                        className={`w-full px-5 py-4 rounded-xl border outline-none transition-all appearance-none text-[15px] font-medium bg-white ${errors.gender ? 'border-red-500' : 'border-gray-200 focus:border-[#191974]'}`}
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </select>
+                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                      {errors.gender && <p className="text-[11px] text-red-500 mt-1 ml-1 font-bold italic">{errors.gender} is required</p>}
+                    </div>
+
+                    {/* Date of Birth */}
+                    <div className="relative">
+                      <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Date of birth*</label>
                       <div className="relative">
-                        <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
-                          name="date"
-                          value={formData.date}
+                          name="dob"
+                          value={formData.dob}
                           onChange={handleChange}
                           type="date"
-                          min={new Date().toISOString().split("T")[0]}
-                          className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.date ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
+                          className="w-full px-5 py-4 rounded-xl border border-gray-200 outline-none focus:border-[#191974] text-[15px] font-medium bg-white"
                         />
                       </div>
-                      {errors.date && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.date}</p>}
                     </div>
                   </div>
 
-                  {/* Travelers Grid */}
-                  <div className="grid grid-cols-3 gap-3 md:gap-5">
-                    {/* Adults */}
-                    <div className="space-y-1.5">
-                      <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
-                        Adults (12+ Yrs)
-                      </label>
-                      <div className="relative">
-                        <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          name="adults"
-                          value={formData.adults}
-                          onChange={handleChange}
-                          type="number"
-                          min="1"
-                          className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.adults ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
-                        />
-                      </div>
-                      {errors.adults && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.adults}</p>}
+                  {/* GST Options */}
+                  <div className="pt-8 border-t border-gray-100 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                    <div className="flex flex-col">
+                      <h4 className="text-[16px] font-bold text-[#191974]">Do you want to add GST ?</h4>
+                      <p className="text-gray-400 text-[12px] font-medium">You can't do this later!</p>
                     </div>
-
-                    {/* Children */}
-                    <div className="space-y-1.5">
-                      <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
-                        Children (2–12 Yrs)
-                      </label>
-                      <div className="relative">
-                        <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          name="children"
-                          value={formData.children}
-                          onChange={handleChange}
-                          type="number"
-                          min="0"
-                          className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.children ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
-                        />
-                      </div>
-                      {errors.children && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.children}</p>}
-                    </div>
-
-                    {/* Infants */}
-                    <div className="space-y-1.5">
-                      <label className="text-[11px]  text-[#191974]  tracking-widest ml-1">
-                        Infants (0-2 Yrs)
-                      </label>
-                      <div className="relative">
-                        <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          name="infants"
-                          value={formData.infants}
-                          onChange={handleChange}
-                          type="number"
-                          min="0"
-                          className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border outline-none transition-all text-[15px] ${errors.infants ? 'border-red-500 focus:border-red-600' : 'border-gray-200 focus:border-[#191974]'}`}
-                        />
-                      </div>
-                      {errors.infants && <p className="text-red-500 text-[10px] ml-1 font-bold">{errors.infants}</p>}
+                    <div className="flex items-center gap-3 bg-gray-50 p-2 rounded-full px-4 border border-gray-100">
+                      <span className={`text-[13px] font-bold ${addGST ? 'text-gray-400' : 'text-[#ee2229]'}`}>No</span>
+                      <button
+                        type="button"
+                        onClick={() => setAddGST(!addGST)}
+                        className={`w-12 h-6 rounded-full relative transition-all duration-300 ${addGST ? 'bg-[#191974]' : 'bg-gray-200'}`}
+                      >
+                        <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300 ${addGST ? 'left-7' : 'left-1'}`}></div>
+                      </button>
+                      <span className={`text-[13px] font-bold ${addGST ? 'text-[#191974]' : 'text-gray-400'}`}>Yes</span>
                     </div>
                   </div>
 
-                  {/* Submit */}
-                  <div className="pt-4">
+                  {/* Co-travellers */}
+                  <div className="space-y-4 pt-4">
+                    <h4 className="text-[16px] font-bold text-[#191974]">Co-traveller details</h4>
+                    <div className="flex items-center justify-between p-6 bg-gray-50/50 border border-gray-100 rounded-2xl cursor-pointer hover:bg-gray-100/50 transition-all">
+                      <span className="text-[15px] font-bold text-[#191974]">Adult 2</span>
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-gray-400 shadow-sm border border-gray-100">
+                        <Plus className="w-5 h-5" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Submission */}
+                  <div className="pt-10 flex flex-col md:flex-row items-center gap-6 border-t border-gray-50">
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full bg-[#191974] hover:bg-[#ee2229] disabled:bg-gray-400 text-white  py-4 rounded-full  tracking-[0.25em] transition-all flex items-center justify-center gap-3 group shadow-xl"
+                      className="w-full md:w-2/3 bg-[#191974]hover:bg-[#ffbb00] text-[#191974] font-bold py-5 rounded-2xl text-[16px] shadow-xl shadow-yellow-500/10 transition-all flex items-center justify-center gap-3 active:scale-95 group"
                     >
                       {isLoading ? (
-                        <span className="flex items-center gap-2">
-                          <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          Processing...
-                        </span>
+                        <span className="w-6 h-6 border-3 border-[#191974]/20 border-t-[#191974] rounded-full animate-spin" />
                       ) : (
                         <>
-                          Confirm Booking
-                          <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                          NEXT
+                          <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-all" />
                         </>
                       )}
                     </button>
-                    <p className="text-[10px] text-gray-400 text-center ">
-                      By clicking &quot;Confirm Booking&quot; you agree to our Terms &amp; Conditions
-                    </p>
+                    <div className="text-center md:text-left text-[12px] text-gray-400 font-medium leading-snug">
+                      Almost there! Next step: Review & Payment. <br />
+                      <span className="text-blue-500 cursor-pointer hover:underline">Terms & Conditions apply.</span>
+                    </div>
                   </div>
                 </form>
               </div>
@@ -439,7 +402,6 @@ const BookingModal = () => {
           </motion.div>
         </div>
       )}
-    </AnimatePresence>
-  );
+    </AnimatePresence>);
 };
 

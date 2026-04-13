@@ -15,12 +15,13 @@ const icon = L.icon({
 
 // A small dictionary of city coordinates for common destinations
 const CITY_COORDS: Record<string, [number, number]> = {
-  // Scandinavia
-  'Copenhagen': [55.6761, 12.5683],
-  'Oslo': [59.9139, 10.7522],
-  'Bergen': [60.3913, 5.3221],
-  'Stockholm': [59.3293, 18.0686],
-  'Helsinki': [60.1699, 24.9384],
+  // Japan
+  'Tokyo': [35.6762, 139.6503],
+  'Osaka': [34.6937, 135.5023],
+  'Kyoto': [35.0116, 135.7681],
+  'Nara': [34.6851, 135.8048],
+  'Mt. Fuji': [35.3606, 138.7274],
+  'Fuji': [35.3606, 138.7274],
   // Vietnam & SE Asia
   'Hanoi': [21.0285, 105.8542],
   'Halong': [20.9101, 107.1839],
@@ -39,6 +40,9 @@ const CITY_COORDS: Record<string, [number, number]> = {
   'Rome': [41.9028, 12.4964],
   'Swiss': [46.8182, 8.2275],
   'Lucerne': [47.0502, 8.3093],
+  'Dubai': [25.2048, 55.2708],
+  'Abu Dhabi': [24.4539, 54.3773],
+  'Copenhagen': [55.6761, 12.5683],
 };
 
 function ChangeView({ center, zoom }: { center: [number, number], zoom: number }) {

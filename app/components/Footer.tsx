@@ -27,7 +27,14 @@ const Linkedin = (props: any) => (
 
 export default function Footer() {
   const pathname = usePathname();
+  // Support for dynamic region routing
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const region = (pathname?.split("/")[1] || "en-in").toLowerCase();
+  const currentRegion = mounted ? region : "en-in";
 
   const destinations = [
     { name: "Japan Tour Packages", slug: "japan" },
@@ -44,7 +51,7 @@ export default function Footer() {
     { name: "Andaman Tour Packages", slug: "andaman" }
   ];
 
-  const prefixed = (path: string) => `/${region}${path}`;
+  const prefixed = (path: string) => `/${currentRegion}${path}`;
 
   return (
     <footer className="bg-[#191974] text-white pt-16 pb-8 font-inter">
@@ -53,7 +60,7 @@ export default function Footer() {
         {/* === TOP SECTION: BRAND STORY === */}
         <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16">
           <div className="lg:w-2/3 space-y-8">
-            <Link href={`/${region}`} className="inline-block">
+            <Link href={`/${currentRegion}`} className="inline-block">
               <Image
                 src="/Footer-logo.png"
                 alt="Madura Travel logo"
@@ -236,6 +243,7 @@ export default function Footer() {
           onClick={() => window.dispatchEvent(new Event("openPopup"))}
           className="w-14 h-14 bg-[#ee2229] text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform active:scale-95"
           title="Quick Enquiry"
+          suppressHydrationWarning
         >
           <Image src="/Footer-logo.png" alt="Enquire" width={24} height={24} className="brightness-0 invert w-6 h-6 object-contain" />
         </button>

@@ -113,15 +113,17 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
         </div>
 
         {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-2 mt-2">
+        <div className="grid grid-cols-2 gap-3 mt-4">
           <Link
             href={`/${region}/tours/${slug}`}
-            className="flex items-center justify-center border border-[#ee2229] text-[#ee2229] hover:bg-red-50 py-2.5 rounded-md text-[13px] font-bold transition-all"
+            className="flex items-center justify-center border-2 border-[#191974] text-[#191974] hover:bg-[#191974] hover:text-white py-2.5 rounded-xl text-[12px] font-bold transition-all uppercase tracking-wider"
           >
             View Tour
           </Link>
           <button
-            className="flex items-center justify-center bg-[#ee2229] text-white hover:bg-[#d91d24] py-2.5 rounded-md text-[13px] font-bold transition-all shadow-sm"
+            className="book-now-btn flex items-center justify-center bg-[#ee2229] border-2 border-[#ee2229] text-white hover:bg-transparent hover:text-[#ee2229] py-2.5 rounded-xl text-[12px] font-bold transition-all shadow-lg shadow-red-500/10 active:scale-95 uppercase tracking-wider"
+            data-package={tour.title}
+            data-price={price}
           >
             Book Online
           </button>

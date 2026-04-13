@@ -19,12 +19,13 @@ const scrollToId = (id: string) => {
 };
 
 import { getDestinationBySlug, VisaDestination } from '@/app/data/visaData';
-import { formatRegionalPrice } from '@/config/country';
+import { getCountryConfig, formatRegionalPrice } from '@/config/country';
 import DeparturePricing from '@/app/components/tours/DeparturePricing';
 
 export default function DynamicVisaDetailPage({ params }: { params: Promise<{ region: string, slug: string }> }) {
   const resolvedParams = use(params);
   const { region, slug } = resolvedParams;
+  const countryConfig = getCountryConfig(region);
 
   const destination = getDestinationBySlug(slug);
   const destName = destination ? destination.name : (slug ? slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, ' ') : "Dubai");
@@ -69,12 +70,12 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
 
   const faqs = [
     `How much does a ${destName} visa cost?`,
-    `Is a ${destName} visa free for Indians?`,
-    `How to apply for a ${destName} visa for Indian Citizens?`,
+    `Is a ${destName} visa free for citizens of ${countryConfig.name}?`,
+    `How to apply for a ${destName} visa for ${countryConfig.name} Citizens?`,
     `Can I get my ${destName} visa in 2 days?`,
-    `What are ${destName} visa fees from India?`,
+    `What are ${destName} visa fees from ${countryConfig.name}?`,
     `Can we go to ${destName} without a visa?`,
-    `How much does a ${destName} trip cost from India?`,
+    `How much does a ${destName} trip cost from ${countryConfig.name}?`,
     `How much is the 14 day tourist visa for ${destName === 'Dubai' ? 'UAE' : destName}?`,
     `Can I apply for a ${destName === 'Dubai' ? 'UAE' : destName} visa online?`,
     `How long does a ${destName} visa take?`,
@@ -109,7 +110,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           </div>
 
           <p className="text-[32px]  leading-tight mb-4 max-w-2xl">
-            {destName} Visa Online for Indian Citizens
+            {destName} Visa Online for {countryConfig.name} Citizens
           </p>
 
           <div className="flex flex-wrap items-center gap-4 mb-8">
@@ -399,7 +400,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                   <div className="space-y-1">
                     <p className="text-[12px] text-[#ee2229]  tracking-widest uppercase">Verified Document Template</p>
                     <p className="text-[#191974] font-bold text-[15px]">This is an accurate sample of the {destName} Tourist Visa.</p>
-                    <p className="text-gray-500 font-medium text-[13px] leading-relaxed">Your actual visa will be issued by the respective consulate. It will contain your personal details and a secure QR code for verification at immigration counters.</p>
+                    <p className="text-gray-500 font-medium text-[13px] leading-relaxed">Your actual visa will be issued by the respective consulate for {countryConfig.name} citizens. It will contain your personal details and a secure QR code for verification at immigration counters.</p>
                   </div>
                 </div>
               </div>
@@ -552,7 +553,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                 </div>
                 <div className="space-y-4">
                   <p className="text-gray-600 leading-relaxed">
-                    This document is a certified sample of the current {destName} {currentData.type} format issued to Indian citizens.
+                    This document is a certified sample of the current {destName} {currentData.type} format issued to {countryConfig.name} citizens.
                   </p>
                   <ul className="space-y-3">
                     {["QR Code Verification", "Official Consulate Seal", "Embedded Security Features", "Digital/Sticker Format"].map((item, i) => (

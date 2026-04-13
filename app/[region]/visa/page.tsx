@@ -7,7 +7,7 @@ import { Search, ChevronLeft, ChevronRight, Star, MapPin, CheckCircle2, ShieldCh
 import { motion } from 'framer-motion';
 
 import { destinations } from '@/app/data/visaData';
-import { formatRegionalPrice } from '@/config/country';
+import { getCountryConfig, formatRegionalPrice } from '@/config/country';
 import VisaCard from '@/app/components/visa/VisaCard';
 
 // Experts Data
@@ -20,7 +20,8 @@ const experts = [
 
 export default function VisaServicesPage() {
   const params = useParams();
-  const region = params?.region as string || "india";
+  const region = params?.region as string || "en-in";
+  const countryConfig = getCountryConfig(region);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeContinent, setActiveContinent] = useState("All");
 
@@ -52,7 +53,7 @@ export default function VisaServicesPage() {
               <MapPin className="text-[#ee2229] w-5 h-5 mr-3 shrink-0" />
               <div className="flex flex-col items-start text-left">
                 <span className="text-[10px]  text-gray-400 uppercase tracking-widest ">Citizen of</span>
-                <input type="text" value="India" readOnly className="w-full text-[#191974]  p-0 border-none outline-none bg-transparent" />
+                <input type="text" value={countryConfig.name} readOnly className="w-full text-[#191974]  p-0 border-none outline-none bg-transparent" />
               </div>
             </div>
             <div className="flex-[1.5] flex items-center px-6 py-4">

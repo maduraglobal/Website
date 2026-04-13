@@ -392,15 +392,23 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                 <p className="text-[13px] opacity-60 max-w-md font-medium leading-relaxed tracking-wider">{offerSlides[activeOffer].desc}</p>
               </div>
 
-              <button
-                suppressHydrationWarning
-                className="book-now-btn bg-[#ee2229] border border-[#ee2229] hover:bg-transparent text-white px-10 py-3.5 rounded-lg text-xs tracking-[0.2em] transition-all transform active:scale-95 shadow-xl shadow-red-500/30"
-                data-package={offerSlides[activeOffer].title}
-                data-price={offerSlides[activeOffer].priceInr}
-                data-original-price={offerSlides[activeOffer].joiningPriceInr}
-              >
-                Book Journey
-              </button>
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href={`/${region}/tours/${offerSlides[activeOffer].title.toLowerCase().replace(/ /g, '-')}`}
+                  className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-10 py-3.5 rounded-lg text-xs tracking-[0.2em] transition-all hover:bg-white hover:text-black active:scale-95 text-center font-bold"
+                >
+                  VIEW DETAILS
+                </Link>
+                <button
+                  suppressHydrationWarning
+                  className="book-now-btn bg-[#ee2229] border border-[#ee2229] hover:bg-transparent text-white px-10 py-3.5 rounded-lg text-xs tracking-[0.2em] transition-all transform active:scale-95 shadow-xl shadow-red-500/30 font-bold"
+                  data-package={offerSlides[activeOffer].title}
+                  data-price={offerSlides[activeOffer].priceInr}
+                  data-original-price={offerSlides[activeOffer].joiningPriceInr}
+                >
+                  BOOK NOW
+                </button>
+              </div>
             </div>
 
             <div className="absolute top-1/2 -translate-y-1/2 flex justify-between w-full px-6 opacity-0 group-hover:opacity-100 transition-opacity">
