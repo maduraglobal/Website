@@ -18,7 +18,6 @@ import { formatRegionalPrice } from '@/config/country';
 import TourMap from '@/app/components/tours/TourMap';
 import { createClient } from '@/utils/supabase/client';
 import { Pencil } from 'lucide-react';
-import BookingDetailsForm from '@/app/components/tours/BookingDetailsForm';
 
 
 interface TourDetailContentProps {
@@ -415,9 +414,9 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
           </div>
 
             {/* RIGHT COLUMN (1/3) - SIDEBAR */}
-            <div className="lg:w-1/3 space-y-6 h-fit pt-6">
+            <div className="lg:w-1/3 space-y-6 h-fit pt-6 sticky top-24">
               {/* Sidebar Booking Summary Card (Screenshot 2 Match) */}
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden sticky top-30 font-inter">
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden font-inter">
                 <div className="p-6 border-b border-gray-100 flex items-center gap-3">
                   <div className="w-5 h-5 flex items-center justify-center">
                     <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
@@ -525,7 +524,10 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   </div>
 
                   <div className="pt-4 space-y-3">
-                    <button className="w-full bg-[#ee2229] text-white py-4 rounded-xl font-bold text-[14px] hover:bg-[#d91d24] transition-all shadow-lg shadow-red-500/20 active:scale-95">
+                    <button 
+                      onClick={handleEnquire}
+                      className="w-full bg-[#ee2229] text-white py-4 rounded-xl font-bold text-[14px] hover:bg-[#d91d24] transition-all shadow-lg shadow-red-500/20 active:scale-95"
+                    >
                       Enquire Now
                     </button>
                     <button
@@ -560,7 +562,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <input 
                       type="text" 
                       placeholder="Full Name*" 
-                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-4 text-[14px] outline-none focus:border-[#ee2229] transition-all placeholder:text-red-400" 
+                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-4 text-[14px] outline-none focus:border-[#ee2229] transition-all placeholder:text-gray-400" 
                     />
                   </div>
 
@@ -574,7 +576,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                       <input 
                         type="text" 
                         placeholder="Mobile No.*" 
-                        className="flex-1 px-4 py-4 text-[14px] outline-none placeholder:text-red-400" 
+                        className="flex-1 px-4 py-4 text-[14px] outline-none placeholder:text-gray-400" 
                       />
                     </div>
                   </div>

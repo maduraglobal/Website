@@ -220,63 +220,25 @@ const BookingModal = () => {
                   </div>
 
                   <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-[20px] font-bold text-[#191974]">Lead traveller details</h3>
+                    <h3 className="text-[20px] font-bold text-[#191974]">Request an Enquiry</h3>
                     <Info className="w-4 h-4 text-blue-500 cursor-pointer" />
                   </div>
-                  <p className="text-gray-400 text-[14px] font-medium leading-none">Enter details as registered in your identification document</p>
+                  <p className="text-gray-400 text-[14px] font-medium leading-none">Our travel experts will contact you soon</p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
                     {/* First Name */}
                     <div className="relative">
-                      <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">First Name*</label>
+                      <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Full Name*</label>
                       <input
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleChange}
                         type="text"
-                        placeholder="Enter first name"
-                        className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-[15px] font-medium ${errors.firstName ? 'border-red-500 bg-red-50/20' : 'border-gray-200 focus:border-[#191974]'}`}
+                        placeholder="Enter full name"
+                        className={`w-full px-5 py-3.5 rounded-xl border outline-none transition-all text-[15px] font-medium ${errors.firstName ? 'border-red-500 bg-red-50/20' : 'border-gray-200 focus:border-[#191974]'}`}
                       />
-                      {errors.firstName && <p className="text-[11px] text-red-500 mt-1 ml-1">{errors.firstName}</p>}
-                    </div>
-
-                    {/* Last Name */}
-                    <div className="relative">
-                      <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Last Name*</label>
-                      <input
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleChange}
-                        type="text"
-                        placeholder="Enter last name"
-                        className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-[15px] font-medium ${errors.lastName ? 'border-red-500 bg-red-50/20' : 'border-gray-200 focus:border-[#191974]'}`}
-                      />
-                      {errors.lastName && <p className="text-[11px] text-red-500 mt-1 ml-1">{errors.lastName}</p>}
-                    </div>
-
-                    {/* Mobile Number */}
-                    <div className="relative">
-                      <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Mobile No.*</label>
-                      <div className={`flex rounded-xl border overflow-hidden transition-all ${errors.phone ? 'border-red-500' : 'border-gray-200 focus-within:border-[#191974]'}`}>
-                        <div className="flex items-center gap-2 px-3 bg-gray-50 border-r border-gray-100 cursor-pointer hover:bg-gray-100 transition-colors">
-                          <img src={`https://flagcdn.com/w40/${region === 'en-au' ? 'au' : region === 'en-us' ? 'us' : 'in'}.png`} alt="Flag" className="w-5 h-3.5 object-cover rounded-sm" />
-                          <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
-                        </div>
-                        <div className="flex items-center px-4 bg-gray-50/50 text-gray-500 text-[15px] font-bold border-r border-gray-100">
-                          {region === 'en-au' ? '+61' : region === 'en-us' ? '+1' : '+91'}
-                        </div>
-                        <input
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          type="tel"
-                          placeholder="98844XXXXX"
-                          className="w-full px-4 py-4 outline-none text-[15px] font-medium"
-                        />
-                      </div>
-                      {errors.phone && <p className="text-[11px] text-red-500 mt-1 ml-1">{errors.phone}</p>}
                     </div>
 
                     {/* Email */}
@@ -288,9 +250,26 @@ const BookingModal = () => {
                         onChange={handleChange}
                         type="email"
                         placeholder="example@mail.com"
-                        className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-[15px] font-medium ${errors.email ? 'border-red-500 bg-red-50/20' : 'border-gray-200 focus:border-[#191974]'}`}
+                        className={`w-full px-5 py-3.5 rounded-xl border outline-none transition-all text-[15px] font-medium ${errors.email ? 'border-red-500 bg-red-50/20' : 'border-gray-200 focus:border-[#191974]'}`}
                       />
-                      {errors.email && <p className="text-[11px] text-red-500 mt-1 ml-1">{errors.email}</p>}
+                    </div>
+
+                    {/* Mobile Number */}
+                    <div className="relative">
+                      <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Mobile No.*</label>
+                      <div className={`flex rounded-xl border overflow-hidden transition-all ${errors.phone ? 'border-red-500' : 'border-gray-200 focus-within:border-[#191974]'}`}>
+                        <div className="flex items-center px-4 bg-gray-50/50 text-gray-500 text-[15px] font-bold border-r border-gray-100">
+                          {region === 'en-au' ? '+61' : region === 'en-us' ? '+1' : '+91'}
+                        </div>
+                        <input
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          type="tel"
+                          placeholder="Your Mobile Number"
+                          className="w-full px-4 py-3.5 outline-none text-[15px] font-medium"
+                        />
+                      </div>
                     </div>
 
                     {/* State */}
@@ -300,101 +279,37 @@ const BookingModal = () => {
                         name="state"
                         value={formData.state}
                         onChange={handleChange}
-                        className={`w-full px-5 py-4 rounded-xl border outline-none transition-all appearance-none text-[15px] font-medium bg-white ${errors.state ? 'border-red-500' : 'border-gray-200 focus:border-[#191974]'}`}
+                        className={`w-full px-5 py-3.5 rounded-xl border outline-none transition-all text-[15px] font-medium appearance-none bg-white ${errors.state ? 'border-red-500 bg-red-50/20' : 'border-gray-200 focus:border-[#191974]'}`}
                       >
                         <option value="">Select State</option>
-                        <option value="Tamil Nadu">Tamil Nadu</option>
                         <option value="Maharashtra">Maharashtra</option>
-                        <option value="Delhi">Delhi</option>
                         <option value="Karnataka">Karnataka</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
                       </select>
-                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                      {errors.state && <p className="text-[11px] text-red-500 mt-1 ml-1 font-bold italic">{errors.state} is required</p>}
-                    </div>
-
-                    {/* Gender */}
-                    <div className="relative">
-                      <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Gender*</label>
-                      <select
-                        name="gender"
-                        value={formData.gender}
-                        onChange={handleChange}
-                        className={`w-full px-5 py-4 rounded-xl border outline-none transition-all appearance-none text-[15px] font-medium bg-white ${errors.gender ? 'border-red-500' : 'border-gray-200 focus:border-[#191974]'}`}
-                      >
-                        <option value="">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                      </select>
-                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                      {errors.gender && <p className="text-[11px] text-red-500 mt-1 ml-1 font-bold italic">{errors.gender} is required</p>}
-                    </div>
-
-                    {/* Date of Birth */}
-                    <div className="relative">
-                      <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Date of birth*</label>
-                      <div className="relative">
-                        <input
-                          name="dob"
-                          value={formData.dob}
-                          onChange={handleChange}
-                          type="date"
-                          className="w-full px-5 py-4 rounded-xl border border-gray-200 outline-none focus:border-[#191974] text-[15px] font-medium bg-white"
-                        />
-                      </div>
+                      <ChevronDown className="absolute right-4 top-4 w-4 h-4 text-gray-400 pointer-events-none" />
                     </div>
                   </div>
 
-                  {/* GST Options */}
-                  <div className="pt-8 border-t border-gray-100 flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                    <div className="flex flex-col">
-                      <h4 className="text-[16px] font-bold text-[#191974]">Do you want to add GST ?</h4>
-                      <p className="text-gray-400 text-[12px] font-medium">You can't do this later!</p>
-                    </div>
-                    <div className="flex items-center gap-3 bg-gray-50 p-2 rounded-full px-4 border border-gray-100">
-                      <span className={`text-[13px] font-bold ${addGST ? 'text-gray-400' : 'text-[#ee2229]'}`}>No</span>
-                      <button
-                        type="button"
-                        onClick={() => setAddGST(!addGST)}
-                        className={`w-12 h-6 rounded-full relative transition-all duration-300 ${addGST ? 'bg-[#191974]' : 'bg-gray-200'}`}
-                      >
-                        <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300 ${addGST ? 'left-7' : 'left-1'}`}></div>
-                      </button>
-                      <span className={`text-[13px] font-bold ${addGST ? 'text-[#191974]' : 'text-gray-400'}`}>Yes</span>
-                    </div>
+                  {/* Message Field */}
+                  <div className="relative">
+                    <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">How can we help you? (Optional)</label>
+                    <textarea 
+                      rows={3}
+                      placeholder="e.g. I'm looking for a customized family tour for 5 people..."
+                      className="w-full px-5 py-4 rounded-xl border border-gray-200 outline-none focus:border-[#191974] transition-all text-[15px] font-medium resize-none"
+                    ></textarea>
                   </div>
-
-                  {/* Co-travellers */}
-                  <div className="space-y-4 pt-4">
-                    <h4 className="text-[16px] font-bold text-[#191974]">Co-traveller details</h4>
-                    <div className="flex items-center justify-between p-6 bg-gray-50/50 border border-gray-100 rounded-2xl cursor-pointer hover:bg-gray-100/50 transition-all">
-                      <span className="text-[15px] font-bold text-[#191974]">Adult 2</span>
-                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-gray-400 shadow-sm border border-gray-100">
-                        <Plus className="w-5 h-5" />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Submission */}
-                  <div className="pt-10 flex flex-col md:flex-row items-center gap-6 border-t border-gray-50">
+                  <div className="pt-4">
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full md:w-2/3 bg-[#191974]hover:bg-[#ffbb00] text-[#191974] font-bold py-5 rounded-2xl text-[16px] shadow-xl shadow-yellow-500/10 transition-all flex items-center justify-center gap-3 active:scale-95 group"
+                      className="w-full bg-[#191974] text-white py-5 rounded-2xl font-bold text-[16px] hover:bg-[#ee2229] transition-all shadow-xl shadow-blue-500/10 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 group"
                     >
-                      {isLoading ? (
-                        <span className="w-6 h-6 border-3 border-[#191974]/20 border-t-[#191974] rounded-full animate-spin" />
-                      ) : (
-                        <>
-                          NEXT
-                          <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-all" />
-                        </>
-                      )}
+                      {isLoading ? "Processing..." : "Submit Enquiry"}
+                      <Send className={`w-5 h-5 transition-transform group-hover:translate-x-1 ${isLoading ? 'animate-pulse' : ''}`} />
                     </button>
-                    <div className="text-center md:text-left text-[12px] text-gray-400 font-medium leading-snug">
-                      Almost there! Next step: Review & Payment. <br />
-                      <span className="text-blue-500 cursor-pointer hover:underline">Terms & Conditions apply.</span>
-                    </div>
+                    <p className="text-center text-gray-400 text-[11px] mt-4 uppercase tracking-[0.1em] font-bold">Your information is secure with us</p>
                   </div>
                 </form>
               </div>
@@ -402,6 +317,6 @@ const BookingModal = () => {
           </motion.div>
         </div>
       )}
-    </AnimatePresence>);
+    </AnimatePresence>
+  );
 };
-
