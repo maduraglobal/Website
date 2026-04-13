@@ -65,6 +65,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
   const cityList = tour.cities?.split('▶') || ["Hanoi", "Halong Bay", "Hoi An", "Da Nang"];
 
   return (
+    <>
     <div className="bg-white min-h-screen pb-20">
       <div className="max-w-7xl mx-auto px-4">
         {/* Main 2-Column Grid */}
@@ -495,10 +496,10 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 </button>
 
                 <div className="flex items-center justify-between pt-2">
-                  <button className="text-[13px] font-bold text-white flex items-center gap-2 hover:text-[#191974]] transition-colors">
+                  <button className="text-[13px] font-bold text-white flex items-center gap-2 hover:text-[#191974] transition-colors">
                     EMI starts at <span className="text-[#ee2229] underline">₹10,224/mo</span> <ChevronRight className="w-4 h-4 bg-white/10 rounded-full" />
                   </button>
-                  <button className="text-[14px]  text-white flex items-center gap-2 hover:text-[#ee2229] transition-colors group">
+                  <button className="text-[14px] text-white flex items-center gap-2 hover:text-[#ee2229] transition-colors group">
                     Pricing Table <ChevronRight className="w-4 h-4 bg-white/10 rounded-full group-hover:bg-[#ee2229] group-hover:text-gray-900" />
                   </button>
                 </div>
@@ -511,12 +512,12 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   { icon: Download, label: "Download" },
                   { icon: Mail, label: "Email" },
                   { icon: Share2, label: "Share" }
-                ].map((act, i) => (
+                ].map(({ icon: Icon, label }, i) => (
                   <div key={i} className="flex flex-col items-center gap-2 cursor-pointer group">
                     <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-gray-400 group-hover:bg-[#ee2229]/10 group-hover:text-[#ee2229] transition-all">
-                      <act.icon className="w-5 h-5" />
+                      <Icon className="w-5 h-5" />
                     </div>
-                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{act.label}</span>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{label}</span>
                   </div>
                 ))}
               </div>
@@ -539,7 +540,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   <div className="flex gap-2">
                     <div className="flex items-center gap-2 border border-black rounded-2xl px-4 py-4 bg-white">
                       <img src="https://flagcdn.com/w20/in.png" alt="IN" className="w-5 h-4 rounded-sm" />
-                      <span className="text-[15px] font-bold text-Black">+91</span>
+                      <span className="text-[15px] font-bold text-black">+91</span>
                     </div>
                     <input type="text" placeholder="Mobile Number" className="flex-1 bg-white border border-black rounded-2xl px-5 py-4 text-[15px] text-black placeholder-white/20 outline-none focus:border-[#191974] focus:ring-1 focus:ring-[#191974] transition-all" />
                   </div>
@@ -555,12 +556,12 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
       </div>
       {/* Map Modal Overlay */}
       {isMapOpen && (
-        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 md:p-12">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12">
           <div
             className="absolute inset-0 bg-[#0a0a1a]/95 backdrop-blur-xl transition-all"
             onClick={() => setIsMapOpen(false)}
           />
-          <div className="relative w-full max-w-6xl aspect-square md:aspect-21/9 bg-white rounded-[40px] overflow-hidden shadow-2xl border border-white/10 animate-in zoom-in-95 duration-300">
+          <div className="relative w-full max-w-6xl aspect-square md:aspect-[21/9] bg-white rounded-[40px] overflow-hidden shadow-2xl border border-white/10 animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsMapOpen(false)}
               className="absolute top-6 right-6 z-50 w-12 h-12 bg-gray-900/10 hover:bg-gray-900/20 rounded-full flex items-center justify-center text-gray-900 transition-all backdrop-blur-md"
@@ -572,5 +573,6 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
         </div>
       )}
     </div>
+    </>
   );
 }
