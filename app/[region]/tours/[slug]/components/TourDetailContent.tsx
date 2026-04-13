@@ -203,10 +203,10 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
                 {/* Section: Itinerary (Day Wise) */}
                 <section id="itinerary" className="pt-16 space-y-6">
-                  <div className="flex items-center justify-between border-b border-gray-50 pb-6">
+                  {/* <div className="flex items-center justify-between border-b border-gray-50 pb-6">
                     <h2 className="text-[28px] font-bold text-gray-900">Itinerary <span className="text-gray-400 font-normal text-[14px] lowercase">(Day Wise)</span></h2>
                     <button className="text-[#191974] font-bold text-[14px] hover:underline flex items-center gap-1">View all days <ChevronRight className="w-4 h-4" /></button>
-                  </div>
+                  </div> */}
 
                   <div className="bg-orange-50/40 p-5 rounded-2xl border-white flex items-center justify-between shadow-sm">
                     <div className="flex items-center gap-3 text-[14px] text-gray-700 flex-wrap">

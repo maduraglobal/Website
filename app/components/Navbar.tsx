@@ -625,7 +625,7 @@ export default function Navbar() {
               <p className="text-[10px] text-gray-400  tracking-widest mb-1.5 ">Reach Us</p>
               <a href="tel:18003135555" className="text-[16px]  text-[#191974] hover:text-[#ee2229] transition-colors flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#ee2229]" />
-                1800 313 5555
+                +91 90929 49494
               </a>
               <p className="text-[10px] text-gray-400 mt-0.5 font-bold  tracking-tight">Toll Free · 10 AM - 7 PM</p>
             </div>
