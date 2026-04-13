@@ -61,27 +61,58 @@ const CITY_COORDS: Record<string, [number, number]> = {
 
 function ChangeView({ markers }: { markers: any[] }) {
   const map = useMap();
-  
+
   useEffect(() => {
     if (!map || markers.length === 0) return;
+
+    let initialFlyTimeout: NodeJS.Timeout;
+    let routeAnimationTimeouts: NodeJS.Timeout[] = [];
 
     try {
       const bounds = L.latLngBounds(markers.map(m => m.coords));
       if (bounds.isValid()) {
+        // Initial overview
         map.fitBounds(bounds, { padding: [50, 50], maxZoom: 8, animate: true, duration: 1.5 });
-        
-        // Gentle "Fly" effect to the first marker
-        const flyTimer = setTimeout(() => {
-          map.flyTo(markers[0].coords, 5, { animate: true, duration: 1 });
-        }, 500);
-        
-        return () => clearTimeout(flyTimer);
+
+        // Start animation sequence after 2s
+        initialFlyTimeout = setTimeout(() => {
+          if (markers.length > 0) {
+            // Source
+            map.flyTo(markers[0].coords, 6, { animate: true, duration: 2 });
+
+            // Destinations
+            let currentIdx = 1;
+            const animateNext = () => {
+              if (currentIdx < markers.length) {
+                const timer = setTimeout(() => {
+                  map.flyTo(markers[currentIdx].coords, 6, { animate: true, duration: 2.5 });
+                  currentIdx++;
+                  animateNext();
+                }, 3000); // wait 3s at current location
+                routeAnimationTimeouts.push(timer);
+              } else if (markers.length > 1) {
+                // Finally zoom back out
+                const timer = setTimeout(() => {
+                  map.fitBounds(bounds, { padding: [50, 50], maxZoom: 8, animate: true, duration: 2 });
+                }, 4000);
+                routeAnimationTimeouts.push(timer);
+              }
+            };
+
+            animateNext();
+          }
+        }, 2000);
       }
     } catch (err) {
       console.warn("Map bounds error:", err);
     }
+
+    return () => {
+      clearTimeout(initialFlyTimeout);
+      routeAnimationTimeouts.forEach(clearTimeout);
+    };
   }, [markers, map]);
-  
+
   return null;
 }
 
@@ -91,16 +122,27 @@ interface MapComponentProps {
 
 export default function MapComponent({ itinerary }: MapComponentProps) {
   // Extract unique cities from itinerary and map to coordinates
-  const markers = (itinerary || [])
-    .map(item => {
-      // Try to find city name in title or description (Case Insensitive)
-      const content = `${item.title || ''} ${item.description || ''}`.toLowerCase();
-      const cityName = Object.keys(CITY_COORDS).find(city =>
-        content.includes(city.toLowerCase())
-      );
-      return cityName ? { name: cityName, coords: CITY_COORDS[cityName] } : null;
-    })
-    .filter((m): m is { name: string, coords: [number, number] } => m !== null);
+  const markers = React.useMemo(() => {
+    const list = (itinerary || [])
+      .map(item => {
+        // Try to find city name in title or description (Case Insensitive)
+        const content = `${item.title || ''} ${item.description || ''}`.toLowerCase();
+        const cityName = Object.keys(CITY_COORDS).find(city =>
+          content.includes(city.toLowerCase())
+        );
+        return cityName ? { name: cityName, coords: CITY_COORDS[cityName] } : null;
+      })
+      .filter((m): m is { name: string, coords: [number, number] } => m !== null);
+
+    // Keep only unique destinations (avoid hitting the exact same lat/lng back to back)
+    const unique: typeof list = [];
+    list.forEach(m => {
+      if (!unique.length || unique[unique.length - 1].name !== m.name) {
+        unique.push(m);
+      }
+    });
+    return unique;
+  }, [itinerary]);
 
   // Default fallback center (India) if no markers
   const defaultCenter: [number, number] = [20.5937, 78.9629];
@@ -129,37 +171,48 @@ export default function MapComponent({ itinerary }: MapComponentProps) {
           </Marker>
         ))}
         {polylineCoords.length > 1 && (
-          <Polyline
-            positions={polylineCoords}
-            pathOptions={{
-              color: "#ee2229",
-              weight: 4,
-              opacity: 0.8,
-              dashArray: "10, 15",
-              lineCap: "round",
-              lineJoin: "round",
-              className: "animate-route-flow"
-            }}
-          />
+          <>
+            {/* Base Red Line (Destination Path) */}
+            <Polyline
+              positions={polylineCoords}
+              pathOptions={{
+                color: "#ee2229",
+                weight: 4,
+                opacity: 0.8,
+                lineCap: "round",
+                lineJoin: "round",
+              }}
+            />
+            {/* Yellow Moving Line (Moving Stage) */}
+            <Polyline
+              positions={polylineCoords}
+              pathOptions={{
+                color: "#ffc107",
+                weight: 4,
+                opacity: 0.9,
+                dashArray: "10, 20",
+                lineCap: "round",
+                lineJoin: "round",
+                className: "animate-route-flow"
+              }}
+            />
+          </>
         )}
         <ChangeView markers={markers} />
       </MapContainer>
 
-      <style jsx global>{`
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes route-flow {
-          from {
-            stroke-dashoffset: 100;
-          }
-          to {
-            stroke-dashoffset: 0;
-          }
+          from { stroke-dashoffset: 60; }
+          to { stroke-dashoffset: 0; }
         }
         .animate-route-flow {
-          animation: route-flow 2s linear infinite;
-          stroke-dasharray: 10 15;
-          filter: drop-shadow(0 0 2px rgba(238, 34, 41, 0.4));
+          animation: route-flow 1.5s linear infinite;
+          stroke-dasharray: 15 25;
+          filter: drop-shadow(0 0 4px rgba(255, 193, 7, 0.8));
         }
-      `}</style>
+      `}} />
     </div>
   );
 }

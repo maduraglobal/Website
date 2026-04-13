@@ -295,23 +295,23 @@ export default function AntigravityTourDetail() {
               <div className="p-6 md:p-8 min-h-50">
                 {activeTab === 'inclusions' && (
                   <ul className="space-y-4 text-gray-300">
-                    <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-green-400 shrink-0" /> Premium accommodation in 4-star properties</li>
-                    <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-green-400 shrink-0" /> Fast-track airport transfers in luxury SUVs</li>
-                    <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-green-400 shrink-0" /> Daily breakfast and choice of 3 dinner cuisines</li>
+                    <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#191974] shrink-0" /> Premium accommodation in 4-star properties</li>
+                    <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#191974] shrink-0" /> Fast-track airport transfers in luxury SUVs</li>
+                    <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#191974] shrink-0" /> Daily breakfast and choice of 3 dinner cuisines</li>
                   </ul>
                 )}
                 {activeTab === 'exclusions' && (
                   <ul className="space-y-4 text-gray-300">
-                    <li className="flex gap-3"><X className="w-5 h-5 text-red-400 shrink-0" /> Any personal expenses or room service items</li>
-                    <li className="flex gap-3"><X className="w-5 h-5 text-red-400 shrink-0" /> Optional adventure sports at Solang Valley</li>
-                    <li className="flex gap-3"><X className="w-5 h-5 text-red-400 shrink-0" /> Medical/Travel Insurance (can be added separately)</li>
+                    <li className="flex gap-3"><X className="w-5 h-5 text-[#ee2229] shrink-0" /> Any personal expenses or room service items</li>
+                    <li className="flex gap-3"><X className="w-5 h-5 text-[#ee2229] shrink-0" /> Optional adventure sports at Solang Valley</li>
+                    <li className="flex gap-3"><X className="w-5 h-5 text-[#ee2229] shrink-0" /> Medical/Travel Insurance (can be added separately)</li>
                   </ul>
                 )}
                 {activeTab === 'preparation' && (
                   <ul className="space-y-4 text-gray-300">
-                    <li className="flex gap-3"><Info className="w-5 h-5 text-blue-400 shrink-0" /> Pack heavy woolens for Rohtang/Atal Tunnel visits.</li>
-                    <li className="flex gap-3"><Info className="w-5 h-5 text-blue-400 shrink-0" /> Carry Govt approved ID cards (original).</li>
-                    <li className="flex gap-3"><Info className="w-5 h-5 text-blue-400 shrink-0" /> Moisturizers and sunscreens are essential for high altitude.</li>
+                    <li className="flex gap-3"><Info className="w-5 h-5 text-[#191974] shrink-0" /> Pack heavy woolens for Rohtang/Atal Tunnel visits.</li>
+                    <li className="flex gap-3"><Info className="w-5 h-5 text-[#191974] shrink-0" /> Carry Govt approved ID cards (original).</li>
+                    <li className="flex gap-3"><Info className="w-5 h-5 text-[#191974] shrink-0" /> Moisturizers and sunscreens are essential for high altitude.</li>
                   </ul>
                 )}
               </div>
