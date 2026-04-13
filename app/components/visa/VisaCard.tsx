@@ -68,9 +68,9 @@ const VisaCard: React.FC<VisaCardProps> = ({ dest, region, index }) => {
         </div>
 
         {/* Compact Content Area */}
-        <div className="absolute inset-x-0 bottom-0 p-4 pt-8 flex flex-col items-center text-center bg-white h-[160px]">
-          <h3 className="text-[18px] font-bold tracking-tight text-[#191974] mb-4 group-hover:text-[#ee2229] transition-colors line-clamp-1">
-            {dest.name}
+        <div className="absolute inset-x-0 bottom-0 p-4 pt-10 flex flex-col items-center text-center bg-white h-[160px]">
+          <h3 className="text-[20px] font-bold tracking-tight text-[#191974] mb-3 group-hover:text-[#ee2229] transition-colors">
+            {dest.name} Visa
           </h3>
 
           <div className="w-full grid grid-cols-2 gap-2 border-t border-gray-50 pt-3 mb-4">

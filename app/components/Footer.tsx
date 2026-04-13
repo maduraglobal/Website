@@ -4,25 +4,25 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
+import {
+  MapPin,
+  Phone,
+  Mail,
   ShieldCheck,
   ChevronRight
 } from "lucide-react";
 
 // Custom brand icons as Lucide v1.x removed them
 const Facebook = (props: any) => (
-  <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+  <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
 );
 
 const Instagram = (props: any) => (
-  <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+  <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
 );
 
 const Linkedin = (props: any) => (
-  <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+  <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>
 );
 
 export default function Footer() {
@@ -62,7 +62,7 @@ export default function Footer() {
                 className="brightness-0 invert"
               />
             </Link>
-            <p className="text-[14px] text-white/70 leading-relaxed max-w-3xl">
+            <p className="text-[14px] text-white leading-relaxed max-w-3xl">
               Founded on January 17th, 1986, In Egmore, Chennai, Madura Travel Service (P) Ltd.
               has been a trusted name in the Indian travel industry for nearly four decades.
               What began as a visionary dream has evolved into a legacy of delivering authentic,
@@ -94,7 +94,7 @@ export default function Footer() {
         {/* === POPULAR DESTINATIONS === */}
         <div className="py-8 border-y border-white/10 mb-12">
           <h4 className="text-[18px] font-bold text-[#ee2229] mb-6 uppercase tracking-wider">Popular Destinations for 2026</h4>
-          <div className="flex flex-wrap gap-x-4 gap-y-3 text-[13px] text-white/60">
+          <div className="flex flex-wrap gap-x-4 gap-y-3 text-[13px] text-white">
             {destinations.map((dest, i) => (
               <React.Fragment key={i}>
                 <Link
@@ -129,7 +129,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={prefixed(link.path)}
-                    className="text-[14px] text-white/60 hover:text-white transition-colors"
+                    className="text-[14px] text-white hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -155,7 +155,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={prefixed(link.path)}
-                    className="text-[14px] text-white/60 hover:text-white transition-colors"
+                    className="text-[14px] text-white hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -181,7 +181,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={prefixed(link.path)}
-                    className="text-[14px] text-white/60 hover:text-white transition-colors"
+                    className="text-[14px] text-white hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -199,7 +199,7 @@ export default function Footer() {
             <div className="space-y-5 pt-2">
               <div className="flex gap-4">
                 <MapPin className="w-5 h-5 text-[#ee2229] shrink-0" />
-                <p className="text-[14px] text-white/60 leading-relaxed">
+                <p className="text-[14px] text-white leading-relaxed">
                   25-3, Gandhi Irwin Rd, Egmore, Chennai, Tamil Nadu 600008
                 </p>
               </div>
@@ -221,17 +221,11 @@ export default function Footer() {
 
         {/* === BOTTOM BAR === */}
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex gap-4 opacity-40">
-            <span className="text-[10px] font-bold border border-white/30 px-3 py-1 rounded">VISA</span>
-            <span className="text-[10px] font-bold border border-white/30 px-3 py-1 rounded">MASTERCARD</span>
-            <span className="text-[10px] font-bold border border-white/30 px-3 py-1 rounded">AMEX</span>
-          </div>
-          <div className="text-[12px] text-white/30 text-center">
+
+          <div className="text-[12px] text-white text-center">
             © 2026 Madura Travel Service (P) Ltd. All Rights Reserved.
           </div>
-          <div className="flex items-center gap-2 text-white/30 text-[11px] font-bold uppercase tracking-widest">
-            <ShieldCheck className="w-4 h-4 text-green-500" /> Secure Payments
-          </div>
+
         </div>
 
       </div>
