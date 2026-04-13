@@ -13,6 +13,20 @@ const icon = L.icon({
   iconAnchor: [12, 41],
 });
 
+const startIcon = L.icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+});
+
+const endIcon = L.icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+});
+
 // A small dictionary of city coordinates for common destinations
 const CITY_COORDS: Record<string, [number, number]> = {
   // Japan
@@ -45,11 +59,29 @@ const CITY_COORDS: Record<string, [number, number]> = {
   'Copenhagen': [55.6761, 12.5683],
 };
 
-function ChangeView({ center, zoom }: { center: [number, number], zoom: number }) {
+function ChangeView({ markers }: { markers: any[] }) {
   const map = useMap();
+  
   useEffect(() => {
-    map.setView(center, zoom);
-  }, [center, zoom, map]);
+    if (!map || markers.length === 0) return;
+
+    try {
+      const bounds = L.latLngBounds(markers.map(m => m.coords));
+      if (bounds.isValid()) {
+        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 8, animate: true, duration: 1.5 });
+        
+        // Gentle "Fly" effect to the first marker
+        const flyTimer = setTimeout(() => {
+          map.flyTo(markers[0].coords, 5, { animate: true, duration: 1 });
+        }, 500);
+        
+        return () => clearTimeout(flyTimer);
+      }
+    } catch (err) {
+      console.warn("Map bounds error:", err);
+    }
+  }, [markers, map]);
+  
   return null;
 }
 
@@ -61,50 +93,73 @@ export default function MapComponent({ itinerary }: MapComponentProps) {
   // Extract unique cities from itinerary and map to coordinates
   const markers = (itinerary || [])
     .map(item => {
-      // Try to find city name in title or description
+      // Try to find city name in title or description (Case Insensitive)
+      const content = `${item.title || ''} ${item.description || ''}`.toLowerCase();
       const cityName = Object.keys(CITY_COORDS).find(city =>
-        item.title?.includes(city) || item.description?.includes(city)
+        content.includes(city.toLowerCase())
       );
       return cityName ? { name: cityName, coords: CITY_COORDS[cityName] } : null;
     })
     .filter((m): m is { name: string, coords: [number, number] } => m !== null);
 
-  // If no markers found, use default (Copenhagen)
-  const center: [number, number] = markers.length > 0 ? markers[0].coords : [55.6761, 12.5683];
-  const zoom = markers.length > 1 ? 5 : 8;
-
+  // Default fallback center (India) if no markers
+  const defaultCenter: [number, number] = [20.5937, 78.9629];
   const polylineCoords = markers.map(m => m.coords);
 
   return (
     <div className="h-full w-full">
       <MapContainer
-        center={center}
-        zoom={zoom}
+        center={defaultCenter}
+        zoom={5}
         scrollWheelZoom={false}
         className="h-full w-full"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         />
         {markers.map((marker, idx) => (
-          <Marker key={idx} position={marker.coords} icon={icon}>
+          <Marker key={idx} position={marker.coords} icon={idx === 0 ? startIcon : idx === markers.length - 1 ? endIcon : icon}>
             <Popup>
-              <div className="font-bold">{marker.name}</div>
+              <div className="p-1">
+                <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Destination</div>
+                <div className="text-[14px] font-bold text-[#191974]">{marker.name}</div>
+              </div>
             </Popup>
           </Marker>
         ))}
         {polylineCoords.length > 1 && (
           <Polyline
             positions={polylineCoords}
-            color="#191974"
-            weight={3}
-            opacity={0.6}
-            dashArray="10, 10"
+            pathOptions={{
+              color: "#ee2229",
+              weight: 4,
+              opacity: 0.8,
+              dashArray: "10, 15",
+              lineCap: "round",
+              lineJoin: "round",
+              className: "animate-route-flow"
+            }}
           />
         )}
-        <ChangeView center={center} zoom={zoom} />
+        <ChangeView markers={markers} />
       </MapContainer>
+
+      <style jsx global>{`
+        @keyframes route-flow {
+          from {
+            stroke-dashoffset: 100;
+          }
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+        .animate-route-flow {
+          animation: route-flow 2s linear infinite;
+          stroke-dasharray: 10 15;
+          filter: drop-shadow(0 0 2px rgba(238, 34, 41, 0.4));
+        }
+      `}</style>
     </div>
   );
 }

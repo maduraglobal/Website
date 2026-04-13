@@ -106,312 +106,312 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
           {/* Main 2-Column Grid */}
           <div className="flex flex-col lg:flex-row gap-8">            {/* LEFT COLUMN (2/3) */}
             <div className="lg:w-2/3 space-y-8">
-                <div className="space-y-6 pt-6">
-                  {/* Badges & Title Section */}
-                  <div className="space-y-4 pt-6">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span className="bg-[#ee2229] text-white text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1 uppercase">
-                        GROUP TOUR <span className="bg-white/20 px-1 rounded">ASPV</span>
-                      </span>
-                      <span className="text-gray-500 text-[12px] font-medium flex items-center gap-1 uppercase tracking-wider">
-                        Experience
-                      </span>
-                      <span className="text-gray-500 text-[12px] font-medium flex items-center gap-1 uppercase tracking-wider">
-                        <CheckCircle2 className="w-3 h-3 text-green-500" /> Culture
-                      </span>
-                    </div>
+              <div className="space-y-6 pt-6">
+                {/* Badges & Title Section */}
+                <div className="space-y-4 pt-6">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="bg-[#ee2229] text-white text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1 uppercase">
+                      GROUP TOUR <span className="bg-white/20 px-1 rounded">ASPV</span>
+                    </span>
+                    <span className="text-gray-500 text-[12px] font-medium flex items-center gap-1 uppercase tracking-wider">
+                      Experience
+                    </span>
+                    <span className="text-gray-500 text-[12px] font-medium flex items-center gap-1 uppercase tracking-wider">
+                      <CheckCircle2 className="w-3 h-3 text-green-500" /> Culture
+                    </span>
+                  </div>
 
-                    <p className="text-[36px] font-bold text-gray-900 leading-tight">
-                      {tour.title}
-                    </p>
+                  <p className="text-[36px] font-bold text-gray-900 leading-tight">
+                    {tour.title}
+                  </p>
 
-                    <div className="flex items-center gap-4 text-[13px] font-medium">
-                      <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700">{tour.duration || "5 Days"}</span>
-                      <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700">1 Country</span>
-                      <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700 flex items-center gap-1">
-                        4 Cities <HelpCircle className="w-3 h-3 text-gray-400" />
-                      </span>
+                  <div className="flex items-center gap-4 text-[13px] font-medium">
+                    <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700">{tour.duration || "5 Days"}</span>
+                    <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700">1 Country</span>
+                    <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700 flex items-center gap-1">
+                      4 Cities <HelpCircle className="w-3 h-3 text-gray-400" />
+                    </span>
 
-                      {/* Admin Quick Edit Button */}
-                      {isAdmin && (
-                        <Link
-                          href="/admin/tours"
-                          className="ml-auto flex items-center gap-2 bg-gray-900 text-white px-4 py-1.5 rounded-full text-[12px] font-bold hover:bg-black transition-all shadow-lg animate-bounce hover:animate-none"
-                        >
-                          <Pencil className="w-3.5 h-3.5" />
-                          Edit Tour Details
-                        </Link>
+                    {/* Admin Quick Edit Button */}
+                    {isAdmin && (
+                      <Link
+                        href="/admin/tours"
+                        className="ml-auto flex items-center gap-2 bg-gray-900 text-white px-4 py-1.5 rounded-full text-[12px] font-bold hover:bg-black transition-all shadow-lg animate-bounce hover:animate-none"
+                      >
+                        <Pencil className="w-3.5 h-3.5" />
+                        Edit Tour Details
+                      </Link>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-2 text-[13px] text-gray-600 border-b border-gray-50 pb-4">
+                    <MapPin className="w-4 h-4 text-[#ee2229]" />
+                    <span className="flex items-center gap-2 flex-wrap">
+                      {tour.title.toLowerCase().includes('japan') ? (
+                        <>Tokyo (2N) <span className="text-gray-300">---&gt;</span> Mt. Fuji <span className="text-gray-300">---&gt;</span> Kyoto (1N) <span className="text-gray-300">---&gt;</span> Osaka (2N)</>
+                      ) : tour.title.toLowerCase().includes('europe') ? (
+                        <>London (2N) <span className="text-gray-300">---&gt;</span> Paris (2N) <span className="text-gray-300">---&gt;</span> Swiss (2N)</>
+                      ) : (
+                        <>{tour.cities || "Vietnam Hanoi (1N) ---> Halong (1N) ---> Hoi An ---> Da Nang (2N)"}</>
                       )}
-                    </div>
-
-                    <div className="flex items-center gap-2 text-[13px] text-gray-600 border-b border-gray-50 pb-4">
-                      <MapPin className="w-4 h-4 text-[#ee2229]" />
-                      <span className="flex items-center gap-2 flex-wrap">
-                        {tour.title.toLowerCase().includes('japan') ? (
-                          <>Tokyo (2N) <span className="text-gray-300">---&gt;</span> Mt. Fuji <span className="text-gray-300">---&gt;</span> Kyoto (1N) <span className="text-gray-300">---&gt;</span> Osaka (2N)</>
-                        ) : tour.title.toLowerCase().includes('europe') ? (
-                          <>London (2N) <span className="text-gray-300">---&gt;</span> Paris (2N) <span className="text-gray-300">---&gt;</span> Swiss (2N)</>
-                        ) : (
-                          <>{tour.cities || "Vietnam Hanoi (1N) ---> Halong (1N) ---> Hoi An ---> Da Nang (2N)"}</>
-                        )}
-                      </span>
-                    </div>
-
-                    <button
-                      onClick={() => scrollToSection('itinerary')}
-                      suppressHydrationWarning
-                      className="text-[#191974] font-bold text-[14px] flex items-center gap-1 hover:underline"
-                    >
-                      View day-wise tour itinerary <ChevronRight className="w-4 h-4" />
-                    </button>
+                    </span>
                   </div>
 
-                  {/* Tour Includes Icons Row */}
-                  <div className="py-8 border-t border-gray-100">
-                    <h3 className="text-[14px] font-bold text-gray-900 mb-6 uppercase tracking-wider">Tour Includes</h3>
-                    <div className="grid grid-cols-3 md:grid-cols-6 gap-8">
-                      {[
-                        { icon: Bed, label: "Hotel" },
-                        { icon: Utensils, label: "Meals" },
-                        { icon: Plane, label: "Flight" },
-                        { icon: Camera, label: "Sightseeing" },
-                        { icon: Bus, label: "Transport" },
-                        { icon: Shield, label: "Visa" },
-                      ].map((item, i) => (
-                        <div key={i} className="flex flex-col items-center gap-2 text-center group cursor-pointer">
-                          <div className="w-14 h-14 bg-gray-50 border border-gray-100 rounded-2xl flex items-center justify-center text-[#191974] group-hover:bg-[#191974] group-hover:text-white transition-all">
-                            <item.icon className="w-6 h-6" />
-                          </div>
-                          <span className="text-[10px] font-bold text-gray-400 ">{item.label}</span>
+                  <button
+                    onClick={() => scrollToSection('itinerary')}
+                    suppressHydrationWarning
+                    className="text-[#191974] font-bold text-[14px] flex items-center gap-1 hover:underline"
+                  >
+                    View day-wise tour itinerary <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Tour Includes Icons Row */}
+                <div className="py-8 border-t border-gray-100">
+                  <h3 className="text-[14px] font-bold text-gray-900 mb-6 uppercase tracking-wider">Tour Includes</h3>
+                  <div className="grid grid-cols-3 md:grid-cols-6 gap-8">
+                    {[
+                      { icon: Bed, label: "Hotel" },
+                      { icon: Utensils, label: "Meals" },
+                      { icon: Plane, label: "Flight" },
+                      { icon: Camera, label: "Sightseeing" },
+                      { icon: Bus, label: "Transport" },
+                      { icon: Shield, label: "Visa" },
+                    ].map((item, i) => (
+                      <div key={i} className="flex flex-col items-center gap-2 text-center group cursor-pointer">
+                        <div className="w-14 h-14 bg-gray-50 border border-gray-100 rounded-2xl flex items-center justify-center text-[#191974] group-hover:bg-[#191974] group-hover:text-white transition-all">
+                          <item.icon className="w-6 h-6" />
                         </div>
-                      ))}
-                    </div>
-                    <div className="mt-8 p-5 rounded-2xl border border-blue-50 bg-blue-50/20 flex items-start gap-4">
-                      <div className="w-10 h-10 bg-white shadow-sm rounded-full flex items-center justify-center text-blue-600 shrink-0">
-                        <Users className="w-5 h-5" />
+                        <span className="text-[10px] font-bold text-gray-400 ">{item.label}</span>
                       </div>
-                      <p className="text-[13px] text-gray-700 font-medium leading-relaxed">
-                        Tour includes the services of Madura Travel service's Tour Manager.
-                      </p>
-                    </div>
+                    ))}
                   </div>
-
-                  {/* Content Tabs */}
-                  <div className="sticky top-[80px] z-40 bg-white">
-                    <TourTabs tabs={TABS} activeTab={activeTab} onTabChange={scrollToSection} />
-                  </div>
-
-                  {/* Section: Itinerary (Day Wise) */}
-                  <section id="itinerary" className="pt-16 space-y-6">
-                    <div className="flex items-center justify-between border-b border-gray-50 pb-6">
-                      <h2 className="text-[28px] font-bold text-gray-900">Itinerary <span className="text-gray-400 font-normal text-[14px] lowercase">(Day Wise)</span></h2>
-                      <button className="text-[#191974] font-bold text-[14px] hover:underline flex items-center gap-1">View all days <ChevronRight className="w-4 h-4" /></button>
+                  <div className="mt-8 p-5 rounded-2xl border border-blue-50 bg-blue-50/20 flex items-start gap-4">
+                    <div className="w-10 h-10 bg-white shadow-sm rounded-full flex items-center justify-center text-blue-600 shrink-0">
+                      <Users className="w-5 h-5" />
                     </div>
-
-                    <div className="bg-orange-50/40 p-5 rounded-2xl border border-orange-100 flex items-center justify-between shadow-sm">
-                      <div className="flex items-center gap-3 text-[14px] text-gray-700 flex-wrap">
-                        <span className="px-3 py-1 bg-white rounded-lg border border-orange-200 text-orange-700 font-bold text-[12px]">Notice</span>
-                        Viewing itinerary for <span className="font-bold underline decoration-dotted">04 Jun 2026 from Mumbai</span>
-                        <button className="ml-4 text-[#191974] flex items-center gap-1 font-bold bg-white px-3 py-1 rounded-full border border-gray-200 hover:bg-gray-50 shadow-sm transition-all"><MapIcon className="w-3.5 h-3.5" /> Change Departure Date</button>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col xl:flex-row gap-10 mt-10">
-                      <div className="flex-1">
-                        <ItineraryTimeline itinerary={itinerary} />
-                      </div>
-                      <div className="w-full xl:w-[320px] shrink-0 space-y-6">
-                        <button
-                          onClick={() => setIsMapOpen(true)}
-                          className="w-full relative h-[100px] rounded-2xl overflow-hidden shadow-sm group cursor-pointer border border-gray-200 bg-gray-50 flex items-center justify-center hover:border-black transition-all"
-                        >
-                          <div className="absolute inset-0 bg-map-pattern opacity-10"></div>
-                          <div className="bg-white px-6 py-2.5 rounded-full shadow-md flex items-center gap-3 group-hover:scale-105 transition-all z-10 border border-gray-100">
-                            <MapIcon className="w-5 h-5 text-gray-700" />
-                            <span className="text-[14px] font-bold text-gray-900">Map View</span>
-                          </div>
-                        </button>
-                      </div>
-                    </div>
-                  </section>
-
-              {/* Section: Information (Image 5 Style) */}
-              <section id="info" className="pt-24 space-y-12">
-                <div>
-                  <h2 className="text-[28px] font-bold text-gray-900">Tour Information</h2>
-                  <p className="text-[14px] font-normal text-gray-400 italic mt-1">Read this to prepare for your tour in the best way!</p>
-                </div>
-
-                {/* 1. Tour Inclusions */}
-                <div className="space-y-4">
-                  <h3 className="text-[20px] font-bold text-[#191974] flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-[#191974]" /> Tour Inclusions
-                  </h3>
-                  <div className="border border-green-100 rounded-2xl overflow-hidden shadow-sm bg-white">
-                    <TourInclusions />
+                    <p className="text-[13px] text-gray-700 font-medium leading-relaxed">
+                      Tour includes the services of Madura Travel service's Tour Manager.
+                    </p>
                   </div>
                 </div>
 
-                {/* 2. Tour Exclusions */}
-                <div className="space-y-4">
-                  <h3 className="text-[20px] font-bold text-[#ee2229] flex items-center gap-2">
-                    <X className="w-5 h-5 text-[ee2229]" /> Tour Exclusions
-                  </h3>
-                  <div className="border border-red-100 rounded-2xl overflow-hidden shadow-sm bg-red-50/20 p-6 md:p-8">
-                    <ul className="text-[14px] text-gray-700 space-y-3">
-                      <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Anything not mentioned in the inclusions</li>
-                      <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Any personal expenses, tips, porterage etc.</li>
-                      <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Excess baggage charges</li>
-                      <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Optional tours and sightseeing</li>
-                      <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Travel Insurance (unless specified)</li>
-                    </ul>
+                {/* Content Tabs */}
+                <div className="sticky top-[80px] z-40 bg-white">
+                  <TourTabs tabs={TABS} activeTab={activeTab} onTabChange={scrollToSection} />
+                </div>
+
+                {/* Section: Itinerary (Day Wise) */}
+                <section id="itinerary" className="pt-16 space-y-6">
+                  <div className="flex items-center justify-between border-b border-gray-50 pb-6">
+                    <h2 className="text-[28px] font-bold text-gray-900">Itinerary <span className="text-gray-400 font-normal text-[14px] lowercase">(Day Wise)</span></h2>
+                    <button className="text-[#191974] font-bold text-[14px] hover:underline flex items-center gap-1">View all days <ChevronRight className="w-4 h-4" /></button>
                   </div>
-                </div>
 
-                {/* 3. Advance Preparation */}
-                <div className="space-y-4">
-                  <h3 className="text-[20px] font-bold text-orange-700 flex items-center gap-2">
-                    <AlertCircle className="w-5 h-5 text-orange-600" /> Advance Preparation
-                  </h3>
-                  <div className="border border-orange-100 rounded-2xl overflow-hidden shadow-sm bg-orange-50/20 p-6 md:p-8 space-y-4">
-                    <p className="text-[14px] text-gray-700 leading-relaxed font-bold">Please pack comfortably and according to the weather updates in the Need to Know section.</p>
-                    <ul className="text-[14px] text-gray-600 space-y-2 list-disc pl-5">
-                      <li>Carry universal adapters for charging electronic devices.</li>
-                      <li>Always keep a digital copy of your Passport and Visa on your phone.</li>
-                      <li>Bring any required personal medication as local equivalents might be difficult to find.</li>
-                    </ul>
-                  </div>
-                </div>
-
-              </section>
-
-              {/* Section: Need to Know */}
-              <section id="needtoknow" className="pt-24 space-y-8">
-                <div>
-                  <h2 className="text-[28px] font-bold text-gray-900">Need to Know</h2>
-                  <p className="text-[14px] text-gray-400 italic mt-1">Things to consider before the trip!</p>
-                </div>
-
-                <div className="space-y-8">
-                  {/* Weather */}
-                  <div className="bg-blue-50/40 border border-blue-100 rounded-2xl p-6 space-y-3">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-                        <CloudRain className="w-5 h-5 text-blue-600" />
-                      </div>
-                      <h3 className="text-[16px] font-bold text-gray-900">Weather</h3>
+                  <div className="bg-orange-50/40 p-5 rounded-2xl border-white flex items-center justify-between shadow-sm">
+                    <div className="flex items-center gap-3 text-[14px] text-gray-700 flex-wrap">
+                      <span className="px-3 py-1 bg-white rounded-lg border border-orange-200 text-orange-700 font-bold text-[12px]">Notice</span>
+                      Viewing itinerary for <span className="font-bold underline decoration-dotted">04 Jun 2026 from Mumbai</span>
+                      <button className="ml-4 text-[#191974] flex items-center gap-1 font-bold bg-white px-3 py-1 rounded-full border border-gray-200 hover:bg-gray-50 shadow-sm transition-all"><MapIcon className="w-3.5 h-3.5" /> Change Departure Date</button>
                     </div>
-                    <ul className="space-y-2 text-[14px] text-gray-600">
-                      <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0" />Warm & humid with tropical rains, unexpected showers during the day</li>
-                      <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0" />For detailed information about weather kindly visit <a href="https://www.accuweather.com" target="_blank" className="text-[#191974] underline font-medium">www.accuweather.com</a></li>
-                    </ul>
                   </div>
 
-                  {/* Transport */}
-                  <div className="bg-orange-50/40 border border-orange-100 rounded-2xl p-6 space-y-4">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center">
-                        <Navigation className="w-5 h-5 text-orange-600" />
-                      </div>
-                      <h3 className="text-[16px] font-bold text-gray-900">Transport</h3>
+                  <div className="flex flex-col xl:flex-row gap-10 mt-10">
+                    <div className="flex-1">
+                      <ItineraryTimeline itinerary={itinerary} />
                     </div>
+                    <div className="w-full xl:w-[320px] shrink-0 space-y-6">
+                      <button
+                        onClick={() => setIsMapOpen(true)}
+                        className="w-full relative h-[100px] rounded-2xl overflow-hidden shadow-sm group cursor-pointer border border-gray-200 bg-gray-50 flex items-center justify-center hover:border-black transition-all"
+                      >
+                        <div className="absolute inset-0 bg-map-pattern opacity-10"></div>
+                        <div className="bg-white px-6 py-2.5 rounded-full shadow-md flex items-center gap-3 group-hover:scale-105 transition-all z-10 border border-gray-100">
+                          <MapIcon className="w-5 h-5 text-gray-700" />
+                          <span className="text-[14px] font-bold text-gray-900">Map View</span>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </section>
 
-                    <p className="text-[13px] font-bold text-gray-700">Air Travel:</p>
-                    <ul className="space-y-2 text-[14px] text-gray-600">
-                      <li className="flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#ee2229] mt-2 shrink-0" />
-                        <span>
-                          {tour.title.toLowerCase().includes('japan')
-                            ? "Mumbai – Tokyo // Osaka – Mumbai"
-                            : "Mumbai – Hanoi // Hanoi – Da Nang // Da Nang – Mumbai"}
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#ee2229] mt-2 shrink-0" /><span>We use combination of Airlines like Indigo, Akasa Air, Air India, Air India Express, Nok Air, Air Asia, Viet Air, Malindo Airlines, Batik Air, Malaysian Airlines, Singapore Airlines, etc.</span></li>
-                    </ul>
-                    <div className="space-y-3 pt-2 border-t border-orange-100">
-                      <p className="text-[13px] font-bold text-gray-700">Coach Travel:</p>
-                      <ul className="space-y-2 text-[14px] text-gray-600">
-                        <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#ee2229] mt-2 shrink-0" />A/C coach – Seating capacity depends upon group size</li>
+                {/* Section: Information (Image 5 Style) */}
+                <section id="info" className="pt-24 space-y-12">
+                  <div>
+                    <h2 className="text-[28px] font-bold text-gray-900">Tour Information</h2>
+                    <p className="text-[14px] font-normal text-gray-400 italic mt-1">Read this to prepare for your tour in the best way!</p>
+                  </div>
+
+                  {/* 1. Tour Inclusions */}
+                  <div className="space-y-4">
+                    <h3 className="text-[20px] font-bold text-[#191974] flex items-center gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-[#191974]" /> Tour Inclusions
+                    </h3>
+                    <div className="border border-green-100 rounded-2xl overflow-hidden shadow-sm bg-white">
+                      <TourInclusions />
+                    </div>
+                  </div>
+
+                  {/* 2. Tour Exclusions */}
+                  <div className="space-y-4">
+                    <h3 className="text-[20px] font-bold text-[#ee2229] flex items-center gap-2">
+                      <X className="w-5 h-5 text-[ee2229]" /> Tour Exclusions
+                    </h3>
+                    <div className="border border-red-100 rounded-2xl overflow-hidden shadow-sm bg-red-50/20 p-6 md:p-8">
+                      <ul className="text-[14px] text-gray-700 space-y-3">
+                        <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Anything not mentioned in the inclusions</li>
+                        <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Any personal expenses, tips, porterage etc.</li>
+                        <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Excess baggage charges</li>
+                        <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Optional tours and sightseeing</li>
+                        <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Travel Insurance (unless specified)</li>
                       </ul>
                     </div>
                   </div>
 
-                  {/* Documents Required */}
-                  <div className="bg-green-50/40 border border-green-100 rounded-2xl p-6 space-y-3">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
-                        <FileText className="w-5 h-5 text-green-600" />
-                      </div>
-                      <h3 className="text-[16px] font-bold text-gray-900">Documents Required for Travel</h3>
+                  {/* 3. Advance Preparation */}
+                  <div className="space-y-4">
+                    <h3 className="text-[20px] font-bold text-orange-700 flex items-center gap-2">
+                      <AlertCircle className="w-5 h-5 text-orange-600" /> Advance Preparation
+                    </h3>
+                    <div className="border border-white rounded-2xl overflow-hidden shadow-sm bg-orange-50/20 p-6 md:p-8 space-y-4">
+                      <p className="text-[14px] text-gray-700 leading-relaxed font-bold">Please pack comfortably and according to the weather updates in the Need to Know section.</p>
+                      <ul className="text-[14px] text-gray-600 space-y-2 list-disc pl-5">
+                        <li>Carry universal adapters for charging electronic devices.</li>
+                        <li>Always keep a digital copy of your Passport and Visa on your phone.</li>
+                        <li>Bring any required personal medication as local equivalents might be difficult to find.</li>
+                      </ul>
                     </div>
-                    <ul className="space-y-2 text-[14px] text-gray-600">
-                      <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />Original passport with minimum 6 months validity from the date of tour arrival along with sufficient blank pages for visa</li>
-                      <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />A valid Tourist Visa for the duration of the tour</li>
-                      <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />For all Schengen countries passport validity should not exceed more than 10 years</li>
-                      <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />Handwritten passport is not acceptable</li>
-                    </ul>
                   </div>
-                </div>
-              </section>
 
-              {/* Section: Cancellation Policy */}
-              {/* Section: Departure and Pricing */}
-              <section id="pricing" className="pt-24 space-y-8">
-                <h2 className="text-[28px] font-bold text-gray-900">Departure and Pricing <span className="text-[14px] font-normal text-gray-400 ml-2 italic">Select your preferred date for the final price.</span></h2>
-                <DeparturePricing
-                  cities={cityList}
-                  dates={mockDates}
-                  selectedCity={selectedCity}
-                  selectedDateId={selectedDateId}
-                  onCityChange={setSelectedCity}
-                  onDateChange={setSelectedDateId}
-                  region={region}
-                />
-              </section>
+                </section>
 
-              <section id="policy" className="pt-24 space-y-8">
-                <h2 className="text-[28px] font-bold text-gray-900">Cancellation Policy &amp; Payment Terms</h2>
-
-                <div className="bg-blue-50/30 border border-blue-100 rounded-2xl p-5 flex flex-wrap items-center gap-6">
+                {/* Section: Need to Know */}
+                <section id="needtoknow" className="pt-24 space-y-8">
                   <div>
-                    <p className="text-[14px] text-[#191974] font-bold">Mumbai departure, 04 Jun 2026.</p>
+                    <h2 className="text-[28px] font-bold text-gray-900">Need to Know</h2>
+                    <p className="text-[14px] text-gray-400 italic mt-1">Things to consider before the trip!</p>
                   </div>
-                  <button className="flex items-center gap-2 text-[13px] font-bold text-gray-700 border border-gray-200 bg-white px-4 py-2 rounded-full hover:border-[#191974] transition-all">
-                    <Calendar className="w-4 h-4" /> Change Departure Date
-                  </button>
-                </div>
 
-                <div className="space-y-2 text-[14px] text-gray-700">
-                  <p><span className="font-bold">Tour Price:</span> {formatRegionalPrice(tour.price || 105000, region)} / per person on twin sharing</p>
-                  <p className="text-gray-400 text-[13px]">Cancellation charges rise closer to departure, with the exact amount deducted shown.</p>
-                </div>
-
-                <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
-                  {[
-                    { pct: 10, amount: 10500, range: '121–900 days prior', dates: '17 Dec 2023 – 03 Feb 2026', color: 'border-[#191974]', badge: 'bg-[#191974] text-white' },
-                    { pct: 15, amount: 15750, range: '91–120 days prior', dates: '04 Feb 2026 – 05 Mar 2026', color: 'border-[#191974]', badge: 'bg-[#191974] text-white' },
-                    { pct: 20, amount: 21000, range: '61–90 days prior', dates: '06 Mar 2026 – 04 Apr 2026', color: 'border-[#191974]', badge: 'bg-[#191974] text-white' },
-                    { pct: 30, amount: 31500, range: '46–60 days prior', dates: '05 Apr 2026 – 19 Apr 2026', color: 'border-[#191974]', badge: 'bg-[#191974] text-white' },
-                    { pct: 40, amount: 42000, range: '31–45 days prior', dates: '20 Apr 2026 – 04 May 2026', color: 'border-[#191974]', badge: 'bg-[#191974] text-white' },
-                    { pct: 50, amount: 52500, range: '16–30 days prior', dates: '05 May 2026 – 19 May 2026', color: 'border-[#191974]', badge: 'bg-[#191974] text-white' },
-                    { pct: 75, amount: 78750, range: '6–15 days prior', dates: '20 May 2026 – 29 May 2026', color: 'border-[#191974]', badge: 'bg-[#191974] text-white' },
-                    { pct: 100, amount: 105000, range: '0–5 days prior', dates: '30 May 2026 – 04 Jun 2026', color: 'border-[#ee2229]', badge: 'bg-[#ee2229] text-white' },
-                  ].map((row, i) => (
-                    <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 p-5 border-b border-gray-50 last:border-b-0 border-l-4 ${row.color} hover:bg-gray-50/50 transition-all`}>
-                      <div className="flex-1 min-w-0">
-                        <span className="font-bold text-[15px] text-gray-900">{formatRegionalPrice(row.amount, region)}</span>
-                        <span className="text-[13px] text-gray-500 ml-2">({row.pct}% deduction from tour amount)</span>
+                  <div className="space-y-8">
+                    {/* Weather */}
+                    <div className="bg-blue-50/40 border border-blue-100 rounded-2xl p-6 space-y-3">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                          <CloudRain className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <h3 className="text-[16px] font-bold text-gray-900">Weather</h3>
                       </div>
-                      <div className="flex items-center gap-4 text-[13px] shrink-0">
-                        <span className={`px-3 py-1 rounded-full font-bold text-[11px] ${row.badge}`}>{row.range}</span>
-                        <span className="text-gray-400 hidden sm:block">{row.dates}</span>
+                      <ul className="space-y-2 text-[14px] text-gray-600">
+                        <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0" />Warm & humid with tropical rains, unexpected showers during the day</li>
+                        <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0" />For detailed information about weather kindly visit <a href="https://www.accuweather.com" target="_blank" className="text-[#191974] underline font-medium">www.accuweather.com</a></li>
+                      </ul>
+                    </div>
+
+                    {/* Transport */}
+                    <div className="bg-white border-white rounded-2xl p-6 space-y-4">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center">
+                          <Navigation className="w-5 h-5 text-orange-600" />
+                        </div>
+                        <h3 className="text-[16px] font-bold text-gray-900">Transport</h3>
+                      </div>
+
+                      <p className="text-[13px] font-bold text-gray-700">Air Travel:</p>
+                      <ul className="space-y-2 text-[14px] text-gray-600">
+                        <li className="flex items-start gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#ee2229] mt-2 shrink-0" />
+                          <span>
+                            {tour.title.toLowerCase().includes('japan')
+                              ? "Mumbai – Tokyo // Osaka – Mumbai"
+                              : "Mumbai – Hanoi // Hanoi – Da Nang // Da Nang – Mumbai"}
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#ee2229] mt-2 shrink-0" /><span>We use combination of Airlines like Indigo, Akasa Air, Air India, Air India Express, Nok Air, Air Asia, Viet Air, Malindo Airlines, Batik Air, Malaysian Airlines, Singapore Airlines, etc.</span></li>
+                      </ul>
+                      <div className="space-y-3 pt-2 border-t border-orange-100">
+                        <p className="text-[13px] font-bold text-gray-700">Coach Travel:</p>
+                        <ul className="space-y-2 text-[14px] text-gray-600">
+                          <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#ee2229] mt-2 shrink-0" />A/C coach – Seating capacity depends upon group size</li>
+                        </ul>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </section>
+
+                    {/* Documents Required */}
+                    <div className="bg-green-50/40 border border-green-100 rounded-2xl p-6 space-y-3">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                          <FileText className="w-5 h-5 text-green-600" />
+                        </div>
+                        <h3 className="text-[16px] font-bold text-gray-900">Documents Required for Travel</h3>
+                      </div>
+                      <ul className="space-y-2 text-[14px] text-gray-600">
+                        <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />Original passport with minimum 6 months validity from the date of tour arrival along with sufficient blank pages for visa</li>
+                        <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />A valid Tourist Visa for the duration of the tour</li>
+                        <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />For all Schengen countries passport validity should not exceed more than 10 years</li>
+                        <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />Handwritten passport is not acceptable</li>
+                      </ul>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Section: Cancellation Policy */}
+                {/* Section: Departure and Pricing */}
+                <section id="pricing" className="pt-24 space-y-8">
+                  <h2 className="text-[28px] font-bold text-gray-900">Departure and Pricing <span className="text-[14px] font-normal text-gray-400 ml-2 italic">Select your preferred date for the final price.</span></h2>
+                  <DeparturePricing
+                    cities={cityList}
+                    dates={mockDates}
+                    selectedCity={selectedCity}
+                    selectedDateId={selectedDateId}
+                    onCityChange={setSelectedCity}
+                    onDateChange={setSelectedDateId}
+                    region={region}
+                  />
+                </section>
+
+                <section id="policy" className="pt-24 space-y-8">
+                  <h2 className="text-[28px] font-bold text-gray-900">Cancellation Policy &amp; Payment Terms</h2>
+
+                  <div className="bg-blue-50/30 border border-blue-100 rounded-2xl p-5 flex flex-wrap items-center gap-6">
+                    <div>
+                      <p className="text-[14px] text-[#191974] font-bold">Mumbai departure, 04 Jun 2026.</p>
+                    </div>
+                    <button className="flex items-center gap-2 text-[13px] font-bold text-gray-700 border border-gray-200 bg-white px-4 py-2 rounded-full hover:border-[#191974] transition-all">
+                      <Calendar className="w-4 h-4" /> Change Departure Date
+                    </button>
+                  </div>
+
+                  <div className="space-y-2 text-[14px] text-gray-700">
+                    <p><span className="font-bold">Tour Price:</span> {formatRegionalPrice(tour.price || 105000, region)} / per person on twin sharing</p>
+                    <p className="text-gray-400 text-[13px]">Cancellation charges rise closer to departure, with the exact amount deducted shown.</p>
+                  </div>
+
+                  <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+                    {[
+                      { pct: 10, amount: 10500, range: '121–900 days prior', dates: '17 Dec 2023 – 03 Feb 2026', color: 'border-[#191974]', badge: 'bg-[#191974] text-white' },
+                      { pct: 15, amount: 15750, range: '91–120 days prior', dates: '04 Feb 2026 – 05 Mar 2026', color: 'border-[#191974]', badge: 'bg-[#191974] text-white' },
+                      { pct: 20, amount: 21000, range: '61–90 days prior', dates: '06 Mar 2026 – 04 Apr 2026', color: 'border-[#191974]', badge: 'bg-[#191974] text-white' },
+                      { pct: 30, amount: 31500, range: '46–60 days prior', dates: '05 Apr 2026 – 19 Apr 2026', color: 'border-[#191974]', badge: 'bg-[#191974] text-white' },
+                      { pct: 40, amount: 42000, range: '31–45 days prior', dates: '20 Apr 2026 – 04 May 2026', color: 'border-[#191974]', badge: 'bg-[#191974] text-white' },
+                      { pct: 50, amount: 52500, range: '16–30 days prior', dates: '05 May 2026 – 19 May 2026', color: 'border-[#191974]', badge: 'bg-[#191974] text-white' },
+                      { pct: 75, amount: 78750, range: '6–15 days prior', dates: '20 May 2026 – 29 May 2026', color: 'border-[#191974]', badge: 'bg-[#191974] text-white' },
+                      { pct: 100, amount: 105000, range: '0–5 days prior', dates: '30 May 2026 – 04 Jun 2026', color: 'border-[#ee2229]', badge: 'bg-[#ee2229] text-white' },
+                    ].map((row, i) => (
+                      <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 p-5 border-b border-gray-50 last:border-b-0 border-l-4 ${row.color} hover:bg-gray-50/50 transition-all`}>
+                        <div className="flex-1 min-w-0">
+                          <span className="font-bold text-[15px] text-gray-900">{formatRegionalPrice(row.amount, region)}</span>
+                          <span className="text-[13px] text-gray-500 ml-2">({row.pct}% deduction from tour amount)</span>
+                        </div>
+                        <div className="flex items-center gap-4 text-[13px] shrink-0">
+                          <span className={`px-3 py-1 rounded-full font-bold text-[11px] ${row.badge}`}>{row.range}</span>
+                          <span className="text-gray-400 hidden sm:block">{row.dates}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </div>
             </div>
-          </div>
 
             {/* RIGHT COLUMN (1/3) - SIDEBAR */}
             <div className="lg:w-1/3 space-y-6 h-fit pt-6 sticky top-24">
@@ -524,15 +524,12 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   </div>
 
                   <div className="pt-4 space-y-3">
-                    <button 
-                      onClick={handleEnquire}
-                      className="w-full bg-[#ee2229] text-white py-4 rounded-xl font-bold text-[14px] hover:bg-[#d91d24] transition-all shadow-lg shadow-red-500/20 active:scale-95"
-                    >
+                    <button className="w-full bg-[#ee2229] text-white py-4 rounded-xl font-bold text-[14px] hover:bg-[#d91d24] transition-all shadow-lg shadow-red-500/20 active:scale-95">
                       Enquire Now
                     </button>
                     <button
                       onClick={handleBookNow}
-                      className="w-full bg-[#191974] text-white py-4 rounded-xl font-bold text-[14px] hover:bg-[#ffbb00] transition-all shadow-lg shadow-yellow-500/10 active:scale-95"
+                      className="w-full bg-[#191974] text-white py-4 rounded-xl font-bold text-[14px] hover:bg-[#ee2229] transition-all shadow-lg shadow-yellow-500/10 active:scale-95"
                     >
                       Book Online Instantly
                     </button>
@@ -559,10 +556,10 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
                 <div className="space-y-4">
                   <div className="relative group">
-                    <input 
-                      type="text" 
-                      placeholder="Full Name*" 
-                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-4 text-[14px] outline-none focus:border-[#ee2229] transition-all placeholder:text-gray-400" 
+                    <input
+                      type="text"
+                      placeholder="Full Name*"
+                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-4 text-[14px] outline-none focus:border-[#ee2229] transition-all placeholder:text-gray-400"
                     />
                   </div>
 
@@ -573,15 +570,15 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                         <ChevronRight className="w-3 h-3 rotate-90 text-gray-400" />
                       </div>
                       <div className="flex items-center px-4 text-gray-400 text-[14px] font-bold border-r border-gray-100">+91</div>
-                      <input 
-                        type="text" 
-                        placeholder="Mobile No.*" 
-                        className="flex-1 px-4 py-4 text-[14px] outline-none placeholder:text-gray-400" 
+                      <input
+                        type="text"
+                        placeholder="Mobile No.*"
+                        className="flex-1 px-4 py-4 text-[14px] outline-none placeholder:text-gray-400"
                       />
                     </div>
                   </div>
 
-                  <button className="w-full bg-[#ffcc00] text-[#191974] py-4 rounded-xl font-bold text-[15px] hover:bg-[#ffbb00] transition-all shadow-lg shadow-yellow-500/10 active:scale-95 flex items-center justify-center gap-2">
+                  <button className="w-full bg-[#ee2229] text-[#191974] py-4 rounded-xl font-bold text-[15px] hover:bg-[#ee2229] transition-all shadow-lg  active:scale-95 flex items-center justify-center gap-2">
                     <Phone className="w-5 h-5" />
                     Request Call Back
                   </button>
