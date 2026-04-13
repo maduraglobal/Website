@@ -216,7 +216,7 @@ export default function Navbar() {
                       <svg className="w-3.5 h-3.5 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
                     </div>
                     <div className="flex flex-col gap-0.5">
-                      <p className="text-[10px] text-gray-400 tracking-wider">You can also call us on</p>
+                      <p className="text-[10px] text-gray-400 tracking-wider">whatsapp Number</p>
                       <a href="tel:+919092949494" className="text-[15px] text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
                     </div>
                   </div>
