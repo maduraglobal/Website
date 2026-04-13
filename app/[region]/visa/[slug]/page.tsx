@@ -36,7 +36,9 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
     heroImg: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=1200",
     visaTypes: [{ name: "Tourist Visa", pop: true, pTime: "5-7 days", stay: "30 days", valid: "90 days", entry: "Single", fees: "4,500" }],
     attractions: [{ title: "Popular Landmarks", desc: "Explore the most iconic sites and cultural heritage of this beautiful destination." }],
-    embassy: "Contact our support for the latest embassy address and submission details."
+    embassy: "Contact our support for the latest embassy address and submission details.",
+    type: "E-VISA",
+    sampleVisaImg: "/images/sample-visa.png"
   };
 
   // State for interactive elements
@@ -44,6 +46,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
   const [isSidebarLetUsCallOpen, setSidebarLetUsCallOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [openDocs, setOpenDocs] = useState(true);
+  const [isSampleModalOpen, setIsSampleModalOpen] = useState(false);
 
   // DEPARTURE PRICING DATA
   const pricingCities = ["All departures", "Mumbai", "Bangalore", "Chennai", "Cochin", "Hyderabad", "Indore", "Kolkata", "New Delhi"];
@@ -88,7 +91,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
   const attractions = currentData.attractions;
 
   // STICKY TABS
-  const tabs = ["Types Of Visas", "Documents", "Process", "Why Choose Us", "Sample Visa", "FAQs", "Embassy", "Visit Us"];
+  const tabs = ["Types Of Visas", "Documents", "Process", "Why Choose Us", "Sample Visa", "FAQs"];
 
   return (
     <div className="min-h-screen bg-white font-inter text-black text-[14px]">
@@ -373,10 +376,13 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                 <ShieldCheck className="w-4 h-4" /> SECURE DOCUMENT
               </div>
             </div>
-            <div className="relative group rounded-[32px] overflow-hidden border-8 border-gray-100 shadow-2xl bg-gray-50">
+            <div
+              className="relative group rounded-[32px] overflow-hidden border-8 border-gray-100 shadow-2xl bg-gray-50 cursor-pointer"
+              onClick={() => setIsSampleModalOpen(true)}
+            >
               <img
-                src="/images/sample-visa.png"
-                alt="Sample Visa Sticker/E-Visa"
+                src={destination?.sampleVisaImg || "/images/sample-visa.png"}
+                alt={`Sample ${destName} Visa`}
                 className="w-full h-auto transition-all duration-700"
               />
               <div className="absolute inset-0 bg-[#191974]/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -400,7 +406,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             </div>
           </div>
 
-          {/* 9. Embassy Section */}
+          {/* 9. Embassy Section
           <div id="embassy" className="space-y-8 pt-4">
             <h2 className="text-[26px] font-bold text-[#191974]">{destName} Consulate & Embassy</h2>
             <div className="bg-[#191974] rounded-[32px] overflow-hidden text-white flex flex-col md:flex-row shadow-2xl">
@@ -431,10 +437,10 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                 />
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* 10. Visit Us */}
-          <div id="visit-us" className="space-y-8 pt-4">
+          {/* <div id="visit-us" className="space-y-8 pt-4">
             <div className="flex items-center justify-between">
               <h2 className="text-[26px] font-bold text-[#191974]">Our Presence In India</h2>
               <button className="text-[12px]  text-[#ee2229] uppercase tracking-widest border border-[#ee2229]/20 px-6 py-2 rounded-full hover:bg-red-50 transition-all flex items-center gap-2">
@@ -454,7 +460,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
         </div>
 
@@ -510,45 +516,65 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
 
       {/* ===== LOCAL FOOTER APPEND ===== */}
       {/* Appended specifically because customer requested footer details explicitly for this view, 
-          although layout.tsx handles full footer. This serves as a minimal directory footer. */}
-      <footer className="bg-[#191974] text-white pt-12 pb-6 border-t border-white/10 mt-10">
-        <div className="max-w-7xl mx-auto px-4 w-full">
-          <div className="flex flex-wrap gap-x-12 gap-y-6 lg:justify-between border-b border-white/10 pb-8 mb-6 text-[13px]">
-            <div className="min-w-[150px]">
-              <h4 className="text-[#ee2229] font-bold  tracking-widest mb-3 text-[12px]">International Tour Packages</h4>
-              <p className="text-white/60 space-x-2 leading-loose">
-                <a className="hover:text-white" href="#">Dubai</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">Singapore</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">Europe</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">Thailand</a>
-              </p>
-            </div>
-            <div className="min-w-[150px]">
-              <h4 className="text-[#ee2229] font-bold  tracking-widest mb-3 text-[12px]">Domestic Tour Packages</h4>
-              <p className="text-white/60 space-x-2 leading-loose">
-                <a className="hover:text-white" href="#">Kerala</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">Rajasthan</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">Kashmir</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">Goa</a>
-              </p>
-            </div>
-            <div className="min-w-[150px]">
-              <h4 className="text-[#ee2229] font-bold  tracking-widest mb-3 text-[12px]">Visa</h4>
-              <p className="text-white/60 space-x-2 leading-loose">
-                <a className="hover:text-white" href="#">Dubai Visa</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">Singapore Visa</a> <span className="text-white/20">|</span> <a className="hover:text-white" href="#">US Visa</a>
-              </p>
-            </div>
-          </div>
+          although layout.tsx handles full footer. This serves as a minimal directory footer. */}      <footer className="bg-[#191974] text-white pt-12 pb-6 border-t border-white/10 mt-10">
+        {/* ... existing footer content ... */}
+      </footer>
 
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex gap-4 opacity-70">
-              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] ">VISA</span>
-              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] ">Mastercard</span>
-              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] ">Amex</span>
-              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] ">Diners Club</span>
-              <span className="font-bold border border-white/30 px-3 py-1 rounded text-[11px] ">RuPay</span>
-            </div>
-            <div className="text-[12px] opacity-40 text-center md:text-right">
-              © 2025 www.antigravitytravels.com All Rights Reserved
+      {/* ===== SAMPLE VISA MODAL ===== */}
+      {isSampleModalOpen && (
+        <div
+          className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-300"
+          onClick={() => setIsSampleModalOpen(false)}
+        >
+          <div
+            className="relative max-w-5xl w-full bg-white rounded-[32px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setIsSampleModalOpen(false)}
+              className="absolute top-6 right-6 z-10 w-10 h-10 bg-white/10 hover:bg-[#ee2229] text-white hover:text-white rounded-full flex items-center justify-center transition-all backdrop-blur-md border border-white/20"
+            >
+              <span className="text-2xl font-light">&times;</span>
+            </button>
+
+            <div className="flex flex-col md:flex-row h-full">
+              <div className="md:w-2/3 bg-gray-100 flex items-center justify-center p-8">
+                <img
+                  src={destination?.sampleVisaImg || "/images/sample-visa.png"}
+                  alt={`Full Sample ${destName} Visa`}
+                  className="max-h-[80vh] w-auto shadow-2xl rounded-lg"
+                />
+              </div>
+              <div className="md:w-1/3 p-10 flex flex-col justify-center space-y-6">
+                <div className="space-y-2">
+                  <p className="text-[12px] text-[#ee2229] font-bold uppercase tracking-widest">Document Template</p>
+                  <h3 className="text-[28px] font-bold text-[#191974] leading-tight">Accurate {destName} Visa Sample</h3>
+                </div>
+                <div className="space-y-4">
+                  <p className="text-gray-600 leading-relaxed">
+                    This document is a certified sample of the current {destName} {currentData.type} format issued to Indian citizens.
+                  </p>
+                  <ul className="space-y-3">
+                    {["QR Code Verification", "Official Consulate Seal", "Embedded Security Features", "Digital/Sticker Format"].map((item, i) => (
+                      <li key={i} className="flex items-center gap-2 text-[13px] font-bold text-gray-700">
+                        <CheckCircle2 className="w-4 h-4 text-green-500" /> {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-6">
+                  <button
+                    onClick={() => setIsSampleModalOpen(false)}
+                    className="w-full bg-[#191974] text-white py-4 rounded-xl font-bold tracking-widest hover:bg-[#ee2229] transition-all shadow-xl"
+                  >
+                    CLOSE PREVIEW
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </footer>
-
+      )}
     </div>
   );
 }

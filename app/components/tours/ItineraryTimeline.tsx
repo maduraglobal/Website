@@ -27,7 +27,7 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
       <div className="absolute left-[7px] top-6 bottom-6 w-[2px] bg-gray-100 z-0"></div>
 
       {itinerary.map((item, idx) => (
-        <div key={item.day} className="relative pb-10 group">
+        <div key={`${item.day || idx}-${idx}`} className="relative pb-10 group">
           {/* Timeline Dot */}
           <div className={cn(
             "absolute left-0 top-[6px] w-[16px] h-[16px] rounded-full border-2 border-white shadow-sm z-10 transition-all duration-300",
@@ -37,7 +37,7 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
           {/* Content */}
           <div className="pl-8 space-y-1">
             <p className="text-[13px] text-gray-500 font-medium">
-              Day {item.day} / {getDayDate(idx)}
+              Day-{item.day || (idx + 1)} / {getDayDate(idx)}
             </p>
             <h4 className={cn(
                "text-[16px] font-bold leading-tight group-hover:underline transition-all cursor-pointer",

@@ -51,7 +51,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ reg
     meals: "Breakfast, Lunch, Dinner"
   }));
 
-  const validImgUrl = currentTour.images?.[0] || '/images/img-8.jpg';
+  const validImgUrl = currentTour.images?.[0] || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1200&auto=format&fit=crop';
 
   return (
     <div className="bg-white min-h-screen text-[#191974] text-[14px]">

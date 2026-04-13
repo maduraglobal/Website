@@ -1,6 +1,8 @@
 "use client";
 import React from 'react';
 
+import { Check } from 'lucide-react';
+
 export default function TourInclusions() {
   const inclusions = [
     "To and fro economy class air travel for 'Mumbai to Mumbai Tour' guests as mentioned in the itinerary",
@@ -20,7 +22,7 @@ export default function TourInclusions() {
     <ul className="space-y-4">
       {inclusions.map((item, index) => (
         <li key={index} className="flex items-start gap-4">
-          <div className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0 mt-2"></div>
+          <Check className="w-4 h-4 text-[#191974] shrink-0 mt-1" />
           <span className="text-[14px] text-gray-700 leading-relaxed font-medium">{item}</span>
         </li>
       ))}

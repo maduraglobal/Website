@@ -34,11 +34,22 @@ const UPGRADES = [
 ];
 
 export default function UpgradesSection() {
+  const handleUpgradeClick = () => {
+    const element = document.getElementById('lead-form');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Fallback to WhatsApp if lead form not found
+      window.open('https://wa.me/919092949494?text=I am interested in tour upgrades', '_blank');
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {UPGRADES.map((upgrade, index) => (
         <div 
           key={index} 
+          onClick={handleUpgradeClick}
           className="group bg-white rounded-2xl border border-gray-100 p-6 flex items-start gap-4 hover:border-[#191974] hover:shadow-xl transition-all cursor-pointer relative overflow-hidden"
         >
           {/* Decorative background element */}
@@ -73,7 +84,10 @@ export default function UpgradesSection() {
       
       <div className="md:col-span-2 p-5 bg-gray-50 rounded-2xl border border-dashed border-gray-200 flex flex-col items-center justify-center text-center space-y-2">
         <p className="text-[13px] text-gray-500 font-medium">Looking for something more specific?</p>
-        <button className="text-[#191974] font-bold text-[14px] hover:underline flex items-center gap-1">
+        <button 
+          onClick={handleUpgradeClick}
+          className="text-[#191974] font-bold text-[14px] hover:underline flex items-center gap-1"
+        >
           Talk to our upgrade experts <ArrowRight className="w-4 h-4" />
         </button>
       </div>

@@ -23,6 +23,7 @@ export default function TourTabs({ tabs, activeTab, onTabChange }: TourTabsProps
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
+              suppressHydrationWarning
               className={cn(
                 "py-4 md:py-3 px-3 md:px-1 border-b-2  text-[13px] tracking-widest transition-all duration-500 whitespace-nowrap active:scale-95 min-h-[48px] md:min-h-0",
                 activeTab === tab.id

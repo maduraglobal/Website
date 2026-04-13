@@ -13,6 +13,7 @@ export interface VisaDestination {
   visaTypes: { name: string; pop: boolean; pTime: string; stay: string; valid: string; entry: string; fees: string }[];
   attractions: { title: string; desc: string }[];
   embassy: string;
+  sampleVisaImg?: string;
 }
 
 export const destinations: VisaDestination[] = [
@@ -31,7 +32,8 @@ export const destinations: VisaDestination[] = [
       { title: "Cu Chi Tunnels", desc: "An immense network of connecting tunnels located in the Củ Chi District of Ho Chi Minh City." },
       { title: "Phong Nha-Ke Bang", desc: "Home to the oldest karst mountains in Asia and the world's largest cave." }
     ],
-    embassy: "20, Kautilya Marg, Chanakyapuri, New Delhi – 110 021, India"
+    embassy: "20, Kautilya Marg, Chanakyapuri, New Delhi – 110 021, India",
+    sampleVisaImg: "/images/visas/vietnam.png"
   },
   {
     name: "Thailand", slug: "thailand", price: "0", 
@@ -48,7 +50,8 @@ export const destinations: VisaDestination[] = [
       { title: "Phi Phi Islands", desc: "An island group in Thailand, between the large island of Phuket and the Straits of Malacca." },
       { title: "Railay Beach", desc: "A small peninsula between the city of Krabi and Ao Nang in Thailand." }
     ],
-    embassy: "56-N, Nyaya Marg, Chanakyapuri, New Delhi – 110 021, India"
+    embassy: "56-N, Nyaya Marg, Chanakyapuri, New Delhi – 110 021, India",
+    sampleVisaImg: "/images/visas/thailand.png"
   },
   {
     name: "Dubai", slug: "dubai", price: "6,900", 
@@ -66,7 +69,8 @@ export const destinations: VisaDestination[] = [
       { title: "Palm Jumeirah", desc: "A phenomenal man-made island shaped like a palm tree, featuring luxury resorts." },
       { title: "Museum of the Future", desc: "A landmark devoted to innovative and futuristic ideologies." }
     ],
-    embassy: "12, Chandragupta Marg, Chanakyapuri, New Delhi – 110 021, India"
+    embassy: "12, Chandragupta Marg, Chanakyapuri, New Delhi – 110 021, India",
+    sampleVisaImg: "/images/visas/dubai.png"
   },
   {
     name: "Spain", slug: "spain", price: "8,900", 
@@ -99,7 +103,8 @@ export const destinations: VisaDestination[] = [
       { title: "Sentosa Island", desc: "An island resort off Singapore's southern coast, connected to the city by road and cable car." },
       { title: "Universal Studios", desc: "A theme park located within Resorts World Sentosa on Sentosa Island." }
     ],
-    embassy: "E-6, Chandragupta Marg, Chanakyapuri, New Delhi – 110 021, India"
+    embassy: "E-6, Chandragupta Marg, Chanakyapuri, New Delhi – 110 021, India",
+    sampleVisaImg: "/images/visas/singapore.png"
   },
   {
     name: "United Kingdom", slug: "united-kingdom", price: "12,500", 
@@ -164,7 +169,8 @@ export const destinations: VisaDestination[] = [
       { title: "Genting Highlands", desc: "An integrated hilltop leisure city comprising hotels, shopping malls, theme parks and casinos." },
       { title: "Langkawi Sky Bridge", desc: "A 125-metre curved pedestrian cable-stayed bridge in Malaysia." }
     ],
-    embassy: "50-M, Satya Marg, Chanakyapuri, New Delhi – 110 021, India"
+    embassy: "50-M, Satya Marg, Chanakyapuri, New Delhi – 110 021, India",
+    sampleVisaImg: "/images/visas/malaysia.png"
   },
   {
     name: "France", slug: "france", price: "8,900", 
