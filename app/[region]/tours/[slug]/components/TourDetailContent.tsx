@@ -548,6 +548,43 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   </div>
                 </div>
               </div>
+
+              {/* Request Call Back Card */}
+              <div className="bg-[#f8faff] rounded-3xl border border-blue-100 shadow-sm p-8 space-y-6 font-inter">
+                <div>
+                  <h3 className="text-[20px] font-bold text-[#191974]">Want us to call you?</h3>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="relative group">
+                    <input 
+                      type="text" 
+                      placeholder="Full Name*" 
+                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-4 text-[14px] outline-none focus:border-[#ee2229] transition-all placeholder:text-red-400" 
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <div className="flex rounded-xl border border-gray-200 bg-white overflow-hidden focus-within:border-[#ee2229] transition-all">
+                      <div className="flex items-center gap-2 px-3 bg-gray-50/50 border-r border-gray-100 cursor-pointer">
+                        <img src="https://flagcdn.com/w40/in.png" alt="India" className="w-5 h-3.5 object-cover rounded-sm" />
+                        <ChevronRight className="w-3 h-3 rotate-90 text-gray-400" />
+                      </div>
+                      <div className="flex items-center px-4 text-gray-400 text-[14px] font-bold border-r border-gray-100">+91</div>
+                      <input 
+                        type="text" 
+                        placeholder="Mobile No.*" 
+                        className="flex-1 px-4 py-4 text-[14px] outline-none placeholder:text-red-400" 
+                      />
+                    </div>
+                  </div>
+
+                  <button className="w-full bg-[#ffcc00] text-[#191974] py-4 rounded-xl font-bold text-[15px] hover:bg-[#ffbb00] transition-all shadow-lg shadow-yellow-500/10 active:scale-95 flex items-center justify-center gap-2">
+                    <Phone className="w-5 h-5" />
+                    Request Call Back
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
