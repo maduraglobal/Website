@@ -495,24 +495,24 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
               </div>
 
               {/* Request a Quote Card */}
-              <div className="bg-white rounded-3xl border border-gray-100 shadow-xl p-8 space-y-6 font-inter">
-                <div>
+              {/* <div className="bg-white rounded-3xl border border-gray-100 shadow-xl p-8 space-y-6 font-inter"> */}
+              {/* <div>
                   <h3 className="text-[20px] font-bold text-[#191974]">Request a Quote</h3>
                   <p className="text-[14px] text-gray-500 mt-1">Let our experts craft the perfect package for you.</p>
-                </div>
+                </div> */}
 
-                <div className="space-y-4">
-                  <div className="space-y-1.5">
+              {/* <div className="space-y-4"> */}
+              {/* <div className="space-y-1.5">
                     <label className="text-[11px] font-bold text-[#191974] uppercase tracking-wider">Full Name</label>
                     <input type="text" placeholder="e.g. John Doe" className="w-full bg-gray-50/50 border border-gray-100 rounded-xl px-4 py-3.5 text-[14px] outline-none focus:border-[#ee2229] transition-all" />
-                  </div>
+                  </div> */}
 
-                  <div className="space-y-1.5">
+              {/* <div className="space-y-1.5">
                     <label className="text-[11px] font-bold text-[#191974] uppercase tracking-wider">Email</label>
                     <input type="email" placeholder="john@example.com" className="w-full bg-gray-50/50 border border-gray-100 rounded-xl px-4 py-3.5 text-[14px] outline-none focus:border-[#ee2229] transition-all" />
-                  </div>
+                  </div> */}
 
-                  <div className="space-y-1.5">
+              {/* <div className="space-y-1.5">
                     <label className="text-[11px] font-bold text-[#191974] uppercase tracking-wider">Phone Number</label>
                     <div className="flex gap-2">
                       <div className="w-24 bg-gray-50/50 border border-gray-100 rounded-xl px-4 py-3.5 text-[14px] font-bold text-[#191974] flex items-center justify-center gap-2 cursor-pointer">
@@ -521,9 +521,9 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                       </div>
                       <input type="text" placeholder="Mobile Number" className="flex-1 bg-gray-50/50 border border-gray-100 rounded-xl px-4 py-3.5 text-[14px] outline-none focus:border-[#ee2229] transition-all" />
                     </div>
-                  </div>
+                  </div> */}
 
-                  <div className="pt-4 space-y-3">
+              {/* <div className="pt-4 space-y-3">
                     <button className="w-full bg-[#ee2229] text-white py-4 rounded-xl font-bold text-[14px] hover:bg-[#d91d24] transition-all shadow-lg shadow-red-500/20 active:scale-95">
                       Enquire Now
                     </button>
@@ -534,9 +534,9 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                       Book Online Instantly
                     </button>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="pt-4 flex items-center justify-center gap-6 text-[12px] text-gray-400">
+              {/* <div className="pt-4 flex items-center justify-center gap-6 text-[12px] text-gray-400">
                   <div className="flex items-center gap-1.5">
                     <Shield className="w-3.5 h-3.5 text-green-500" />
                     <span>Secure Payments</span>
@@ -546,7 +546,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <span>Verified Agent</span>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* Request Call Back Card */}
               <div className="bg-[#f8faff] rounded-3xl border border-blue-100 shadow-sm p-8 space-y-6 font-inter">
