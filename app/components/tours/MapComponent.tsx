@@ -123,6 +123,7 @@ function ChangeView({ markers }: { markers: any[] }) {
 
 interface MapComponentProps {
   itinerary?: any[];
+  cities?: string[];
 }
 
 function MovingArrow({ coords }: { coords: [number, number][] }) {
@@ -152,7 +153,7 @@ function MovingArrow({ coords }: { coords: [number, number][] }) {
     if (totalDist === 0) return;
 
     let animationFrameId: number;
-    const DURATION = Math.max(3000, segments.length * 1000); // Dynamic duration based on segments
+    const DURATION = Math.max(4000, segments.length * 1200); // Dynamic duration based on segments
     let startTime = performance.now();
 
     const animate = (time: number) => {
@@ -199,35 +200,47 @@ function MovingArrow({ coords }: { coords: [number, number][] }) {
   return <Marker position={position.latLng} icon={icon} interactive={false} />;
 }
 
-export default function MapComponent({ itinerary }: MapComponentProps) {
-  // Extract unique cities from itinerary and map to coordinates
+export default function MapComponent({ itinerary, cities }: MapComponentProps) {
+  // Extract unique cities from explicit cities array, fallback to itinerary parsing
   const markers = React.useMemo(() => {
-    const list = (itinerary || [])
-      .map((item: any) => {
-        // Try to find city name in title or description with EXPLICIT word boundaries
-        const content = `${item.title || ''} ${item.description || ''}`.toLowerCase();
-        
-        // Sort keys by length descending to match longest city names first (e.g. "Ho Chi Minh" before "Ho")
-        const cityKeys = Object.keys(CITY_COORDS).sort((a, b) => b.length - a.length);
-        
-        const cityName = cityKeys.find(city => {
-          const regex = new RegExp(`\\b${city.toLowerCase()}\\b`);
-          return regex.test(content);
-        });
-        
-        return cityName ? { name: cityName, coords: CITY_COORDS[cityName] } : null;
-      })
-      .filter((m: any): m is { name: string, coords: [number, number] } => m !== null);
+    let list: { name: string, coords: [number, number] }[] = [];
+
+    // Approach 1: Try using explicitly passed 'cities'
+    if (cities && cities.length > 0) {
+      list = cities.map((c: string) => {
+        const cleanName = c.replace(/[^a-zA-Z\s]/g, '').trim().toLowerCase();
+        // Look up by exact matching the key in lowercase
+        const matchKey = Object.keys(CITY_COORDS).find(key => key.toLowerCase() === cleanName);
+        if (matchKey) {
+          return { name: matchKey, coords: CITY_COORDS[matchKey] };
+        }
+        return null;
+      }).filter((m): m is { name: string; coords: [number, number] } => m !== null);
+    }
+
+    // Approach 2: Fallback to reading the itinerary if cities is missing or yielded nothing
+    if (list.length === 0 && itinerary && itinerary.length > 0) {
+      list = itinerary.map((item: any) => {
+          const content = `${item.title || ''} ${item.description || ''}`.toLowerCase();
+          const cityKeys = Object.keys(CITY_COORDS).sort((a, b) => b.length - a.length);
+          const cityName = cityKeys.find(city => {
+            const regex = new RegExp(`\\b${city.toLowerCase()}\\b`);
+            return regex.test(content);
+          });
+          return cityName ? { name: cityName, coords: CITY_COORDS[cityName] } : null;
+        }).filter((m: any): m is { name: string, coords: [number, number] } => m !== null);
+    }
       
+    // Strip consecutive duplicates to avoid 0-length visual route bugs
     const unique: typeof list = [];
-    list.forEach((m: any) => {
-      // Avoid consecutive duplicate markers
+    list.forEach((m) => {
       if (!unique.length || unique[unique.length - 1].name !== m.name) {
         unique.push(m);
       }
     });
+
     return unique;
-  }, [itinerary]);
+  }, [itinerary, cities]);
 
   const defaultCenter: [number, number] = [20.5937, 78.9629];
   const polylineCoords = markers.map((m: any) => m.coords);
