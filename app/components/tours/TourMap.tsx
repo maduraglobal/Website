@@ -10,12 +10,14 @@ interface TourMapProps {
   onPreview?: () => void;
   fullsize?: boolean;
   itinerary?: any[];
+  cities?: string[];
 }
 
-export default function TourMap({ fullsize, itinerary }: TourMapProps) {
+export default function TourMap({ fullsize, itinerary, cities }: TourMapProps) {
   return (
     <div className={`relative w-full overflow-hidden bg-gray-100 border border-gray-200 ${fullsize ? 'h-full' : 'rounded-[32px] h-full shadow-inner'}`}>
-      <MapComponent itinerary={itinerary} />
+      <MapComponent itinerary={itinerary} cities={cities} />
+
     </div>
   );
 }

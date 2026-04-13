@@ -12,7 +12,7 @@ export default function MICEPage() {
   const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); setSubmitted(true); };
 
   return (
-    <div className="bg-[var(--background)] min-h-screen">
+    <div className="bg-(--background) min-h-screen">
       <div className="w-full bg-[#191974] py-24 text-center text-white relative overflow-hidden">
         <div className="absolute top-[-120px] right-[-120px] w-[500px] h-[500px] bg-[#ee2229] opacity-15 rounded-full blur-[120px]"></div>
         <div className="max-w-7xl mx-auto px-4 relative z-10 flex flex-col items-center">
@@ -31,7 +31,7 @@ export default function MICEPage() {
             { icon: "ðŸŽª", title: "Exhibitions", desc: "Trade show and international expo representation services.", color: "from-[#f4a021] to-[#ee2229]" }
           ].map((s, i) => (
             <div key={i} className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all group flex flex-col">
-              <div className={`h-2 bg-gradient-to-r ${s.color}`}></div>
+              <div className={`h-2 bg-linear-to-r ${s.color}`}></div>
               <div className="p-6 flex flex-col flex-1 items-center text-center">
                 <span className="text-[40px] mb-4 block">{s.icon}</span>
                 <h3 className="text-[20px] font-bold text-[#171717] mb-3 ">{s.title}</h3>
@@ -123,8 +123,8 @@ export default function MICEPage() {
             </>
           ) : (
             <div className="flex flex-col items-center text-center py-10">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-6">
+                <svg className="w-10 h-10 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
               </div>
               <h3 className="font-bold text-[24px] text-[#171717] mb-2 ">Enquiry Submitted!</h3>
               <p className="text-[15px] text-gray-600 mb-8 ">We&apos;ll send a proposal to {formData.email} within 24 hours.</p>

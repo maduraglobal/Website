@@ -601,7 +601,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
               >
                 <X className="w-6 h-6" />
               </button>
-              <TourMap tourTitle={tour.title} itinerary={itinerary} fullsize />
+              <TourMap tourTitle={tour.title} itinerary={itinerary} fullsize cities={tour.cities?.split('▶').map(c => c.trim())} />
             </div>
           </div>
         )}
