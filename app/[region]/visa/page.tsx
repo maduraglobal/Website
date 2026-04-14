@@ -18,23 +18,116 @@ const experts = [
   { name: "Anushree Manoj", role: "Visa Officer", exp: "2 yrs", img: "https://ui-avatars.com/api/?name=Anushree+Manoj&background=f3f4f6&color=ee2229" }
 ];
 
+const allCountries = [
+  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
+  "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi",
+  "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic",
+  "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia",
+  "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
+  "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan",
+  "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
+  "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar",
+  "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman",
+  "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar",
+  "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria",
+  "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu",
+  "Uganda", "Ukraine", "United Arab Emirates", "Dubai (UAE)", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+];
+
+const sourceAwareData: Record<string, Record<string, any>> = {
+  "United Arab Emirates": {
+    "India": {
+      name: "India",
+      slug: "india",
+      price: "180",
+      image: "https://images.unsplash.com/photo-1524492707947-2f10a7b4dd30?auto=format&fit=crop&q=80&w=1200",
+      type: "E-VISA",
+      valid: "30 DAYS",
+      docs: ["Passport Copy", "Photo", "UAE Residence Visa"],
+      flag: "in",
+      continent: "Asia",
+      startingPrice: "180",
+      partner: "Official India Visa Agent in UAE",
+      visaTypes: [
+        { name: "Tourist E-Visa (30 Days)", pop: true, pTime: "3-5 days", stay: "30 days", valid: "30 days", entry: "Double", fees: "180" },
+        { name: "Business E-Visa", pop: false, pTime: "3-5 days", stay: "60 days", valid: "1 year", entry: "Multiple", fees: "350" }
+      ],
+      attractions: [
+        { title: "Taj Mahal", desc: "The iconic ivory-white marble mausoleum in Agra." },
+        { title: "Red Fort", desc: "Historical fortification in the city of Delhi." }
+      ],
+      embassy: "Embassy of India, Abu Dhabi, UAE"
+    }
+  },
+  "Dubai (UAE)": {
+    "India": {
+      name: "India",
+      slug: "india",
+      price: "180",
+      image: "https://images.unsplash.com/photo-1524492707947-2f10a7b4dd30?auto=format&fit=crop&q=80&w=1200",
+      type: "E-VISA",
+      valid: "30 DAYS",
+      docs: ["Passport Copy", "Photo", "UAE Residence Visa"],
+      flag: "in",
+      continent: "Asia",
+      startingPrice: "180",
+      partner: "Official India Visa Agent in UAE",
+      visaTypes: [
+        { name: "Tourist E-Visa (30 Days)", pop: true, pTime: "3-5 days", stay: "30 days", valid: "30 days", entry: "Double", fees: "180" },
+        { name: "Business E-Visa", pop: false, pTime: "3-5 days", stay: "60 days", valid: "1 year", entry: "Multiple", fees: "350" }
+      ],
+      attractions: [
+        { title: "Taj Mahal", desc: "The iconic ivory-white marble mausoleum in Agra." },
+        { title: "Red Fort", desc: "Historical fortification in the city of Delhi." }
+      ],
+      embassy: "Embassy of India, Abu Dhabi, UAE"
+    }
+  }
+};
+
 export default function VisaServicesPage() {
   const params = useParams();
   const region = params?.region as string || "en-in";
   const countryConfig = getCountryConfig(region);
+  
+  const [citizenOf, setCitizenOf] = useState(countryConfig.name);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeContinent, setActiveContinent] = useState("All");
+  const [citizenOpen, setCitizenOpen] = useState(false);
+  const [destinationOpen, setDestinationOpen] = useState(false);
 
   const continents = ["All", "Asia", "Europe", "Americas", "Africa", "Oceania"];
 
-  const filteredDestinations = destinations.filter(dest => {
-    const matchesSearch = dest.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesContinent = activeContinent === "All" || dest.continent === activeContinent;
-    return matchesSearch && matchesContinent;
-  });
+  // Logic for accurate data based on source
+  const getDisplayDestinations = () => {
+    let baseDestinations = [...destinations];
+    
+    // Check if we have source-aware accurate data for the selected citizen country
+    const sourceData = sourceAwareData[citizenOf];
+    if (sourceData) {
+      // If we have specific requirements for this citizen context, inject them
+      Object.entries(sourceData).forEach(([destName, data]) => {
+        const index = baseDestinations.findIndex(d => d.name === destName);
+        if (index !== -1) {
+          baseDestinations[index] = { ...baseDestinations[index], ...data };
+        } else {
+          baseDestinations.push(data as any);
+        }
+      });
+    }
+
+    return baseDestinations.filter(dest => {
+      const matchesSearch = dest.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesContinent = activeContinent === "All" || dest.continent === activeContinent;
+      return matchesSearch && matchesContinent;
+    });
+  };
+
+  const filteredDestinations = getDisplayDestinations();
 
   const resetFilters = () => {
     setSearchQuery("");
+    setCitizenOf(countryConfig.name);
     setActiveContinent("All");
   };
 
@@ -43,47 +136,81 @@ export default function VisaServicesPage() {
       {/* 1. HERO SECTION */}
       <section className="bg-[#191974] pt-24 pb-16 px-4 relative overflow-hidden flex-1">
         <div className="max-w-6xl mx-auto text-center relative z-10 pt-10">
-          <h5 className="text-white text-3xl md:text-6xl  mb-8 tracking-tight leading-tight">
+          <motion.h5 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-white text-3xl md:text-6xl mb-8 tracking-tight leading-tight"
+          >
             Choose Destination.<br /> We'll Handle the <span className="text-[#ee2229]">Visa</span>
-          </h5>
+          </motion.h5>
 
           {/* Search Bar */}
-          <div className="max-w-4xl mx-auto flex flex-col md:flex-row bg-white rounded-2xl md:rounded-full p-2 mb-8 shadow-2xl overflow-hidden">
-            <div className="flex-1 flex items-center px-6 py-4 border-b md:border-b-0 md:border-r border-gray-100">
+          <div className="max-w-4xl mx-auto flex flex-col md:flex-row bg-white rounded-2xl md:rounded-full p-2 mb-8 shadow-2xl relative">
+            {/* CITIZEN OF */}
+            <div className="flex-1 relative flex items-center px-6 py-4 border-b md:border-b-0 md:border-r border-gray-100 group">
               <MapPin className="text-[#ee2229] w-5 h-5 mr-3 shrink-0" />
-              <div className="flex flex-col items-start text-left">
-                <span className="text-[10px]  text-gray-400 uppercase tracking-widest ">Citizen of</span>
-                <input type="text" value={countryConfig.name} readOnly className="w-full text-[#191974]  p-0 border-none outline-none bg-transparent" />
+              <div className="flex flex-col items-start text-left w-full">
+                <span className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-0.5">Citizen of</span>
+                <input 
+                  type="text" 
+                  value={citizenOf} 
+                  onChange={(e) => { setCitizenOf(e.target.value); setCitizenOpen(true); }}
+                  onFocus={() => setCitizenOpen(true)}
+                  onBlur={() => setTimeout(() => setCitizenOpen(false), 200)}
+                  className="w-full text-[#191974] font-bold p-0 border-none outline-none bg-transparent" 
+                />
               </div>
+              
+              {citizenOpen && (
+                <div className="absolute top-full left-0 w-full md:w-64 bg-white shadow-2xl rounded-2xl mt-4 z-50 border border-gray-100 overflow-hidden py-2 text-left">
+                  {allCountries.filter(c => c.toLowerCase().includes(citizenOf.toLowerCase())).map(country => (
+                    <div 
+                      key={country}
+                      onClick={() => { setCitizenOf(country); setCitizenOpen(false); }}
+                      className="px-6 py-2.5 hover:bg-gray-50 cursor-pointer text-[#191974] font-medium text-sm transition-colors"
+                    >
+                      {country}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-            <div className="flex-[1.5] flex items-center px-6 py-4">
+
+            {/* TRAVELLING TO */}
+            <div className="flex-[1.5] relative flex items-center px-6 py-4">
               <Search className="text-[#ee2229] w-5 h-5 mr-3 shrink-0" />
               <div className="flex flex-col items-start w-full text-left">
-                <span className="text-[10px]  text-gray-400  tracking-widest ">Travelling to</span>
+                <span className="text-[10px] text-gray-400 font-bold tracking-widest mb-0.5">Travelling to</span>
                 <input
                   type="text"
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => { setSearchQuery(e.target.value); setDestinationOpen(true); }}
+                  onFocus={() => setDestinationOpen(true)}
+                  onBlur={() => setTimeout(() => setDestinationOpen(false), 200)}
                   placeholder="Enter country name..."
-                  className="w-full text-[#191974]  p-0 border-none outline-none bg-transparent placeholder-gray-300"
+                  className="w-full text-[#191974] font-bold p-0 border-none outline-none bg-transparent placeholder-gray-300"
                 />
               </div>
+
+              {destinationOpen && (
+                <div className="absolute top-full left-0 w-full bg-white shadow-2xl rounded-2xl mt-4 z-50 border border-gray-100 overflow-hidden py-2 text-left">
+                  {destinations.map(d => d.name).filter(c => c.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 8).map(country => (
+                    <div 
+                      key={country}
+                      onClick={() => { setSearchQuery(country); setDestinationOpen(false); }}
+                      className="px-6 py-2.5 hover:bg-gray-50 cursor-pointer text-[#191974] font-medium text-sm transition-colors"
+                    >
+                      {country}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-            <button className="bg-[#ee2229] hover:bg-[#191974] active:scale-95 text-white  py-4 px-12 rounded-xl md:rounded-full transition-all tracking-[0.2em] text-[13px]  shadow-xl shadow-red-500/20">
+
+            <button className="bg-[#ee2229] hover:bg-[#191974] active:scale-95 text-white font-bold py-4 px-12 rounded-xl md:rounded-full transition-all tracking-[0.2em] text-[13px] shadow-xl shadow-red-500/20">
               SEARCH
             </button>
           </div>
-
-          {/* Trust Badge */}
-          {/* <div className="flex -space-x-3">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="w-8 h-8 rounded-full border-2 border-[#191974] bg-gray-200 overflow-hidden">
-                  <img src={`https://ui-avatars.com/api/?name=User+${i}&background=random`} alt="user" />
-                </div>
-              ))}
-            </div> */}
-
-
         </div>
 
         {/* Abstract shapes */}
@@ -97,7 +224,7 @@ export default function VisaServicesPage() {
           <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
             <div className="text-center md:text-left">
               <h2 className="text-[32px] md:text-[42px]  text-[#191974] leading-tight ">Explore Destinations</h2>
-              <p className="text-gray-400 mt-2 font-medium">Find visa requirements for your next journey.</p>
+              <p className="text-gray-400 mt-2 font-medium">Showing visa requirements for {citizenOf} citizens.</p>
             </div>
 
             {/* Continent Filter Tabs */}
@@ -121,10 +248,11 @@ export default function VisaServicesPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredDestinations.map((dest, i) => (
                 <VisaCard
-                  key={dest.slug}
+                  key={`${dest.slug}-${citizenOf}`}
                   dest={dest}
                   region={region}
                   index={i}
+                  citizenOf={citizenOf}
                 />
               ))}
             </div>

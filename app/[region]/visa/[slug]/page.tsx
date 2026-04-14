@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
   CheckCircle2, ChevronRight, ChevronDown, ChevronUp, Star, Phone, MessageCircle, Clock,
   MapPin, ShieldCheck, FileText, Globe, Building2, Check, ExternalLink, ChevronLeft, Users,
-  Sparkles, Calendar, Zap
+  Sparkles, Calendar, Zap, Plus
 } from 'lucide-react';
 
 // Helpers
@@ -20,27 +20,80 @@ const scrollToId = (id: string) => {
 
 import { getDestinationBySlug, VisaDestination } from '@/app/data/visaData';
 import { getCountryConfig, formatRegionalPrice } from '@/config/country';
-import DeparturePricing from '@/app/components/tours/DeparturePricing';
+
+import { useSearchParams } from 'next/navigation';
+
+const sourceAwareData: Record<string, Record<string, any>> = {
+  "United Arab Emirates": {
+    "india": {
+      startingPrice: "180",
+      partner: "Official India Visa Agent in UAE",
+      heroImg: "https://images.unsplash.com/photo-1524492707947-2f10a7b4dd30?auto=format&fit=crop&q=80&w=1200",
+      visaTypes: [
+        { name: "Tourist E-Visa (30 Days)", pop: true, pTime: "3-5 days", stay: "30 days", valid: "30 days", entry: "Double", fees: "180" },
+        { name: "Business E-Visa", pop: false, pTime: "3-5 days", stay: "60 days", valid: "1 year", entry: "Multiple", fees: "350" }
+      ],
+      docs: [
+        "Color scan of Passport (First & Last page)",
+        "Recent passport size photo (White background)",
+        "UAE Residence Visa Copy",
+        "Emirates ID Copy (Front & Back)"
+      ]
+    }
+  },
+  "Dubai (UAE)": {
+    "india": {
+      startingPrice: "180",
+      partner: "Official India Visa Agent in UAE",
+      heroImg: "https://images.unsplash.com/photo-1524492707947-2f10a7b4dd30?auto=format&fit=crop&q=80&w=1200",
+      visaTypes: [
+        { name: "Tourist E-Visa (30 Days)", pop: true, pTime: "3-5 days", stay: "30 days", valid: "30 days", entry: "Double", fees: "180" },
+        { name: "Business E-Visa", pop: false, pTime: "3-5 days", stay: "60 days", valid: "1 year", entry: "Multiple", fees: "350" }
+      ],
+      docs: [
+        "Color scan of Passport (First & Last page)",
+        "Recent passport size photo (White background)",
+        "UAE Residence Visa Copy",
+        "Emirates ID Copy (Front & Back)"
+      ]
+    }
+  }
+};
 
 export default function DynamicVisaDetailPage({ params }: { params: Promise<{ region: string, slug: string }> }) {
   const resolvedParams = use(params);
+  const searchParams = useSearchParams();
   const { region, slug } = resolvedParams;
   const countryConfig = getCountryConfig(region);
+
+  const urlCitizen = searchParams.get('citizen');
+  const citizenOf = urlCitizen || countryConfig.name;
 
   const destination = getDestinationBySlug(slug);
   const destName = destination ? destination.name : (slug ? slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, ' ') : "Dubai");
 
-  // Get current country data or fallback to a safe default
-  const currentData = destination ? { ...destination, heroImg: destination.image } : {
-    startingPrice: "4,500",
-    partner: "Authorised Visa Agent",
-    heroImg: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=1200",
-    visaTypes: [{ name: "Tourist Visa", pop: true, pTime: "5-7 days", stay: "30 days", valid: "90 days", entry: "Single", fees: "4,500" }],
-    attractions: [{ title: "Popular Landmarks", desc: "Explore the most iconic sites and cultural heritage of this beautiful destination." }],
-    embassy: "Contact our support for the latest embassy address and submission details.",
-    type: "E-VISA",
-    sampleVisaImg: "/images/sample-visa.png"
+  // Get current country data with source-awareness
+  const getSourceAwareData = () => {
+    let base = destination ? { ...destination, heroImg: destination.image } : {
+      startingPrice: "4,500",
+      partner: "Authorised Visa Agent",
+      heroImg: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=1200",
+      visaTypes: [{ name: "Tourist Visa", pop: true, pTime: "5-7 days", stay: "30 days", valid: "90 days", entry: "Single", fees: "4,500" }],
+      docs: ["Photo", "Passport"],
+      attractions: [{ title: "Popular Landmarks", desc: "Explore the most iconic sites and cultural heritage of this beautiful destination." }],
+      embassy: "Contact our support for the latest embassy address and submission details.",
+      type: "E-VISA",
+      sampleVisaImg: "/images/sample-visa.png"
+    };
+
+    const sourceData = sourceAwareData[citizenOf]?.[slug.toLowerCase()];
+    if (sourceData) {
+      return { ...base, ...sourceData };
+    }
+    return base;
   };
+
+  const currentData = getSourceAwareData();
 
   // State for interactive elements
   const [activeTab, setActiveTab] = useState("Types Of Visas");
@@ -49,33 +102,19 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
   const [openDocs, setOpenDocs] = useState(true);
   const [isSampleModalOpen, setIsSampleModalOpen] = useState(false);
 
-  // DEPARTURE PRICING DATA
-  const pricingCities = ["All departures", "Mumbai", "Bangalore", "Chennai", "Cochin", "Hyderabad", "Indore", "Kolkata", "New Delhi"];
-  const [selectedCity, setSelectedCity] = useState("All departures");
-  const [selectedDateId, setSelectedDateId] = useState("d1");
 
-  const pricingDates: Record<string, any[]> = {
-    "All departures": [
-      { id: "d1", date: "06", day: "SAT", month: "Jun", year: "2026", price: 525000, savings: 15000, isLowest: true },
-      { id: "d2", date: "15", day: "THU", month: "Oct", year: "2026", price: 525000, savings: 15000 }
-    ]
-  };
-  // Mocking cities
-  pricingCities.forEach(city => {
-    if (city !== "All departures") pricingDates[city] = pricingDates["All departures"];
-  });
 
   // DATA
   const visaTypes = currentData.visaTypes;
 
   const faqs = [
     `How much does a ${destName} visa cost?`,
-    `Is a ${destName} visa free for citizens of ${countryConfig.name}?`,
-    `How to apply for a ${destName} visa for ${countryConfig.name} Citizens?`,
+    `Is a ${destName} visa free for citizens of ${citizenOf}?`,
+    `How to apply for a ${destName} visa for ${citizenOf} Citizens?`,
     `Can I get my ${destName} visa in 2 days?`,
-    `What are ${destName} visa fees from ${countryConfig.name}?`,
+    `What are ${destName} visa fees from ${citizenOf}?`,
     `Can we go to ${destName} without a visa?`,
-    `How much does a ${destName} trip cost from ${countryConfig.name}?`,
+    `How much does a ${destName} trip cost from ${citizenOf}?`,
     `How much is the 14 day tourist visa for ${destName === 'Dubai' ? 'UAE' : destName}?`,
     `Can I apply for a ${destName === 'Dubai' ? 'UAE' : destName} visa online?`,
     `How long does a ${destName} visa take?`,
@@ -110,7 +149,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           </div>
 
           <p className="text-[32px]  leading-tight mb-4 max-w-2xl">
-            {destName} Visa Online for {countryConfig.name} Citizens
+            {destName} Visa Online for {citizenOf} Citizens
           </p>
 
           <div className="flex flex-wrap items-center gap-4 mb-8">
@@ -185,21 +224,10 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           <div id="types-of-visas" className="space-y-8">
             <h2 className="text-[26px] font-bold text-[#191974]">Types of {destName} Visas</h2>
 
-            <div className="bg-gray-50/50 p-6 rounded-[24px] border border-gray-100 mb-10">
-              <p className="text-[#ee2229] font-bold text-[13px] tracking-widest mb-6 uppercase">Current Pricing Estimates</p>
-              <DeparturePricing
-                cities={pricingCities}
-                dates={pricingDates}
-                selectedCity={selectedCity}
-                selectedDateId={selectedDateId}
-                onCityChange={setSelectedCity}
-                onDateChange={setSelectedDateId}
-                region={region}
-              />
-            </div>
+
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {visaTypes.map((v, i) => (
+              {visaTypes.map((v: { pop: any; name: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; pTime: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; valid: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; stay: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; entry: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; fees: string; }, i: React.Key | null | undefined) => (
                 <div key={i} className="bg-white rounded-[24px] border border-gray-100 p-8 hover:shadow-2xl hover:border-red-100 transition-all group flex flex-col relative overflow-hidden">
                   {v.pop && (
                     <div className="absolute top-0 right-0 bg-[#ee2229] text-white text-[10px] font-bold px-6 py-1.5 rounded-bl-2xl uppercase tracking-widest">
@@ -249,14 +277,13 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                         {v.fees === "0" ? 'FREE' : formatRegionalPrice(v.fees, region)}
                       </p>
                     </div>
-                    <button
+                    <Link
+                      href={`/${region}/visa/${slug}/apply?citizen=${encodeURIComponent(citizenOf)}`}
                       className="bg-[#191974] text-white px-8 py-3.5 rounded-full font-bold text-[12px] tracking-widest hover:bg-[#ee2229] transition-all shadow-xl active:scale-95 flex items-center gap-2"
-                      data-package={`${destName} ${v.name}`}
-                      data-price={v.fees}
                     >
                       APPLY NOW
                       <Zap className="w-4 h-4" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -275,7 +302,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
               </div>
             </div>
             <div className="text-[14px] font-bold text-[#191974] bg-white px-6 py-2.5 rounded-full border border-gray-200 shadow-sm">
-              Rated <strong className="text-[#ee2229]">4.9/5</strong> by 821+ travelers
+              Rated <strong className="text-[#ee2229]">4.9/5</strong> by 272+ travelers
             </div>
           </div>
 
@@ -284,12 +311,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             <h2 className="text-[26px] font-bold text-[#191974]">Documentation Checklist</h2>
 
             <div className="grid grid-cols-1 gap-4">
-              {[
-                "Scanned colour copy of first & last page of Passport",
-                "Passport size photo with white background",
-                "Confirmed return flight tickets",
-                "Hotel booking details"
-              ].map((doc, i) => (
+              {currentData.docs.map((doc: string, i: number) => (
                 <div key={i} className="flex items-center gap-5 bg-white border border-gray-100 p-6 rounded-2xl hover:border-red-100 transition-all shadow-sm group">
                   <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-[#191974]  pointer-events-none group-hover:bg-[#ee2229] group-hover:text-white transition-colors">
                     {i + 1}
@@ -465,50 +487,99 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
 
         </div>
 
-        {/* RIGHT SIDEBAR */}
-        <div className="w-full lg:w-[32%] lg:sticky lg:top-[160px] space-y-8">
-
-          <div className="bg-[#191974] rounded-[24px] shadow-2xl overflow-hidden border border-white/5">
-            <div className="bg-[#ee2229] text-white text-center font-bold text-[11px] py-2 tracking-[0.2em] uppercase">
-              Instant Application
+        {/* RIGHT SIDEBAR (Indigo Premium Checkout Card) */}
+        <div className="w-full lg:w-[32%] lg:sticky lg:top-[160px] space-y-6">
+          <div className="bg-[#f0f4ff] rounded-[32px] shadow-2xl overflow-hidden border border-[#191974]/10 flex flex-col">
+            {/* Guarantee / Info Bar */}
+            <div className="bg-[#191974]/5 py-3 px-6 flex items-center justify-between border-b border-[#191974]/10">
+              <div className="flex items-center gap-2 text-[#191974] text-[11px] font-bold uppercase tracking-wider">
+                <ShieldCheck className="w-4 h-4" />
+                Visa Guaranteed
+              </div>
+              <div className="text-[10px] font-bold text-gray-400 italic">
+                {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}, {new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+              </div>
             </div>
-            <div className="p-8 space-y-6">
-              <div className="space-y-1">
-                <h3 className="text-[22px]  text-white">Apply Now</h3>
-                <p className="text-white/50 text-[13px] font-medium">Get your visa processed in simple steps.</p>
+
+            <div className="p-8 flex flex-col items-center">
+              {/* Traveler Counter */}
+              <div className="w-full flex items-center justify-between mb-8">
+                <div className="flex items-center gap-2 font-bold text-[#191974]">
+                  <Users className="w-5 h-5" />
+                  <span>Travellers</span>
+                </div>
+                <div className="flex items-center gap-4 bg-white rounded-full px-4 py-1.5 border border-gray-100 shadow-sm">
+                  <button className="text-gray-400 hover:text-[#ee2229] transition-colors"><ChevronLeft className="w-4 h-4" /></button>
+                  <span className="font-bold text-[16px] min-w-[12px] text-center">1</span>
+                  <button className="text-[#191974] hover:text-[#ee2229] transition-colors"><Plus className="w-4 h-4" /></button>
+                </div>
               </div>
 
-              <form className="space-y-3">
-                <input type="email" placeholder="Email Address" className="w-full px-5 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white text-[14px] outline-none focus:border-[#ee2229] transition-colors" />
-                <input type="tel" placeholder="Mobile Number" className="w-full px-5 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white text-[14px] outline-none focus:border-[#ee2229] transition-colors" />
-                <button className="w-full bg-[#ee2229] text-white  text-[13px] tracking-widest py-4 rounded-xl mt-4 shadow-xl shadow-red-500/20 active:scale-95 transition-all">
-                  CONTINUE APPLICATION
-                </button>
-              </form>
+              {/* Price Display */}
+              <div className="text-center mb-8">
+                <p className="text-[42px] font-bold text-black leading-none mb-1">
+                  {currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(1, region)}
+                </p>
+                <p className="text-[11px] font-bold text-gray-500 tracking-widest uppercase">To be paid now</p>
+              </div>
 
-              <div className="flex items-center gap-4 text-white/40 pt-4">
-                <ShieldCheck className="w-5 h-5" />
-                <p className="text-[11px] font-bold tracking-tight">Secured & encrypted application portal</p>
+              {/* Start Application Button */}
+              <Link
+                href={`/${region}/visa/${slug}/apply?citizen=${encodeURIComponent(citizenOf)}`}
+                className="w-full bg-[#191974] hover:bg-[#3f36d5] text-white font-bold py-4 rounded-full text-[14px] text-center transition-all shadow-xl shadow-[#191974]/20 active:scale-95 mb-10 uppercase tracking-widest"
+              >
+                Start Application
+              </Link>
+
+              {/* Breakdown */}
+              <div className="w-full space-y-4 px-2">
+                <div className="flex justify-between items-center text-[13px] font-bold">
+                  <div className="flex items-center gap-2">
+                    <Building2 className="w-4 h-4 text-gray-400" />
+                    <span>Pay Now</span>
+                  </div>
+                  <span>{currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(1, region)}</span>
+                </div>
+                <div className="pl-6 pb-2 text-[11px] font-medium text-gray-400 border-b border-[#191974]/5">
+                  Government fee
+                </div>
+
+                <div className="flex justify-between items-center text-[13px] font-bold pt-2">
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-gray-400" />
+                    <span>Pay on {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
+                  </div>
+                  <span>{currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(parseInt(currentData.startingPrice) - 1, region)}</span>
+                </div>
+                <div className="pl-6 pb-2 text-[11px] font-medium text-gray-400 border-b border-[#191974]/5">
+                  Madura Fees
+                </div>
+
+                <div className="flex justify-between items-center text-[15px] font-bold pt-4 text-[#191974]">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#191974]" />
+                    <span>Total Amount</span>
+                  </div>
+                  <span>{currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(currentData.startingPrice, region)}</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-3">
-            {[
-              { icon: MessageCircle, label: "WhatsApp Support", detail: "+91 9092949494", color: "text-green-500", bg: "bg-green-50" },
-              { icon: Phone, label: "Call Experts", detail: "+91 9092949494", color: "text-blue-500", bg: "bg-blue-50" },
-              { icon: Clock, label: "Working Hours", detail: "09:00 AM - 09:00 PM", color: "text-amber-500", bg: "bg-amber-50" }
-            ].map((act, i) => (
-              <div key={i} className="flex items-center gap-4 bg-white border border-gray-100 p-5 rounded-2xl shadow-sm hover:border-[#191974]/30 transition-all cursor-pointer">
-                <div className={`w-12 h-12 rounded-xl ${act.bg} ${act.color} flex items-center justify-center`}>
-                  <act.icon className="w-6 h-6" />
+          {/* Madura Protect Banner */}
+          <div className="bg-[#191974] rounded-[24px] p-6 text-white relative overflow-hidden group border border-white/5">
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-[#191974]" />
+                  <span className="font-bold text-[14px]">Madura Protect</span>
                 </div>
-                <div>
-                  <p className="text-[14px] text-black  uppercase tracking-widest">{act.label}</p>
-                  <p className="text-[16px]  text-[#191974]">{act.detail}</p>
-                </div>
+                <div className="bg-[#191974] text-[9px] font-bold px-3 py-1 rounded-full uppercase">Included</div>
               </div>
-            ))}
+              <p className="text-[11px] font-medium text-white/70 mb-1">If Visa Delayed — No Madura Fee</p>
+              <p className="text-[11px] font-medium text-white/70">If Rejected — 100% Refund</p>
+            </div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#191974]/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 group-hover:scale-150 transition-transform" />
           </div>
         </div>
 

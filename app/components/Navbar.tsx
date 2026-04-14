@@ -6,11 +6,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { countryConfigs } from "../../config/country";
 import LoginPopup from "./LoginPopup";
-import { Globe, ShieldCheck, LogOut } from "lucide-react";
+import { Globe, ShieldCheck, LogOut, Search, X, Clock } from "lucide-react";
 import { createClient } from '@/utils/supabase/client';
 
 const destinations = {
-  // ... existing destinations ...
   "India": ["Andaman", "Assam", "Arunachal pradesh", "Golden Triangle", "Gujarat", "Himachal Pradesh", "Karnataka", "Kashmir", "Kerala", "Maharashtra", "Madhya Pradesh", "North East India", "Orissa", "Rajasthan", "Tamil Nadu", "Telangana", "Goa", "Sikkim", "Delhi", "Uttar Pradesh", "Uttarakhand", "West Bengal"],
   "Mainland Europe": ["Austria", "Belgium", "Finland", "France", "Germany", "Iceland", "Ireland", "Italy", "Luxembourg", "Netherlands", "Norway", "Poland", "Portugal", "Denmark", "Spain", "Sweden", "Switzerland", "United Kingdom", "Vatican City"],
   "Australasia": ["Australia", "New Zealand", "Fiji", "Queensland"],
@@ -23,8 +22,18 @@ const destinations = {
   "Central Asia": ["Kazakhstan", "Uzbekistan", "Azerbaijan"]
 };
 
-const popularDestinations = ["India", "Australia", "Dubai", "Vietnam", "Singapore", "Malaysia", "Sri Lanka"];
-const allDestinations = Object.values(destinations).flat();
+const multiDestinations = [
+  "Dubai",
+  "Oman+Dubai",
+  "Dubai+Egypt",
+  "Dubai+Qatar",
+  "Dubai+Turkey",
+  "Tanzania+Dubai",
+  "Dubai + Europe"
+];
+
+const popularDestinations = ["India", "Australia", "Dubai", "Vietnam", "Singapore", "Malaysia", "Sri Lanka", "Dubai + Europe", "Oman+Dubai"];
+const allDestinations = [...Object.values(destinations).flat(), ...multiDestinations];
 
 type DestinationKey = keyof typeof destinations;
 
@@ -149,42 +158,74 @@ export default function Navbar() {
           </Link>
 
           {/* Right side: Search + Phone + Login + Country + Hamburger */}
-          <div className="flex items-center gap-4 ">
+          <div className="flex items-center gap-4 ">            {/* 🔍 SEARCH BAR */}
+            <div className="relative w-64 hidden sm:block group">
+              <div className="relative flex items-center">
+                <Search className="absolute left-3.5 w-4 h-4 text-gray-400 group-focus-within:text-[#ee2229] transition-colors" />
+                <input
+                  type="text"
+                  value={query}
+                  onFocus={() => setIsOpen(true)}
+                  onBlur={() => setTimeout(() => setIsOpen(false), 200)}
+                  onChange={(e) => { setQuery(e.target.value); setIsOpen(true); }}
+                  placeholder='Search "Destination"'
+                  className="w-full pl-10 pr-10 py-2 rounded-full border border-gray-200 text-[13px] font-medium placeholder:text-gray-400 outline-none focus:border-[#191974] focus:ring-4 focus:ring-[#191974]/5 transition-all bg-gray-50/50 focus:bg-white"
+                  suppressHydrationWarning
+                />
+                {query && (
+                  <button 
+                    onClick={() => setQuery("")}
+                    className="absolute right-3.5 p-0.5 hover:bg-gray-100 rounded-full transition-colors"
+                  >
+                    <X className="w-3.5 h-3.5 text-gray-400" />
+                  </button>
+                )}
+              </div>
 
-            {/* ðŸ” SEARCH BAR */}
-            <div className="relative w-56 hidden sm:block">
-              <input
-                type="text"
-                value={query}
-                onFocus={() => setIsOpen(true)}
-                onBlur={() => setTimeout(() => setIsOpen(false), 150)}
-                onChange={(e) => { setQuery(e.target.value); setIsOpen(true); }}
-                placeholder='Search "Destination"'
-                className="w-full px-4 py-1.5 rounded-full border border-[#191974] text-[13px] outline-none focus:border-[#ee2229] transition-colors"
-                suppressHydrationWarning
-              />
               {isOpen && (
-                <div className="absolute w-full bg-white shadow-2xl rounded-xl mt-2 z-50 border border-gray-100 overflow-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                  <div className="px-4 py-2 border-b border-gray-50">
-                    <p className="text-[10px]  text-gray-400  tracking-widest">
-                      {query.trim().length === 0 ? "Popular Destinations" : "Search Results"}
+                <div className="absolute w-full bg-white shadow-2xl rounded-2xl mt-3 z-50 border border-gray-100 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="px-5 py-3 border-b border-gray-50 bg-gray-50/30">
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                      {query.trim().length === 0 ? "Popular Choices" : "Matching Destinations"}
                     </p>
                   </div>
-                  {(query.trim().length === 0 ? popularDestinations : filteredResults).length > 0 ? (
-                    (query.trim().length === 0 ? popularDestinations : filteredResults).map((place, index) => (
-                      <div
-                        key={index}
-                        onMouseDown={(e) => e.preventDefault()}
-                        onClick={() => handleSelect(place)}
-                        className="px-4 py-2.5 cursor-pointer hover:bg-[#191974]/5 text-[13px] text-[#191974] font-bold  tracking-wide transition-colors flex items-center gap-2"
-                      >
-                        <span className="w-1 h-1 rounded-full bg-[#ee2229] shrink-0" />
-                        {place}
+                  
+                  <div className="max-h-[350px] overflow-y-auto custom-scrollbar">
+                    {(query.trim().length === 0 ? popularDestinations : filteredResults).length > 0 ? (
+                      (query.trim().length === 0 ? popularDestinations : filteredResults).map((place, index) => {
+                        // Dynamic social proof based on the screenshot
+                        let bookedAgo = null;
+                        if (place === "Dubai") bookedAgo = "91hr ago";
+                        if (place === "Dubai + Europe") bookedAgo = "351hr ago";
+                        if (place.includes("+") && index % 3 === 0) bookedAgo = `${12 + (index * 4)}hr ago`;
+                        
+                        return (
+                          <div
+                            key={index}
+                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={() => handleSelect(place)}
+                            className="px-5 py-3.5 cursor-pointer hover:bg-gray-50 transition-all border-b border-gray-50 last:border-0 flex items-center justify-between group/item"
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover/item:bg-[#191974] transition-colors" />
+                              <span className="text-[14px] text-[#191974] font-bold tracking-tight">{place}</span>
+                            </div>
+                            
+                            {bookedAgo && (
+                              <div className="flex items-center gap-1.5 text-gray-400">
+                                <Clock className="w-3 h-3 text-gray-300" />
+                                <span className="text-[10px] font-medium italic translate-y-[0.5px]">Booked {bookedAgo}</span>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div className="px-5 py-6 text-center">
+                        <p className="text-gray-400 text-[13px] font-medium">No results found for "{query}"</p>
                       </div>
-                    ))
-                  ) : (
-                    <div className="px-4 py-3 text-gray-400 text-[13px]">No results found</div>
-                  )}
+                    )}
+                  </div>
                 </div>
               )}
             </div>

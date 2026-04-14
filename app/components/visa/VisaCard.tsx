@@ -18,13 +18,14 @@ interface VisaCardProps {
   };
   region: string;
   index: number;
+  citizenOf?: string;
 }
 
 /**
  * Optimized Visa Card UI (Compact Version)
  * Reduces bulky height while maintaining premium information density.
  */
-const VisaCard: React.FC<VisaCardProps> = ({ dest, region, index }) => {
+const VisaCard: React.FC<VisaCardProps> = ({ dest, region, index, citizenOf }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 15 }}
@@ -33,7 +34,7 @@ const VisaCard: React.FC<VisaCardProps> = ({ dest, region, index }) => {
       className="h-full"
     >
       <Link
-        href={`/${region}/visa/${dest.slug}`}
+        href={`/${region}/visa/${dest.slug}${citizenOf ? `?citizen=${encodeURIComponent(citizenOf)}` : ''}`}
         className="group relative rounded-[24px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 cursor-pointer block h-[400px] bg-white"
       >
         {/* Optimized Image Container (Aspect Ratio ~4:5 focused) */}
