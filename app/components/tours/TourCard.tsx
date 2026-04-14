@@ -5,8 +5,20 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { formatRegionalPrice } from '../../../config/country';
 import TourInclusions from './TourInclusions';
-import { Heart, Star, Clock, MapPin, Calendar, CheckCircle2 } from 'lucide-react';
 import FallbackImage from '../FallbackImage';
+import {
+  X,
+  Pencil,
+  Heart,
+  Star,
+  Clock,
+  MapPin,
+  Calendar,
+  CheckCircle2
+} from 'lucide-react';
+import TourMap from './TourMap';
+import { getItineraryByTourId } from '@/utils/crm';
+import { createClient } from '@/utils/supabase/client';
 
 interface TourCardProps {
   tour: any;
@@ -16,6 +28,29 @@ interface TourCardProps {
 
 export default function TourCard({ tour, destinationSlug, region }: TourCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [isMapOpen, setIsMapOpen] = useState(false);
+  const [isHighlightsOpen, setIsHighlightsOpen] = useState(false);
+  const [itinerary, setItinerary] = useState<any[]>([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const supabase = createClient();
+
+  React.useEffect(() => {
+    async function checkAdmin() {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsAdmin(session?.user?.email === 'admin@maduratravel.com');
+    }
+    checkAdmin();
+  }, [supabase]);
+
+  React.useEffect(() => {
+    if (isMapOpen && itinerary.length === 0) {
+      async function loadItinerary() {
+        const data = await getItineraryByTourId(tour.id);
+        setItinerary(data);
+      }
+      loadItinerary();
+    }
+  }, [isMapOpen, tour.id, itinerary.length]);
 
   // Format price based on region using central configuration
   const formatPrice = (price: number) => {
@@ -90,30 +125,30 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
             </div>
 
             <div className="pt-4 flex flex-wrap items-center gap-6 border-t border-gray-50 mt-auto">
-                <div className="flex flex-col items-center gap-1 group/item">
-                    <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#191974] group-hover/item:bg-[#ee2229] group-hover/item:text-white transition-colors">
-                        <Clock className="w-4 h-4" />
-                    </div>
-                    <span className="text-[10px] font-bold text-gray-400">Duration</span>
+              <div className="flex flex-col items-center gap-1 group/item">
+                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#191974] group-hover/item:bg-[#ee2229] group-hover/item:text-white transition-colors">
+                  <Clock className="w-4 h-4" />
                 </div>
-                <div className="flex flex-col items-center gap-1 group/item">
-                    <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#191974] group-hover/item:bg-[#ee2229] group-hover/item:text-white transition-colors">
-                        <MapPin className="w-4 h-4" />
-                    </div>
-                    <span className="text-[10px] font-bold text-gray-400">Cities</span>
+                <span className="text-[10px] font-bold text-gray-400">Duration</span>
+              </div>
+              <button
+                onClick={() => setIsMapOpen(true)}
+                className="flex flex-col items-center gap-1 group/item cursor-pointer"
+              >
+                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#191974] group-hover/item:bg-[#ee2229] group-hover/item:text-white transition-colors">
+                  <MapPin className="w-4 h-4" />
                 </div>
-                <div className="flex flex-col items-center gap-1 group/item">
-                    <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#191974] group-hover/item:bg-[#ee2229] group-hover/item:text-white transition-colors">
-                        <Calendar className="w-4 h-4" />
-                    </div>
-                    <span className="text-[10px] font-bold text-gray-400">Dates</span>
+                <span className="text-[10px] font-bold text-gray-400">Map View</span>
+              </button>
+              <button
+                onClick={() => setIsHighlightsOpen(true)}
+                className="flex flex-col items-center gap-1 group/item cursor-pointer"
+              >
+                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#191974] group-hover/item:bg-[#ee2229] group-hover/item:text-white transition-colors">
+                  <CheckCircle2 className="w-4 h-4" />
                 </div>
-                <div className="flex flex-col items-center gap-1 group/item">
-                    <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#191974] group-hover/item:bg-[#ee2229] group-hover/item:text-white transition-colors">
-                        <CheckCircle2 className="w-4 h-4" />
-                    </div>
-                    <span className="text-[10px] font-bold text-gray-400">All-Incl</span>
-                </div>
+                <span className="text-[10px] font-bold text-gray-400">Highlights</span>
+              </button>
             </div>
           </div>
 
@@ -130,11 +165,8 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
 
             <div className="space-y-2.5 w-full flex flex-col relative z-20 ">
               <Link
-                href={`/${region}/tours/${tour.slug || tour.id}`}
+                href={`/${region}/booking?tour=${tour.slug || tour.id}&price=${price || 0}&savings=0`}
                 className="w-full block text-center bg-[#191974] hover:bg-[#ee2229] text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-900/10 transition-all text-[15px]  tracking-wider"
-                data-package={tour.title}
-                data-price={price?.toString() || '0'}
-                data-original-price={price ? Math.round(price * 1.15).toString() : '0'}
               >
                 Book Now
               </Link>
@@ -156,6 +188,70 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
           </div>
         </div>
       </div>
+
+      {/* Map Modal */}
+      {isMapOpen && (
+        <div className="fixed inset-0 z-200 flex items-center justify-center p-4 md:p-12 cursor-default">
+          <div
+            className="absolute inset-0 bg-[#0a0a1a]/95 backdrop-blur-xl cursor-pointer"
+            onClick={() => setIsMapOpen(false)}
+          />
+          <div className="relative w-full max-w-6xl aspect-square md:aspect-21/9 bg-white rounded-[40px] overflow-hidden shadow-2xl z-50">
+            <button
+              onClick={() => setIsMapOpen(false)}
+              className="absolute top-6 right-6 z-50 w-12 h-12 bg-gray-900/10 hover:bg-gray-900/20 rounded-full flex items-center justify-center cursor-pointer"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <TourMap
+              tourTitle={tour.title}
+              itinerary={itinerary}
+              fullsize
+              cities={tour.cities ? tour.cities.split('▶').map((c: string) => c.trim()) : []}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Highlights Modal */}
+      {isHighlightsOpen && (
+        <div className="fixed inset-0 z-200 flex items-center justify-center p-4 cursor-default">
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"
+            onClick={() => setIsHighlightsOpen(false)}
+          />
+          <div className="relative bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl z-50">
+            <button
+              onClick={() => setIsHighlightsOpen(false)}
+              className="absolute top-4 right-4 w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <h3 className="text-[18px] font-bold text-[#191974] mb-4">Tour Highlights</h3>
+            <ul className="space-y-3">
+              {tour.tags && tour.tags.length > 0 ? tour.tags.map((tag: string, i: number) => (
+                <li key={i} className="flex items-start gap-2 text-[14px] text-gray-700">
+                  <span className="w-1.5 h-1.5 bg-[#ee2229] rounded-full mt-2 shrink-0"></span>
+                  {tag}
+                </li>
+              )) : (
+                <li className="flex items-start gap-2 text-[14px] text-gray-700">
+                  <span className="w-1.5 h-1.5 bg-[#ee2229] rounded-full mt-2 shrink-0"></span>
+                  Premium Accommodations, Professional Guide, Guided Sightseeing
+                </li>
+              )}
+              <li className="flex items-start gap-2 text-[14px] text-gray-700">
+                <span className="w-1.5 h-1.5 bg-[#ee2229] rounded-full mt-2 shrink-0"></span>
+                {tour.cities_count || 4} Premium Cities Covered
+              </li>
+              <li className="flex items-start gap-2 text-[14px] text-gray-700">
+                <span className="w-1.5 h-1.5 bg-[#ee2229] rounded-full mt-2 shrink-0"></span>
+                All-Inclusive Daily Breakfast & Dinners
+              </li>
+            </ul>
+          </div>
+        </div>
+      )}
     </motion.div>
   );
 }

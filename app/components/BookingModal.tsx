@@ -36,8 +36,12 @@ export const useBooking = () => {
 export const BookingProvider = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [bookingData, setBookingData] = useState<BookingData | null>(null);
+  const pathname = usePathname();
 
   const openBooking = (data?: BookingData) => {
+    // Safety check: Don't open the modal if we are already on the dedicated booking page
+    if (pathname?.includes('/booking')) return;
+
     setBookingData(data ?? {
       packageName: 'Custom Holiday Package',
       discountedPrice: '0',
@@ -48,41 +52,20 @@ export const BookingProvider = ({ children }: { children: React.ReactNode }) => 
 
   const closeBooking = () => setIsOpen(false);
 
+  // Auto-close modal when navigating to /booking page
+  useEffect(() => {
+    if (pathname?.includes('/booking') && isOpen) {
+      setIsOpen(false);
+    }
+  }, [pathname, isOpen]);
+
   // Listen for class-based triggers, text-based triggers, and window event (openPopup)
   useEffect(() => {
     const TRIGGER_TEXTS = ['book now', 'book online', 'confirm booking', 'explore tours', 'apply now', 'quick enquiry'];
 
     const handleGlobalClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-
-      // 1. Class-based: closest element with .book-now-btn
-      const byClass = target.closest('.book-now-btn') as HTMLElement | null;
-      if (byClass) {
-        e.preventDefault();
-        openBooking({
-          packageName: byClass.getAttribute('data-package') ?? 'Custom Holiday Package',
-          discountedPrice: byClass.getAttribute('data-price') ?? '0',
-          originalPrice: byClass.getAttribute('data-original-price') ?? '0',
-        });
-        return;
-      }
-
-      // 2. Text-based: button or anchor whose visible text matches trigger words
-      // Skip if inside a data-no-modal container or if the button has its own react onClick fiber
-      const clickedEl = target.closest('button, a') as HTMLElement | null;
-      if (clickedEl && !clickedEl.closest('[data-no-modal]')) {
-        const text = (clickedEl.textContent ?? '').trim().toLowerCase();
-        // Only match exact short labels to avoid triggering on long descriptive text
-        const exactMatch = ['book now', 'book online', 'confirm booking'].some(t => text === t);
-        if (exactMatch) {
-          e.preventDefault();
-          openBooking({
-            packageName: clickedEl.getAttribute('data-package') ?? 'Custom Holiday Package',
-            discountedPrice: clickedEl.getAttribute('data-price') ?? '0',
-            originalPrice: clickedEl.getAttribute('data-original-price') ?? '0',
-          });
-        }
-      }
+      // ALL click interception is DISABLED.
+      // Booking buttons now navigate to the dedicated /booking page via router.push or Link.
     };
 
     const handleOpenEvent = () => openBooking();
@@ -207,8 +190,8 @@ const BookingModal = () => {
               </div>
             ) : bookingData?.isDetailed ? (
               <div className="p-0">
-                <BookingDetailsForm 
-                  onCountUpdate={() => {}} 
+                <BookingDetailsForm
+                  onCountUpdate={() => { }}
                 />
               </div>
             ) : (
@@ -294,7 +277,7 @@ const BookingModal = () => {
                   {/* Message Field */}
                   <div className="relative">
                     <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">How can we help you? (Optional)</label>
-                    <textarea 
+                    <textarea
                       rows={3}
                       placeholder="e.g. I'm looking for a customized family tour for 5 people..."
                       className="w-full px-5 py-4 rounded-xl border border-gray-200 outline-none focus:border-[#191974] transition-all text-[15px] font-medium resize-none"
@@ -309,7 +292,7 @@ const BookingModal = () => {
                       {isLoading ? "Processing..." : "Submit Enquiry"}
                       <Send className={`w-5 h-5 transition-transform group-hover:translate-x-1 ${isLoading ? 'animate-pulse' : ''}`} />
                     </button>
-                    <p className="text-center text-gray-400 text-[11px] mt-4 uppercase tracking-[0.1em] font-bold">Your information is secure with us</p>
+                    <p className="text-center text-gray-400 text-[11px] mt-4 uppercase  font-bold">Your information is secure with us</p>
                   </div>
                 </form>
               </div>

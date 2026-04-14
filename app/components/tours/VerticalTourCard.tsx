@@ -3,12 +3,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { MapPin, Utensils, Camera, Bus, Plane, Bed, Wallet } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { MapPin, Utensils, Camera, Bus, Plane, Bed, Wallet, X, Pencil } from 'lucide-react';
 import { formatRegionalPrice } from '../../../config/country';
 import FallbackImage from '@/app/components/FallbackImage';
+import TourMap from '@/app/components/tours/TourMap';
 
 import { createClient } from '@/utils/supabase/client';
-import { Pencil } from 'lucide-react';
 
 interface VerticalTourCardProps {
   tour: any;
@@ -19,6 +20,9 @@ const ADMIN_EMAIL = 'admin@maduratravel.com';
 
 export default function VerticalTourCard({ tour, region }: VerticalTourCardProps) {
   const [isAdmin, setIsAdmin] = React.useState(false);
+  const [isMapOpen, setIsMapOpen] = React.useState(false);
+  const [isHighlightsOpen, setIsHighlightsOpen] = React.useState(false);
+  const router = useRouter();
   const supabase = createClient();
 
   React.useEffect(() => {
@@ -59,25 +63,27 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
         </div>
 
         {/* Bottom Right Map Button */}
-        <Link
-          href={`/${region}/tours/${slug}#itinerary`}
-          className="absolute bottom-3 right-3 bg-black/40 backdrop-blur-sm hover:bg-black/60 text-white px-3 py-1 rounded-md flex items-center gap-1 transition-colors"
+        <button
+          onClick={(e) => { e.preventDefault(); setIsMapOpen(true); }}
+          className="absolute bottom-3 right-3 bg-black/40 backdrop-blur-sm hover:bg-black/60 text-white px-3 py-1 rounded-md flex items-center gap-1 transition-colors z-10 cursor-pointer"
         >
           <MapPin className="w-3.5 h-3.5" />
           <span className="text-[11px] font-medium">Map</span>
-        </Link>
+        </button>
       </div>
 
       {/* Content Area */}
       <div className="px-4 py-3 flex flex-col flex-1">
         <p className="text-[11px] text-gray-400 font-medium mb-0.5">Explorer</p>
-        <h3 className="text-[16px] font-bold text-gray-900 leading-tight mb-1 line-clamp-2 h-10">
-          {tour.title}
-        </h3>
+        <Link href={`/${region}/tours/${slug}`}>
+          <h3 className="text-[16px] font-bold text-gray-900 leading-tight mb-1 line-clamp-2 h-10 hover:text-[#ee2229] transition-colors cursor-pointer">
+            {tour.title}
+          </h3>
+        </Link>
 
         <div className="flex items-center justify-between mb-2">
           <p className="text-[12px] text-gray-500">{tour.dates_count || 1} Dates</p>
-          <button className="text-[12px] text-gray-500 hover:text-[#ee2229] font-medium">Highlights</button>
+          <button onClick={() => setIsHighlightsOpen(true)} className="text-[12px] text-gray-500 hover:text-[#ee2229] font-medium cursor-pointer">Highlights</button>
         </div>
 
         <div className="mb-3">
@@ -121,9 +127,8 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
             View Tour
           </Link>
           <button
-            className="book-now-btn flex items-center justify-center bg-[#ee2229] border-2 border-[#ee2229] text-white hover:bg-transparent hover:text-[#ee2229] py-2.5 rounded-xl text-[12px] font-bold transition-all shadow-lg shadow-red-500/10 active:scale-95 uppercase tracking-wider"
-            data-package={tour.title}
-            data-price={price}
+            onClick={() => router.push(`/${region}/booking?tour=${tour.slug || tour.id}&price=${tour.price || 0}&savings=0`)}
+            className="flex items-center justify-center bg-[#ee2229] border-2 border-[#ee2229] text-white hover:bg-transparent hover:text-[#ee2229] py-2.5 rounded-xl text-[12px] font-bold transition-all shadow-lg shadow-red-500/10 active:scale-95 uppercase tracking-wider"
           >
             Book Online
           </button>
@@ -142,6 +147,76 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
           </div>
         )}
       </div>
+
+      {/* Map Modal */}
+      {isMapOpen && (
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 md:p-12 cursor-default">
+          <div
+            className="absolute inset-0 bg-[#0a0a1a]/95 backdrop-blur-xl cursor-pointer"
+            onClick={() => setIsMapOpen(false)}
+          />
+          <div className="relative w-full max-w-6xl aspect-square md:aspect-21/9 bg-white rounded-[40px] overflow-hidden shadow-2xl z-50">
+            <button
+              onClick={() => setIsMapOpen(false)}
+              className="absolute top-6 right-6 z-50 w-12 h-12 bg-gray-900/10 hover:bg-gray-900/20 rounded-full flex items-center justify-center cursor-pointer"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <TourMap
+              tourTitle={tour.title}
+              itinerary={tour.itinerary_data || []}
+              fullsize
+              cities={tour.cities ? tour.cities.split('▶').map((c: string) => c.trim()) : []}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Highlights Modal */}
+      {isHighlightsOpen && (
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 cursor-default">
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"
+            onClick={() => setIsHighlightsOpen(false)}
+          />
+          <div className="relative bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl z-50">
+            <button
+              onClick={() => setIsHighlightsOpen(false)}
+              className="absolute top-4 right-4 w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <h3 className="text-[18px] font-bold text-[#191974] mb-4">Tour Highlights</h3>
+            <ul className="space-y-3">
+              {tour.tags && tour.tags.length > 0 ? tour.tags.map((tag: string, i: number) => (
+                <li key={i} className="flex items-start gap-2 text-[14px] text-gray-700">
+                  <span className="w-1.5 h-1.5 bg-[#ee2229] rounded-full mt-2 shrink-0"></span>
+                  {tag}
+                </li>
+              )) : (
+                <li className="flex items-start gap-2 text-[14px] text-gray-700">
+                  <span className="w-1.5 h-1.5 bg-[#ee2229] rounded-full mt-2 shrink-0"></span>
+                  Premium Accommodations, Professional Guide, Guided Sightseeing
+                </li>
+              )}
+              <li className="flex items-start gap-2 text-[14px] text-gray-700">
+                <span className="w-1.5 h-1.5 bg-[#ee2229] rounded-full mt-2 shrink-0"></span>
+                {tour.cities_count || 4} Premium Cities Covered
+              </li>
+              <li className="flex items-start gap-2 text-[14px] text-gray-700">
+                <span className="w-1.5 h-1.5 bg-[#ee2229] rounded-full mt-2 shrink-0"></span>
+                All-Inclusive Daily Breakfast & Dinners
+              </li>
+              {tour.duration && (
+                <li className="flex items-start gap-2 text-[14px] text-gray-700">
+                  <span className="w-1.5 h-1.5 bg-[#ee2229] rounded-full mt-2 shrink-0"></span>
+                  {tour.duration} of unforgettable experiences
+                </li>
+              )}
+            </ul>
+          </div>
+        </div>
+      )}
     </motion.div>
   );
 }

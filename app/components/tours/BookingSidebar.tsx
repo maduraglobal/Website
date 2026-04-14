@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/utils/cn';
+import { formatRegionalPrice } from '@/config/country';
 
 interface BookingSidebarProps {
   price?: number;
@@ -13,9 +15,6 @@ interface BookingSidebarProps {
   travellerCount?: { adults: number; children: number; infants: number };
 }
 
-import { useBooking } from '@/app/components/BookingModal';
-import { formatRegionalPrice } from '@/config/country';
-
 export default function BookingSidebar({
   price = 45000,
   tourName,
@@ -25,22 +24,17 @@ export default function BookingSidebar({
   region = "en-in",
   travellerCount = { adults: 1, children: 0, infants: 0 }
 }: BookingSidebarProps) {
-  const { openBooking } = useBooking();
-
-  const handleEnquire = () => {
-    openBooking({
-      packageName: `Enquiry: ${tourName} (${selectedCity})`,
-      discountedPrice: '0',
-      originalPrice: '0',
-    });
-  };
+  const router = useRouter();
 
   const handleBookNow = () => {
-    openBooking({
-      packageName: `${tourName}`,
-      discountedPrice: price.toString(),
-      originalPrice: (price * 1.15).toString(),
+    const params = new URLSearchParams({
+      tour: tourName,
+      city: selectedCity,
+      date: selectedDate,
+      price: price.toString(),
+      savings: '0'
     });
+    router.push(`/${region}/booking?${params.toString()}`);
   };
 
   return (
@@ -110,7 +104,7 @@ export default function BookingSidebar({
           <div className="mb-6 py-4 border-y border-gray-50">
             <div className="flex items-center justify-center gap-2 text-[13px] text-[#191974] font-bold">
               <span className="w-8 h-8 rounded-full bg-[#191974]/5 flex items-center justify-center">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5.25V3h1.5v2.25H3zm13.125 15.625l-1.062 1.062-1.062-1.062 1.062-1.062 1.062 1.062zm-9.187 0l-1.062 1.062-1.062-1.062 1.062-1.062 1.062 1.062z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.25 18.75V21h1.5v-2.25H2.25zm19.5 0V21h-1.5v-2.25h1.5zM7.5 7.5h9v9h-9v-9zM3.75 3.75v16.5h16.5V3.75H3.75z" /></svg>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
               </span>
               1800 313 5555
               <span className="text-gray-200 mx-1">|</span>
@@ -118,17 +112,11 @@ export default function BookingSidebar({
             </div>
           </div>
 
-          {/* Dual CTAs */}
-          <div className="grid grid-cols-2 gap-3 pb-2">
-            <button
-              onClick={handleEnquire}
-              className="w-full bg-white border-2 border-[#191974] text-[#191974] font-bold py-4 rounded-xl text-[12px] tracking-widest transition-all hover:bg-gray-50 active:scale-95 uppercase"
-            >
-              Enquire Now
-            </button>
+          {/* Book Online CTA */}
+          <div className="pb-2">
             <button
               onClick={handleBookNow}
-              className="w-full bg-[#191974] border-2 border-[#191974] text-white font-bold py-4 rounded-xl text-[12px] tracking-widest transition-all hover:bg-[#ee2229] hover:border-[#ee2229] active:scale-95 uppercase shadow-xl shadow-blue-500/10"
+              className="w-full bg-[#ee2229] border-2 border-[#ee2229] text-white font-bold py-4 rounded-xl text-[14px] tracking-widest transition-all hover:bg-[#191974] hover:border-[#191974] active:scale-95 uppercase shadow-xl shadow-red-500/10"
             >
               Book Online
             </button>

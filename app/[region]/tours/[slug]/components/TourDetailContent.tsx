@@ -8,6 +8,7 @@ import DeparturePricing from '@/app/components/tours/DeparturePricing';
 import TourInclusions from '@/app/components/tours/TourInclusions';
 import UpgradesSection from '@/app/components/tours/UpgradesSection';
 import Link from 'next/link';
+import { useParams, useRouter } from 'next/navigation';
 import {
   Clock, MapPin, CheckCircle2, Star, Calendar, Users, Camera, ChevronRight,
   Plane, Check, X, Utensils, Phone, MessageCircle, Heart, Download, Mail, Share2,
@@ -40,6 +41,8 @@ import { useBooking } from '@/app/components/BookingModal';
 
 export default function TourDetailContent({ tour, itinerary, region }: TourDetailContentProps) {
   const [activeTab, setActiveTab] = useState('itinerary');
+  const [detailsSubTab, setDetailsSubTab] = useState('accommodation');
+  const [infoSubTab, setInfoSubTab] = useState('inclusions');
   const [isAdmin, setIsAdmin] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [travellerCount, setTravellerCount] = useState({ adults: 1, children: 0, infants: 0 });
@@ -49,21 +52,33 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
   const [selectedCity, setSelectedCity] = useState(cityList[0]);
   const [selectedDateId, setSelectedDateId] = useState('d1');
 
+  const handleCityChange = (city: string) => {
+    setSelectedCity(city);
+    // Automatically select the first date for the new city
+    if (mockDates[city] && mockDates[city].length > 0) {
+      setSelectedDateId(mockDates[city][0].id);
+    }
+  };
+
   const supabase = createClient();
 
+  const router = useRouter();
+
   const handleBookNow = () => {
-    openBooking({
-      packageName: tour.title,
-      discountedPrice: tour.price?.toString() || '105000',
-      originalPrice: tour.originalPrice?.toString() || '125000',
-      isDetailed: true,
+    const searchParams = new URLSearchParams({
+      tour: tour.slug || 'premium-package',
+      city: selectedCity,
+      date: `${selectedDateObject.date} ${selectedDateObject.month} ${selectedDateObject.year}`,
+      price: selectedDateObject.price.toString(),
+      savings: selectedDateObject.savings.toString()
     });
+    router.push(`/${region}/booking?${searchParams.toString()}`);
   };
 
   const handleEnquire = () => {
     openBooking({
-      packageName: `Enquiry: ${tour.title}`,
-      discountedPrice: '0',
+      packageName: `Enquiry: ${tour.title} (${selectedCity} - ${selectedDateObject.date} ${selectedDateObject.month})`,
+      discountedPrice: selectedDateObject.price.toString(),
       originalPrice: '0',
     });
   };
@@ -99,6 +114,8 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
     ]
   };
 
+  const selectedDateObject = mockDates[selectedCity]?.find((d: any) => d.id === selectedDateId) || mockDates[selectedCity]?.[0] || mockDates[cityList[0]][0];
+
   return (
     <>
       <div className="bg-white min-h-screen pb-20">
@@ -111,7 +128,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 <div className="space-y-4 pt-6">
                   <div className="flex flex-wrap items-center gap-3">
                     <span className="bg-[#ee2229] text-white text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1 uppercase">
-                      GROUP TOUR <span className="bg-white/20 px-1 rounded">ASPV</span>
+                      GROUP TOUR
                     </span>
                     <span className="text-gray-500 text-[12px] font-medium flex items-center gap-1 uppercase tracking-wider">
                       Experience
@@ -212,7 +229,12 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <div className="flex items-center gap-3 text-[14px] text-gray-700 flex-wrap">
                       <span className="px-3 py-1 bg-white rounded-lg border border-orange-200 text-orange-700 font-bold text-[12px]">Notice</span>
                       Viewing itinerary for <span className="font-bold underline decoration-dotted">04 Jun 2026 from Mumbai</span>
-                      <button className="ml-4 text-[#191974] flex items-center gap-1 font-bold bg-white px-3 py-1 rounded-full border border-gray-200 hover:bg-gray-50 shadow-sm transition-all"><MapIcon className="w-3.5 h-3.5" /> Change Departure Date</button>
+                      <button
+                        onClick={() => scrollToSection('pricing')}
+                        className="ml-4 text-[#191974] flex items-center gap-1 font-bold bg-white px-3 py-1 rounded-full border border-gray-200 hover:bg-gray-50 shadow-sm transition-all"
+                      >
+                        <Calendar className="w-3.5 h-3.5" /> Change Departure Date
+                      </button>
                     </div>
                   </div>
 
@@ -235,6 +257,80 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   </div>
                 </section>
 
+                {/* Section: Details (Image 5 Style) */}
+                <section id="details" className="pt-24 space-y-8">
+                  <div>
+                    <h2 className="text-[28px] font-bold text-gray-900">Tour details</h2>
+                    <p className="text-[14px] font-normal text-gray-400 italic mt-1">Best facilities with no added cost.</p>
+                  </div>
+
+                  {/* Sub Tabs */}
+                  <div className="grid grid-cols-3 bg-blue-50/50 rounded-xl overflow-hidden p-1 border border-blue-100">
+                    <button
+                      onClick={() => setDetailsSubTab('flight')}
+                      className={`py-3 px-4 text-[13px] font-bold rounded-lg transition-all ${detailsSubTab === 'flight' ? 'bg-[#191974] text-white shadow-md' : 'text-gray-500 hover:bg-white/50'}`}
+                    >
+                      Flight Details
+                    </button>
+                    <button
+                      onClick={() => setDetailsSubTab('accommodation')}
+                      className={`py-3 px-4 text-[13px] font-bold rounded-lg transition-all ${detailsSubTab === 'accommodation' ? 'bg-[#191974] text-white shadow-md' : 'text-gray-500 hover:bg-white/50'}`}
+                    >
+                      Accommodation Details
+                    </button>
+                    <button
+                      onClick={() => setDetailsSubTab('reporting')}
+                      className={`py-3 px-4 text-[13px] font-bold rounded-lg transition-all ${detailsSubTab === 'reporting' ? 'bg-[#191974] text-white shadow-md' : 'text-gray-500 hover:bg-white/50'}`}
+                    >
+                      Reporting & Dropping
+                    </button>
+                  </div>
+
+                  <div className="mt-8">
+                    {detailsSubTab === 'flight' && (
+                      <div className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm space-y-4">
+                        <div className="flex items-center justify-between border-b border-gray-50 pb-4">
+                          <p className="font-bold text-gray-800">Flight Route</p>
+                          <p className="font-bold text-[#191974]">Tentative Schedule</p>
+                        </div>
+                        <div className="space-y-4">
+                          <div className="flex justify-between items-center bg-gray-50 p-4 rounded-xl">
+                            <div>
+                              <p className="text-[14px] font-bold">Mumbai &rarr; Hanoi</p>
+                              <p className="text-[12px] text-gray-500">Vietjet Air | VJ896</p>
+                            </div>
+                            <div className="text-right">
+                              <p className="text-[14px] font-bold">23:30 - 06:00</p>
+                              <p className="text-[12px] text-gray-500">Direct Flight</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {detailsSubTab === 'accommodation' && (
+                      <div className="p-4 md:p-8 bg-white border border-gray-100 rounded-2xl shadow-sm">
+                        <AccommodationTable />
+                      </div>
+                    )}
+
+                    {detailsSubTab === 'reporting' && (
+                      <div className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm space-y-6">
+                        <div className="grid md:grid-cols-2 gap-8">
+                          <div className="space-y-2">
+                            <h4 className="font-bold text-[#191974]">Reporting Detail</h4>
+                            <p className="text-[14px] text-gray-600">Reporting at Mumbai International Airport at 20:30 Hrs on Day 1.</p>
+                          </div>
+                          <div className="space-y-2">
+                            <h4 className="font-bold text-[#191974]">Dropping Detail</h4>
+                            <p className="text-[14px] text-gray-600">Arriving at Mumbai International Airport at 22:30 Hrs on the last day.</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </section>
+
                 {/* Section: Information (Image 5 Style) */}
                 <section id="info" className="pt-24 space-y-12">
                   <div>
@@ -242,47 +338,79 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <p className="text-[14px] font-normal text-gray-400 italic mt-1">Read this to prepare for your tour in the best way!</p>
                   </div>
 
-                  {/* 1. Tour Inclusions */}
-                  <div className="space-y-4">
-                    <h3 className="text-[20px] font-bold text-[#191974] flex items-center gap-2">
-                      <CheckCircle2 className="w-5 h-5 text-[#191974]" /> Tour Inclusions
-                    </h3>
-                    <div className="border border-green-100 rounded-2xl overflow-hidden shadow-sm bg-white">
-                      <TourInclusions />
-                    </div>
+                  {/* Sub Tabs */}
+                  <div className="grid grid-cols-3 bg-blue-50/50 rounded-xl overflow-hidden p-1 border border-blue-100">
+                    <button
+                      onClick={() => setInfoSubTab('inclusions')}
+                      className={`py-3 px-4 text-[13px] font-bold rounded-lg transition-all ${infoSubTab === 'inclusions' ? 'bg-[#191974] text-white shadow-md' : 'text-gray-500 hover:bg-white/50'}`}
+                    >
+                      Tour Inclusions
+                    </button>
+                    <button
+                      onClick={() => setInfoSubTab('exclusions')}
+                      className={`py-3 px-4 text-[13px] font-bold rounded-lg transition-all ${infoSubTab === 'exclusions' ? 'bg-[#191974] text-white shadow-md' : 'text-gray-500 hover:bg-white/50'}`}
+                    >
+                      Tour Exclusions
+                    </button>
+                    <button
+                      onClick={() => setInfoSubTab('preparation')}
+                      className={`py-3 px-4 text-[13px] font-bold rounded-lg transition-all ${infoSubTab === 'preparation' ? 'bg-[#191974] text-white shadow-md' : 'text-gray-500 hover:bg-white/50'}`}
+                    >
+                      Advance Preparation
+                    </button>
                   </div>
 
-                  {/* 2. Tour Exclusions */}
-                  <div className="space-y-4">
-                    <h3 className="text-[20px] font-bold text-[#ee2229] flex items-center gap-2">
-                      <X className="w-5 h-5 text-[ee2229]" /> Tour Exclusions
-                    </h3>
-                    <div className="border border-red-100 rounded-2xl overflow-hidden shadow-sm bg-red-50/20 p-6 md:p-8">
-                      <ul className="text-[14px] text-gray-700 space-y-3">
-                        <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Anything not mentioned in the inclusions</li>
-                        <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Any personal expenses, tips, porterage etc.</li>
-                        <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Excess baggage charges</li>
-                        <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Optional tours and sightseeing</li>
-                        <li className="flex gap-3"><span className="text-red-500 font-bold mt-0.5">✕</span> Travel Insurance (unless specified)</li>
-                      </ul>
-                    </div>
-                  </div>
+                  <div className="mt-8">
+                    {infoSubTab === 'inclusions' && (
+                      <div className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm">
+                        <ul className="space-y-4">
+                          {[
+                            "To and fro economy class air travel for 'Mumbai to Mumbai Tour' guests as mentioned in the itinerary",
+                            "Airfare and Airport taxes",
+                            "Baggage Allowance as per the airline policy",
+                            "Tour Manager Services throughout the tour",
+                            "Accommodation in premium hotels on twin sharing basis",
+                            "All meals as per the itinerary (Breakfast, Lunch, Dinner)"
+                          ].map((item, i) => (
+                            <li key={i} className="flex items-start gap-4 text-[14px] text-gray-700 font-medium group">
+                              <Check className="w-5 h-5 text-[#191974] shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
 
-                  {/* 3. Advance Preparation */}
-                  <div className="space-y-4">
-                    <h3 className="text-[20px] font-bold text-orange-700 flex items-center gap-2">
-                      <AlertCircle className="w-5 h-5 text-orange-600" /> Advance Preparation
-                    </h3>
-                    <div className="border border-white rounded-2xl overflow-hidden shadow-sm bg-orange-50/20 p-6 md:p-8 space-y-4">
-                      <p className="text-[14px] text-gray-700 leading-relaxed font-bold">Please pack comfortably and according to the weather updates in the Need to Know section.</p>
-                      <ul className="text-[14px] text-gray-600 space-y-2 list-disc pl-5">
-                        <li>Carry universal adapters for charging electronic devices.</li>
-                        <li>Always keep a digital copy of your Passport and Visa on your phone.</li>
-                        <li>Bring any required personal medication as local equivalents might be difficult to find.</li>
-                      </ul>
-                    </div>
-                  </div>
+                    {infoSubTab === 'exclusions' && (
+                      <div className="p-8 bg-white border border-red-50 rounded-2xl shadow-sm">
+                        <ul className="space-y-4">
+                          {[
+                            "Anything not mentioned in the inclusions",
+                            "Any personal expenses, tips, porterage etc.",
+                            "Excess baggage charges",
+                            "Optional tours and sightseeing",
+                            "Travel Insurance (unless specified)"
+                          ].map((item, i) => (
+                            <li key={i} className="flex items-start gap-4 text-[14px] text-gray-700 font-medium group">
+                              <X className="w-5 h-5 text-[#ee2229] shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
 
+                    {infoSubTab === 'preparation' && (
+                      <div className="p-8 bg-white border border-orange-50 rounded-2xl shadow-sm space-y-6">
+                        <p className="text-[14px] text-gray-700 leading-relaxed font-bold">Please pack comfortably and according to the weather updates in the Need to Know section.</p>
+                        <ul className="text-[14px] text-gray-600 space-y-4 list-disc pl-5">
+                          <li>Carry universal adapters for charging electronic devices.</li>
+                          <li>Always keep a digital copy of your Passport and Visa on your phone.</li>
+                          <li>Bring any required personal medication as local equivalents might be difficult to find.</li>
+                        </ul>
+                      </div>
+                    )}
+                  </div>
                 </section>
 
                 {/* Section: Need to Know */}
@@ -363,7 +491,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     dates={mockDates}
                     selectedCity={selectedCity}
                     selectedDateId={selectedDateId}
-                    onCityChange={setSelectedCity}
+                    onCityChange={handleCityChange}
                     onDateChange={setSelectedDateId}
                     region={region}
                   />
@@ -376,7 +504,10 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <div>
                       <p className="text-[14px] text-[#191974] font-bold">Mumbai departure, 04 Jun 2026.</p>
                     </div>
-                    <button className="flex items-center gap-2 text-[13px] font-bold text-gray-700 border border-gray-200 bg-white px-4 py-2 rounded-full hover:border-[#191974] transition-all">
+                    <button
+                      onClick={() => scrollToSection('pricing')}
+                      className="flex items-center gap-2 text-[13px] font-bold text-gray-700 border border-gray-200 bg-white px-4 py-2 rounded-full hover:border-[#191974] transition-all"
+                    >
                       <Calendar className="w-4 h-4" /> Change Departure Date
                     </button>
                   </div>
@@ -427,10 +558,12 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 <div className="p-6 space-y-6">
                   <div className="grid grid-cols-2 gap-y-6">
                     <p className="text-[13px] text-gray-500 font-medium">Dept. city</p>
-                    <p className="text-[13px] text-gray-300 font-medium">Mumbai</p>
+                    <p className="text-[13px] text-[#191974] font-bold">{selectedCity}</p>
 
                     <p className="text-[13px] text-gray-500 font-medium">Dept. date</p>
-                    <p className="text-[13px] text-[#191974] font-bold">23 Jun 2026 &rarr; 28 Jun 2026</p>
+                    <p className="text-[13px] text-[#191974] font-bold">
+                      {selectedDateObject.date} {selectedDateObject.month} {selectedDateObject.year}
+                    </p>
 
                     <p className="text-[13px] text-gray-500 font-medium">Travellers</p>
                     <p className="text-[13px] text-[#191974] font-bold">
@@ -455,7 +588,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                         </button>
                       </div>
                       <p className="text-[26px] font-bold text-[#191974]">
-                        {formatRegionalPrice(tour.price || 105000, region)}
+                        {formatRegionalPrice(selectedDateObject.price, region)}
                       </p>
                     </div>
 
@@ -467,7 +600,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                         </button>
                       </div>
                       <p className="text-[18px] font-bold text-[#191974]">
-                        {formatRegionalPrice(Math.round((tour.price || 105000) / 12), region)}<span className="text-[12px] font-normal text-gray-400">/month</span>
+                        {formatRegionalPrice(Math.round(selectedDateObject.price / 12), region)}<span className="text-[12px] font-normal text-gray-400">/month</span>
                       </p>
                     </div>
                   </div>
@@ -481,15 +614,12 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   </div>
                 </div>
 
-                <div className="bg-[#191974] p-4 flex gap-3">
-                  <button className="flex-1 bg-white text-[#191974] py-3 rounded-lg font-bold text-[13px] hover:bg-gray-50 transition-all">
-                    Enquire Now
-                  </button>
+                <div className="bg-[#191974] p-5 flex justify-center">
                   <button
                     onClick={handleBookNow}
-                    className="flex-1 bg-white text-[#191974] py-3 rounded-lg font-bold text-[13px] hover:bg-[#ee2229] transition-all"
+                    className="w-full bg-white text-[#191974] py-4 rounded-xl font-bold text-[15px] hover:bg-[#ee2229] hover:text-white transition-all shadow-lg active:scale-95"
                   >
-                    Book Online
+                    Book Online Now
                   </button>
                 </div>
               </div>
@@ -578,7 +708,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     </div>
                   </div>
 
-                  <button className="w-full bg-[#ee2229] text-[#191974] py-4 rounded-xl font-bold text-[15px] hover:bg-[#ee2229] transition-all shadow-lg  active:scale-95 flex items-center justify-center gap-2">
+                  <button className="w-full bg-[#ee2229] text-white py-4 rounded-xl font-bold text-[15px] hover:bg-[#ee2229] transition-all shadow-lg  active:scale-95 flex items-center justify-center gap-2">
                     <Phone className="w-5 h-5" />
                     Request Call Back
                   </button>
@@ -594,13 +724,14 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
               className="absolute inset-0 bg-[#0a0a1a]/95 backdrop-blur-xl"
               onClick={() => setIsMapOpen(false)}
             />
+            {/* Close Button Outside */}
+            <button
+              onClick={() => setIsMapOpen(false)}
+              className="absolute top-8 right-8 z-110 w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center cursor-pointer transition-all border border-white/20"
+            >
+              <X className="w-6 h-6" />
+            </button>
             <div className="relative w-full max-w-6xl aspect-square md:aspect-21/9 bg-white rounded-[40px] overflow-hidden shadow-2xl">
-              <button
-                onClick={() => setIsMapOpen(false)}
-                className="absolute top-6 right-6 z-50 w-12 h-12 bg-gray-900/10 hover:bg-gray-900/20 rounded-full flex items-center justify-center"
-              >
-                <X className="w-6 h-6" />
-              </button>
               <TourMap tourTitle={tour.title} itinerary={itinerary} fullsize cities={tour.cities?.split('▶').map((c: string) => c.trim())} />
             </div>
           </div>

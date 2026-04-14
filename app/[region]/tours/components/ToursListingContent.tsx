@@ -7,6 +7,8 @@ import { SlidersHorizontal } from 'lucide-react';
 import { formatRegionalPrice } from '@/config/country';
 import FiltersSidebar, { TourFilters } from '@/app/components/tours/FiltersSidebar';
 import FallbackImage from '@/app/components/FallbackImage';
+import VerticalTourCard from '@/app/components/tours/VerticalTourCard';
+import TourCard from '@/app/components/tours/TourCard';
 
 interface Tour {
   id: string;
@@ -24,14 +26,20 @@ interface Tour {
 interface ToursListingContentProps {
   initialTours: Tour[];
   region: string;
+  layout?: 'grid' | 'list';
+  title?: string;
+  defaultDestination?: string;
 }
 
-export default function ToursListingContent({ initialTours, region }: ToursListingContentProps) {
+export default function ToursListingContent({ initialTours, region, layout = 'grid', title, defaultDestination }: ToursListingContentProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const [filters, setFilters] = useState<TourFilters>({
     search: searchParams.get('search') || '',
+    category: 'World',
+    priceRange: [],
+    countries: defaultDestination ? [defaultDestination] : (searchParams.get('search') ? [searchParams.get('search')!] : []),
     duration: [],
     specialty: [],
     month: searchParams.get('month') || ''
@@ -47,10 +55,24 @@ export default function ToursListingContent({ initialTours, region }: ToursListi
       setFilters(prev => ({
         ...prev,
         search: urlSearch,
-        month: urlMonth
+        month: urlMonth,
+        countries: urlSearch ? [urlSearch] : prev.countries
       }));
     }
   }, [searchParams]);
+
+  const indianStates = [
+    "Andaman", "Assam", "Arunachal Pradesh", "Gujarat", "Himachal Pradesh", "Karnataka", "Kashmir", "Kerala", "Maharashtra", "Madhya Pradesh", "Orissa", "Rajasthan", "Tamil Nadu", "Telangana", "Goa", "Sikkim", "Uttar Pradesh", "Uttarakhand", "West Bengal"
+  ];
+
+  const availableCountries = useMemo(() => {
+    const counts: Record<string, number> = {};
+    initialTours.forEach(tour => {
+      const dest = tour.destination || 'Other';
+      counts[dest] = (counts[dest] || 0) + 1;
+    });
+    return Object.entries(counts).map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
+  }, [initialTours]);
 
   // Extract unique specialties from all tours
   const availableSpecialties = useMemo(() => {
@@ -74,15 +96,39 @@ export default function ToursListingContent({ initialTours, region }: ToursListi
 
   const filteredTours = useMemo(() => {
     return initialTours.filter(tour => {
-      // 1. Search Filter
+      // 1. Category Filter (India vs World)
+      const isIndia = indianStates.some(state => tour.destination?.includes(state));
+      if (filters.category === 'India' && !isIndia) return false;
+      if (filters.category === 'World' && isIndia) return false;
+
+      // 2. Search Filter
       if (filters.search) {
         const query = filters.search.toLowerCase();
         const matchesTitle = tour.title.toLowerCase().includes(query);
         const matchesTags = tour.tags?.some(tag => tag.toLowerCase().includes(query));
-        if (!matchesTitle && !matchesTags) return false;
+        const matchesDest = tour.destination?.toLowerCase().includes(query);
+        if (!matchesTitle && !matchesTags && !matchesDest) return false;
       }
 
-      // 2. Duration Filter
+      // 3. Price Range Filter
+      if (filters.priceRange.length > 0) {
+        const matchesPrice = filters.priceRange.some(range => {
+          const price = tour.price;
+          if (range === '49k-1.5l') return price >= 49000 && price <= 150000;
+          if (range === '1.5l-2.6l') return price > 150000 && price <= 260000;
+          if (range === '2.6l-3.7l') return price > 260000 && price <= 370000;
+          if (range === '3.7l-above') return price > 370000;
+          return false;
+        });
+        if (!matchesPrice) return false;
+      }
+
+      // 4. Countries Filter
+      if (filters.countries.length > 0) {
+        if (!filters.countries.includes(tour.destination)) return false;
+      }
+
+      // 5. Duration Filter
       if (filters.duration.length > 0) {
         const days = parseDays(tour.duration);
         const matchesDuration = filters.duration.some(range => {
@@ -94,16 +140,6 @@ export default function ToursListingContent({ initialTours, region }: ToursListi
         });
         if (!matchesDuration) return false;
       }
-
-      // 3. Specialty (Tags) Filter - Match any selected
-      if (filters.specialty.length > 0) {
-        const matchesSpecialty = filters.specialty.some(s => tour.tags?.includes(s));
-        if (!matchesSpecialty) return false;
-      }
-
-      // 4. Month Filter (Mock logic - in real app, tours would have specific departure dates)
-      // Since our tours don't have month data yet, we'll allow all if month is selected
-      // but in a real scenario we'd check tour.departure_dates
 
       return true;
     }).sort((a, b) => {
@@ -121,7 +157,7 @@ export default function ToursListingContent({ initialTours, region }: ToursListi
         <FiltersSidebar
           filters={filters}
           onFilterChange={setFilters}
-          availableSpecialties={availableSpecialties}
+          availableCountries={availableCountries}
         />
       </aside>
 
@@ -131,7 +167,7 @@ export default function ToursListingContent({ initialTours, region }: ToursListi
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
           <div>
             <h2 className="text-[20px]  text-[#191974] tracking-tight ">
-              {filteredTours.length} {filteredTours.length === 1 ? 'Package' : 'Packages'} Found
+              {title || `${filteredTours.length} ${filteredTours.length === 1 ? 'Package' : 'Packages'} Found`}
             </h2>
             {filters.search && (
               <p className="text-[13px] text-gray-400 font-medium">Showing results for &quot;{filters.search}&quot;</p>
@@ -155,57 +191,16 @@ export default function ToursListingContent({ initialTours, region }: ToursListi
 
         {/* Results Grid */}
         {filteredTours.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className={layout === 'grid' 
+            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+            : "flex flex-col space-y-6"
+          }>
             {filteredTours.map((tour) => (
-              <div key={tour.id} className="bg-white border border-gray-100 rounded-[24px] overflow-hidden shadow-sm flex flex-col group transition-all hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] hover:-translate-y-1">
-                <Link href={`/${region}/tours/${tour.slug}`} className="relative h-56 overflow-hidden block">
-                  <FallbackImage
-                    src={tour.images[0]}
-                    fallbackSrc="/images/img-8.jpg"
-                    alt={tour.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="absolute bottom-4 left-4 flex gap-2">
-                    <span className="bg-white/90 backdrop-blur-md text-[#191974] text-[10px]  px-3 py-1.5 rounded-full shadow-sm uppercase tracking-widest border border-white/20">
-                      {tour.duration}
-                    </span>
-                  </div>
-                </Link>
-
-                <div className="p-6 flex flex-col flex-1">
-                  <div className="flex flex-wrap gap-1.5 mb-3">
-                    {(tour.tags || ['Premium']).slice(0, 2).map(tag => (
-                      <span key={tag} className="text-[9px]  text-[#ee2229] uppercase tracking-[0.15em] bg-red-50 px-2 py-0.5 rounded-sm">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <Link href={`/${region}/tours/${tour.slug}`}>
-                    <h3 className="text-[16px]  text-[#191974] mb-4 leading-tight line-clamp-2 h-[40px] hover:text-[#ee2229] transition-colors ">
-                      {tour.title}
-                    </h3>
-                  </Link>
-
-                  <div className="mt-auto pt-4 border-t border-gray-50">
-                    <div className="flex items-end justify-between">
-                      <div className="flex flex-col">
-                        <span className="text-[9px] text-gray-400  uppercase tracking-widest mb-1">Starting from</span>
-                        <span className="text-[20px]  text-[#191974] tracking-tighter leading-none">
-                          {formatRegionalPrice(tour.price, region)}
-                        </span>
-                      </div>
-                      <Link
-                        href={`/${region}/tours/${tour.slug}`}
-                        className="bg-[#191974] hover:bg-[#ee2229] text-white px-5 py-2.5 rounded-xl text-[11px]  uppercase tracking-widest transition-all shadow-lg shadow-blue-900/10 active:scale-95"
-                      >
-                        Details
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              layout === 'grid' ? (
+                <VerticalTourCard key={tour.id} tour={tour} region={region} />
+              ) : (
+                <TourCard key={tour.id} tour={tour} region={region} destinationSlug={tour.destination} />
+              )
             ))}
           </div>
         ) : (
@@ -217,7 +212,7 @@ export default function ToursListingContent({ initialTours, region }: ToursListi
             <h3 className="text-[18px]  text-[#191974] mb-2 tracking-tight">No tours match your filters</h3>
             <p className="text-gray-400 text-[14px] mb-8 max-w-xs mx-auto">Try adjusting your selection or search criteria to find what you&apos;re looking for.</p>
             <button
-              onClick={() => setFilters({ search: '', duration: [], specialty: [], month: '' })}
+              onClick={() => setFilters({ search: '', category: 'World', priceRange: [], countries: [], duration: [], specialty: [], month: '' })}
               className="bg-[#ee2229] hover:bg-[#191974] text-white px-8 py-3 rounded-full text-[12px]  uppercase tracking-widest transition-all shadow-xl shadow-red-500/20 active:scale-95 text-center"
             >
               Reset All Filters

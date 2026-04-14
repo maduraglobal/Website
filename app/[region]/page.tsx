@@ -93,10 +93,21 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
   const [activeHero, setActiveHero] = useState(0);
   const [activeOffer, setActiveOffer] = useState(0);
   const [searchTo, setSearchTo] = useState("");
+  const [departFrom, setDepartFrom] = useState("");
+  const [isDepartOpen, setIsDepartOpen] = useState(false);
+  const [isGoingOpen, setIsGoingOpen] = useState(false);
   const [searchMonth, setSearchMonth] = useState("");
   
   const destScrollRef = useRef<HTMLDivElement>(null);
 
+  const allPlaces = [
+    "Chennai", "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Kochi", "Kolkata", "Ahmedabad", "Pune", "Trivandrum", "Coimbatore", "Trichy", "Madurai",
+    "Andaman", "Assam", "Arunachal Pradesh", "Gujarat", "Himachal Pradesh", "Karnataka", "Kashmir", "Kerala", "Maharashtra", "Madhya Pradesh", "Orissa", "Rajasthan", "Tamil Nadu", "Telangana", "Goa", "Sikkim", "Uttar Pradesh", "Uttarakhand", "West Bengal",
+    "Japan", "Dubai", "Singapore", "Malaysia", "Thailand", "Mainland Europe", "Australia", "New Zealand", "USA", "Vietnam", "Bali", "Sri Lanka", "Maldives", "Mauritius", "Fiji", "China", "South Korea", "Taiwan", "Hong Kong", "Greece", "Bulgaria", "Czech Republic", "Hungary", "Russia", "Croatia", "Jordan", "Kuwait", "Oman", "Qatar", "Saudi Arabia", "Turkey", "Bhutan", "Nepal", "Cambodia", "Indonesia", "Philippines", "Egypt", "Kenya", "Madagascar", "Morocco", "Namibia", "Seychelles", "South Africa", "Canada", "Mexico", "Kazakhstan", "Uzbekistan", "Azerbaijan"
+  ].sort();
+
+  const filteredDepart = allPlaces.filter(c => c.toLowerCase().includes(departFrom.toLowerCase()));
+  const filteredGoing = allPlaces.filter(c => c.toLowerCase().includes(searchTo.toLowerCase()));
   const scrollDest = (direction: 'left' | 'right') => {
     if (destScrollRef.current) {
       const scrollAmount = 400;
@@ -148,6 +159,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
     let url = `/${region}/tours`;
     const searchParamsObj = new URLSearchParams();
     if (searchTo) searchParamsObj.append('search', searchTo);
+    if (departFrom) searchParamsObj.append('depart', departFrom);
     if (searchMonth) searchParamsObj.append('month', searchMonth);
     const query = searchParamsObj.toString();
     if (query) url += `?${query}`;
@@ -185,32 +197,82 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
       <div className="w-full relative z-30 -mt-10 md:-mt-14">
         <div className="max-w-6xl mx-auto w-full px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center border border-gray-200 rounded-2xl md:rounded-full bg-white shadow-2xl py-2 px-3 transition-shadow hover:shadow-[0_25px_60px_rgba(0,0,0,0.15)]">
-            <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer">
+            <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group relative">
               <label className="text-[14px]  tracking-widest text-[#ee2229] mb-0.5 ">Depart From</label>
-              <div className="flex items-center justify-between w-full">
+              <div className="flex items-center justify-between w-full relative">
                 <input
                   suppressHydrationWarning
                   type="text"
+                  value={departFrom}
+                  onFocus={() => setIsDepartOpen(true)}
+                  onBlur={() => setTimeout(() => setIsDepartOpen(false), 200)}
+                  onChange={(e) => { setDepartFrom(e.target.value); setIsDepartOpen(true); }}
                   placeholder="Where From?"
                   className="w-full text-[14px] font-bold text-gray-900 outline-none bg-transparent placeholder-gray-400"
                 />
                 <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </div>
+              
+              {isDepartOpen && (
+                <div className="absolute top-[48px] left-4 right-4 bg-white shadow-2xl rounded-xl z-50 border border-gray-100 overflow-hidden max-h-60 overflow-y-auto [&::-webkit-scrollbar]:hidden">
+                  <div className="px-4 py-2 border-b border-gray-50">
+                    <p className="text-[10px] text-gray-400 tracking-widest uppercase">Popular Hubs</p>
+                  </div>
+                  {filteredDepart.length > 0 ? (
+                    filteredDepart.map((city, idx) => (
+                      <div
+                        key={idx}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => { setDepartFrom(city); setIsDepartOpen(false); }}
+                        className="px-4 py-2.5 cursor-pointer hover:bg-gray-50 text-[13px] text-gray-900 font-bold transition-colors"
+                      >
+                        {city}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="px-4 py-3 text-gray-400 text-[13px]">No results</div>
+                  )}
+                </div>
+              )}
             </div>
 
-            <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer">
+            <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group relative">
               <label className="text-[14px]  tracking-widest text-[#ee2229] mb-0.5 ">Going To</label>
-              <div className="flex items-center justify-between w-full">
+              <div className="flex items-center justify-between w-full relative">
                 <input
                   suppressHydrationWarning
                   type="text"
                   value={searchTo}
-                  onChange={(e) => setSearchTo(e.target.value)}
+                  onFocus={() => setIsGoingOpen(true)}
+                  onBlur={() => setTimeout(() => setIsGoingOpen(false), 200)}
+                  onChange={(e) => { setSearchTo(e.target.value); setIsGoingOpen(true); }}
                   placeholder="Where to?"
                   className="w-full text-[14px] font-bold text-gray-900 outline-none bg-transparent placeholder-gray-400"
                 />
                 <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </div>
+              
+              {isGoingOpen && (
+                <div className="absolute top-[48px] left-4 right-4 bg-white shadow-2xl rounded-xl z-50 border border-gray-100 overflow-hidden max-h-60 overflow-y-auto [&::-webkit-scrollbar]:hidden">
+                  <div className="px-4 py-2 border-b border-gray-50">
+                    <p className="text-[10px] text-gray-400 tracking-widest uppercase">Top Destinations</p>
+                  </div>
+                  {filteredGoing.length > 0 ? (
+                    filteredGoing.map((dest, idx) => (
+                      <div
+                        key={idx}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => { setSearchTo(dest); setIsGoingOpen(false); }}
+                        className="px-4 py-2.5 cursor-pointer hover:bg-gray-50 text-[13px] text-gray-900 font-bold transition-colors"
+                      >
+                        {dest}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="px-4 py-3 text-gray-400 text-[13px]">No results</div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group cursor-pointer relative">
@@ -377,7 +439,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               <div className="flex items-start gap-4 mb-4">
                 <div className="w-1.5 h-12 bg-[#ee2229] rounded-full" />
                 <div>
-                  <p className="text-xs  tracking-[0.3em] uppercae opacity-70 mb-1">Featured Offer</p>
+                  <p className="text-xs  tracking-[0.3em] uppercase opacity-70 mb-1">Featured Offer</p>
                   <p className="text-xl lg:text-xl tracking-tight">{offerSlides[activeOffer].title}</p>
                 </div>
               </div>
@@ -399,15 +461,12 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                 >
                   VIEW DETAILS
                 </Link>
-                <button
-                  suppressHydrationWarning
-                  className="book-now-btn bg-[#ee2229] border border-[#ee2229] hover:bg-transparent text-white px-10 py-3.5 rounded-lg text-xs tracking-[0.2em] transition-all transform active:scale-95 shadow-xl shadow-red-500/30 font-bold"
-                  data-package={offerSlides[activeOffer].title}
-                  data-price={offerSlides[activeOffer].priceInr}
-                  data-original-price={offerSlides[activeOffer].joiningPriceInr}
+                <Link
+                  href={`/${region}/booking?tour=${offerSlides[activeOffer].title.toLowerCase().replace(/ /g, '-')}&price=${offerSlides[activeOffer].priceInr}&savings=0`}
+                  className="bg-[#ee2229] border border-[#ee2229] hover:bg-transparent text-white px-10 py-3.5 rounded-lg text-xs tracking-[0.2em] transition-all transform active:scale-95 shadow-xl shadow-red-500/30 font-bold text-center"
                 >
                   BOOK NOW
-                </button>
+                </Link>
               </div>
             </div>
 

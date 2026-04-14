@@ -7,6 +7,7 @@ import AccommodationTable from '@/app/components/tours/AccommodationTable';
 import DeparturePricing from '@/app/components/tours/DeparturePricing';
 import TourInclusions from '@/app/components/tours/TourInclusions';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   Clock, MapPin, CheckCircle2, Star, Calendar, Users, Camera, ChevronRight,
   Plane, Check, X, Utensils, Phone, MessageCircle, Heart, Download, Mail, Share2,
@@ -36,6 +37,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
   const [activeTab, setActiveTab] = useState('itinerary');
   const [isBookingMode, setIsBookingMode] = useState(false);
   const [travellerCount, setTravellerCount] = useState({ adults: 1, children: 0, infants: 0 });
+  const router = useRouter();
 
   const scrollToSection = (id: string) => {
     if (isBookingMode) setIsBookingMode(false);
@@ -270,7 +272,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     Enquire Now
                   </button>
                   <button
-                    onClick={() => setIsBookingMode(true)}
+                    onClick={() => router.push(`/${region}/booking?tour=${tour.slug || tour.id}&price=${tour.price || 0}&savings=0`)}
                     className="w-full bg-[#191974] text-white py-4 rounded-xl font-bold text-[14px] hover:bg-[#ffbb00] transition-all shadow-lg shadow-yellow-500/10 active:scale-95"
                   >
                     Book Online Instantly

@@ -64,14 +64,12 @@ export default function InboundPage({ params }: { params: Promise<{ region: stri
             <p className="text-[20px] md:text-[24px]  max-w-2xl mx-auto mb-10 text-white/90">
               Curated inbound travel experiences for international travelers. Heritage, Luxury, and Spirituality await you.
             </p>
-            <button
-              className="book-now-btn bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white px-12 py-5 rounded-xl   tracking-widest transition-all shadow-2xl"
-              data-package="Soul of India - Heritage Tour"
-              data-price="1,49,999"
-              data-original-price="1,89,999"
+            <a
+              href={`/${region}/tours`}
+              className="bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white px-12 py-5 rounded-xl tracking-widest transition-all shadow-2xl inline-block"
             >
               Explore Tours
-            </button>
+            </a>
           </motion.div>
         </div>
       </section>

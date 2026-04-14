@@ -55,5 +55,21 @@ export async function getDestinationBySlug(slug: string): Promise<Destination | 
  * Server-side should use crm-server.ts.
  */
 export async function getItineraryByTourId(tourId: string): Promise<any[]> {
-  return [];
+  if (typeof window === 'undefined') return [];
+
+  try {
+    const res = await fetch(`/api/tours/itinerary?tour_id=${tourId}`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return (data.days || []).map((d: any) => ({
+      day: d.day,
+      title: d.title || `Day ${d.day}`,
+      description: d.description || '',
+      activities: d.activities || [],
+      meals: d.meals || '',
+    }));
+  } catch (err) {
+    console.error('getItineraryByTourId error:', err);
+    return [];
+  }
 }

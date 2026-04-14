@@ -69,6 +69,7 @@ export async function GET(request: Request) {
         rating: t.rating ?? null,
         duration_days: t.duration_days ?? null,
         cities_count: t.cities_count ?? t.stops ?? null,
+        cities: t.cities ?? null,
         // Pass through raw fields for TourCard to use
         base_price_inr: price,
         image_url: imageUrl,
