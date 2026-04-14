@@ -46,7 +46,7 @@ const VisaCard: React.FC<VisaCardProps> = ({ dest, region, index }) => {
           />
           {/* Subtle Dynamic Overlay */}
           <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"></div>
-          
+
           {/* Smaller Visa Type Badge */}
           <div className="absolute top-4 right-4 z-10">
             <div className="bg-white/10 backdrop-blur-md border border-white/20 text-white text-[8px] font-bold tracking-[0.15em] px-2.5 py-1 rounded-full uppercase">
@@ -86,7 +86,7 @@ const VisaCard: React.FC<VisaCardProps> = ({ dest, region, index }) => {
             </div>
           </div>
 
-          <div className="w-full bg-[#191974] group-hover:bg-[#ee2229] text-white py-2.5 rounded-lg text-center text-[10px] font-bold tracking-[0.15em] transition-all shadow-md active:scale-95 uppercase">
+          <div className="w-full bg-[#191974] group-hover:bg-[#ee2229] text-white py-2.5 rounded-lg text-center text-[10px] font-bold  transition-all shadow-md active:scale-95 uppercase">
             Get Started
           </div>
         </div>

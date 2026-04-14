@@ -353,7 +353,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             <h2 className="text-[26px] font-bold text-[#191974]">Why Trust Madura Travel?</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
-                { title: "20+ Years Experience", desc: "Successfully processed over 5 lakh visas with a specialized focus on tourist and business travel.", icon: Star },
+                { title: "40+ Years Experience", desc: "Successfully processed over 5 lakh visas with a specialized focus on tourist and business travel.", icon: Star },
                 { title: "Real-time Support", desc: "Dedicated visa experts available from 9 AM to 9 PM to answer all your queries.", icon: MessageCircle },
                 { title: "Authorized Agent", desc: "Official partner for major consulates, ensuring faster processing and better transparency.", icon: Building2 },
                 { title: "Highest Success Rate", desc: "Maintaining a consistent 99.2% approval rate through rigorous document vetting.", icon: CheckCircle2 }
@@ -558,7 +558,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                   <ul className="space-y-3">
                     {["QR Code Verification", "Official Consulate Seal", "Embedded Security Features", "Digital/Sticker Format"].map((item, i) => (
                       <li key={i} className="flex items-center gap-2 text-[13px] font-bold text-gray-700">
-                        <CheckCircle2 className="w-4 h-4 text-green-500" /> {item}
+                        <CheckCircle2 className="w-4 h-4 text-[#191974]" /> {item}
                       </li>
                     ))}
                   </ul>

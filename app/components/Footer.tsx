@@ -60,7 +60,11 @@ export default function Footer() {
         {/* === TOP SECTION: BRAND STORY === */}
         <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16">
           <div className="lg:w-2/3 space-y-8">
-            <Link href={`/${currentRegion}`} className="inline-block">
+            <Link 
+              href={`/${currentRegion}`} 
+              className="inline-block"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
               <Image
                 src="/Footer-logo.png"
                 alt="Madura Travel logo"

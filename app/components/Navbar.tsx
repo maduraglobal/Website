@@ -132,7 +132,11 @@ export default function Navbar() {
         <div className="bg-white text-[#191974] px-4 lg:px-8 py-3 flex items-center justify-between">
 
           {/* Logo */}
-          <Link href={`/${currentRegionCode}`} className="flex items-center shrink-0">
+          <Link 
+            href={`/${currentRegionCode}`} 
+            className="flex items-center shrink-0"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          >
             <Image
               src="/logo.webp"
               alt="Madura Travel Logo"
@@ -389,7 +393,13 @@ export default function Navbar() {
 
           {/* Sidebar Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-[#191974] shrink-0">
-            <Link href={`/${currentRegionCode}`} onClick={() => setSidebarOpen(false)}>
+            <Link 
+              href={`/${currentRegionCode}`} 
+              onClick={() => {
+                setSidebarOpen(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            >
               <Image src="/logo.webp" alt="Madura Travel" width={120} height={38} className="object-contain brightness-0 invert" />
             </Link>
             <button
