@@ -60,8 +60,8 @@ export default function Footer() {
         {/* === TOP SECTION: BRAND STORY === */}
         <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16">
           <div className="lg:w-2/3 space-y-8">
-            <Link 
-              href={`/${currentRegion}`} 
+            <Link
+              href={`/${currentRegion}`}
               className="inline-block"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             >
@@ -86,9 +86,9 @@ export default function Footer() {
             <h4 className="text-[18px] font-bold">Follow to stay updated</h4>
             <div className="flex gap-4">
               {[
-                { icon: Instagram, href: "#" },
-                { icon: Facebook, href: "#" },
-                { icon: Linkedin, href: "#" }
+                { icon: Instagram, href: "https://www.instagram.com/madura_travel_service/" },
+                { icon: Facebook, href: "https://www.facebook.com/maduratravel/" },
+                { icon: Linkedin, href: "https://www.linkedin.com/company/madura-travel-service-p-ltd/" }
               ].map((social, i) => (
                 <a
                   key={i}
