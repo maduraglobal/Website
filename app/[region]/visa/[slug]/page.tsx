@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
   CheckCircle2, ChevronRight, ChevronDown, ChevronUp, Star, Phone, MessageCircle, Clock,
   MapPin, ShieldCheck, FileText, Globe, Building2, Check, ExternalLink, ChevronLeft, Users,
-  Sparkles, Calendar, Zap, Plus
+  Sparkles, Calendar, Zap, Plus, Mail
 } from 'lucide-react';
 
 // Helpers
@@ -567,22 +567,92 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           </div>
 
           {/* Madura Protect Banner */}
-          <div className="bg-[#191974] rounded-[24px] p-6 text-white relative overflow-hidden group border border-white/5">
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-[#191974]" />
-                  <span className="font-bold text-[14px]">Madura Protect</span>
-                </div>
-                <div className="bg-[#191974] text-[9px] font-bold px-3 py-1 rounded-full uppercase">Included</div>
-              </div>
-              <p className="text-[11px] font-medium text-white/70 mb-1">If Visa Delayed — No Madura Fee</p>
-              <p className="text-[11px] font-medium text-white/70">If Rejected — 100% Refund</p>
+          {/* Help & Enquiry Card */}
+          <div className="bg-white rounded-[32px] p-8 shadow-xl shadow-[#191974]/5 border border-gray-100 flex flex-col gap-6">
+            <div className="space-y-1">
+              <h4 className="text-[17px] font-bold text-[#191974]">Have any Enquiry?</h4>
+              <p className="text-[12px] text-gray-400 font-medium">Our visa experts are here to help you 24/7</p>
             </div>
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#191974]/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 group-hover:scale-150 transition-transform" />
+
+            <div className="space-y-4">
+              {/* Call */}
+              <a href="tel:+919092949494" className="flex items-center gap-4 group">
+                <div className="w-10 h-10 rounded-xl bg-[#191974] flex items-center justify-center text-white group-hover:bg-[#191974] group-hover:text-white transition-all">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Call Us</p>
+                  <p className="text-[14px] font-bold text-[#191974]">+91 90929 49494</p>
+                </div>
+              </a>
+
+              {/* WhatsApp */}
+              <a href="https://wa.me/919092949494" target="_blank" className="flex items-center gap-4 group">
+                <div className="w-10 h-10 rounded-xl bg-[#191974] text-[#ffffff] flex items-center justify-center group-hover:bg-[#191974] group-hover:text-white transition-all">
+                  <MessageCircle className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">WhatsApp</p>
+                  <p className="text-[14px] font-bold text-[#191974]">+91 90929 49494</p>
+                </div>
+              </a>
+
+              {/* Mail */}
+              <a href="mailto:mail@maduratravel.com" className="flex items-center gap-4 group">
+                <div className="w-10 h-10 rounded-xl bg-[#191974] flex items-center justify-center text-white group-hover:bg-[#191974] group-hover:text-white transition-all">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Email Support</p>
+                  <p className="text-[14px] font-bold text-[#191974]">mail@maduratravel.com</p>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
 
+      </div>
+
+
+      {/* ===== TESTIMONIALS SECTION ===== */}
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-24">
+        <div className="text-center mb-16 space-y-4">
+          <p className="text-[#ee2229] font-bold text-[12px]">Real Experiences</p>
+          <h2 className="text-[42px] font-bold text-[#191974] tracking-tight">Trust by 10,000+ Travellers</h2>
+          <div className="flex items-center justify-center gap-1">
+            {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}
+            <span className="ml-2 font-bold text-[#191974]">4.9/5 Average Rating</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            { name: "Rahul Sharma", role: "Business Traveller", text: "Got my Dubai visa in less than 24 hours. The process was completely digital and seamless. Highly recommended!", img: "https://i.pravatar.cc/150?u=1" },
+            { name: "Priya Patel", role: "Family Vacation", text: "Madura Travel made our Thailand application so easy. Added 4 family members in one go and everything was perfect.", img: "https://i.pravatar.cc/150?u=2" },
+            { name: "James Wilson", role: "Solo Explorer", text: "Transparent pricing and excellent support. The direct flight tracking feature is a game changer for visa planning.", img: "https://i.pravatar.cc/150?u=3" }
+          ].map((item, idx) => (
+            <div key={idx} className="bg-white rounded-[32px] p-8 shadow-xl shadow-[#191974]/5 border border-gray-50 flex flex-col h-full transform hover:-translate-y-2 transition-all duration-300">
+              <div className="flex items-center gap-4 mb-6">
+                <img src={item.img} className="w-14 h-14 rounded-2xl object-cover shadow-md" alt={item.name} />
+                <div>
+                  <h4 className="font-bold text-[#191974]">{item.name}</h4>
+                  <p className="text-[12px] text-gray-400 font-medium">{item.role}</p>
+                </div>
+              </div>
+              <div className="flex gap-1 mb-4">
+                {[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />)}
+              </div>
+              <p className="text-gray-600 leading-relaxed text-[15px] italic font-medium flex-1">"{item.text}"</p>
+              <div className="mt-6 pt-6 border-t border-gray-50 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-green-500" />
+                  <span className="text-[11px] font-bold text-gray-400 uppercase">Verified Application</span>
+                </div>
+                <span className="text-[10px] font-bold text-gray-400">2 days ago</span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
 

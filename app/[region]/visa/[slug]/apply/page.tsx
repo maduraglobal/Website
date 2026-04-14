@@ -25,19 +25,35 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
 
   // Multi-Traveler State
   const [travelers, setTravelers] = useState([
-    { id: 1, firstName: '', lastName: '', dob: '', gender: '', maritalStatus: '', passportNumber: '', passportExpiry: '', passportIssuePlace: '' }
+    { id: 1, firstName: '', lastName: '', dob: '', gender: '', maritalStatus: '', passportNumber: '', passportExpiry: '', passportIssuePlace: '', email: '', phone: '', countryCode: 'in' }
   ]);
+
+  const [flightType, setFlightType] = useState('direct');
+  const [selectedCountryCode, setSelectedCountryCode] = useState('in');
+  const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
+
+  const countryCodes = [
+    { code: 'in', name: 'India', dial: '+91' },
+    { code: 'ae', name: 'UAE', dial: '+971' },
+    { code: 'om', name: 'Oman', dial: '+968' },
+    { code: 'qa', name: 'Qatar', dial: '+974' },
+    { code: 'sa', name: 'Saudi', dial: '+966' },
+  ];
 
   const addTraveler = () => {
     setTravelers([
       ...travelers,
-      { id: travelers.length + 1, firstName: '', lastName: '', dob: '', gender: '', maritalStatus: '', passportNumber: '', passportExpiry: '', passportIssuePlace: '' }
+      { id: Date.now(), firstName: '', lastName: '', dob: '', gender: '', maritalStatus: '', passportNumber: '', passportExpiry: '', passportIssuePlace: '', email: '', phone: '', countryCode: 'in' }
     ]);
+  };
+
+  const updateTraveler = (id: number, field: string, value: string) => {
+    setTravelers(travelers.map(t => t.id === id ? { ...t, [field]: value } : t));
   };
 
   return (
     <div className="min-h-screen bg-[#f8f9fc] pb-12 font-inter text-[#191974]">
-      {/* 1. TOP NAV BAR */}
+      {/* 1. TOP NAV BAR ... (omitted for brevity in instruction, keeping same) */}
       <nav className="bg-white border-b border-gray-100 sticky top-0 z-50 px-4 py-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <button
@@ -114,6 +130,8 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
                 <input
                   type="text"
                   placeholder="First Name"
+                  value={traveler.firstName}
+                  onChange={(e) => updateTraveler(traveler.id, 'firstName', e.target.value)}
                   className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] focus:ring-4 focus:ring-[#191974]/5 transition-all text-[#191974] font-medium"
                 />
               </div>
@@ -122,6 +140,8 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
                 <input
                   type="text"
                   placeholder="Last Name"
+                  value={traveler.lastName}
+                  onChange={(e) => updateTraveler(traveler.id, 'lastName', e.target.value)}
                   className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] focus:ring-4 focus:ring-[#191974]/5 transition-all text-[#191974] font-medium"
                 />
               </div>
@@ -131,12 +151,18 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
                 <input
                   type="text"
                   placeholder="dd/mm/yyyy"
+                  value={traveler.dob}
+                  onChange={(e) => updateTraveler(traveler.id, 'dob', e.target.value)}
                   className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] focus:ring-4 focus:ring-[#191974]/5 transition-all text-[#191974] font-medium text-left"
                 />
               </div>
               <div className="space-y-1.5 font-medium">
                 <label className="text-[12px] font-bold text-gray-500">Gender*</label>
-                <select className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] appearance-none cursor-pointer font-bold text-[14px]">
+                <select 
+                  value={traveler.gender}
+                  onChange={(e) => updateTraveler(traveler.id, 'gender', e.target.value)}
+                  className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] appearance-none cursor-pointer font-bold text-[14px]"
+                >
                   <option value="">Select gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -145,7 +171,11 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
 
               <div className="space-y-1.5">
                 <label className="text-[12px] font-bold text-gray-500">Marital Status*</label>
-                <select className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] appearance-none cursor-pointer font-bold text-[14px]">
+                <select 
+                  value={traveler.maritalStatus}
+                  onChange={(e) => updateTraveler(traveler.id, 'maritalStatus', e.target.value)}
+                  className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] appearance-none cursor-pointer font-bold text-[14px]"
+                >
                   <option value="">Select marital status</option>
                   <option value="single">Single</option>
                   <option value="married">Married</option>
@@ -156,6 +186,8 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
                 <input
                   type="text"
                   placeholder="Passport Number"
+                  value={traveler.passportNumber}
+                  onChange={(e) => updateTraveler(traveler.id, 'passportNumber', e.target.value)}
                   className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] transition-all text-[#191974] font-bold uppercase tracking-widest"
                 />
               </div>
@@ -165,6 +197,8 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
                 <input
                   type="text"
                   placeholder="dd/mm/yyyy"
+                  value={traveler.passportExpiry}
+                  onChange={(e) => updateTraveler(traveler.id, 'passportExpiry', e.target.value)}
                   className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] transition-all text-[#191974] font-medium"
                 />
               </div>
@@ -173,6 +207,8 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
                 <input
                   type="text"
                   placeholder="Passport place of issue"
+                  value={traveler.passportIssuePlace}
+                  onChange={(e) => updateTraveler(traveler.id, 'passportIssuePlace', e.target.value)}
                   className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] transition-all text-[#191974] font-medium"
                 />
               </div>
@@ -186,19 +222,46 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
                 <input
                   type="email"
                   placeholder="Primary Email"
+                  value={traveler.email}
+                  onChange={(e) => updateTraveler(traveler.id, 'email', e.target.value)}
                   className="w-full px-5 py-3.5 rounded-2xl bg-gray-100/50 border border-gray-200 outline-none focus:border-[#191974] font-medium"
                 />
               </div>
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 relative">
                 <label className="text-[12px] font-bold text-gray-500">Phone Number</label>
                 <div className="flex gap-3">
-                  <div className="w-24 px-4 py-3.5 rounded-2xl bg-gray-100/50 border border-gray-200 flex items-center justify-between font-bold cursor-pointer">
-                    <img src="https://flagcdn.com/w40/in.png" className="w-6 h-4 object-cover rounded shadow-sm" />
-                    <ChevronLeft className="w-4 h-4 -rotate-90 text-gray-400" />
+                  <div 
+                    onClick={() => setIsCountryDropdownOpen(!isCountryDropdownOpen)}
+                    className="w-24 px-4 py-3.5 rounded-2xl bg-gray-100/50 border border-gray-200 flex items-center justify-between font-bold cursor-pointer hover:bg-gray-200 transition-colors"
+                  >
+                    <img src={`https://flagcdn.com/w40/${selectedCountryCode}.png`} className="w-6 h-4 object-cover rounded shadow-sm" />
+                    <ChevronLeft className={`w-4 h-4 transition-transform ${isCountryDropdownOpen ? 'rotate-90' : '-rotate-90'} text-gray-400`} />
                   </div>
+
+                  {isCountryDropdownOpen && (
+                    <div className="absolute top-20 left-0 w-48 bg-white border border-gray-100 rounded-2xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                      {countryCodes.map((c) => (
+                        <div 
+                          key={c.code}
+                          onClick={() => {
+                            setSelectedCountryCode(c.code);
+                            setIsCountryDropdownOpen(false);
+                          }}
+                          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-50 last:border-0"
+                        >
+                          <img src={`https://flagcdn.com/w40/${c.code}.png`} className="w-6 h-4 object-cover rounded shadow-sm" />
+                          <span className="text-[13px] font-bold">{c.dial}</span>
+                          <span className="text-[11px] text-gray-400 capitalize">{c.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
                   <input
                     type="tel"
                     placeholder="Phone Number"
+                    value={traveler.phone}
+                    onChange={(e) => updateTraveler(traveler.id, 'phone', e.target.value)}
                     className="flex-1 px-5 py-3.5 rounded-2xl bg-gray-100/50 border border-gray-200 outline-none focus:border-[#191974] font-medium"
                   />
                 </div>
@@ -217,11 +280,25 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
           </div>
 
           <div className="flex gap-4 mb-6">
-            <button className="flex-1 py-4 px-6 rounded-2xl border border-[#191974] bg-[#191974]/5 text-[#191974] font-bold text-[14px] flex items-center justify-center gap-3">
-              <CheckCircle2 className="w-5 h-5 fill-[#191974] text-white" /> Direct flight
+            <button 
+              onClick={() => setFlightType('direct')}
+              className={`flex-1 py-4 px-6 rounded-2xl border transition-all font-bold text-[14px] flex items-center justify-center gap-3 ${
+                flightType === 'direct' 
+                ? 'border-[#191974] bg-[#191974]/5 text-[#191974]' 
+                : 'border-gray-100 text-gray-400 hover:border-gray-200'
+              }`}
+            >
+              <CheckCircle2 className={`w-5 h-5 fill-[#191974] text-white transition-opacity ${flightType === 'direct' ? 'opacity-100' : 'opacity-0'}`} /> Direct flight
             </button>
-            <button className="flex-1 py-4 px-6 rounded-2xl border border-gray-100 text-gray-400 font-bold text-[14px] hover:border-gray-200 transition-colors">
-              Multi Stop
+            <button 
+              onClick={() => setFlightType('multi')}
+              className={`flex-1 py-4 px-6 rounded-2xl border transition-all font-bold text-[14px] flex items-center justify-center gap-3 ${
+                flightType === 'multi' 
+                ? 'border-[#191974] bg-[#191974]/5 text-[#191974]' 
+                : 'border-gray-100 text-gray-400 hover:border-gray-200'
+              }`}
+            >
+              <CheckCircle2 className={`w-5 h-5 fill-[#191974] text-white transition-opacity ${flightType === 'multi' ? 'opacity-100' : 'opacity-0'}`} /> Multi Stop
             </button>
           </div>
 
@@ -243,6 +320,31 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
               />
             </div>
           </div>
+          
+          {flightType === 'multi' && (
+            <motion.div 
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              className="pt-6 border-t border-gray-100 mt-6 grid grid-cols-1 md:grid-cols-2 gap-6"
+            >
+              <div className="space-y-1.5">
+                <label className="text-[12px] font-bold text-gray-500">Connecting Flight*</label>
+                <input
+                  type="text"
+                  placeholder="Flight Number"
+                  className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] font-medium"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[12px] font-bold text-gray-500">Layover Duration*</label>
+                <input
+                  type="text"
+                  placeholder="e.g. 4 Hours"
+                  className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] font-medium"
+                />
+              </div>
+            </motion.div>
+          )}
         </section>
 
         {/* 3. HOTEL DETAILS */}

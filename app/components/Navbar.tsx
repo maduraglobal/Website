@@ -29,10 +29,17 @@ const multiDestinations = [
   "Dubai+Qatar",
   "Dubai+Turkey",
   "Tanzania+Dubai",
-  "Dubai + Europe"
+  "Dubai + Europe",
+  "Malaysia + Singapore",
+  "India + Australia",
+  "Thailand + Vietnam",
+  "Singapore + Malaysia + Thailand",
+  "Europe + UK",
+  "USA + Canada",
+  "Australia + New Zealand"
 ];
 
-const popularDestinations = ["India", "Australia", "Dubai", "Vietnam", "Singapore", "Malaysia", "Sri Lanka", "Dubai + Europe", "Oman+Dubai"];
+const popularDestinations = ["India", "Australia", "Dubai", "Vietnam", "Singapore", "Malaysia", "Sri Lanka", "Malaysia + Singapore", "India + Australia", "Dubai + Europe"];
 const allDestinations = [...Object.values(destinations).flat(), ...multiDestinations];
 
 type DestinationKey = keyof typeof destinations;
