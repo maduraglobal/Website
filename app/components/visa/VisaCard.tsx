@@ -34,7 +34,7 @@ const VisaCard: React.FC<VisaCardProps> = ({ dest, region, index }) => {
     >
       <Link
         href={`/${region}/visa/${dest.slug}`}
-        className="group relative rounded-[20px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 cursor-pointer block h-[380px] bg-white"
+        className="group relative rounded-[24px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 cursor-pointer block h-[400px] bg-white"
       >
         {/* Optimized Image Container (Aspect Ratio ~4:5 focused) */}
         <div className="absolute inset-x-0 top-0 h-[220px] overflow-hidden">
@@ -68,12 +68,12 @@ const VisaCard: React.FC<VisaCardProps> = ({ dest, region, index }) => {
         </div>
 
         {/* Compact Content Area */}
-        <div className="absolute inset-x-0 bottom-0 p-4 pt-10 flex flex-col items-center text-center bg-white h-[160px]">
-          <h3 className="text-[20px] font-bold tracking-tight text-[#191974] mb-3 group-hover:text-[#ee2229] transition-colors">
+        <div className="absolute inset-x-0 bottom-0 p-4 pt-9 flex flex-col items-center text-center bg-white h-[180px]">
+          <h3 className="text-[20px] font-bold tracking-tight text-[#191974] mb-2.5 group-hover:text-[#ee2229] transition-colors">
             {dest.name} Visa
           </h3>
 
-          <div className="w-full grid grid-cols-2 gap-2 border-t border-gray-50 pt-3 mb-4">
+          <div className="w-full grid grid-cols-2 gap-2 border-t border-gray-50 pt-3 mb-3.5">
             <div>
               <p className="text-[8px] tracking-widest text-gray-400 uppercase font-bold mb-0.5">Validity</p>
               <p className="text-[12px] font-bold text-[#191974] uppercase">{dest.valid || '30 DAYS'}</p>
@@ -86,7 +86,7 @@ const VisaCard: React.FC<VisaCardProps> = ({ dest, region, index }) => {
             </div>
           </div>
 
-          <div className="w-full bg-[#191974] group-hover:bg-[#ee2229] text-white py-2.5 rounded-lg text-center text-[10px] font-bold  transition-all shadow-md active:scale-95 uppercase">
+          <div className="w-full mt-auto bg-[#191974] group-hover:bg-[#ee2229] text-white py-2.5 rounded-xl text-center text-[11px] font-bold transition-all shadow-md active:scale-95 uppercase tracking-wider">
             Get Started
           </div>
         </div>
