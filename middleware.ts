@@ -11,25 +11,33 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   
-  // 1. Handle short-code aliases for easy manual entry (e.g., /in, /au, /us)
+  // 1. Define Supported Regions and Reserved Paths
+  const supportedRegions = ['en-in', 'en-au', 'en-us'];
+  const reservedPaths = ['admin', 'api', 'auth', 'antigravity', 'crm', 'destination', 'test', '_next'];
   const shortCodes: Record<string, string> = {
-    '/in':  'en-in',
-    '/au':  'en-au',
-    '/us':  'en-us',
-  }
-  
-  for (const [short, full] of Object.entries(shortCodes)) {
-    if (pathname === short || pathname.startsWith(short + '/')) {
-      const rest = pathname.slice(short.length)
-      const response = NextResponse.redirect(new URL(`/${full}${rest}`, request.url))
-      // Update cookie to persist this manual selection
-      response.cookies.set('user-region', full, { maxAge: 60 * 60 * 24 * 365, path: '/' })
-      return response
-    }
+    'in': 'en-in',
+    'au': 'en-au',
+    'us': 'en-us',
   }
 
-  // 2. ROOT REDIRECTION: Logic for landing on maduratravel.com (Root)
-  if (pathname === '/') {
+  const segments = pathname.split('/').filter(Boolean);
+  const firstSegment = segments[0];
+
+  // 2. Handle short-code aliases (e.g., /in/visa -> /en-in/visa)
+  if (firstSegment && shortCodes[firstSegment]) {
+    const target = shortCodes[firstSegment];
+    const rest = pathname.slice(firstSegment.length + 1);
+    const response = NextResponse.redirect(new URL(`/${target}${rest}`, request.url));
+    response.cookies.set('user-region', target, { maxAge: 60 * 60 * 24 * 365, path: '/' });
+    return response;
+  }
+
+  // 3. Geolocation-based routing for non-regional paths
+  // If we are at root, or the first segment is not a supported region AND not a reserved path
+  const isRegional = supportedRegions.includes(firstSegment);
+  const isReserved = reservedPaths.includes(firstSegment);
+
+  if (!isRegional && !isReserved) {
     // Priority: Cookie > IP detection > Default (en-in)
     let targetRegion = request.cookies.get('user-region')?.value;
 
@@ -41,38 +49,31 @@ export async function middleware(request: NextRequest) {
         'IN': 'en-in',
         'AU': 'en-au',
         'US': 'en-us',
-        'GB': 'en-us', // Mapping UK to US segment as a placeholder if no UK segment exists
+        'GB': 'en-us',
+        'AE': 'en-in',
+        'OM': 'en-in',
+        'QA': 'en-in',
+        'SA': 'en-in',
       }
       
       targetRegion = countryCode ? (countryToRegion[countryCode.toUpperCase()] || 'en-in') : 'en-in';
     }
 
-    const response = NextResponse.redirect(new URL(`/${targetRegion}`, request.url))
-    // Persist finalized region in cookie
+    const response = NextResponse.redirect(new URL(`/${targetRegion}${pathname}`, request.url))
     response.cookies.set('user-region', targetRegion, { maxAge: 60 * 60 * 24 * 365, path: '/' })
     return response
   }
 
-  // 3. MANUAL OVERRIDE DETECTION: If visiting a regional path directly, update preference
-  const supportedRegions = ['en-in', 'en-au', 'en-us'];
-  const firstSegment = pathname.split('/')[1];
-
-  let response = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
-  })
-
-  if (supportedRegions.includes(firstSegment)) {
+  // 4. Persistence: If visiting a regional path, ensure cookie matches
+  let response = NextResponse.next();
+  if (isRegional) {
     const currentCookie = request.cookies.get('user-region')?.value;
-    // If user navigates to a different region manually, update the cookie
     if (currentCookie !== firstSegment) {
       response.cookies.set('user-region', firstSegment, { maxAge: 60 * 60 * 24 * 365, path: '/' })
     }
   }
 
-  // 4. SUPABASE SESSION REFRESH
-  // This ensures the session remains active across different regional domains
+  // 5. SUPABASE SESSION REFRESH
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -97,8 +98,8 @@ export async function middleware(request: NextRequest) {
               expires: undefined,
             })
           )
-          // Re-apply our custom region cookie if it was set earlier in this middleware
-          if (supportedRegions.includes(firstSegment)) {
+          // Re-apply our custom region cookie if it was set earlier
+          if (isRegional) {
              response.cookies.set('user-region', firstSegment, { maxAge: 60 * 60 * 24 * 365, path: '/' })
           }
         },

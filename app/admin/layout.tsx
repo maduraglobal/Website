@@ -14,6 +14,8 @@ import {
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 
+import LogoutButton from '@/app/components/admin/LogoutButton';
+
 export default async function AdminLayout({
   children,
 }: {
@@ -77,10 +79,7 @@ export default async function AdminLayout({
         </nav>
 
         <div className="p-4 border-t border-white/10">
-          <button className="flex items-center gap-3 px-4 py-3 w-full text-white/50 hover:text-red-400 transition-colors font-medium">
-            <LogOut className="w-5 h-5" />
-            Logout
-          </button>
+          <LogoutButton />
         </div>
       </aside>
 

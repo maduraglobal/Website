@@ -59,7 +59,8 @@ export default function Navbar() {
   const [user, setUser] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const supabase = createClient();
+  
+  const supabase = React.useMemo(() => createClient(), []);
 
   const currentRegionCode = (pathname?.split('/')[1] || 'en-in').toLowerCase();
   const activeCountryConfig = countryConfigs[currentRegionCode] || countryConfigs['en-in'];
@@ -76,14 +77,34 @@ export default function Navbar() {
 
   const handleSignOut = async () => {
     try {
-      await supabase.auth.signOut();
+      // 1. Sign out from Supabase (Global scope to clear all tabs)
+      await supabase.auth.signOut({ scope: 'global' });
+      
+      // 2. Clear local auth state
+      setUser(null);
+      setIsAdmin(false);
+      setSidebarOpen(false);
+      
+      // 3. Clear any lingering Supabase cookies manually for extra safety
+      document.cookie.split(";").forEach((c) => {
+        if (c.includes("sb-") || c.includes("supabase")) {
+          document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+        }
+      });
+
+      // 4. Force a hard reload to root of current region to purge all caches
+      const targetPath = `/${currentRegionCode}`;
+      window.location.href = targetPath;
+      
+      // 5. Fallback in case href assignment is delayed
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+
     } catch (e) {
-      console.error(e);
+      console.error('Logout error:', e);
+      window.location.replace(`/${currentRegionCode}`);
     }
-    setUser(null);
-    setIsAdmin(false);
-    setSidebarOpen(false);
-    window.location.href = `/${currentRegionCode}`;
   };
 
   const switchRegion = (newRegion: string) => {

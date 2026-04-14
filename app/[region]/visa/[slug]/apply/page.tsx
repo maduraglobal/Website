@@ -31,6 +31,92 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
   const [flightType, setFlightType] = useState('direct');
   const [selectedCountryCode, setSelectedCountryCode] = useState('in');
   const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    // Simulate secure submission to CRM/Database
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    setIsSubmitting(false);
+    setIsSubmitted(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const visaFee = parseInt(destination?.price.replace(/,/g, '') || '0');
+  const totalFee = visaFee * travelers.length;
+
+  if (isSubmitted) {
+    return (
+      <div className="min-h-screen bg-[#f8f9fc] flex items-center justify-center p-6 text-[#191974]">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="max-w-xl w-full bg-white rounded-[40px] shadow-2xl border border-gray-100 overflow-hidden"
+        >
+          <div className="bg-[#191974] p-10 text-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16" />
+            <div className="relative z-10">
+              <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-green-500/20">
+                <CheckCircle2 className="w-12 h-12 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-white mb-2">Application Received!</h2>
+              <p className="text-white/60 text-sm font-medium">Reference: <span className="text-white">#MDV-{Math.floor(100000 + Math.random() * 900000)}</span></p>
+            </div>
+          </div>
+
+          <div className="p-10 space-y-8">
+            <div className="space-y-4">
+              <div className="flex justify-between items-center text-sm font-bold">
+                <span className="text-gray-400 uppercase tracking-widest text-[11px]">Destination</span>
+                <span>{destName}</span>
+              </div>
+              <div className="flex justify-between items-center text-sm font-bold">
+                <span className="text-gray-400 uppercase tracking-widest text-[11px]">Travelers</span>
+                <span>{travelers.length} {travelers.length === 1 ? 'Person' : 'People'}</span>
+              </div>
+              <div className="flex justify-between items-center text-sm font-bold">
+                <span className="text-gray-400 uppercase tracking-widest text-[11px]">Visa Type</span>
+                <span className="text-[#191974]">{destination?.type || 'E-VISA'}</span>
+              </div>
+              
+              <hr className="border-gray-50 border-dashed" />
+              
+              <div className="flex justify-between items-center">
+                <div className="space-y-1">
+                  <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Total Amount</p>
+                  <p className="text-3xl font-bold text-[#191974] tracking-tight">{formatRegionalPrice(totalFee, region)}</p>
+                </div>
+                <Globe className="w-10 h-10 text-gray-100" />
+              </div>
+            </div>
+
+            <div className="bg-blue-50/50 p-6 rounded-3xl border border-blue-100 flex items-start gap-4">
+              <Info className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
+              <p className="text-[12px] text-blue-700/80 leading-relaxed font-medium">
+                Your application has been logged in our secure processing queue. Proceed to the payment gateway to finalize your submission.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <button 
+                onClick={() => window.location.href = `https://checkout.${countryConfig.paymentGateway}.com/pay`}
+                className="w-full py-4 rounded-2xl bg-[#ee2229] text-white font-bold text-[14px] uppercase tracking-widest shadow-xl shadow-red-500/20 hover:bg-[#191974] transition-all flex items-center justify-center gap-3 active:scale-95"
+              >
+                <Plus className="w-5 h-5 rotate-45" /> Pay with {countryConfig.paymentGateway === 'razorpay' ? 'Razorpay' : 'Stripe'}
+              </button>
+              <button 
+                onClick={() => router.push(`/${region}/visa`)}
+                className="w-full py-4 text-gray-400 font-bold text-[12px] hover:text-[#191974] transition-colors"
+              >
+                Cancel and Return
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
 
   const countryCodes = [
     { code: 'in', name: 'India', dial: '+91' },
@@ -410,8 +496,16 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
             >
               <Plus className="w-5 h-5" /> Add travelers
             </button>
-            <button className="flex-2 py-4 px-6 rounded-2xl bg-[#191974] text-white font-bold text-[14px] hover:bg-[#0f0f4a] transition-all shadow-xl shadow-[#191974]/20 active:scale-95 uppercase tracking-widest">
-              Submit application
+            <button 
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className="flex-[2] py-4 px-6 rounded-2xl bg-[#191974] text-white font-bold text-[14px] hover:bg-[#0f0f4a] transition-all shadow-xl shadow-[#191974]/20 active:scale-95 uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-50"
+            >
+              {isSubmitting ? (
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                "Submit application"
+              )}
             </button>
           </div>
         </div>
