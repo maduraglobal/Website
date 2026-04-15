@@ -51,9 +51,18 @@ export const ImagesSlider = ({
       });
     });
 
-    Promise.all(loadPromises)
-      .then((loadedImages) => {
-        setLoadedImages(loadedImages as string[]);
+    Promise.allSettled(loadPromises)
+      .then((results) => {
+        const successfulImages = results
+          .filter((result): result is PromiseFulfilledResult<unknown> => result.status === 'fulfilled')
+          .map((result) => result.value as string);
+        
+        if (successfulImages.length > 0) {
+          setLoadedImages(successfulImages);
+        } else {
+          // If all fail, fallback to a safe default
+          setLoadedImages(['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2946&auto=format&fit=crop']);
+        }
         setLoading(false);
       })
       .catch((err) => console.error("Failed to load images", err));

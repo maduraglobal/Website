@@ -322,28 +322,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             </div>
           </div>
 
-          {/* 5. FAQs */}
-          <div id="faqs" className="space-y-8">
-            <h2 className="text-[26px] font-bold text-[#191974]">Common Questions</h2>
-            <div className="space-y-3">
-              {faqs.slice(0, 10).map((q, i) => (
-                <div key={i} className="bg-white border border-gray-100 rounded-[12px] overflow-hidden hover:border-[#191974]/30 transition-all">
-                  <button
-                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    className="w-full text-left px-8 py-5 flex justify-between items-center text-[15px] group"
-                  >
-                    <span className={`font-bold transition-colors ${openFaq === i ? 'text-[#ee2229]' : 'text-[#191974] group-hover:text-[#ee2229]'}`}>{q}</span>
-                    {openFaq === i ? <ChevronUp className="w-5 h-5 text-[#ee2229]" /> : <ChevronDown className="w-5 h-5 text-gray-300" />}
-                  </button>
-                  {openFaq === i && (
-                    <div className="px-8 pb-6 text-gray-500 font-medium leading-relaxed border-t border-gray-50 pt-4">
-                      Applying through Madura Travel ensures professional review of your documents, significantly reducing rejection risks. Our experts manage the entire submission process, providing regular status updates.
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
+
 
           {/* 6. Process Selection */}
           <div id="process" className="space-y-8 pt-4">
@@ -484,6 +463,28 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
               ))}
             </div>
           </div> */}
+          {/* 5. FAQs */}
+          <div id="faqs" className="space-y-8">
+            <h2 className="text-[26px] font-bold text-[#191974]">Common Questions</h2>
+            <div className="space-y-3">
+              {faqs.slice(0, 10).map((q, i) => (
+                <div key={i} className="bg-white border border-gray-100 rounded-[12px] overflow-hidden hover:border-[#191974]/30 transition-all">
+                  <button
+                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                    className="w-full text-left px-8 py-5 flex justify-between items-center text-[15px] group"
+                  >
+                    <span className={`font-bold transition-colors ${openFaq === i ? 'text-[#ee2229]' : 'text-[#191974] group-hover:text-[#ee2229]'}`}>{q}</span>
+                    {openFaq === i ? <ChevronUp className="w-5 h-5 text-[#ee2229]" /> : <ChevronDown className="w-5 h-5 text-gray-300" />}
+                  </button>
+                  {openFaq === i && (
+                    <div className="px-8 pb-6 text-gray-500 font-medium leading-relaxed border-t border-gray-50 pt-4">
+                      Applying through Madura Travel ensures professional review of your documents, significantly reducing rejection risks. Our experts manage the entire submission process, providing regular status updates.
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
 
         </div>
 

@@ -219,9 +219,8 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Phone className="w-3.5 h-3.5 text-gray-400" />
-                    <p className="text-[13px] font-bold text-[#191974] border-b-2 border-gray-200">1800 313 5555</p>
+                    <p className="text-[13px] font-bold text-[#191974] border-b-2 border-gray-200">+91 9092949494</p>
                   </div>
-                  <p className="text-[12px] text-gray-400"><span className="text-[#191974] font-bold border-b-2 border-gray-200">Locate</span> nearest branch</p>
                 </div>
               </div>
 

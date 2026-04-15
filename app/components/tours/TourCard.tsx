@@ -32,7 +32,33 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
   const [isHighlightsOpen, setIsHighlightsOpen] = useState(false);
   const [itinerary, setItinerary] = useState<any[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isWishlisted, setIsWishlisted] = useState(false);
   const supabase = createClient();
+
+  React.useEffect(() => {
+    try {
+      const list = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      setIsWishlisted(list.includes(tour.id));
+    } catch(e){}
+  }, [tour.id]);
+
+  const toggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      let list = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      if (list.includes(tour.id)) {
+        list = list.filter((id: string) => id !== tour.id);
+        setIsWishlisted(false);
+      } else {
+        list.push(tour.id);
+        setIsWishlisted(true);
+      }
+      localStorage.setItem('wishlist', JSON.stringify(list));
+    } catch(err) {
+      console.error(err);
+    }
+  };
 
   React.useEffect(() => {
     async function checkAdmin() {
@@ -87,8 +113,11 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
         </div>
         {/* Wishlist / Share */}
         <div className="absolute top-4 right-4 flex gap-2">
-          <button className="w-8 h-8 rounded-full bg-white/80 backdrop-blur flex items-center justify-center text-gray-500 hover:text-[#ee2229] hover:bg-white transition-all shadow-sm">
-            <Heart className="w-4 h-4" />
+          <button 
+            onClick={toggleWishlist}
+            className={`w-8 h-8 rounded-full bg-white/80 backdrop-blur flex items-center justify-center transition-all shadow-sm ${isWishlisted ? 'text-[#ee2229] bg-white' : 'text-gray-500 hover:text-[#ee2229] hover:bg-white'}`}
+          >
+            <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
           </button>
         </div>
 
@@ -105,24 +134,26 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
         <div className="flex flex-col md:flex-row justify-between gap-4 flex-1">
           {/* Main Info */}
           <div className="flex-1 space-y-3">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-bold text-[#191974] bg-[#191974]/5 px-2 py-0.5 rounded flex items-center gap-1">
-                <Star className="w-3.5 h-3.5 fill-current text-yellow-500" /> 4.8 (124 Reviews)
-              </span>
-              <span className="text-xs font-semibold text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded">All Inclusive</span>
-            </div>
+            <Link href={`/${region}/tours/${tour.slug || tour.id}`} className="block group/link">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs font-bold text-[#191974] bg-[#191974]/5 px-2 py-0.5 rounded flex items-center gap-1 w-fit">
+                  <Star className="w-3.5 h-3.5 fill-current text-yellow-500" /> 4.8 (124 Reviews)
+                </span>
+                {/* <span className="text-xs font-semibold text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded">All Inclusive</span> */}
+              </div>
 
-            <h3 className="text-[20px] font-bold text-[#ee2229] leading-tight group-hover:underline transition-all">
-              {tour.title}
-            </h3>
+              <h3 className="text-[20px] font-bold text-[#ee2229] leading-tight group-hover/link:underline transition-all mt-2">
+                {tour.title}
+              </h3>
 
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[14px] text-gray-600 ">
-              <span className="flex items-center gap-1.5 font-bold"><Clock className="w-4 h-4 text-gray-400" /> {tour.duration_days || 6} Days</span>
-              <span className="w-1 h-1 rounded-full bg-gray-300" />
-              <span className="flex items-center gap-1.5 font-bold"><MapPin className="w-4 h-4 text-gray-400" /> {tour.cities_count || 4} Cities</span>
-              <span className="w-1 h-1 rounded-full bg-gray-300" />
-              <span className="flex items-center gap-1.5 font-bold"><Calendar className="w-4 h-4 text-gray-400" /> Sep - Dec Dates</span>
-            </div>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[14px] text-gray-600 mt-2">
+                <span className="flex items-center gap-1.5 font-bold"><Clock className="w-4 h-4 text-gray-400" /> {tour.duration_days || 6} Days</span>
+                <span className="w-1 h-1 rounded-full bg-gray-300" />
+                <span className="flex items-center gap-1.5 font-bold"><MapPin className="w-4 h-4 text-gray-400" /> {tour.cities_count || 4} Cities</span>
+                <span className="w-1 h-1 rounded-full bg-gray-300" />
+                <span className="flex items-center gap-1.5 font-bold"><Calendar className="w-4 h-4 text-gray-400" /> Sep - Dec Dates</span>
+              </div>
+            </Link>
 
             <div className="pt-4 flex flex-wrap items-center gap-6 border-t border-gray-50 mt-auto">
               <div className="flex flex-col items-center gap-1 group/item">

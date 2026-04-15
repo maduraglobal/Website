@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { SlidersHorizontal } from 'lucide-react';
+import { SlidersHorizontal, X } from 'lucide-react';
 import { formatRegionalPrice } from '@/config/country';
 import FiltersSidebar, { TourFilters } from '@/app/components/tours/FiltersSidebar';
 import FallbackImage from '@/app/components/FallbackImage';
@@ -46,6 +46,17 @@ export default function ToursListingContent({ initialTours, region, layout = 'gr
   });
 
   const [sortBy, setSortBy] = useState('popularity');
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+
+  // Lock body scroll when drawer is open
+  useEffect(() => {
+    if (isFilterDrawerOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isFilterDrawerOpen]);
 
   // Sync with URL params if they change externally (e.g. back button)
   useEffect(() => {
@@ -151,48 +162,91 @@ export default function ToursListingContent({ initialTours, region, layout = 'gr
   }, [initialTours, filters, sortBy]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 md:py-10 flex flex-col md:flex-row gap-8">
-      {/* Sidebar Filters */}
-      <aside className="w-full md:w-1/4 shrink-0">
-        <FiltersSidebar
-          filters={filters}
-          onFilterChange={setFilters}
-          availableCountries={availableCountries}
+    <div className="max-w-7xl mx-auto px-4 py-8 md:py-10 relative">
+      {/* Overlay */}
+      {isFilterDrawerOpen && (
+        <div 
+          className="fixed inset-0 bg-black/40 z-[99] transition-opacity duration-300"
+          onClick={() => setIsFilterDrawerOpen(false)}
         />
-      </aside>
+      )}
+
+      {/* Filter Drawer */}
+      <div 
+        className={`fixed top-0 left-0 h-[100dvh] w-[85vw] max-w-[340px] bg-white z-[100] transform transition-transform duration-300 ease-in-out shadow-2xl flex flex-col ${
+          isFilterDrawerOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="flex items-center justify-between p-4 md:p-6 border-b border-gray-100 bg-white sticky top-0 shrink-0">
+          <h2 className="text-[16px] font-bold text-[#191974] flex items-center gap-2">
+            <SlidersHorizontal className="w-5 h-5" /> Filters
+          </h2>
+          <button 
+            onClick={() => setIsFilterDrawerOpen(false)}
+            className="p-2 -mr-2 bg-gray-50 hover:bg-gray-100 text-gray-500 rounded-full transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-50/50">
+          <FiltersSidebar
+            filters={filters}
+            onFilterChange={setFilters}
+            availableCountries={availableCountries}
+          />
+        </div>
+        {/* Sticky bottom Apply button for mobile convenience */}
+        <div className="p-4 border-t border-gray-100 bg-white sticky bottom-0 shrink-0">
+          <button 
+            onClick={() => setIsFilterDrawerOpen(false)}
+            className="w-full bg-[#191974] text-white py-3 rounded-xl text-[13px] font-bold hover:bg-[#191974]/90 transition-colors shadow-lg shadow-[#191974]/20"
+          >
+            Apply Filters
+          </button>
+        </div>
+      </div>
 
       {/* Main Content Area */}
-      <div className="w-full md:w-3/4 flex flex-col">
+      <div className="w-full">
         {/* Results Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
           <div>
-            <h2 className="text-[20px]  text-[#191974] tracking-tight ">
+            <h2 className="text-[20px] text-[#191974] tracking-tight font-bold">
               {title || `${filteredTours.length} ${filteredTours.length === 1 ? 'Package' : 'Packages'} Found`}
             </h2>
             {filters.search && (
-              <p className="text-[13px] text-gray-400 font-medium">Showing results for &quot;{filters.search}&quot;</p>
+              <p className="text-[13px] text-gray-500 mt-1">Showing results for &quot;<span className="font-semibold text-[#191974]">{filters.search}</span>&quot;</p>
             )}
           </div>
 
-          <div className="flex items-center gap-3 w-full sm:w-auto">
-            <span className="text-[12px]  text-gray-300  tracking-widest whitespace-nowrap">Sort By:</span>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="flex-1 sm:flex-none border border-gray-200 rounded-xl px-4 py-2.5 text-[13px]  text-[#191974] bg-white outline-none cursor-pointer hover:border-[#191974] transition-all shadow-sm"
+          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+            <button
+              onClick={() => setIsFilterDrawerOpen(true)}
+              className="flex-1 md:flex-none flex items-center justify-center gap-2 border border-gray-200 rounded-xl px-5 py-2.5 text-[13px] font-semibold text-[#191974] bg-white outline-none cursor-pointer hover:border-[#191974] hover:bg-gray-50 transition-all shadow-sm"
             >
-              <option value="popularity">Popularity</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-              <option value="rating">Top Rated</option>
-            </select>
+              <SlidersHorizontal className="w-4 h-4" /> Filter Tours
+            </button>
+            <div className="w-[1px] h-8 bg-gray-200 hidden md:block"></div>
+            <div className="flex-1 md:flex-none flex items-center gap-3">
+              <span className="text-[12px] text-gray-400 font-medium tracking-wide whitespace-nowrap uppercase">Sort By:</span>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-[13px] font-semibold text-[#191974] bg-white outline-none cursor-pointer hover:border-[#191974] transition-all shadow-sm focus:ring-2 focus:ring-[#191974]/10"
+              >
+                <option value="popularity">Popularity</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="rating">Top Rated</option>
+              </select>
+            </div>
           </div>
         </div>
 
         {/* Results Grid */}
         {filteredTours.length > 0 ? (
           <div className={layout === 'grid' 
-            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
             : "flex flex-col space-y-6"
           }>
             {filteredTours.map((tour) => (
@@ -209,11 +263,11 @@ export default function ToursListingContent({ initialTours, region, layout = 'gr
             <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
               <SlidersHorizontal className="w-8 h-8 text-[#191974]/20" />
             </div>
-            <h3 className="text-[18px]  text-[#191974] mb-2 tracking-tight">No tours match your filters</h3>
-            <p className="text-gray-400 text-[14px] mb-8 max-w-xs mx-auto">Try adjusting your selection or search criteria to find what you&apos;re looking for.</p>
+            <h3 className="text-[18px] font-bold text-[#191974] mb-2 tracking-tight">No tours match your filters</h3>
+            <p className="text-gray-500 text-[14px] mb-8 max-w-xs mx-auto">Try adjusting your selection or search criteria to find what you&apos;re looking for.</p>
             <button
               onClick={() => setFilters({ search: '', category: 'World', priceRange: [], countries: [], duration: [], specialty: [], month: '' })}
-              className="bg-[#ee2229] hover:bg-[#191974] text-white px-8 py-3 rounded-full text-[12px]  uppercase tracking-widest transition-all shadow-xl shadow-red-500/20 active:scale-95 text-center"
+              className="bg-[#ee2229] hover:bg-[#191974] text-white px-8 py-3 rounded-full text-[12px] font-bold uppercase tracking-widest transition-all shadow-xl shadow-red-500/20 active:scale-95 text-center inline-block cursor-pointer"
             >
               Reset All Filters
             </button>

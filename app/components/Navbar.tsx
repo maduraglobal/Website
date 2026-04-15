@@ -604,7 +604,8 @@ export default function Navbar() {
 
             {/* --- SIMPLE LINKS --- */}
             {[
-              { label: "Customized Holidays", href: "/en-in/contact" },
+              { label: "My Wishlist", href: `/${currentRegionCode}/wishlist` },
+              { label: "Customized Holidays", href: `/${currentRegionCode}/contact` },
               { label: "Visa", href: `/${currentRegionCode}/visa` },
             ].map(({ label, href }) => (
               <Link

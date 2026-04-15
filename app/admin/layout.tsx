@@ -31,7 +31,7 @@ export default async function AdminLayout({
   }
 
   if (!user || !isAdmin) {
-    redirect('/en-in/login'); // Fallback to login if not admin
+    redirect('/en-in'); // Fallback to home where they can open the Login modal
   }
 
   return (

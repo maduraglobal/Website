@@ -142,12 +142,21 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     {tour.title}
                   </p>
 
-                  <div className="flex items-center gap-4 text-[13px] font-medium">
+                  <div className="flex flex-wrap items-center gap-4 text-[13px] font-medium">
                     <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700">{tour.duration || "5 Days"}</span>
                     <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700">1 Country</span>
                     <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700 flex items-center gap-1">
                       4 Cities <HelpCircle className="w-3 h-3 text-gray-400" />
                     </span>
+
+                    {/* Download Details Button */}
+                    <button
+                      onClick={() => window.print()}
+                      className="flex items-center gap-2 bg-blue-50 text-[#191974] px-4 py-1.5 rounded-full text-[12px] font-bold hover:bg-blue-100 transition-all border border-blue-100 shadow-sm group"
+                    >
+                      <Download className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
+                      Download Details
+                    </button>
 
                     {/* Admin Quick Edit Button */}
                     {isAdmin && (
@@ -228,7 +237,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   <div className="bg-orange-50/40 p-5 rounded-2xl border-white flex items-center justify-between shadow-sm">
                     <div className="flex items-center gap-3 text-[14px] text-gray-700 flex-wrap">
                       <span className="px-3 py-1 bg-white rounded-lg border border-orange-200 text-orange-700 font-bold text-[12px]">Notice</span>
-                      Viewing itinerary for <span className="font-bold underline decoration-dotted">04 Jun 2026 from Mumbai</span>
+                      Viewing itinerary for <span className="font-bold underline decoration-dotted">{selectedDateObject.date} {selectedDateObject.month} {selectedDateObject.year} from {selectedCity}</span>
                       <button
                         onClick={() => scrollToSection('pricing')}
                         className="ml-4 text-[#191974] flex items-center gap-1 font-bold bg-white px-3 py-1 rounded-full border border-gray-200 hover:bg-gray-50 shadow-sm transition-all"
@@ -502,7 +511,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
                   <div className="bg-blue-50/30 border border-blue-100 rounded-2xl p-5 flex flex-wrap items-center gap-6">
                     <div>
-                      <p className="text-[14px] text-[#191974] font-bold">Mumbai departure, 04 Jun 2026.</p>
+                      <p className="text-[14px] text-[#191974] font-bold">{selectedCity} departure, {selectedDateObject.date} {selectedDateObject.month} {selectedDateObject.year}.</p>
                     </div>
                     <button
                       onClick={() => scrollToSection('pricing')}
@@ -580,10 +589,10 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <div className="flex justify-between items-start mb-1">
                       <div>
                         <p className="text-[14px] font-bold text-[#191974]">Basic Price</p>
-                        <button className="text-[11px] text-[#191974] font-bold flex items-center gap-1 hover:underline mt-1">
+                        <button onClick={() => scrollToSection('pricing')} className="text-[11px] text-[#191974] font-bold flex items-center gap-1 hover:underline mt-1 cursor-pointer">
                           View Pricing Table <ChevronRight className="w-2.5 h-2.5" />
                         </button>
-                        <button className="text-[11px] text-[#191974] font-bold flex items-center gap-1 hover:underline">
+                        <button onClick={() => scrollToSection('policy')} className="text-[11px] text-[#191974] font-bold flex items-center gap-1 hover:underline cursor-pointer">
                           Cancellation Policy <ChevronRight className="w-2.5 h-2.5" />
                         </button>
                       </div>
@@ -595,7 +604,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <div className="flex justify-between items-center pt-4">
                       <div>
                         <p className="text-[13px] font-bold text-[#191974]">EMI Available</p>
-                        <button className="text-[11px] text-[#191974] font-bold flex items-center gap-1 hover:underline">
+                        <button onClick={() => scrollToSection('pricing')} className="text-[11px] text-[#191974] font-bold flex items-center gap-1 hover:underline cursor-pointer">
                           Check eligibility <ChevronRight className="w-2.5 h-2.5" />
                         </button>
                       </div>
@@ -608,9 +617,8 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Phone className="w-3.5 h-3.5 text-gray-400" />
-                      <p className="text-[13px] font-bold text-[#191974] border-b-2 border-gray-200">1800 313 5555</p>
+                      <a href="tel:+919092949494" className="text-[13px] font-bold text-[#191974] border-b-2 border-gray-200">+91 9092949494</a>
                     </div>
-                    <p className="text-[12px] text-gray-400"><span className="text-[#191974] font-bold border-b-2 border-gray-200">Locate</span> nearest branch</p>
                   </div>
                 </div>
 
@@ -708,7 +716,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     </div>
                   </div>
 
-                  <button className="w-full bg-[#ee2229] text-white py-4 rounded-xl font-bold text-[15px] hover:bg-[#ee2229] transition-all shadow-lg  active:scale-95 flex items-center justify-center gap-2">
+                  <button onClick={handleEnquire} className="w-full bg-[#ee2229] text-white py-4 rounded-xl font-bold text-[15px] hover:bg-[#ee2229] transition-all shadow-lg  active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
                     <Phone className="w-5 h-5" />
                     Request Call Back
                   </button>
@@ -719,7 +727,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
         </div>
 
         {isMapOpen && (
-          <div className="fixed inset-0 z-100 flex items-center justify-center p-4 md:p-12">
+          <div className="fixed inset-0 z-100 flex flex-col items-center justify-center p-4 md:p-12 pt-16 md:pt-12">
             <div
               className="absolute inset-0 bg-[#0a0a1a]/95 backdrop-blur-xl"
               onClick={() => setIsMapOpen(false)}
@@ -727,11 +735,11 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
             {/* Close Button Outside */}
             <button
               onClick={() => setIsMapOpen(false)}
-              className="absolute top-8 right-8 z-110 w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center cursor-pointer transition-all border border-white/20"
+              className="absolute top-4 right-4 md:top-8 md:right-8 z-110 w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center cursor-pointer transition-all border border-white/20"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5 md:w-6 md:h-6" />
             </button>
-            <div className="relative w-full max-w-6xl aspect-square md:aspect-21/9 bg-white rounded-[40px] overflow-hidden shadow-2xl">
+            <div className="relative w-full max-w-6xl aspect-4/5 sm:aspect-square md:aspect-21/9 bg-white rounded-3xl md:rounded-[40px] overflow-hidden shadow-2xl z-105">
               <TourMap tourTitle={tour.title} itinerary={itinerary} fullsize cities={tour.cities?.split('▶').map((c: string) => c.trim())} />
             </div>
           </div>

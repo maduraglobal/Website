@@ -33,7 +33,7 @@ export default async function CRMLayout({
   }
 
   if (!user || !isAdmin) {
-    redirect('/en-in/login');
+    redirect('/en-in');
   }
 
   return (

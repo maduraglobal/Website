@@ -101,7 +101,7 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
         <div className="mt-auto pt-3 border-t border-gray-100 bg-gray-50/30 -mx-5 px-5 py-2">
           <div className="flex justify-between items-end">
             <div>
-              <p className="text-[10px] text-gray-500 mb-0.5">All inclusive price starts</p>
+              {/* <p className="text-[10px] text-gray-500 mb-0.5">All inclusive price starts</p> */}
               <p className="text-[22px] font-bold text-gray-900 leading-none">
                 {formatRegionalPrice(price, region)}<span className="text-[14px] align-top">*</span>
               </p>
