@@ -1,18 +1,22 @@
 "use client";
 
-import React, { useState, use, Suspense } from 'react';
+import React, { useState, use, Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import {
   ChevronLeft, Info, HelpCircle, User, Plane, Building2, Briefcase, Plus,
-  CheckCircle2, Globe, Calendar, Clock
+  CheckCircle2, Globe, Calendar, Clock, Upload, X, ShieldCheck, ArrowRight,
+  CreditCard, Fingerprint, FileText, Camera
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { getDestinationBySlug } from '@/app/data/visaData';
 import { getCountryConfig, formatRegionalPrice } from '@/config/country';
 
-// Default export wraps in Suspense to satisfy Next.js 14 useSearchParams() requirement
+// --- TYPES ---
+type VisStep = 'details' | 'documents' | 'review' | 'payment';
+
+// --- MAIN COMPONENT ---
 export default function VisaApplyPage({ params }: { params: Promise<{ region: string, slug: string }> }) {
   return (
     <Suspense fallback={
@@ -36,549 +40,459 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
   const destination = getDestinationBySlug(slug);
   const destName = destination ? destination.name : (slug ? slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, ' ') : "Thailand");
 
-  // Multi-Traveler State
+  // --- STATE ---
+  const [step, setStep] = useState<VisStep>('details');
   const [travelers, setTravelers] = useState([
-    { id: 1, firstName: '', lastName: '', dob: '', gender: '', maritalStatus: '', passportNumber: '', passportExpiry: '', passportIssuePlace: '', email: '', phone: '', countryCode: 'in' }
+    { 
+      id: 1, 
+      firstName: '', 
+      lastName: '', 
+      dob: '', 
+      gender: '', 
+      passportNo: '', 
+      passportExpiry: '', 
+      email: '', 
+      phone: '', 
+      countryCode: 'in',
+      documents: {} as Record<string, File | null>
+    }
   ]);
-
-  const [flightType, setFlightType] = useState('direct');
-  const [selectedCountryCode, setSelectedCountryCode] = useState('in');
-  const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const validateForm = () => {
+  // --- LOGIC ---
+  const handleTravelerChange = (id: number, field: string, value: any) => {
+    setTravelers(prev => prev.map(t => t.id === id ? { ...t, [field]: value } : t));
+  };
+
+  const handleDocUpload = (travelerId: number, docType: string, file: File | null) => {
+    setTravelers(prev => prev.map(t => 
+      t.id === travelerId 
+        ? { ...t, documents: { ...t.documents, [docType]: file } } 
+        : t
+    ));
+  };
+
+  const validateDetails = () => {
     const newErrors: Record<string, string> = {};
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^\+?\d{1,4}\s?\d{7,14}$/;
-    const passportRegex = /^[A-Z0-9]{5,12}$/i;
-
-    travelers.forEach((t, i) => {
-      if (!t.firstName) newErrors[`t-${t.id}-firstName`] = "First name is required";
-      if (!t.lastName) newErrors[`t-${t.id}-lastName`] = "Last name is required";
-
-      if (!emailRegex.test(t.email)) {
-        newErrors[`t-${t.id}-email`] = "Valid email required";
-      }
-
-      if (!t.phone) {
-        newErrors[`t-${t.id}-phone`] = "Phone and country code required";
-      }
-
-      if (!passportRegex.test(t.passportNumber)) {
-        newErrors[`t-${t.id}-passportNumber`] = "Alphanumeric passport required";
-      }
+    travelers.forEach(t => {
+      if (!t.firstName) newErrors[`t-${t.id}-firstName`] = "First name required";
+      if (!t.lastName) newErrors[`t-${t.id}-lastName`] = "Last name required";
+      if (!t.passportNo) newErrors[`t-${t.id}-passportNo`] = "Passport number required";
+      if (!t.email) newErrors[`t-${t.id}-email`] = "Email required";
     });
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async () => {
-    if (!validateForm()) {
-      const firstError = Object.keys(errors)[0];
-      const element = document.getElementsByName(firstError)[0];
-      if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
+  const validateDocuments = () => {
+    const newErrors: Record<string, string> = {};
+    const requiredDocs = destination?.docs || ['Passport', 'Photo'];
+    
+    travelers.forEach(t => {
+      requiredDocs.forEach(doc => {
+        if (!t.documents[doc]) {
+          newErrors[`t-${t.id}-${doc}`] = `${doc} is required`;
+        }
+      });
+    });
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const nextStep = () => {
+    if (step === 'details') {
+      if (validateDetails()) setStep('documents');
+    } else if (step === 'documents') {
+      if (validateDocuments()) setStep('review');
+    } else if (step === 'review') {
+      setStep('payment');
     }
-    setIsSubmitting(true);
-    // Simulate secure submission to CRM/Database
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const visaFee = parseInt(destination?.price.replace(/,/g, '') || '0');
-  const totalFee = visaFee * travelers.length;
-
-  if (isSubmitted) {
-    return (
-      <div className="min-h-screen bg-[#f8f9fc] flex items-center justify-center p-6 text-[#191974]">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-xl w-full bg-white rounded-[40px] shadow-2xl border border-gray-100 overflow-hidden"
-        >
-          <div className="bg-[#191974] p-10 text-center relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16" />
-            <div className="relative z-10">
-              <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-green-500/20">
-                <CheckCircle2 className="w-12 h-12 text-white" />
-              </div>
-              <h2 className="text-2xl font-bold text-white mb-2">Application Received!</h2>
-              <p className="text-white/60 text-sm font-medium">Reference: <span className="text-white">#MDV-{Math.floor(100000 + Math.random() * 900000)}</span></p>
-            </div>
-          </div>
-
-          <div className="p-10 space-y-8">
-            <div className="space-y-4">
-              <div className="flex justify-between items-center text-sm font-bold">
-                <span className="text-gray-400 uppercase tracking-widest text-[11px]">Destination</span>
-                <span>{destName}</span>
-              </div>
-              <div className="flex justify-between items-center text-sm font-bold">
-                <span className="text-gray-400 uppercase tracking-widest text-[11px]">Travelers</span>
-                <span>{travelers.length} {travelers.length === 1 ? 'Person' : 'People'}</span>
-              </div>
-              <div className="flex justify-between items-center text-sm font-bold">
-                <span className="text-gray-400 uppercase tracking-widest text-[11px]">Visa Type</span>
-                <span className="text-[#191974]">{destination?.type || 'E-VISA'}</span>
-              </div>
-
-              <hr className="border-gray-50 border-dashed" />
-
-              <div className="flex justify-between items-center">
-                <div className="space-y-1">
-                  <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Total Amount</p>
-                  <p className="text-3xl font-bold text-[#191974] tracking-tight">{formatRegionalPrice(totalFee, region)}</p>
-                </div>
-                <Globe className="w-10 h-10 text-gray-100" />
-              </div>
-            </div>
-
-            <div className="bg-blue-50/50 p-6 rounded-3xl border border-blue-100 flex items-start gap-4">
-              <Info className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
-              <p className="text-[12px] text-blue-700/80 leading-relaxed font-medium">
-                Your application has been logged in our secure processing queue. Proceed to the payment gateway to finalize your submission.
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              <button
-                onClick={() => window.location.href = `https://checkout.${countryConfig.paymentGateway}.com/pay`}
-                className="w-full py-4 rounded-2xl bg-[#ee2229] text-white font-bold text-[14px] uppercase tracking-widest shadow-xl shadow-red-500/20 hover:bg-[#191974] transition-all flex items-center justify-center gap-3 active:scale-95"
-              >
-                <Plus className="w-5 h-5 rotate-45" /> Pay with {countryConfig.paymentGateway === 'razorpay' ? 'Razorpay' : 'Stripe'}
-              </button>
-              <button
-                onClick={() => router.push(`/${region}/visa`)}
-                className="w-full py-4 text-gray-400 font-bold text-[12px] hover:text-[#191974] transition-colors"
-              >
-                Cancel and Return
-              </button>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    );
-  }
-
-  const countryCodes = [
-    { code: 'in', name: 'India', dial: '+91' },
-    { code: 'ae', name: 'UAE', dial: '+971' },
-    { code: 'om', name: 'Oman', dial: '+968' },
-    { code: 'qa', name: 'Qatar', dial: '+974' },
-    { code: 'sa', name: 'Saudi', dial: '+966' },
-  ];
-
-  const addTraveler = () => {
-    setTravelers([
-      ...travelers,
-      { id: Date.now(), firstName: '', lastName: '', dob: '', gender: '', maritalStatus: '', passportNumber: '', passportExpiry: '', passportIssuePlace: '', email: '', phone: '', countryCode: 'in' }
-    ]);
+  const prevStep = () => {
+    if (step === 'documents') setStep('details');
+    else if (step === 'review') setStep('documents');
+    else if (step === 'payment') setStep('review');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const updateTraveler = (id: number, field: string, value: string) => {
-    setTravelers(travelers.map(t => t.id === id ? { ...t, [field]: value } : t));
-    if (errors[`t-${id}-${field}`]) {
-      setErrors(prev => {
-        const next = { ...prev };
-        delete next[`t-${id}-${field}`];
-        return next;
-      });
-    }
+  const handleFinalSubmit = async () => {
+    setIsSubmitting(true);
+    await new Promise(r => setTimeout(r, 2000));
+    setIsSubmitting(false);
+    setIsSuccess(true);
+  };
+
+  const visaFee = parseInt(destination?.price.replace(/,/g, '') || '0');
+  const totalAmount = visaFee * travelers.length;
+
+  if (isSuccess) return <SuccessScreen tourName={destName} travelersCount={travelers.length} total={totalAmount} region={region} />;
+
+  return (
+    <div className="min-h-screen bg-[#f8f9fc] text-[#191974] font-inter">
+      {/* HEADER BAR */}
+      <div className="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <button onClick={() => router.back()} className="p-2 hover:bg-gray-50 rounded-full transition-colors">
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <div>
+              <h1 className="text-lg font-bold">Apply for {destName} Visa</h1>
+              <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{citizen} Citizen • {travelers.length} Traveler(s)</p>
+            </div>
+          </div>
+          
+          {/* STEPPER COMPACT */}
+          <div className="hidden md:flex items-center gap-3">
+             {['details', 'documents', 'review', 'payment'].map((s, idx) => {
+               const isActive = s === step;
+               const isDone = ['details', 'documents', 'review', 'payment'].indexOf(step) > idx;
+               return (
+                 <React.Fragment key={s}>
+                   <div className={`flex items-center gap-2 ${isActive ? 'opacity-100' : 'opacity-40'}`}>
+                     <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${isDone ? 'bg-green-500 text-white' : isActive ? 'bg-[#ee2229] text-white' : 'bg-gray-200'}`}>
+                       {isDone ? <CheckCircle2 className="w-3.5 h-3.5" /> : idx + 1}
+                     </div>
+                     <span className="text-[10px] font-bold uppercase tracking-widest pointer-events-none">{s}</span>
+                   </div>
+                   {idx < 3 && <div className="w-4 h-[1px] bg-gray-200" />}
+                 </React.Fragment>
+               );
+             })}
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 py-12 flex flex-col lg:flex-row gap-10">
+        
+        {/* LEFT: FORM AREA */}
+        <div className="flex-1 space-y-8">
+          <AnimatePresence mode="wait">
+            {step === 'details' && (
+              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="space-y-8">
+                <SectionHeader title="Traveler Information" subtitle="Enter details exactly as they appear on your passport." icon={<User className="w-5 h-5" />} />
+                {travelers.map((t, index) => (
+                  <div key={t.id} className="bg-white border border-gray-100 rounded-[24px] p-8 space-y-6">
+                    <div className="flex items-center justify-between border-b border-gray-50 pb-4">
+                      <h4 className="font-bold flex items-center gap-2">
+                         <span className="w-7 h-7 bg-blue-50 text-[#191974] rounded-full flex items-center justify-center text-[12px]">{index + 1}</span>
+                         Traveler {index + 1}
+                      </h4>
+                      {travelers.length > 1 && (
+                         <button onClick={() => setTravelers(prev => prev.filter(x => x.id !== t.id))} className="text-red-500 text-[10px] font-bold uppercase tracking-widest hover:underline">Remove</button>
+                      )}
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <InputBox label="First Name*" placeholder="John" value={t.firstName} onChange={(v) => handleTravelerChange(t.id, 'firstName', v)} error={errors[`t-${t.id}-firstName`]} />
+                      <InputBox label="Last Name*" placeholder="Doe" value={t.lastName} onChange={(v) => handleTravelerChange(t.id, 'lastName', v)} error={errors[`t-${t.id}-lastName`]} />
+                      <InputBox label="Passport No.*" placeholder="A1234567" value={t.passportNo} onChange={(v) => handleTravelerChange(t.id, 'passportNo', v)} error={errors[`t-${t.id}-passportNo`]} />
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-1">Date of Birth*</label>
+                        <input type="date" value={t.dob} onChange={(e) => handleTravelerChange(t.id, 'dob', e.target.value)} className="w-full bg-gray-50 border border-gray-100 focus:border-[#191974] px-5 py-3.5 rounded-xl outline-none transition-all font-semibold text-sm" />
+                      </div>
+                      <InputBox label="Email ID*" type="email" placeholder="john@email.com" value={t.email} onChange={(v) => handleTravelerChange(t.id, 'email', v)} error={errors[`t-${t.id}-email`]} />
+                      <InputBox label="Phone*" type="tel" placeholder="+91 90000 00000" value={t.phone} onChange={(v) => handleTravelerChange(t.id, 'phone', v)} error={errors[`t-${t.id}-phone`]} />
+                    </div>
+                  </div>
+                ))}
+                
+                <button onClick={() => setTravelers([...travelers, { id: Date.now(), firstName: '', lastName: '', dob: '', gender: '', passportNo: '', passportExpiry: '', email: '', phone: '', countryCode: 'in', documents: {} }])} className="w-full py-4 border-2 border-dashed border-gray-200 rounded-2xl text-gray-400 font-bold flex items-center justify-center gap-2 hover:border-[#191974] hover:text-[#191974] transition-all">
+                  <Plus className="w-4 h-4" /> Add Another Traveler
+                </button>
+              </motion.div>
+            )}
+
+            {step === 'documents' && (
+              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="space-y-8">
+                <SectionHeader title="Upload Documents" subtitle="Clear scans are mandatory for approval. Max size 2MB." icon={<ShieldCheck className="w-5 h-5" />} />
+                {travelers.map((t, index) => (
+                  <div key={t.id} className="bg-white border border-gray-100 rounded-[24px] p-8 space-y-6">
+                    <h4 className="font-bold flex items-center gap-2 text-sm">
+                       <span className="w-6 h-6 bg-blue-50 text-[#191974] rounded-full flex items-center justify-center text-[10px]">{index + 1}</span>
+                       {t.firstName || 'Traveler'} {t.lastName} • Documents
+                    </h4>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {(destination?.docs || ['Passport Front', 'Passport Back', 'Photo']).map(doc => (
+                        <FileUploader 
+                          key={doc} 
+                          label={doc} 
+                          file={t.documents[doc]} 
+                          onFileSelect={(f) => handleDocUpload(t.id, doc, f)} 
+                          error={errors[`t-${t.id}-${doc}`]}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+            )}
+
+            {step === 'review' && (
+              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="space-y-8">
+                <SectionHeader title="Review Application" subtitle="Please check all details before proceeding to payment." icon={<FileText className="w-5 h-5" />} />
+                {travelers.map((t, idx) => (
+                   <div key={t.id} className="bg-white border border-gray-100 rounded-[24px] p-8 space-y-4">
+                     <div className="flex justify-between items-center mb-2">
+                        <h4 className="font-bold text-[#191974]">Traveler {idx + 1}</h4>
+                        <button onClick={() => setStep('details')} className="text-[#ee2229] font-bold text-[10px] uppercase tracking-widest hover:underline">Edit</button>
+                     </div>
+                     <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-12">
+                        <ReviewItem label="FULL NAME" value={`${t.firstName} ${t.lastName}`} />
+                        <ReviewItem label="PASSPORT NO" value={t.passportNo} />
+                        <ReviewItem label="DATE OF BIRTH" value={t.dob} />
+                        <ReviewItem label="DOCUMENTS" value={Object.keys(t.documents).filter(k=>t.documents[k]).length + ' Uploaded'} />
+                     </div>
+                   </div>
+                ))}
+              </motion.div>
+            )}
+
+            {step === 'payment' && (
+              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="space-y-8">
+                <SectionHeader title="Finalize & Pay" subtitle="Secure transaction powered by Stripe & Razorpay." icon={<CreditCard className="w-5 h-5" />} />
+                <div className="bg-white border-2 border-[#191974] rounded-[24px] p-8 flex items-center justify-between">
+                   <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-[#191974]">
+                        <Fingerprint className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold">Instant E-Visa Processing</h4>
+                        <p className="text-xs text-gray-400">Your application will be verified within 6 hours.</p>
+                      </div>
+                   </div>
+                   <div className="text-right">
+                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total to pay</p>
+                      <h3 className="text-2xl font-bold text-[#ee2229] tracking-tight">{formatRegionalPrice(totalAmount, region)}</h3>
+                   </div>
+                </div>
+                
+                <div className="bg-white border border-gray-100 rounded-[24px] p-8 space-y-6">
+                   <h4 className="font-bold">Select Payment Method</h4>
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <PaymentOption icon={<Globe className="w-5 h-5"/>} title="International Cards" desc="Visa, Mastercard, Amex" active />
+                      <PaymentOption icon={<Building2 className="w-5 h-5"/>} title="Regional Methods" desc="UPI, NetBanking, Mobile Wallets" />
+                   </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* NAV BUTTONS */}
+          <div className="flex items-center justify-between pt-6">
+            {step !== 'details' ? (
+              <button onClick={prevStep} className="flex items-center gap-2 font-bold text-gray-400 hover:text-[#191974] transition-colors">
+                <ChevronLeft className="w-5 h-5" /> Back
+              </button>
+            ) : <div />}
+            
+            <button 
+              suppressHydrationWarning
+              onClick={step === 'payment' ? handleFinalSubmit : nextStep} 
+              disabled={isSubmitting}
+              className="bg-[#ee2229] text-white px-10 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-[#191974] transition-all   active:scale-95 group"
+            >
+              {isSubmitting ? 'Processing...' : step === 'payment' ? `Pay ${formatRegionalPrice(totalAmount, region)}` : 'Continue'}
+              {!isSubmitting && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
+            </button>
+          </div>
+        </div>
+
+        {/* RIGHT: SIDEBAR SUMMARY */}
+        <div className="lg:w-[360px] flex-shrink-0">
+          <div className="sticky top-32 space-y-6">
+              <div className="bg-white border border-gray-100 rounded-[24px] overflow-hidden">
+                <div className="p-6 bg-gray-50/50 border-b border-gray-100">
+                   <h4 className="font-bold text-sm">Visa Details</h4>
+                </div>
+                <div className="p-6 space-y-4">
+                  <div className="flex items-center gap-3">
+                     <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
+                        <Plane className="w-4 h-4" />
+                     </div>
+                     <div>
+                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Destination</p>
+                        <p className="text-sm font-bold">{destName}</p>
+                     </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                     <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
+                        <Calendar className="w-4 h-4" />
+                     </div>
+                     <div>
+                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Type</p>
+                        <p className="text-sm font-bold">{destination?.type || 'E-Tourist Visa'}</p>
+                     </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                     <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
+                        <Clock className="w-4 h-4" />
+                     </div>
+                     <div>
+                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Validity</p>
+                        <p className="text-sm font-bold">{destination?.valid || '30 Days'}</p>
+                     </div>
+                  </div>
+                </div>
+                
+                <div className="p-6 pt-0 space-y-3 border-t border-gray-100 mt-2">
+                   <div className="flex justify-between text-xs pt-4 text-gray-400">
+                      <span>Visa Fee (x{travelers.length})</span>
+                      <span className="font-bold text-[#191974]">{formatRegionalPrice(totalAmount, region)}</span>
+                   </div>
+                   <div className="flex justify-between text-xs text-gray-400">
+                      <span>Service Charge</span>
+                      <span className="font-bold text-green-500">Free</span>
+                   </div>
+                   <div className="pt-4 flex justify-between items-center">
+                      <p className="font-bold text-[#191974]">TOTAL Amount</p>
+                      <p className="text-xl font-bold text-[#ee2229] tracking-tight">{formatRegionalPrice(totalAmount, region)}</p>
+                   </div>
+                </div>
+              </div>
+              
+              <div className="p-5 bg-blue-50/50 rounded-2xl border border-blue-100 flex items-start gap-4">
+                 <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
+                 <div>
+                    <p className="text-[12px] font-bold text-[#191974]">Madura Secure Payment</p>
+                    <p className="text-[10px] text-blue-700 leading-relaxed mt-1">Your data is encrypted and protected. We use industry-standard security protocols to keep your information safe.</p>
+                 </div>
+              </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+// --- SUB-COMPONENTS ---
+
+function SectionHeader({ title, subtitle, icon }: { title: string, subtitle: string, icon: React.ReactNode }) {
+  return (
+    <div className="flex items-start gap-4 mb-2">
+      <div className="w-10 h-10 bg-[#191974] text-white rounded-2xl flex items-center justify-center flex-shrink-0">
+        {icon}
+      </div>
+      <div>
+        <h2 className="text-xl font-bold tracking-tight">{title}</h2>
+        <p className="text-sm text-gray-400">{subtitle}</p>
+      </div>
+    </div>
+  );
+}
+
+function InputBox({ label, placeholder, value, onChange, type = "text", error }: {
+  label: string, placeholder: string, value: string, onChange: (v: string) => void, type?: string, error?: string
+}) {
+  return (
+    <div className="space-y-2">
+      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-1">{label}</label>
+      <input 
+        type={type} 
+        value={value} 
+        onChange={(e) => onChange(e.target.value)} 
+        placeholder={placeholder}
+        className={`w-full bg-gray-50 border ${error ? 'border-red-500' : 'border-gray-100'} focus:border-[#191974] px-5 py-3.5 rounded-xl outline-none transition-all font-semibold text-sm placeholder:text-gray-300`}
+      />
+      {error && <p className="text-[10px] text-red-500 font-bold px-1">{error}</p>}
+    </div>
+  );
+}
+
+function FileUploader({ label, file, onFileSelect, error }: { label: string, file: File | null, onFileSelect: (f: File | null) => void, error?: string }) {
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    if (f) onFileSelect(f);
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fc] pb-12 font-inter text-[#191974]">
-      {/* 1. TOP NAV BAR ... (omitted for brevity in instruction, keeping same) */}
-      <nav className="bg-white border-b border-gray-100 sticky top-0 z-50 px-4 py-4">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <button
-            onClick={() => router.back()}
-            className="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-
-          <div className="flex items-center gap-3">
-            {destination && (
-              <img
-                src={`https://flagcdn.com/w80/${destination.flag}.png`}
-                className="w-8 h-6 object-cover rounded shadow-sm"
-                alt={destName}
-              />
-            )}
-            <div className="text-center">
-              <h5 className="text-[16px] font-bold leading-none mb-1">{destName} TDAC</h5>
-              <div className="flex items-center gap-3 text-[11px] font-bold text-gray-400">
-                <span>Validity: {destination?.valid || '90 days'}</span>
-                <span>Stay: {destination?.valid || '60 days'}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 text-[#191974] font-bold text-[12px]">
-            <span className="flex items-center gap-1 bg-[#191974]/10 px-3 py-1.5 rounded-full">
-              <Clock className="w-3.5 h-3.5" /> In 1 hour
-            </span>
-          </div>
-        </div>
-      </nav>
-
-      <div className="max-w-3xl mx-auto px-4 py-8 space-y-10">
-        {/* PROGRESS INFO */}
-        <div className="flex items-center justify-between text-[13px] font-bold px-4 mb-2">
-          <div className="flex items-center gap-2 text-[#191974]">
-            <HelpCircle className="w-4 h-4" /> Have questions?
-          </div>
-          <div className="text-gray-400 uppercase tracking-widest text-[11px]">
-            Step 1 of 4: Traveler Details
-          </div>
-        </div>
-
-        {/* TRAVELER SECTIONS */}
-        {travelers.map((traveler, index) => (
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            key={traveler.id}
-            className="bg-white rounded-[32px] shadow-sm border border-gray-100 p-8 space-y-8"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#191974]/5 flex items-center justify-center text-[#191974]">
-                  <User className="w-6 h-6" />
-                </div>
-                <h2 className="text-[18px] font-bold uppercase tracking-tight">Traveler {index + 1}</h2>
-              </div>
-              {index > 0 && (
-                <button
-                  onClick={() => setTravelers(travelers.filter(t => t.id !== traveler.id))}
-                  className="text-[12px] font-bold text-red-500 hover:underline"
-                >
-                  Remove
-                </button>
-              )}
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
-              <div className="space-y-1.5">
-                <label className="text-[12px] font-bold text-gray-500">First Name*</label>
-                <input
-                  type="text"
-                  placeholder="First Name"
-                  value={traveler.firstName}
-                  onChange={(e) => updateTraveler(traveler.id, 'firstName', e.target.value)}
-                  className={`w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border outline-none transition-all text-[#191974] font-medium ${errors[`t-${traveler.id}-firstName`] ? 'border-red-500' : 'border-gray-200 focus:border-[#191974]'}`}
-                  name={`t-${traveler.id}-firstName`}
-                />
-                {errors[`t-${traveler.id}-firstName`] && <p className="text-[10px] text-red-500 font-bold px-2">{errors[`t-${traveler.id}-firstName`]}</p>}
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-[12px] font-bold text-gray-500">Last Name*</label>
-                <input
-                  type="text"
-                  placeholder="Last Name"
-                  value={traveler.lastName}
-                  onChange={(e) => updateTraveler(traveler.id, 'lastName', e.target.value)}
-                  className={`w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border outline-none transition-all text-[#191974] font-medium ${errors[`t-${traveler.id}-lastName`] ? 'border-red-500' : 'border-gray-200 focus:border-[#191974]'}`}
-                  name={`t-${traveler.id}-lastName`}
-                />
-                {errors[`t-${traveler.id}-lastName`] && <p className="text-[10px] text-red-500 font-bold px-2">{errors[`t-${traveler.id}-lastName`]}</p>}
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-[12px] font-bold text-gray-500">Date of Birth*</label>
-                <div className="relative group">
-                  <input
-                    type="date"
-                    value={traveler.dob}
-                    onChange={(e) => updateTraveler(traveler.id, 'dob', e.target.value)}
-                    className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] transition-all text-[#191974] font-medium appearance-none"
-                  />
-                  <Calendar className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#191974] transition-colors pointer-events-none" />
-                </div>
-              </div>
-              <div className="space-y-1.5 font-medium">
-                <label className="text-[12px] font-bold text-gray-500">Gender*</label>
-                <select
-                  value={traveler.gender}
-                  onChange={(e) => updateTraveler(traveler.id, 'gender', e.target.value)}
-                  className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] appearance-none cursor-pointer font-bold text-[14px]"
-                >
-                  <option value="">Select gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-[12px] font-bold text-gray-500">Marital Status*</label>
-                <select
-                  value={traveler.maritalStatus}
-                  onChange={(e) => updateTraveler(traveler.id, 'maritalStatus', e.target.value)}
-                  className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] appearance-none cursor-pointer font-bold text-[14px]"
-                >
-                  <option value="">Select marital status</option>
-                  <option value="single">Single</option>
-                  <option value="married">Married</option>
-                </select>
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-[12px] font-bold text-gray-500">Passport Number*</label>
-                <input
-                  type="text"
-                  placeholder="Passport Number"
-                  value={traveler.passportNumber}
-                  onChange={(e) => updateTraveler(traveler.id, 'passportNumber', e.target.value)}
-                  className={`w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border outline-none focus:border-[#191974] transition-all text-[#191974] font-bold uppercase tracking-widest ${errors[`t-${traveler.id}-passportNumber`] ? 'border-red-500' : 'border-gray-200'}`}
-                  name={`t-${traveler.id}-passportNumber`}
-                />
-                {errors[`t-${traveler.id}-passportNumber`] && <p className="text-[10px] text-red-500 font-bold px-2">{errors[`t-${traveler.id}-passportNumber`]}</p>}
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-[12px] font-bold text-gray-500">Passport Valid Till*</label>
-                <div className="relative group">
-                  <input
-                    type="date"
-                    value={traveler.passportExpiry}
-                    onChange={(e) => updateTraveler(traveler.id, 'passportExpiry', e.target.value)}
-                    className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] transition-all text-[#191974] font-medium appearance-none"
-                  />
-                  <Calendar className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#191974] transition-colors pointer-events-none" />
-                </div>
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-[12px] font-bold text-gray-500">Passport place of issue*</label>
-                <input
-                  type="text"
-                  placeholder="Passport place of issue"
-                  value={traveler.passportIssuePlace}
-                  onChange={(e) => updateTraveler(traveler.id, 'passportIssuePlace', e.target.value)}
-                  className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] transition-all text-[#191974] font-medium"
-                />
-              </div>
-            </div>
-
-            <hr className="border-gray-100" />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 pt-4">
-              <div className="space-y-1.5">
-                <label className="text-[12px] font-bold text-gray-500">Email*</label>
-                <input
-                  type="email"
-                  placeholder="Primary Email"
-                  value={traveler.email}
-                  onChange={(e) => updateTraveler(traveler.id, 'email', e.target.value)}
-                  className={`w-full px-5 py-3.5 rounded-2xl bg-gray-100/50 border outline-none focus:border-[#191974] font-medium ${errors[`t-${traveler.id}-email`] ? 'border-red-500' : 'border-gray-200'}`}
-                  name={`t-${traveler.id}-email`}
-                />
-                {errors[`t-${traveler.id}-email`] && <p className="text-[10px] text-red-500 font-bold px-2">{errors[`t-${traveler.id}-email`]}</p>}
-              </div>
-              <div className="space-y-1.5 relative">
-                <label className="text-[12px] font-bold text-gray-500">Phone Number (inc. CC)*</label>
-                <div className="flex gap-3">
-                  <div
-                    onClick={() => setIsCountryDropdownOpen(!isCountryDropdownOpen)}
-                    className="w-24 px-4 py-3.5 rounded-2xl bg-gray-100/50 border border-gray-200 flex items-center justify-between font-bold cursor-pointer hover:bg-gray-200 transition-colors"
-                  >
-                    <img src={`https://flagcdn.com/w40/${selectedCountryCode}.png`} className="w-6 h-4 object-cover rounded shadow-sm" alt="Flag" />
-                    <ChevronLeft className={`w-4 h-4 transition-transform ${isCountryDropdownOpen ? 'rotate-90' : '-rotate-90'} text-gray-400`} />
-                  </div>
-
-                  {isCountryDropdownOpen && (
-                    <div className="absolute top-20 left-0 w-48 bg-white border border-gray-100 rounded-2xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-                      {countryCodes.map((c) => (
-                        <div
-                          key={c.code}
-                          onClick={() => {
-                            setSelectedCountryCode(c.code);
-                            setIsCountryDropdownOpen(false);
-                            // Update the dial code in the phone field if empty or starts with +
-                            const dial = c.dial;
-                            if (!traveler.phone.startsWith('+')) {
-                              updateTraveler(traveler.id, 'phone', dial + traveler.phone);
-                            }
-                          }}
-                          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-50 last:border-0"
-                        >
-                          <img src={`https://flagcdn.com/w40/${c.code}.png`} className="w-6 h-4 object-cover rounded shadow-sm" alt={c.name} />
-                          <span className="text-[13px] font-bold">{c.dial}</span>
-                          <span className="text-[11px] text-gray-400 capitalize">{c.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  <input
-                    type="tel"
-                    placeholder="Phone with country code (+91...)"
-                    value={traveler.phone}
-                    onChange={(e) => updateTraveler(traveler.id, 'phone', e.target.value)}
-                    className={`flex-1 px-5 py-3.5 rounded-2xl bg-gray-100/50 border outline-none focus:border-[#191974] font-medium ${errors[`t-${traveler.id}-phone`] ? 'border-red-500' : 'border-gray-200'}`}
-                    name={`t-${traveler.id}-phone`}
-                  />
-                </div>
-                {errors[`t-${traveler.id}-phone`] && <p className="text-[10px] text-red-500 font-bold px-2 mt-1">{errors[`t-${traveler.id}-phone`]}</p>}
-              </div>
-            </div>
-          </motion.section>
-        ))}
-
-        {/* 2. TRAVEL DETAILS */}
-        <section className="bg-white rounded-[32px] shadow-sm border border-gray-100 p-8 space-y-8">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#191974]/5 flex items-center justify-center text-[#191974]">
-              <Plane className="w-6 h-6" />
-            </div>
-            <h2 className="text-[18px] font-bold uppercase tracking-tight">Departure & Arrival</h2>
-          </div>
-
-          <div className="flex gap-4 mb-6">
-            <button
-              onClick={() => setFlightType('direct')}
-              className={`flex-1 py-4 px-6 rounded-2xl border transition-all font-bold text-[14px] flex items-center justify-center gap-3 ${flightType === 'direct'
-                ? 'border-[#191974] bg-[#191974]/5 text-[#191974]'
-                : 'border-gray-100 text-gray-400 hover:border-gray-200'
-                }`}
-            >
-              <CheckCircle2 className={`w-5 h-5 fill-[#191974] text-white transition-opacity ${flightType === 'direct' ? 'opacity-100' : 'opacity-0'}`} /> Direct flight
-            </button>
-            <button
-              onClick={() => setFlightType('multi')}
-              className={`flex-1 py-4 px-6 rounded-2xl border transition-all font-bold text-[14px] flex items-center justify-center gap-3 ${flightType === 'multi'
-                ? 'border-[#191974] bg-[#191974]/5 text-[#191974]'
-                : 'border-gray-100 text-gray-400 hover:border-gray-200'
-                }`}
-            >
-              <CheckCircle2 className={`w-5 h-5 fill-[#191974] text-white transition-opacity ${flightType === 'multi' ? 'opacity-100' : 'opacity-0'}`} /> Multi Stop
+    <div className="space-y-2">
+      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-1">{label}*</label>
+      <div 
+        onClick={() => !file && inputRef.current?.click()}
+        className={`relative group h-[120px] rounded-2xl border-2 border-dashed ${file ? 'border-green-500 bg-green-50/30' : error ? 'border-red-500 bg-red-50/10' : 'border-gray-100 bg-gray-50/50 hover:border-[#191974]'} transition-all flex flex-col items-center justify-center cursor-pointer overflow-hidden`}
+      >
+        <input ref={inputRef} type="file" className="hidden" accept="image/*,.pdf" onChange={handleFileChange} />
+        
+        {file ? (
+          <div className="flex flex-col items-center gap-1 p-4 animate-in fade-in zoom-in duration-300">
+            <CheckCircle2 className="w-8 h-8 text-green-500" />
+            <p className="text-[10px] font-bold text-green-600 truncate max-w-[140px]">{file.name}</p>
+            <button onClick={(e) => { e.stopPropagation(); onFileSelect(null); }} className="absolute top-2 right-2 p-1 bg-white/50 rounded-full hover:bg-white transition-colors">
+              <X className="w-3 h-3 text-gray-500" />
             </button>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-1.5">
-              <label className="text-[12px] font-bold text-gray-500">Flight Number*</label>
-              <input
-                type="text"
-                placeholder="Flight Number"
-                className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] font-medium"
-              />
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-[12px] font-bold text-gray-500">{destName} Arrival Date*</label>
-              <div className="relative group">
-                <input
-                  type="date"
-                  className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] font-medium appearance-none"
-                />
-                <Calendar className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#191974] transition-colors pointer-events-none" />
-              </div>
-            </div>
+        ) : (
+          <div className="flex flex-col items-center gap-1">
+            <Camera className="w-8 h-8 text-gray-300 group-hover:text-[#191974] transition-colors" />
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Click to Upload</p>
           </div>
-
-          {flightType === 'multi' && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              className="pt-6 border-t border-gray-100 mt-6 grid grid-cols-1 md:grid-cols-2 gap-6"
-            >
-              <div className="space-y-1.5">
-                <label className="text-[12px] font-bold text-gray-500">Connecting Flight*</label>
-                <input
-                  type="text"
-                  placeholder="Flight Number"
-                  className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] font-medium"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-[12px] font-bold text-gray-500">Layover Duration*</label>
-                <input
-                  type="text"
-                  placeholder="e.g. 4 Hours"
-                  className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] font-medium"
-                />
-              </div>
-            </motion.div>
-          )}
-        </section>
-
-        {/* 3. HOTEL DETAILS */}
-        <section className="bg-white rounded-[32px] shadow-sm border border-gray-100 p-8 space-y-8">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#191974]/5 flex items-center justify-center text-[#191974]">
-              <Building2 className="w-6 h-6" />
-            </div>
-            <h2 className="text-[18px] font-bold uppercase tracking-tight">Hotel Details</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-1.5">
-              <label className="text-[12px] font-bold text-gray-500">Hotel Name*</label>
-              <input
-                type="text"
-                placeholder="Hotel Name"
-                className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] font-medium"
-              />
-            </div>
-            <div className="space-y-1.5 font-medium">
-              <label className="text-[12px] font-bold text-gray-500">Hotel Location*</label>
-              <input
-                type="text"
-                placeholder="Hotel Location"
-                className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] font-medium"
-              />
-
-
-            </div>
-          </div>
-        </section>
-
-        {/* 4. OCCUPATION */}
-        <section className="bg-white rounded-[32px] shadow-sm border border-gray-100 p-8 space-y-8">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#191974]/5 flex items-center justify-center text-[#191974]">
-              <Briefcase className="w-6 h-6" />
-            </div>
-            <h2 className="text-[18px] font-bold uppercase tracking-tight">Occupation</h2>
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-[12px] font-bold text-gray-500">Occupation*</label>
-            <input
-              type="text"
-              placeholder="e.g. Software Engineer"
-              className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] font-medium"
-            />
-          </div>
-        </section>
-
-        {/* STICKY ACTION BUTTONS */}
-        <div className="sticky bottom-4 z-40">
-          <div className="flex flex-col md:flex-row gap-4 bg-white/80 backdrop-blur-xl p-6 rounded-[32px] border border-gray-100 shadow-2xl">
-            <button
-              onClick={addTraveler}
-              className="flex-1 py-4 px-6 rounded-2xl border border-[#191974] text-[#191974] font-bold text-[14px] hover:bg-[#191974]/5 transition-all flex items-center justify-center gap-2"
-            >
-              <Plus className="w-5 h-5" /> Add travelers
-            </button>
-            <button
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-              className="flex-2 py-4 px-6 rounded-2xl bg-[#191974] text-white font-bold text-[14px] hover:bg-[#0f0f4a] transition-all shadow-xl shadow-[#191974]/20 active:scale-95 uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-50"
-            >
-              {isSubmitting ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : (
-                "Submit application"
-              )}
-            </button>
-          </div>
-        </div>
+        )}
       </div>
+      {error && <p className="text-[10px] text-red-500 font-bold px-1">{error}</p>}
+    </div>
+  );
+}
+
+function ReviewItem({ label, value }: { label: string, value: string }) {
+  return (
+    <div>
+      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{label}</p>
+      <p className="text-sm font-bold text-[#191974]">{value || '—'}</p>
+    </div>
+  );
+}
+
+function PaymentOption({ icon, title, desc, active = false }: { icon: React.ReactNode, title: string, desc: string, active?: boolean }) {
+  return (
+    <div className={`p-5 rounded-2xl border-2 cursor-pointer transition-all ${active ? 'border-[#191974] bg-blue-50/30' : 'border-gray-50 bg-white hover:border-gray-200'}`}>
+       <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${active ? 'bg-[#191974] text-white' : 'bg-gray-100 text-gray-400'}`}>
+          {icon}
+       </div>
+       <h5 className="font-bold text-sm">{title}</h5>
+       <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">{desc}</p>
+    </div>
+  );
+}
+
+function SuccessScreen({ tourName, travelersCount, total, region }: { tourName: string, travelersCount: number, total: number, region: string }) {
+  return (
+    <div className="min-h-screen bg-white flex items-center justify-center p-6 text-[#191974]">
+      <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="max-w-md w-full text-center">
+        <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-8   ">
+          <CheckCircle2 className="w-12 h-12 text-white" strokeWidth={3} />
+        </div>
+        <h2 className="text-3xl font-bold mb-4">Application Sent!</h2>
+        <p className="text-gray-500 mb-8 leading-relaxed">Your visa application for <span className="text-[#ee2229] font-bold">{tourName}</span> has been received. Our experts will review your documents and get back to you within 6 hours.</p>
+        
+        <div className="bg-gray-50 rounded-3xl p-8 mb-8 text-left space-y-4">
+           <div className="flex justify-between items-center text-xs">
+              <span className="text-gray-400 font-bold uppercase tracking-widest">Order ID</span>
+              <span className="font-bold tracking-tight">#VIS-{Math.floor(Math.random() * 89999) + 10000}</span>
+           </div>
+           <div className="flex justify-between items-center text-xs">
+              <span className="text-gray-400 font-bold uppercase tracking-widest">Travelers</span>
+              <span className="font-bold">{travelersCount} Person(s)</span>
+           </div>
+           <div className="flex justify-between items-center text-xs">
+              <span className="text-gray-400 font-bold uppercase tracking-widest">Amount Paid</span>
+              <span className="font-bold text-[#ee2229] text-lg">{formatRegionalPrice(total, region)}</span>
+           </div>
+        </div>
+
+        <Link href={`/${region}/visa`} className="inline-flex items-center gap-2 bg-[#191974] text-white px-8 py-4 rounded-xl font-bold   hover:bg-[#ee2229] transition-all">
+          Go to Dashboard <ArrowRight className="w-5 h-5" />
+        </Link>
+      </motion.div>
     </div>
   );
 }

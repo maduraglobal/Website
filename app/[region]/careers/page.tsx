@@ -43,15 +43,15 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
             transition={{ duration: 0.8 }}
             className="max-w-3xl"
           >
-            <h1 className="text-[52px] md:text-[76px]  text-white  tracking-tighter leading-none mb-6">
+            <h4 className="text-[52px] md:text-[76px]  text-white  tracking-tighter leading-none mb-6">
               Adventure <span className="text-[#ee2229]">Awaits</span> Your Career
-            </h1>
+            </h4>
             <p className="text-[18px] md:text-[22px] text-white/70  mb-10 leading-relaxed">
               Join a legacy of excellence. At Madura Travel, we don't just plan journeysâ€”we build careers that inspire and innovate in the world of global travel.
             </p>
-            <button className="bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white px-10 py-4 rounded-xl font-bold  tracking-widest transition-all">
+            {/* <button className="bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white px-10 py-4 rounded-xl font-bold  tracking-widest transition-all">
               View Openings
-            </button>
+            </button> */}
           </motion.div>
         </div>
       </section>

@@ -65,7 +65,7 @@ export default function BookingPage() {
   const [infants, setInfants] = useState(0);
 
   // Lead booker details
-  const [lead, setLead] = useState({ firstName: '', lastName: '', email: '', phone: '', address: '' });
+  const [lead, setLead] = useState({ firstName: '', lastName: '', email: '', phone: '', address: '', dob: '', gender: '' });
 
   // Co-traveler details (auto-generated based on counts)
   const [travelers, setTravelers] = useState<Traveler[]>([]);
@@ -82,7 +82,7 @@ export default function BookingPage() {
   const totalTravelers = adults + children + infants;
   const totalPrice = price * (adults + children);
 
-  const handleLeadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLeadChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setLead(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -227,6 +227,21 @@ export default function BookingPage() {
                       <input required type="text" name="address" value={lead.address} onChange={handleLeadChange} placeholder="Street, City, State, Country"
                         className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm" />
                     </div>
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">Date of Birth</label>
+                        <input required type="date" name="dob" value={lead.dob} onChange={handleLeadChange} 
+                          className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm" />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">Gender</label>
+                        <select required name="gender" value={lead.gender} onChange={handleLeadChange}
+                          className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm appearance-none">
+                            <option value="">Select Gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
                   </div>
                 </div>
 
@@ -243,8 +258,8 @@ export default function BookingPage() {
       {/* Removed traveler summary badges */}
                 </div>
 
-                {/* Co-Traveler Details */}
-                {travelers.length > 0 && (
+                {/* Co-Traveler Details - Shown only if more than 1 traveler */}
+                {travelers.length > 1 && (
                   <div className="bg-white rounded-3xl border border-gray-100  p-8 space-y-8">
                     <div>
                       <h2 className="text-xl font-bold text-[#191974]">Co-Traveler Details</h2>

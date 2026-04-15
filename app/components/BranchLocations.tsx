@@ -53,60 +53,60 @@ const BranchCard = ({ tag, location, name, status, address, phone, email, isInte
       whileHover={{ y: -8 }}
       className="bg-white rounded-4xl p-8 shadow-xl shadow-blue-900/5 border border-gray-100 flex flex-col h-full group transition-all hover:shadow-2xl hover:shadow-blue-900/10"
     >
-    <div className="flex justify-between items-start mb-6">
-      <span className={`px-4 py-1.5 rounded-full text-[10px]   tracking-widest ${isInternational ? 'bg-[#ee2229] text-white' : 'bg-[#191974]/10 text-[#191974]'}`}>
-        {tag}
-      </span>
-      <div className="flex items-center gap-2 px-3 py-1 bg-green-50 rounded-full">
-        <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-        <span className="text-green-600 text-[10px] font-bold  tracking-widest">{status}</span>
+      <div className="flex justify-between items-start mb-6">
+        <span className={`px-4 py-1.5 rounded-full text-[10px]   tracking-widest ${isInternational ? 'bg-[#ee2229] text-white' : 'bg-[#191974]/10 text-[#191974]'}`}>
+          {tag}
+        </span>
+        <div className="flex items-center gap-2 px-3 py-1 bg-green-50 rounded-full">
+          <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+          <span className="text-green-600 text-[10px] font-bold  tracking-widest">{status}</span>
+        </div>
       </div>
-    </div>
 
-    <div className="mb-6">
-      <div className="flex items-center gap-2 text-[#ee2229] mb-1">
-        <MapPin className="w-4 h-4" />
-        <span className="text-[12px] font-bold  tracking-wider">{location}</span>
+      <div className="mb-6">
+        <div className="flex items-center gap-2 text-[#ee2229] mb-1">
+          <MapPin className="w-4 h-4" />
+          <span className="text-[12px] font-bold  tracking-wider">{location}</span>
+        </div>
+        <h3 className="text-[22px]  text-[#191974] leading-tight group-hover:text-[#ee2229] transition-colors">{name}</h3>
       </div>
-      <h3 className="text-[22px]  text-[#191974] leading-tight group-hover:text-[#ee2229] transition-colors">{name}</h3>
-    </div>
 
-    <div className="space-y-4 mb-8 flex-1">
-      <p className="text-gray-500 text-[14px] leading-relaxed ">
-        {address}
-      </p>
+      <div className="space-y-4 mb-8 flex-1">
+        <p className="text-gray-500 text-[14px] leading-relaxed ">
+          {address}
+        </p>
 
-      <div className="space-y-2">
-        <a href={`tel:${phone.replace(/\s+/g, '')}`} className="flex items-center gap-3 text-gray-600 hover:text-[#191974] transition-colors group/link">
-          <Phone className="w-4 h-4 text-[#ee2229]" />
-          <span className="text-[14px] font-medium">{phone}</span>
-        </a>
-        <a href={`mailto:${email}`} className="flex items-center gap-3 text-gray-600 hover:text-[#191974] transition-colors group/link">
-          <Mail className="w-4 h-4 text-[#ee2229]" />
-          <span className="text-[14px] font-medium grow truncate">{email}</span>
-        </a>
+        <div className="space-y-2">
+          <a href={`tel:${phone.replace(/\s+/g, '')}`} className="flex items-center gap-3 text-gray-600 hover:text-[#191974] transition-colors group/link">
+            <Phone className="w-4 h-4 text-[#ee2229]" />
+            <span className="text-[14px] font-medium">{phone}</span>
+          </a>
+          <a href={`mailto:${email}`} className="flex items-center gap-3 text-gray-600 hover:text-[#191974] transition-colors group/link">
+            <Mail className="w-4 h-4 text-[#ee2229]" />
+            <span className="text-[14px] font-medium grow truncate">{email}</span>
+          </a>
+        </div>
       </div>
-    </div>
 
-    <div className="pt-6 border-t border-gray-50 flex items-center justify-between">
-      <button 
-        onClick={handleGoogleMaps}
-        className="flex items-center gap-2 text-[#191974]   tracking-widest text-[12px] hover:text-[#ee2229] transition-colors group/btn"
-      >
-        Office Details
-        <ExternalLink className="w-4 h-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
-      </button>
-      <div className="flex gap-2">
-        <button 
-          onClick={handleShare}
-          className="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#191974] hover:text-white transition-all shadow-sm"
+      <div className="pt-6 border-t border-gray-50 flex items-center justify-between">
+        <button
+          onClick={handleGoogleMaps}
+          className="flex items-center gap-2 text-[#191974]   tracking-widest text-[12px] hover:text-[#ee2229] transition-colors group/btn"
         >
-          <Share2 className="w-4 h-4" />
+          Office Details
+          <ExternalLink className="w-4 h-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
         </button>
+        <div className="flex gap-2">
+          <button
+            onClick={handleShare}
+            className="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#191974] hover:text-white transition-all shadow-sm"
+          >
+            <Share2 className="w-4 h-4" />
+          </button>
+        </div>
       </div>
-    </div>
-  </motion.div>
-);
+    </motion.div>
+  );
 };
 
 export default function BranchLocations() {
@@ -202,9 +202,9 @@ export default function BranchLocations() {
             <a href="tel:+919092949494" className="bg-[#ee2229] hover:bg-white hover:text-[#191974] text-white px-8 py-4 rounded-xl font-bold  tracking-widest transition-all text-center">
               Call Support
             </a>
-            <a href={`/contact`} className="bg-transparent border-2 border-white/20 hover:border-white text-white px-8 py-4 rounded-xl font-bold  tracking-widest transition-all text-center">
+            {/* <a href={`/contact`} className="bg-transparent border-2 border-white/20 hover:border-white text-white px-8 py-4 rounded-xl font-bold  tracking-widest transition-all text-center">
               Global Directory
-            </a>
+            </a> */}
           </div>
         </motion.div>
       </div>
