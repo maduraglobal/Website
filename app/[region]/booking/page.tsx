@@ -368,13 +368,13 @@ export default function BookingPage() {
                   ))}
                 </div>
 
-                <div className="p-5 bg-blue-50 border border-blue-100 rounded-2xl flex items-start gap-4">
+                {/* <div className="p-5 bg-blue-50 border border-blue-100 rounded-2xl flex items-start gap-4">
                   <ShieldCheck className="w-6 h-6 text-blue-600 shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm font-bold text-[#191974]">Madura Secure Booking</p>
                     <p className="text-xs text-blue-700 leading-relaxed mt-1">Your personal data is protected with 256-bit SSL encryption. We never share your information without consent.</p>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="flex justify-between items-center">
                   <button type="button" onClick={() => setStep(1)} className="text-[#191974] font-bold flex items-center gap-2 hover:text-[#ee2229] transition-colors">

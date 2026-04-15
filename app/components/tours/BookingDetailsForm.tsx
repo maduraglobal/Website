@@ -32,6 +32,7 @@ export default function BookingDetailsForm({ onCountUpdate }: BookingDetailsForm
 
   const [addGST, setAddGST] = useState(false);
   const [coTravelers, setCoTravelers] = useState<any[]>([]);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const [counts, setCounts] = useState({ adults: 1, children: 0, infants: 0 });
 
@@ -51,6 +52,28 @@ export default function BookingDetailsForm({ onCountUpdate }: BookingDetailsForm
     for (let i = 0; i < targetInfants; i++) newList.push({ id: `infant-${i}`, type: 'Infant' });
 
     setCoTravelers(newList);
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Invalid email address";
+    }
+
+    const phoneRegex = /^\+?\d{1,4}\s?\d{7,14}$/;
+    if (!phoneRegex.test(formData.mobile)) {
+      newErrors.mobile = "Include country code (e.g. +91)";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleReview = () => {
+    if (validateForm()) {
+      console.log("Form is valid, proceeding...");
+    }
   };
 
   const adjustCount = (type: keyof typeof counts, delta: number) => {
@@ -119,18 +142,37 @@ export default function BookingDetailsForm({ onCountUpdate }: BookingDetailsForm
         </div>
         <div className="relative">
           <label className="absolute -top-2.5 left-3 bg-white px-2 text-[12px] text-gray-400 font-medium z-10">Mobile No.*</label>
-          <div className="flex rounded-xl border border-gray-200 overflow-hidden focus-within:border-[#191974]">
+          <div className={`flex rounded-xl border overflow-hidden transition-all ${errors.mobile ? 'border-red-500' : 'border-gray-200 focus-within:border-[#191974]'}`}>
             <div className="flex items-center gap-2 px-3 bg-gray-50 border-r border-gray-100 cursor-pointer">
               <img src="https://flagcdn.com/w40/in.png" alt="India" className="w-5 h-3.5 object-cover rounded-sm" />
               <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
             </div>
             <div className="flex items-center px-4 bg-gray-50/50 text-gray-500 text-[15px] font-medium border-r border-gray-100">+91</div>
-            <input type="tel" defaultValue="9884460018" className="w-full px-4 py-4 outline-none text-[15px] font-medium" />
+            <input 
+              type="tel" 
+              value={formData.mobile} 
+              onChange={e => {
+                setFormData({...formData, mobile: e.target.value});
+                if (errors.mobile) setErrors(prev => ({...prev, mobile: ''}));
+              }}
+              className="w-full px-4 py-4 outline-none text-[15px] font-medium" 
+            />
           </div>
+          {errors.mobile && <p className="text-[10px] text-red-500 font-bold mt-1 px-2">{errors.mobile}</p>}
         </div>
         <div className="relative">
           <label className="absolute -top-2.5 left-3 bg-white px-2 text-[12px] text-gray-400 font-medium z-10">Email ID*</label>
-          <input type="email" placeholder="tech@gmail.com" className="w-full px-4 py-4 rounded-xl border border-gray-200 outline-none focus:border-[#191974] text-[15px] font-medium" />
+          <input 
+            type="email" 
+            value={formData.email}
+            onChange={e => {
+              setFormData({...formData, email: e.target.value});
+              if (errors.email) setErrors(prev => ({...prev, email: ''}));
+            }}
+            placeholder="tech@gmail.com" 
+            className={`w-full px-4 py-4 rounded-xl border outline-none transition-all text-[15px] font-medium ${errors.email ? 'border-red-500' : 'border-gray-200 focus:border-[#191974]'}`} 
+          />
+          {errors.email && <p className="text-[10px] text-red-500 font-bold mt-1 px-2">{errors.email}</p>}
         </div>
       </div>
 
@@ -165,7 +207,10 @@ export default function BookingDetailsForm({ onCountUpdate }: BookingDetailsForm
       </div>
 
       <div className="mt-12">
-        <button className="w-full bg-[#191974] text-white font-bold py-5 rounded-2xl text-[16px] shadow-xl shadow-yellow-500/10 hover:bg-[#ee2229] transition-all uppercase tracking-widest">
+        <button 
+          onClick={handleReview}
+          className="w-full bg-[#191974] text-white font-bold py-5 rounded-2xl text-[16px] shadow-xl shadow-yellow-500/10 hover:bg-[#ee2229] transition-all uppercase tracking-widest active:scale-[0.98]"
+        >
           Review Details
         </button>
       </div>

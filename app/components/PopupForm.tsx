@@ -11,6 +11,7 @@ export default function PopupForm() {
     email: '',
     phone: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     // Newsletter popup disabled — BookingModal handles the openPopup event.
@@ -23,8 +24,26 @@ export default function PopupForm() {
     setIsVisible(false);
   };
 
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Invalid email address";
+    }
+
+    // Phone validation - must include country code
+    const phoneRegex = /^\+?\d{1,4}\s?\d{7,14}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      newErrors.phone = "Include country code (e.g. +91...)";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) return;
     console.log('Popup form submitted:', formData);
     handleClose();
   };
@@ -102,9 +121,13 @@ export default function PopupForm() {
                     required
                     type="email"
                     placeholder="Email ID*"
-                    className="w-full border-2 border-gray-100 rounded-2xl px-5 py-4 text-[15px] outline-none focus:border-[#ee2229] transition-all group-hover:border-gray-200"
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className={`w-full border-2 rounded-2xl px-5 py-4 text-[15px] outline-none transition-all group-hover:border-gray-200 ${errors.email ? 'border-red-500' : 'border-gray-100 focus:border-[#ee2229]'}`}
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value });
+                      if (errors.email) setErrors(prev => ({ ...prev, email: '' }));
+                    }}
                   />
+                  {errors.email && <p className="text-[10px] text-red-500 font-bold mt-1 px-2">{errors.email}</p>}
                 </div>
 
                 <div className="flex gap-3">
@@ -115,11 +138,15 @@ export default function PopupForm() {
                   <input
                     required
                     type="tel"
-                    placeholder="Mobile No.*"
-                    className="flex-1 border-2 border-gray-100 rounded-2xl px-5 py-4 text-[15px] outline-none focus:border-[#ee2229] transition-all group-hover:border-gray-200"
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder="Mobile No. (incl. +country code)*"
+                    className={`flex-1 border-2 rounded-2xl px-5 py-4 text-[15px] outline-none transition-all group-hover:border-gray-200 ${errors.phone ? 'border-red-500' : 'border-gray-100 focus:border-[#ee2229]'}`}
+                    onChange={(e) => {
+                      setFormData({ ...formData, phone: e.target.value });
+                      if (errors.phone) setErrors(prev => ({ ...prev, phone: '' }));
+                    }}
                   />
                 </div>
+                {errors.phone && <p className="text-[10px] text-red-500 font-bold px-2">{errors.phone}</p>}
 
                 <button
                   type="submit"

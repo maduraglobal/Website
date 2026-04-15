@@ -33,8 +33,42 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
   const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\+?\d{1,4}\s?\d{7,14}$/;
+    const passportRegex = /^[A-Z0-9]{5,12}$/i;
+
+    travelers.forEach((t, i) => {
+      if (!t.firstName) newErrors[`t-${t.id}-firstName`] = "First name is required";
+      if (!t.lastName) newErrors[`t-${t.id}-lastName`] = "Last name is required";
+      
+      if (!emailRegex.test(t.email)) {
+        newErrors[`t-${t.id}-email`] = "Valid email required";
+      }
+
+      if (!t.phone) {
+        newErrors[`t-${t.id}-phone`] = "Phone and country code required";
+      }
+
+      if (!passportRegex.test(t.passportNumber)) {
+        newErrors[`t-${t.id}-passportNumber`] = "Alphanumeric passport required";
+      }
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async () => {
+    if (!validateForm()) {
+      const firstError = Object.keys(errors)[0];
+      const element = document.getElementsByName(firstError)[0];
+      if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
     setIsSubmitting(true);
     // Simulate secure submission to CRM/Database
     await new Promise(resolve => setTimeout(resolve, 2000));
@@ -135,6 +169,13 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
 
   const updateTraveler = (id: number, field: string, value: string) => {
     setTravelers(travelers.map(t => t.id === id ? { ...t, [field]: value } : t));
+    if (errors[`t-${id}-${field}`]) {
+      setErrors(prev => {
+        const next = { ...prev };
+        delete next[`t-${id}-${field}`];
+        return next;
+      });
+    }
   };
 
   return (
@@ -218,8 +259,10 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
                   placeholder="First Name"
                   value={traveler.firstName}
                   onChange={(e) => updateTraveler(traveler.id, 'firstName', e.target.value)}
-                  className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] focus:ring-4 focus:ring-[#191974]/5 transition-all text-[#191974] font-medium"
+                  className={`w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border outline-none focus:ring-4 focus:ring-[#191974]/5 transition-all text-[#191974] font-medium ${errors[`t-${traveler.id}-firstName`] ? 'border-red-500' : 'border-gray-200 focus:border-[#191974]'}`}
+                  name={`t-${traveler.id}-firstName`}
                 />
+                {errors[`t-${traveler.id}-firstName`] && <p className="text-[10px] text-red-500 font-bold px-2">{errors[`t-${traveler.id}-firstName`]}</p>}
               </div>
               <div className="space-y-1.5">
                 <label className="text-[12px] font-bold text-gray-500">Last Name*</label>
@@ -228,8 +271,10 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
                   placeholder="Last Name"
                   value={traveler.lastName}
                   onChange={(e) => updateTraveler(traveler.id, 'lastName', e.target.value)}
-                  className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] focus:ring-4 focus:ring-[#191974]/5 transition-all text-[#191974] font-medium"
+                  className={`w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border outline-none focus:ring-4 focus:ring-[#191974]/5 transition-all text-[#191974] font-medium ${errors[`t-${traveler.id}-lastName`] ? 'border-red-500' : 'border-gray-200 focus:border-[#191974]'}`}
+                  name={`t-${traveler.id}-lastName`}
                 />
+                {errors[`t-${traveler.id}-lastName`] && <p className="text-[10px] text-red-500 font-bold px-2">{errors[`t-${traveler.id}-lastName`]}</p>}
               </div>
 
               <div className="space-y-1.5">
@@ -276,8 +321,10 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
                   placeholder="Passport Number"
                   value={traveler.passportNumber}
                   onChange={(e) => updateTraveler(traveler.id, 'passportNumber', e.target.value)}
-                  className="w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border border-gray-200 outline-none focus:border-[#191974] transition-all text-[#191974] font-bold uppercase tracking-widest"
+                  className={`w-full px-5 py-3.5 rounded-2xl bg-gray-50/50 border outline-none focus:border-[#191974] transition-all text-[#191974] font-bold uppercase tracking-widest ${errors[`t-${traveler.id}-passportNumber`] ? 'border-red-500' : 'border-gray-200'}`}
+                  name={`t-${traveler.id}-passportNumber`}
                 />
+                {errors[`t-${traveler.id}-passportNumber`] && <p className="text-[10px] text-red-500 font-bold px-2">{errors[`t-${traveler.id}-passportNumber`]}</p>}
               </div>
 
               <div className="space-y-1.5">
@@ -314,17 +361,19 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
                   placeholder="Primary Email"
                   value={traveler.email}
                   onChange={(e) => updateTraveler(traveler.id, 'email', e.target.value)}
-                  className="w-full px-5 py-3.5 rounded-2xl bg-gray-100/50 border border-gray-200 outline-none focus:border-[#191974] font-medium"
+                  className={`w-full px-5 py-3.5 rounded-2xl bg-gray-100/50 border outline-none focus:border-[#191974] font-medium ${errors[`t-${traveler.id}-email`] ? 'border-red-500' : 'border-gray-200'}`}
+                  name={`t-${traveler.id}-email`}
                 />
+                {errors[`t-${traveler.id}-email`] && <p className="text-[10px] text-red-500 font-bold px-2">{errors[`t-${traveler.id}-email`]}</p>}
               </div>
               <div className="space-y-1.5 relative">
-                <label className="text-[12px] font-bold text-gray-500">Phone Number</label>
+                <label className="text-[12px] font-bold text-gray-500">Phone Number (inc. CC)*</label>
                 <div className="flex gap-3">
                   <div
                     onClick={() => setIsCountryDropdownOpen(!isCountryDropdownOpen)}
                     className="w-24 px-4 py-3.5 rounded-2xl bg-gray-100/50 border border-gray-200 flex items-center justify-between font-bold cursor-pointer hover:bg-gray-200 transition-colors"
                   >
-                    <img src={`https://flagcdn.com/w40/${selectedCountryCode}.png`} className="w-6 h-4 object-cover rounded shadow-sm" />
+                    <img src={`https://flagcdn.com/w40/${selectedCountryCode}.png`} className="w-6 h-4 object-cover rounded shadow-sm" alt="Flag" />
                     <ChevronLeft className={`w-4 h-4 transition-transform ${isCountryDropdownOpen ? 'rotate-90' : '-rotate-90'} text-gray-400`} />
                   </div>
 
@@ -336,10 +385,15 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
                           onClick={() => {
                             setSelectedCountryCode(c.code);
                             setIsCountryDropdownOpen(false);
+                            // Update the dial code in the phone field if empty or starts with +
+                            const dial = c.dial;
+                            if (!traveler.phone.startsWith('+')) {
+                              updateTraveler(traveler.id, 'phone', dial + traveler.phone);
+                            }
                           }}
                           className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-50 last:border-0"
                         >
-                          <img src={`https://flagcdn.com/w40/${c.code}.png`} className="w-6 h-4 object-cover rounded shadow-sm" />
+                          <img src={`https://flagcdn.com/w40/${c.code}.png`} className="w-6 h-4 object-cover rounded shadow-sm" alt={c.name} />
                           <span className="text-[13px] font-bold">{c.dial}</span>
                           <span className="text-[11px] text-gray-400 capitalize">{c.name}</span>
                         </div>
@@ -349,12 +403,14 @@ export default function VisaApplyPage({ params }: { params: Promise<{ region: st
 
                   <input
                     type="tel"
-                    placeholder="Phone Number"
+                    placeholder="Phone with country code (+91...)"
                     value={traveler.phone}
                     onChange={(e) => updateTraveler(traveler.id, 'phone', e.target.value)}
-                    className="flex-1 px-5 py-3.5 rounded-2xl bg-gray-100/50 border border-gray-200 outline-none focus:border-[#191974] font-medium"
+                    className={`flex-1 px-5 py-3.5 rounded-2xl bg-gray-100/50 border outline-none focus:border-[#191974] font-medium ${errors[`t-${traveler.id}-phone`] ? 'border-red-500' : 'border-gray-200'}`}
+                    name={`t-${traveler.id}-phone`}
                   />
                 </div>
+                {errors[`t-${traveler.id}-phone`] && <p className="text-[10px] text-red-500 font-bold px-2 mt-1">{errors[`t-${traveler.id}-phone`]}</p>}
               </div>
             </div>
           </motion.section>

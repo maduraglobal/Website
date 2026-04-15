@@ -8,8 +8,30 @@ export default function MICEPage() {
   const region = (params?.region as string) || 'in';
   const [formData, setFormData] = useState({ company: '', name: '', email: '', phone: '', eventType: '', groupSize: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); setSubmitted(true); };
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Invalid email address";
+    }
+
+    const phoneRegex = /^\+?\d{1,4}\s?\d{7,14}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      newErrors.phone = "Include country code (e.g. +91)";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => { 
+    e.preventDefault(); 
+    if (validateForm()) {
+      setSubmitted(true); 
+    }
+  };
 
   return (
     <div className="bg-(--background) min-h-screen">
@@ -84,11 +106,30 @@ export default function MICEPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="flex flex-col gap-1">
                     <label className="text-[12px] font-bold text-gray-600 tracking-wide  px-1">Email</label>
-                    <input required type="email" className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] focus:ring-1 focus:ring-[#191974] bg-gray-50 focus:bg-white" onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                    <input 
+                      required 
+                      type="email" 
+                      className={`border p-3.5 rounded-xl text-[14px] outline-none focus:ring-1 bg-gray-50 focus:bg-white transition-all ${errors.email ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-[#191974] focus:ring-[#191974]'}`} 
+                      onChange={e => {
+                        setFormData({ ...formData, email: e.target.value });
+                        if (errors.email) setErrors(prev => ({ ...prev, email: '' }));
+                      }} 
+                    />
+                    {errors.email && <p className="text-[10px] text-red-500 font-bold px-1">{errors.email}</p>}
                   </div>
                   <div className="flex flex-col gap-1">
                     <label className="text-[12px] font-bold text-gray-600 tracking-wide  px-1">Phone</label>
-                    <input required type="tel" className="border border-gray-200 p-3.5 rounded-xl text-[14px] outline-none focus:border-[#191974] focus:ring-1 focus:ring-[#191974] bg-gray-50 focus:bg-white" onChange={e => setFormData({ ...formData, phone: e.target.value })} />
+                    <input 
+                      required 
+                      type="tel" 
+                      placeholder="+91..."
+                      className={`border p-3.5 rounded-xl text-[14px] outline-none focus:ring-1 bg-gray-50 focus:bg-white transition-all ${errors.phone ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-[#191974] focus:ring-[#191974]'}`} 
+                      onChange={e => {
+                        setFormData({ ...formData, phone: e.target.value });
+                        if (errors.phone) setErrors(prev => ({ ...prev, phone: '' }));
+                      }} 
+                    />
+                    {errors.phone && <p className="text-[10px] text-red-500 font-bold px-1">{errors.phone}</p>}
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

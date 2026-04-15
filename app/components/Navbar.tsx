@@ -53,9 +53,8 @@ export default function Navbar() {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [sidebarDestRegion, setSidebarDestRegion] = useState<DestinationKey>("India");
+  const [isSearchOverlayOpen, setIsSearchOverlayOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -163,7 +162,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="w-full flex flex-col fixed top-0 left-0 z-100 shadow-md">
+      <div className="w-full flex flex-col fixed top-0 left-0 z-10001 shadow-md">
 
         {/* 🔹 TOP HEADER */}
         <div className="bg-white text-[#191974] px-4 lg:px-8 py-3 flex items-center justify-between">
@@ -171,7 +170,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link
             href={`/${currentRegionCode}`}
-            className="flex items-center shrink-0"
+            className="flex items-center shrink-0 w-32 sm:w-[160px]"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
             <Image
@@ -179,83 +178,21 @@ export default function Navbar() {
               alt="Madura Travel Logo"
               width={160}
               height={50}
-              className="object-contain"
-              style={{ height: 'auto' }}
+              className="object-contain w-full h-auto"
               priority
             />
           </Link>
 
           {/* Right side: Search + Phone + Login + Country + Hamburger */}
-          <div className="flex items-center gap-4 ">            {/* 🔍 SEARCH BAR */}
-            <div className="relative w-64 hidden sm:block group">
-              <div className="relative flex items-center">
-                <Search className="absolute left-3.5 w-4 h-4 text-gray-400 group-focus-within:text-[#ee2229] transition-colors" />
-                <input
-                  type="text"
-                  value={query}
-                  onFocus={() => setIsOpen(true)}
-                  onBlur={() => setTimeout(() => setIsOpen(false), 200)}
-                  onChange={(e) => { setQuery(e.target.value); setIsOpen(true); }}
-                  placeholder='Search "Destination"'
-                  className="w-full pl-10 pr-10 py-2 rounded-full border border-gray-200 text-[13px] font-medium placeholder:text-gray-400 outline-none focus:border-[#191974] focus:ring-4 focus:ring-[#191974]/5 transition-all bg-gray-50/50 focus:bg-white"
-                  suppressHydrationWarning
-                />
-                {query && (
-                  <button
-                    onClick={() => setQuery("")}
-                    className="absolute right-3.5 p-0.5 hover:bg-gray-100 rounded-full transition-colors"
-                  >
-                    <X className="w-3.5 h-3.5 text-gray-400" />
-                  </button>
-                )}
-              </div>
-
-              {isOpen && (
-                <div className="absolute w-full bg-white shadow-2xl rounded-2xl mt-3 z-50 border border-gray-100 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="px-5 py-3 border-b border-gray-50 bg-gray-50/30">
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                      {query.trim().length === 0 ? "Popular Choices" : "Matching Destinations"}
-                    </p>
-                  </div>
-
-                  <div className="max-h-[350px] overflow-y-auto custom-scrollbar">
-                    {(query.trim().length === 0 ? popularDestinations : filteredResults).length > 0 ? (
-                      (query.trim().length === 0 ? popularDestinations : filteredResults).map((place, index) => {
-                        // Dynamic social proof based on the screenshot
-                        let bookedAgo = null;
-                        if (place === "Dubai") bookedAgo = "91hr ago";
-                        if (place === "Dubai + Europe") bookedAgo = "351hr ago";
-                        if (place.includes("+") && index % 3 === 0) bookedAgo = `${12 + (index * 4)}hr ago`;
-
-                        return (
-                          <div
-                            key={index}
-                            onMouseDown={(e) => e.preventDefault()}
-                            onClick={() => handleSelect(place)}
-                            className="px-5 py-3.5 cursor-pointer hover:bg-gray-50 transition-all border-b border-gray-50 last:border-0 flex items-center justify-between group/item"
-                          >
-                            <div className="flex items-center gap-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover/item:bg-[#191974] transition-colors" />
-                              <span className="text-[14px] text-[#191974] font-bold tracking-tight">{place}</span>
-                            </div>
-
-                            {bookedAgo && (
-                              <div className="flex items-center gap-1.5 text-gray-400">
-                                <Clock className="w-3 h-3 text-gray-300" />
-                                <span className="text-[10px] font-medium italic translate-y-[0.5px]">Booked {bookedAgo}</span>
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <div className="px-5 py-6 text-center">
-                        <p className="text-gray-400 text-[13px] font-medium">No results found for "{query}"</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
+          <div className="flex items-center gap-1.5 sm:gap-4 ml-auto shrink-0">            {/* 🔍 SEARCH BAR */}
+            <div className="relative w-10 sm:w-64 group">
+              <button
+                onClick={() => setIsSearchOverlayOpen(true)}
+                className="w-full h-10 flex items-center gap-3 px-3 sm:px-4 rounded-full border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-gray-300 transition-all text-gray-400"
+              >
+                <Search className="w-4 h-4" />
+                <span className="text-[13px] font-medium hidden sm:inline">Search destinations...</span>
+              </button>
             </div>
 
             {/* Contact info box with Dropdown */}
@@ -268,29 +205,29 @@ export default function Navbar() {
               {/* Phone Numbers Dropdown */}
               <div className="absolute top-full right-0 mt-2 w-[320px] bg-white shadow-2xl rounded-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-200 z-200 overflow-hidden">
                 <div className="px-5 py-3.5 border-b border-gray-100 bg-gray-50">
-                  <p className="text-[13px] text-[#191974] tracking-widest">Contact Us</p>
+                  <p className="text-[13px] text-[#191974] font-bold tracking-widest">Contact Us</p>
                 </div>
                 <div className="px-5 py-4 flex flex-col gap-4">
 
                   {/* Call us */}
                   <div className="flex items-start gap-3">
-                    <div className="w-7 h-7 rounded-full bg-[#191974]/8 flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-7 h-7 rounded-full font-bold bg-[#191974]/8 flex items-center justify-center shrink-0 mt-0.5">
                       <svg className="w-3.5 h-3.5 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                     </div>
                     <div className="flex flex-col gap-0.5">
-                      <p className="text-[10px] text-gray-400 tracking-wider">Call us</p>
-                      <a href="tel:18003135555" className="text-[16px] text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
+                      <p className="text-[10px]  text-gray-400 font-bold tracking-wider">Call us</p>
+                      <a href="tel:18003135555" className="text-[16px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
                     </div>
                   </div>
 
                   {/* WhatsApp */}
                   <div className="flex items-start gap-3">
-                    <div className="w-7 h-7 rounded-full bg-[#191974]/8 flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-7 h-7 rounded-full bg-[#191974]/8  font-bold flex items-center justify-center shrink-0 mt-0.5">
                       <svg className="w-3.5 h-3.5 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
                     </div>
                     <div className="flex flex-col gap-0.5">
-                      <p className="text-[10px] text-gray-400 tracking-wider">whatsapp Number</p>
-                      <a href="https://wa.me/919092949494" className="text-[15px] text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
+                      <p className="text-[10px] text-gray-400  font-bold tracking-wider">whatsapp Number</p>
+                      <a href="https://wa.me/919092949494" className="text-[15px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
                     </div>
                   </div>
 
@@ -303,7 +240,7 @@ export default function Navbar() {
 
                     <div>
                       <p className="text-[10px] text-gray-400 font-semibold">International</p>
-                      <a href="tel:+61434500743" className="text-[15px] text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+61 434 500 743</a>
+                      <a href="tel:+61434500743" className="text-[15px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+61 434 500 743</a>
                     </div>
                   </div>
 
@@ -363,10 +300,10 @@ export default function Navbar() {
 
             {/* Country Selector */}
             <div className="relative group cursor-pointer z-150">
-              <div className="flex items-center gap-3 border border-gray-100 px-3 py-1.5 rounded-lg font-bold text-[13px] hover:border-gray-200 bg-white transition-all">
-                <div className="flex items-center gap-1.5 border-r border-gray-100 pr-2">
+              <div className="flex items-center gap-1.5 sm:gap-3 border border-gray-100 p-1.5 sm:px-3 sm:py-1.5 rounded-lg font-bold text-[13px] hover:border-gray-200 bg-white transition-all">
+                <div className="flex items-center gap-1.5 sm:border-r border-gray-100 sm:pr-2">
                   <Globe className="w-4 h-4 text-[#191974]" />
-                  <span className="text-[12px] text-[#191974]">{activeCountryConfig.language}</span>
+                  <span className="text-[12px] text-[#191974] hidden sm:inline">{activeCountryConfig.language}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <img
@@ -374,8 +311,8 @@ export default function Navbar() {
                     alt={`${activeCountryConfig.name} flag`}
                     className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
                   />
-                  <div className="flex flex-col leading-none">
-                    <span className="text-[12px]  text-[#191974]">{activeCountryConfig.name}</span>
+                  <div className="hidden sm:flex flex-col leading-none">
+                    <span className="text-[12px] text-[#191974]">{activeCountryConfig.name}</span>
                     <span className="text-[9px] font-bold text-gray-400">{activeCountryConfig.currencySymbol} {activeCountryConfig.currencyCode}</span>
                   </div>
                 </div>
@@ -424,13 +361,13 @@ export default function Navbar() {
             {/* â˜° HAMBURGER BUTTON */}
             <button
               onClick={() => setSidebarOpen(true)}
-              className="flex flex-col justify-center items-center w-10 h-10 rounded-lg border border-gray-200 hover:border-[#191974] hover:bg-gray-50 transition-all gap-1.5 shrink-0"
+              className="flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-[#191974]/5 border border-[#191974]/10 hover:bg-[#191974]/10 transition-all gap-[3px] shrink-0"
               aria-label="Open menu"
               suppressHydrationWarning
             >
-              <span className="w-5 h-0.5 bg-[#191974] rounded-full transition-all" />
-              <span className="w-5 h-0.5 bg-[#191974] rounded-full transition-all" />
-              <span className="w-5 h-0.5 bg-[#191974] rounded-full transition-all" />
+              <span className="w-5 h-[2.5px] bg-[#191974] rounded-full transition-all" />
+              <span className="w-5 h-[2.5px] bg-[#191974] rounded-full transition-all" />
+              <span className="w-5 h-[2.5px] bg-[#191974] rounded-full transition-all" />
             </button>
 
           </div>
@@ -443,14 +380,14 @@ export default function Navbar() {
 
       {/* Backdrop (Dimmed/Blurred) */}
       <div
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-200 transition-opacity duration-300 ${sidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-10002 transition-opacity duration-300 ${sidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setSidebarOpen(false)}
       />
 
       {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
           SIDEBAR OVERLAY CONTENT (Testimonials + Drawer)
       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-      <div className={`fixed top-0 right-0 h-full flex z-210 transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed top-0 right-0 h-full flex z-10003 transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}>
 
         {/* Testimonials Section (White BG, Left of Sidebar) */}
         <div className="hidden lg:flex w-[340px] h-full bg-white border-r border-gray-100 flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.05)] overflow-hidden">
@@ -714,6 +651,105 @@ export default function Navbar() {
         </div>
       </div>
       <LoginPopup isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
+
+      {/* 🔍 GLOBAL SEARCH OVERLAY */}
+      <div
+        className={`fixed inset-0 z-[20000] bg-white/95 backdrop-blur-xl transition-all duration-500 ease-out ${isSearchOverlayOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
+      >
+        {/* Background Decorative Map (inspired by screenshot) */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+          <svg className="w-full h-full" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice">
+            <path d="M150,100 Q400,50 850,100" fill="none" stroke="currentColor" strokeWidth="2" />
+            <path d="M100,200 Q400,250 900,200" fill="none" stroke="currentColor" strokeWidth="2" />
+            <path d="M200,300 Q500,350 800,300" fill="none" stroke="currentColor" strokeWidth="2" />
+          </svg>
+        </div>
+
+        {/* Close Button */}
+        <button
+          onClick={() => setIsSearchOverlayOpen(false)}
+          className="absolute top-8 right-8 w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#191974] hover:text-white transition-all duration-300 shadow-lg z-50 group"
+        >
+          <X className="w-6 h-6 group-hover:rotate-90 transition-transform" />
+        </button>
+
+        <div className="max-w-4xl mx-auto h-full flex flex-col pt-24 px-6 relative z-10">
+          <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
+            <h2 className="text-[28px] md:text-[36px] font-bold text-[#191974] tracking-tight mb-2">
+              What's <span className="text-[#3ed49e] italic">your pick</span> for your next vacation?
+            </h2>
+          </div>
+
+          {/* Large Search Input */}
+          <div className="relative group animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
+            <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-300 group-focus-within:text-[#191974] transition-colors" />
+            <input
+              autoFocus
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search Destinations (e.g. Dubai, Australia, London)"
+              className="w-full h-16 sm:h-20 pl-16 pr-20 rounded-3xl bg-white border-2 border-gray-100 shadow-xl text-[18px] sm:text-[22px] font-medium text-[#191974] outline-none focus:border-[#3ed49e] focus:ring-8 focus:ring-[#3ed49e]/5 transition-all"
+            />
+            {query && (
+              <button
+                onClick={() => setQuery("")}
+                className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-red-50 text-gray-400 hover:text-red-500 transition-all"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
+          </div>
+
+          {/* Results Area */}
+          <div className="flex-1 overflow-y-auto mt-12 mb-8 custom-scrollbar scroll-smooth animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">
+            <div className="space-y-2">
+              {(query.trim().length === 0 ? popularDestinations : filteredResults).length > 0 ? (
+                (query.trim().length === 0 ? popularDestinations : filteredResults).map((place, index) => {
+                  let bookedAgo = null;
+                  if (place === "Dubai") bookedAgo = "20hr ago";
+                  if (place === "Canada") bookedAgo = "312hr ago";
+                  if (place === "Europe") bookedAgo = "12hr ago";
+
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        handleSelect(place);
+                        setIsSearchOverlayOpen(false);
+                      }}
+                      className="w-full group flex items-center justify-between p-5 rounded-[24px] hover:bg-[#3ed49e]/5 border border-transparent hover:border-[#3ed49e]/10 transition-all duration-300"
+                    >
+                      <div className="flex items-center gap-6">
+                        <div className="w-2 h-2 rounded-full bg-gray-200 group-hover:bg-[#3ed49e] group-hover:scale-125 transition-all duration-300" />
+                        <span className="text-[20px] sm:text-[24px] font-bold text-[#191974] group-hover:translate-x-2 transition-transform duration-300">
+                          {place}
+                        </span>
+                      </div>
+
+                      {bookedAgo && (
+                        <div className="flex items-center gap-2 text-gray-400/80 font-medium text-[12px] sm:text-[14px]">
+                          <Clock className="w-4 h-4" />
+                          <span>Booked {bookedAgo}</span>
+                        </div>
+                      )}
+                    </button>
+                  );
+                })
+              ) : (
+                <div className="text-center py-20 px-8 bg-gray-50/50 rounded-[40px] border border-dashed border-gray-200">
+                  <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+                    <Search className="w-10 h-10 text-gray-200" />
+                  </div>
+                  <h4 className="text-[20px] font-bold text-[#191974] mb-2">No destinations found</h4>
+                  <p className="text-gray-400 font-medium">Try searching for something else, like "Thailand" or "Europe"</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

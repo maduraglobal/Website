@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { MapPin, Utensils, Camera, Bus, Plane, Bed, Wallet, X, Pencil } from 'lucide-react';
+import { MapPin, Utensils, Camera, Bus, Plane, Bed, Wallet, X, Pencil, Heart } from 'lucide-react';
 import { formatRegionalPrice } from '../../../config/country';
 import FallbackImage from '@/app/components/FallbackImage';
 import TourMap from '@/app/components/tours/TourMap';
@@ -22,6 +22,7 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
   const [isAdmin, setIsAdmin] = React.useState(false);
   const [isMapOpen, setIsMapOpen] = React.useState(false);
   const [isHighlightsOpen, setIsHighlightsOpen] = React.useState(false);
+  const [isWishlisted, setIsWishlisted] = React.useState(false);
   const router = useRouter();
   const supabase = createClient();
 
@@ -32,6 +33,31 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
     }
     checkAdmin();
   }, [supabase]);
+
+  React.useEffect(() => {
+    try {
+      const list = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      setIsWishlisted(list.includes(tour.id));
+    } catch(e){}
+  }, [tour.id]);
+
+  const toggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      let list = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      if (list.includes(tour.id)) {
+        list = list.filter((id: string) => id !== tour.id);
+        setIsWishlisted(false);
+      } else {
+        list.push(tour.id);
+        setIsWishlisted(true);
+      }
+      localStorage.setItem('wishlist', JSON.stringify(list));
+    } catch(err) {
+      console.error(err);
+    }
+  };
 
   const price = tour.base_price_inr || tour.price || 345000;
   const emi = Math.round(price / 27); // Example EMI calculation if not provided
@@ -56,6 +82,16 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
         />
 
         {/* Top Left Initials Badge - REMOVED GZ */}
+
+        {/* Wishlist Button */}
+        <div className="absolute top-3 right-3 z-10">
+          <button 
+            onClick={toggleWishlist}
+            className={`w-8 h-8 rounded-full bg-white/80 backdrop-blur flex items-center justify-center transition-all shadow-sm ${isWishlisted ? 'text-[#ee2229] bg-white' : 'text-gray-500 hover:text-[#ee2229] hover:bg-white'}`}
+          >
+            <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
+          </button>
+        </div>
 
         {/* Bottom Left Duration Badge */}
         <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-md shadow-sm">
