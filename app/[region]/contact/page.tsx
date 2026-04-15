@@ -42,7 +42,7 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
             { icon: <Mail className="w-6 h-6 text-[#ee2229]" />, title: "Email Us", detail: "mail@maduratravel.com", sub: "We'll get back within 24 hours" },
             { icon: <Clock className="w-6 h-6 text-[#ee2229]" />, title: "whatsapp", detail: "+91 90929 49494", sub: "24/7 WhatsApp Support" }
           ].map((item, idx) => (
-            <div key={idx} className="flex items-center gap-5 p-6 rounded-2xl bg-black border border-gray-100 hover:shadow-xl hover:shadow-blue-900/5 transition-all">
+            <div key={idx} className="flex items-center gap-5 p-6 rounded-2xl bg-white border border-gray-100 hover:shadow-xl hover:shadow-blue-900/5 transition-all">
               <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0">
                 {item.icon}
               </div>
@@ -60,7 +60,7 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
       <CorporateOffice />
 
       {/* Global Branch Directory */}
-      <BranchLocations />
+
 
       {/* Contact Form Section */}
       <section className="py-24 bg-white px-6">

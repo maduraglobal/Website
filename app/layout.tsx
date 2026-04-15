@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { BookingProvider } from "./components/BookingModal";
+import BookingModal, { BookingProvider } from "./components/BookingModal";
 import ScrollToTop from "./components/ScrollToTop";
+import NewsletterPopup from "./components/NewsletterPopup";
 
 export const metadata: Metadata = {
   title: "Madura Travel | Explore the World",
@@ -25,6 +26,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <NewsletterPopup />
         </BookingProvider>
       </body>
     </html>

@@ -24,11 +24,35 @@ interface BranchProps {
   isInternational?: boolean;
 }
 
-const BranchCard = ({ tag, location, name, status, address, phone, email, isInternational }: BranchProps) => (
-  <motion.div
-    whileHover={{ y: -8 }}
-    className="bg-white rounded-4xl p-8 shadow-xl shadow-blue-900/5 border border-gray-100 flex flex-col h-full group transition-all hover:shadow-2xl hover:shadow-blue-900/10"
-  >
+const BranchCard = ({ tag, location, name, status, address, phone, email, isInternational }: BranchProps) => {
+  const handleGoogleMaps = () => {
+    const query = encodeURIComponent(`${name} ${address}`);
+    window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
+  };
+
+  const handleShare = async () => {
+    const shareText = `Madura Travel Service - ${name}\nAddress: ${address}\nPhone: ${phone}\nEmail: ${email}`;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: name,
+          text: shareText,
+          url: window.location.href,
+        });
+      } catch (err) {
+        console.log('Error sharing:', err);
+      }
+    } else {
+      navigator.clipboard.writeText(shareText);
+      alert('Branch details copied to clipboard!');
+    }
+  };
+
+  return (
+    <motion.div
+      whileHover={{ y: -8 }}
+      className="bg-white rounded-4xl p-8 shadow-xl shadow-blue-900/5 border border-gray-100 flex flex-col h-full group transition-all hover:shadow-2xl hover:shadow-blue-900/10"
+    >
     <div className="flex justify-between items-start mb-6">
       <span className={`px-4 py-1.5 rounded-full text-[10px]   tracking-widest ${isInternational ? 'bg-[#ee2229] text-white' : 'bg-[#191974]/10 text-[#191974]'}`}>
         {tag}
@@ -65,18 +89,25 @@ const BranchCard = ({ tag, location, name, status, address, phone, email, isInte
     </div>
 
     <div className="pt-6 border-t border-gray-50 flex items-center justify-between">
-      <button className="flex items-center gap-2 text-[#191974]   tracking-widest text-[12px] hover:text-[#ee2229] transition-colors group/btn">
+      <button 
+        onClick={handleGoogleMaps}
+        className="flex items-center gap-2 text-[#191974]   tracking-widest text-[12px] hover:text-[#ee2229] transition-colors group/btn"
+      >
         Office Details
         <ExternalLink className="w-4 h-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
       </button>
       <div className="flex gap-2">
-        <button className="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#191974] hover:text-white transition-all shadow-sm">
+        <button 
+          onClick={handleShare}
+          className="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#191974] hover:text-white transition-all shadow-sm"
+        >
           <Share2 className="w-4 h-4" />
         </button>
       </div>
     </div>
   </motion.div>
 );
+};
 
 export default function BranchLocations() {
   const indiaBranches: BranchProps[] = [

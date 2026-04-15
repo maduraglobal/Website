@@ -121,7 +121,7 @@ export default function Footer() {
         </div>
 
         {/* === MAIN LINKS GRID === */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
 
           {/* Company */}
           <div className="space-y-6">
@@ -218,7 +218,7 @@ export default function Footer() {
                 <Phone className="w-5 h-5 text-[#ee2229] shrink-0" />
                 <div className="space-y-1">
                   <p className="text-[15px] font-bold">+91 9092949494</p>
-                  <p className="text-[15px] font-bold">+91 44 28192002</p>
+
                 </div>
               </div>
               <div className="flex gap-4 items-center">
