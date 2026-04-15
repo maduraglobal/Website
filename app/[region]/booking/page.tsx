@@ -65,15 +65,19 @@ export default function BookingPage() {
   const [infants, setInfants] = useState(0);
 
   // Lead booker details
-  const [lead, setLead] = useState({ firstName: '', lastName: '', email: '', phone: '', address: '' });
+  const [lead, setLead] = useState({ 
+    firstName: '', lastName: '', email: '', phone: '', address: '',
+    dob: '', gender: '', passportNo: ''
+  });
 
   // Co-traveler details (auto-generated based on counts)
   const [travelers, setTravelers] = useState<Traveler[]>([]);
 
-  // Rebuild traveler list whenever counts change
+  // Rebuild co-traveler list whenever counts change
   useEffect(() => {
     const newList: Traveler[] = [];
-    for (let i = 0; i < adults; i++) newList.push(createTraveler('adult', i + 1));
+    // Skip first adult as they are the lead passenger in the primary card
+    for (let i = 1; i < adults; i++) newList.push(createTraveler('adult', i + 1));
     for (let i = 0; i < children; i++) newList.push(createTraveler('child', i + 1));
     for (let i = 0; i < infants; i++) newList.push(createTraveler('infant', i + 1));
     setTravelers(newList);
@@ -211,20 +215,44 @@ export default function BookingPage() {
                     <p className="text-sm text-gray-400 mt-1">Primary contact for this booking (as per passport).</p>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {[['firstName', 'First Name', 'E.g. Rahul'], ['lastName', 'Last Name', 'E.g. Sharma'], ['email', 'Email Address', 'rahul@email.com'], ['phone', 'Mobile Number', '+91 90000 00000']].map(([name, label, ph]) => (
+                    {[['firstName', 'First Name', 'text'], ['lastName', 'Last Name', 'text'], ['email', 'Email Address', 'email'], ['phone', 'Mobile Number', 'tel']].map(([name, label, type]) => (
                       <div key={name} className="space-y-2">
                         <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">{label}</label>
                         <input
-                          required type={name === 'email' ? 'email' : name === 'phone' ? 'tel' : 'text'}
+                          required type={type}
                           name={name} value={(lead as any)[name]} onChange={handleLeadChange}
-                          placeholder={ph}
+                          placeholder={label}
                           className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm"
                         />
                       </div>
                     ))}
+                    
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Date of Birth</label>
+                      <input required type="date" name="dob" value={lead.dob} onChange={handleLeadChange}
+                        className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#ee2229] focus:bg-white px-3 py-3 rounded-lg outline-none transition-all font-semibold text-[#191974] text-sm" />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Gender</label>
+                      <select required name="gender" value={lead.gender} onChange={handleLeadChange as any}
+                        className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#ee2229] focus:bg-white px-3 py-3 rounded-lg outline-none transition-all font-semibold text-[#191974] text-sm appearance-none">
+                        <option value="">Select Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+
                     <div className="space-y-2 md:col-span-2">
                       <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">Full Address</label>
                       <input required type="text" name="address" value={lead.address} onChange={handleLeadChange} placeholder="Street, City, State, Country"
+                        className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm" />
+                    </div>
+
+                    <div className="space-y-2 md:col-span-2">
+                      <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">Passport Number (Optional)</label>
+                      <input type="text" name="passportNo" value={lead.passportNo} onChange={handleLeadChange} placeholder="e.g. A1234567"
                         className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm" />
                     </div>
                   </div>
@@ -344,8 +372,8 @@ export default function BookingPage() {
                   <div className="space-y-1">
                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Lead Passenger</span>
                     <p className="font-bold text-[#191974] text-lg">{lead.firstName} {lead.lastName}</p>
-                    <p className="text-gray-500 text-sm">{lead.email}</p>
-                    <p className="text-gray-500 text-sm">{lead.phone}</p>
+                    <p className="text-gray-500 text-sm">{lead.email} · {lead.phone}</p>
+                    <p className="text-gray-500 text-xs mt-1">{lead.dob} · {lead.gender} {lead.passportNo ? `· ${lead.passportNo}` : ''}</p>
                   </div>
                   <div className="space-y-1">
                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Departure Info</span>

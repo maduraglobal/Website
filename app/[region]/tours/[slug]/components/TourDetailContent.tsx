@@ -13,7 +13,7 @@ import {
   Clock, MapPin, CheckCircle2, Star, Calendar, Users, Camera, ChevronRight,
   Plane, Check, X, Utensils, Phone, MessageCircle, Heart, Download, Mail, Share2,
   Map as MapIcon, HelpCircle, Bed, Bus, Shield, CloudRain, Navigation, FileText,
-  CreditCard, AlertCircle, Zap, ArrowRight, ThumbsUp
+  CreditCard, AlertCircle, Zap, ArrowRight, ThumbsUp, Plus, Minus, ChevronDown
 } from 'lucide-react';
 import { formatRegionalPrice } from '@/config/country';
 import TourMap from '@/app/components/tours/TourMap';
@@ -46,7 +46,15 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
   const [isAdmin, setIsAdmin] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [travellerCount, setTravellerCount] = useState({ adults: 1, children: 0, infants: 0 });
+  const [isTravellerMenuOpen, setIsTravellerMenuOpen] = useState(false);
   const { openBooking } = useBooking();
+
+  const updateTraveller = (type: keyof typeof travellerCount, delta: number) => {
+    setTravellerCount(prev => ({
+      ...prev,
+      [type]: Math.max(type === 'adults' ? 1 : 0, prev[type] + delta)
+    }));
+  };
 
   const cityList = tour.cities?.split('▶') || ["Hanoi", "Halong Bay", "Hoi An", "Da Nang"];
   const [selectedCity, setSelectedCity] = useState(cityList[0]);
@@ -193,7 +201,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 </div>
 
                 {/* Tour Includes Icons Row */}
-                <div className="py-8 border-t border-gray-100">
+                <div className="py-4 md:py-8 border-t border-gray-100">
                   <h3 className="text-[14px] font-bold text-gray-900 mb-6 uppercase tracking-wider">Tour Includes</h3>
                   <div className="grid grid-cols-3 md:grid-cols-6 gap-8">
                     {[
@@ -228,7 +236,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 </div>
 
                 {/* Section: Itinerary (Day Wise) */}
-                <section id="itinerary" className="pt-16 space-y-6">
+                <section id="itinerary" className="pt-8 md:pt-16 space-y-6">
                   {/* <div className="flex items-center justify-between border-b border-gray-50 pb-6">
                     <h2 className="text-[28px] font-bold text-gray-900">Itinerary <span className="text-gray-400 font-normal text-[14px] lowercase">(Day Wise)</span></h2>
                     <button className="text-[#191974] font-bold text-[14px] hover:underline flex items-center gap-1">View all days <ChevronRight className="w-4 h-4" /></button>
@@ -247,7 +255,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     </div>
                   </div>
 
-                  <div className="flex flex-col xl:flex-row gap-10 mt-10">
+                  <div className="flex flex-col xl:flex-row gap-6 md:gap-10 mt-6 md:mt-10">
                     <div className="flex-1">
                       <ItineraryTimeline itinerary={itinerary} />
                     </div>
@@ -267,7 +275,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 </section>
 
                 {/* Section: Details (Image 5 Style) */}
-                <section id="details" className="pt-24 space-y-8">
+                <section id="details" className="pt-12 md:pt-24 space-y-5 md:space-y-8">
                   <div>
                     <h2 className="text-[28px] font-bold text-gray-900">Tour details</h2>
                     <p className="text-[14px] font-normal text-gray-400 italic mt-1">Best facilities with no added cost.</p>
@@ -295,14 +303,14 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     </button>
                   </div>
 
-                  <div className="mt-8">
+                  <div className="mt-4 md:mt-8">
                     {detailsSubTab === 'flight' && (
-                      <div className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm space-y-4">
-                        <div className="flex items-center justify-between border-b border-gray-50 pb-4">
+                      <div className="p-5 md:p-8 bg-white border border-gray-100 rounded-2xl shadow-sm space-y-4">
+                        <div className="flex items-center justify-between border-b border-gray-50 pb-2 md:pb-4">
                           <p className="font-bold text-gray-800">Flight Route</p>
                           <p className="font-bold text-[#191974]">Tentative Schedule</p>
                         </div>
-                        <div className="space-y-4">
+                        <div className="space-y-2 md:space-y-4">
                           <div className="flex justify-between items-center bg-gray-50 p-4 rounded-xl">
                             <div>
                               <p className="text-[14px] font-bold">Mumbai &rarr; Hanoi</p>
@@ -341,7 +349,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 </section>
 
                 {/* Section: Information (Image 5 Style) */}
-                <section id="info" className="pt-24 space-y-12">
+                <section id="info" className="pt-12 md:pt-24 space-y-6 md:space-y-12">
                   <div>
                     <h2 className="text-[28px] font-bold text-gray-900">Tour Information</h2>
                     <p className="text-[14px] font-normal text-gray-400 italic mt-1">Read this to prepare for your tour in the best way!</p>
@@ -369,9 +377,9 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     </button>
                   </div>
 
-                  <div className="mt-8">
+                  <div className="mt-4 md:mt-8">
                     {infoSubTab === 'inclusions' && (
-                      <div className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm">
+                      <div className="p-5 md:p-8 bg-white border border-gray-100 rounded-2xl shadow-sm">
                         <ul className="space-y-4">
                           {[
                             "To and fro economy class air travel for 'Mumbai to Mumbai Tour' guests as mentioned in the itinerary",
@@ -391,7 +399,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     )}
 
                     {infoSubTab === 'exclusions' && (
-                      <div className="p-8 bg-white border border-red-50 rounded-2xl shadow-sm">
+                      <div className="p-5 md:p-8 bg-white border border-red-50 rounded-2xl shadow-sm">
                         <ul className="space-y-4">
                           {[
                             "Anything not mentioned in the inclusions",
@@ -410,7 +418,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     )}
 
                     {infoSubTab === 'preparation' && (
-                      <div className="p-8 bg-white border border-orange-50 rounded-2xl shadow-sm space-y-6">
+                      <div className="p-5 md:p-8 bg-white border border-orange-50 rounded-2xl shadow-sm space-y-6">
                         <p className="text-[14px] text-gray-700 leading-relaxed font-bold">Please pack comfortably and according to the weather updates in the Need to Know section.</p>
                         <ul className="text-[14px] text-gray-600 space-y-4 list-disc pl-5">
                           <li>Carry universal adapters for charging electronic devices.</li>
@@ -423,7 +431,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 </section>
 
                 {/* Section: Need to Know */}
-                <section id="needtoknow" className="pt-24 space-y-8">
+                <section id="needtoknow" className="pt-12 md:pt-24 space-y-5 md:space-y-8">
                   <div>
                     <h2 className="text-[28px] font-bold text-gray-900">Need to Know</h2>
                     <p className="text-[14px] text-gray-400 italic mt-1">Things to consider before the trip!</p>
@@ -493,7 +501,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
                 {/* Section: Cancellation Policy */}
                 {/* Section: Departure and Pricing */}
-                <section id="pricing" className="pt-24 space-y-8">
+                <section id="pricing" className="pt-12 md:pt-24 space-y-5 md:space-y-8">
                   <h2 className="text-[28px] font-bold text-gray-900">Departure and Pricing <span className="text-[14px] font-normal text-gray-400 ml-2 italic">Select your preferred date for the final price.</span></h2>
                   <DeparturePricing
                     cities={cityList}
@@ -506,7 +514,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   />
                 </section>
 
-                <section id="policy" className="pt-24 space-y-8">
+                <section id="policy" className="pt-12 md:pt-24 space-y-5 md:space-y-8">
                   <h2 className="text-[28px] font-bold text-gray-900">Cancellation Policy &amp; Payment Terms</h2>
 
                   <div className="bg-blue-50/30 border border-blue-100 rounded-2xl p-5 flex flex-wrap items-center gap-6">
@@ -575,13 +583,55 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     </p>
 
                     <p className="text-[13px] text-gray-500 font-medium">Travellers</p>
-                    <p className="text-[13px] text-[#191974] font-bold">
-                      {travellerCount.adults} Adult(s) | {travellerCount.children} Child | {travellerCount.infants} Infant
-                    </p>
+                    <div className="relative">
+                      <button 
+                        onClick={() => setIsTravellerMenuOpen(!isTravellerMenuOpen)}
+                        className="flex items-center gap-1.5 text-[13px] text-[#191974] font-bold hover:text-[#ee2229] transition-all cursor-pointer group"
+                      >
+                        {travellerCount.adults} A | {travellerCount.children} C | {travellerCount.infants} I
+                        <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isTravellerMenuOpen ? 'rotate-180' : ''}`} />
+                      </button>
+
+                      {isTravellerMenuOpen && (
+                        <>
+                          <div className="fixed inset-0 z-40" onClick={() => setIsTravellerMenuOpen(false)} />
+                          <div className="absolute top-full right-0 mt-2 w-[240px] bg-white shadow-2xl rounded-2xl border border-gray-100 p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                            {[
+                              { label: 'Adults', sub: '12+ yrs', key: 'adults' },
+                              { label: 'Children', sub: '2-12 yrs', key: 'children' },
+                              { label: 'Infants', sub: 'Under 2 yrs', key: 'infants' }
+                            ].map((type) => (
+                              <div key={type.key} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                                <div>
+                                  <p className="text-[13px] font-bold text-[#191974]">{type.label}</p>
+                                  <p className="text-[10px] text-gray-400">{type.sub}</p>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                  <button 
+                                    onClick={() => updateTraveller(type.key as any, -1)}
+                                    className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-600 disabled:opacity-30"
+                                    disabled={type.key === 'adults' ? travellerCount.adults <= 1 : (travellerCount as any)[type.key] <= 0}
+                                  >
+                                    <Minus className="w-3 h-3" />
+                                  </button>
+                                  <span className="text-[13px] font-bold text-[#191974] w-4 text-center">{(travellerCount as any)[type.key]}</span>
+                                  <button 
+                                    onClick={() => updateTraveller(type.key as any, 1)}
+                                    className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-600"
+                                  >
+                                    <Plus className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
 
                     <p className="text-[13px] text-gray-500 font-medium">Rooms</p>
                     <p className="text-[13px] text-[#191974] font-bold">
-                      {Math.ceil(travellerCount.adults / 2)} Room(s)
+                      {Math.ceil((travellerCount.adults + travellerCount.children) / 2)} Room(s)
                     </p>
                   </div>
 

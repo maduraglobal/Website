@@ -59,7 +59,7 @@ export default function Navbar() {
   const [user, setUser] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  
+
   const supabase = React.useMemo(() => createClient(), []);
 
   const currentRegionCode = (pathname?.split('/')[1] || 'en-in').toLowerCase();
@@ -79,12 +79,12 @@ export default function Navbar() {
     try {
       // 1. Sign out from Supabase (Global scope to clear all tabs)
       await supabase.auth.signOut({ scope: 'global' });
-      
+
       // 2. Clear local auth state
       setUser(null);
       setIsAdmin(false);
       setSidebarOpen(false);
-      
+
       // 3. Clear any lingering Supabase cookies manually for extra safety
       document.cookie.split(";").forEach((c) => {
         if (c.includes("sb-") || c.includes("supabase")) {
@@ -95,7 +95,7 @@ export default function Navbar() {
       // 4. Force a hard reload to root of current region to purge all caches
       const targetPath = `/${currentRegionCode}`;
       window.location.href = targetPath;
-      
+
       // 5. Fallback in case href assignment is delayed
       setTimeout(() => {
         window.location.reload();
@@ -169,8 +169,8 @@ export default function Navbar() {
         <div className="bg-white text-[#191974] px-4 lg:px-8 py-3 flex items-center justify-between">
 
           {/* Logo */}
-          <Link 
-            href={`/${currentRegionCode}`} 
+          <Link
+            href={`/${currentRegionCode}`}
             className="flex items-center shrink-0"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
@@ -201,7 +201,7 @@ export default function Navbar() {
                   suppressHydrationWarning
                 />
                 {query && (
-                  <button 
+                  <button
                     onClick={() => setQuery("")}
                     className="absolute right-3.5 p-0.5 hover:bg-gray-100 rounded-full transition-colors"
                   >
@@ -217,7 +217,7 @@ export default function Navbar() {
                       {query.trim().length === 0 ? "Popular Choices" : "Matching Destinations"}
                     </p>
                   </div>
-                  
+
                   <div className="max-h-[350px] overflow-y-auto custom-scrollbar">
                     {(query.trim().length === 0 ? popularDestinations : filteredResults).length > 0 ? (
                       (query.trim().length === 0 ? popularDestinations : filteredResults).map((place, index) => {
@@ -226,7 +226,7 @@ export default function Navbar() {
                         if (place === "Dubai") bookedAgo = "91hr ago";
                         if (place === "Dubai + Europe") bookedAgo = "351hr ago";
                         if (place.includes("+") && index % 3 === 0) bookedAgo = `${12 + (index * 4)}hr ago`;
-                        
+
                         return (
                           <div
                             key={index}
@@ -238,7 +238,7 @@ export default function Navbar() {
                               <div className="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover/item:bg-[#191974] transition-colors" />
                               <span className="text-[14px] text-[#191974] font-bold tracking-tight">{place}</span>
                             </div>
-                            
+
                             {bookedAgo && (
                               <div className="flex items-center gap-1.5 text-gray-400">
                                 <Clock className="w-3 h-3 text-gray-300" />
@@ -290,7 +290,7 @@ export default function Navbar() {
                     </div>
                     <div className="flex flex-col gap-0.5">
                       <p className="text-[10px] text-gray-400 tracking-wider">whatsapp Number</p>
-                      <a href="tel:+919092949494" className="text-[15px] text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
+                      <a href="https://wa.me/919092949494" className="text-[15px] text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
                     </div>
                   </div>
 
@@ -311,7 +311,7 @@ export default function Navbar() {
                   <div className="h-px bg-gray-100" />
 
                   {/* Email */}
-                  <a href="mailto:travel@maduratravel.com" className="flex items-center gap-3 group/email">
+                  <a href="mailto:mail@maduratravel.com" className="flex items-center gap-3 group/email">
                     <div className="w-7 h-7 rounded-full bg-[#191974]/8 flex items-center justify-center shrink-0">
                       <svg className="w-3.5 h-3.5 text-[#191974] group-hover/email:text-[#ee2229] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                     </div>
@@ -462,8 +462,8 @@ export default function Navbar() {
 
           {/* Sidebar Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-[#191974] shrink-0">
-            <Link 
-              href={`/${currentRegionCode}`} 
+            <Link
+              href={`/${currentRegionCode}`}
               onClick={() => {
                 setSidebarOpen(false);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -547,7 +547,7 @@ export default function Navbar() {
             </div>
 
             {/* â”€â”€â”€ INDIA â”€â”€â”€ */}
-            <div className="border-b border-gray-100">
+            {/* <div className="border-b border-gray-100">
               <button
                 onClick={() => toggleSection('india')}
                 className="w-full flex items-center justify-between px-6 py-4 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
@@ -572,7 +572,7 @@ export default function Navbar() {
                   ))}
                 </div>
               )}
-            </div>
+            </div> */}
 
             {/* â”€â”€â”€ SPECIALITY TOURS â”€â”€â”€ */}
             <div className="border-b border-gray-100">

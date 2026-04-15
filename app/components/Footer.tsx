@@ -121,7 +121,7 @@ export default function Footer() {
         </div>
 
         {/* === MAIN LINKS GRID === */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
 
           {/* Company */}
           <div className="space-y-6">
