@@ -11,46 +11,46 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid tour ID or itinerary data' }, { status: 400 });
     }
 
-    // 1. Get current version if any
+    // 1. Get current version from tour_itineraries
     const { data: currentItin } = await supabase
-      .from('itineraries')
+      .from('tour_itineraries')
       .select('version')
       .eq('tour_id', id)
       .order('version', { ascending: false })
-      .limit(1);
+      .limit(1)
+      .single();
     
-    const nextVersion = (currentItin?.[0]?.version || 0) + 1;
+    const nextVersion = (currentItin?.version || 0) + 1;
     const updatedAt = new Date().toISOString();
 
-    // 2. Prepare records for upsert
-    // Note: If we want to replace the whole itinerary, we might want to delete old ones first,
-    // but upsert by ID is safer for individual day updates.
-    // However, if we removed days in the UI, we should handle that.
-    
-    // Simple approach for this prototype: Delete all old days for this tour and insert new ones
-    // This effectively "versions" the entire set.
-    const { error: deleteError } = await supabase
-      .from('itineraries')
-      .delete()
+    // 2. Prepare the JSONB days array
+    const formattedDays = days.map((day: any) => ({
+      day: day.day_number || day.day,
+      title: day.title,
+      description: day.description,
+      meals: day.meals,
+      activities: day.activities || []
+    }));
+
+    // 3. Upsert into tour_itineraries
+    // We want to keep history, but for simplicity we'll just insert a new version
+    // and mark it as published.
+    // First, unpublish old versions for this tour
+    await supabase
+      .from('tour_itineraries')
+      .update({ is_published: false })
       .eq('tour_id', id);
 
-    if (deleteError) throw deleteError;
-
     const { error: insertError } = await supabase
-      .from('itineraries')
-      .insert(
-        days.map((day: any) => ({
-          tour_id: id,
-          day_number: day.day_number,
-          title: day.title,
-          description: day.description,
-          meals: day.meals,
-          activities: day.activities || [],
-          updated_by: 'Website Admin',
-          updated_at: updatedAt,
-          version: nextVersion
-        }))
-      );
+      .from('tour_itineraries')
+      .insert({
+        tour_id: id,
+        days: formattedDays,
+        updated_by: 'Website Admin',
+        updated_at: updatedAt,
+        version: nextVersion,
+        is_published: true
+      });
 
     if (insertError) throw insertError;
 
@@ -65,3 +65,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+

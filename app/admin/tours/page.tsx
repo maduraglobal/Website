@@ -75,23 +75,32 @@ export default function ToursManagement() {
               </div>
 
               {/* Admin Overlay Actions */}
-              <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all flex flex-col items-center justify-center gap-3 rounded-xl z-30">
+              <div className="absolute inset-0 bg-black/60 backdrop-blur-[4px] opacity-0 group-hover:opacity-100 transition-all flex flex-col items-center justify-center gap-3 rounded-2xl z-30">
                 <Link
                   href={`/admin/tours/${tour.id}/edit`}
-                  className="bg-white text-[#191974] px-6 py-3 rounded-full font-bold text-[13px] flex items-center gap-2 hover:bg-[#ee2229] hover:text-white transition-all shadow-xl"
+                  className="w-[200px] bg-white text-[#191974] px-6 py-3.5 rounded-xl font-bold text-[13px] flex items-center justify-center gap-2 hover:bg-[#ee2229] hover:text-white transition-all shadow-xl"
+                >
+                  <Settings2 className="w-4 h-4" />
+                  Package Details
+                </Link>
+                <Link
+                  href={`/admin/tours/${tour.id}/itinerary`}
+                  className="w-[200px] bg-[#ee2229] text-white px-6 py-3.5 rounded-xl font-bold text-[13px] flex items-center justify-center gap-2 hover:bg-white hover:text-[#191974] transition-all shadow-xl"
                 >
                   <Edit3 className="w-4 h-4" />
-                  FULL EDIT SYSTEM
+                  Manage Itinerary
                 </Link>
-                <div className="flex gap-2">
-                  <button className="w-10 h-10 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition-all backdrop-blur-md">
-                    <Globe className="w-4 h-4" />
-                  </button>
-                  <button className="w-10 h-10 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition-all backdrop-blur-md">
-                    <Settings2 className="w-4 h-4" />
-                  </button>
+                <div className="flex gap-3 mt-2">
+                  <Link 
+                    href={`/en-in/tours/${tour.slug || tour.id}`}
+                    target="_blank"
+                    className="w-11 h-11 bg-white/10 hover:bg-white text-white hover:text-[#191974] rounded-xl flex items-center justify-center transition-all backdrop-blur-md border border-white/20"
+                  >
+                    <Globe className="w-5 h-5" />
+                  </Link>
                 </div>
               </div>
+
 
               {/* Status Badge */}
               <div className="absolute top-4 right-4 z-40">

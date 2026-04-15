@@ -9,6 +9,7 @@ type ItineraryDay = {
   title: string;
   description: string;
   meals?: string;
+  activities?: string[];
 };
 
 interface ItineraryTimelineProps {
@@ -87,6 +88,16 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
                           {item.description}
                         </div>
                       )}
+
+                      {item.activities && item.activities.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mt-4">
+                          {item.activities.map((act, i) => (
+                            <span key={i} className="text-[11px] font-bold text-[#191974] bg-[#191974]/5 px-2.5 py-1 rounded-md border border-gray-100 tracking-wide">
+                              {act}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                       
                       {item.meals && (
                         <p className="text-[12px] font-black text-gray-400 uppercase tracking-[0.15em] pt-5 flex items-center gap-2">
@@ -105,3 +116,4 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
     </div>
   );
 }
+

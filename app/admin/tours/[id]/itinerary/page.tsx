@@ -43,23 +43,28 @@ export default function ItineraryEditor() {
       const { data: tourData } = await supabase.from('tours').select('*').eq('id', id).single();
       setTour(tourData);
 
-      // Fetch Itinerary
+      // Fetch Itinerary from tour_itineraries (the JSONB version)
       const { data: itinData } = await supabase
-        .from('itineraries')
+        .from('tour_itineraries')
         .select('*')
         .eq('tour_id', id)
-        .order('day_number', { ascending: true });
+        .order('version', { ascending: false })
+        .limit(1)
+        .single();
 
-      if (itinData && itinData.length > 0) {
-        setDays(itinData.map(d => ({
-          ...d,
+      if (itinData && itinData.days) {
+        setDays(itinData.days.map((d: any) => ({
+          day_number: d.day,
+          title: d.title || '',
+          description: d.description || '',
+          meals: d.meals || '',
           activities: d.activities || []
         })));
-        // Mock versioning data - in real app, these would come from the record
+        
         setVersionInfo({
-          version: itinData[0].version || 1,
-          updated_by: itinData[0].updated_by || 'Admin',
-          updated_at: itinData[0].updated_at || new Date().toISOString()
+          version: itinData.version || 1,
+          updated_by: itinData.updated_by || 'Admin',
+          updated_at: itinData.updated_at || new Date().toISOString()
         });
       } else {
         // Default day 1 if empty
@@ -69,6 +74,7 @@ export default function ItineraryEditor() {
     }
     fetchData();
   }, [id]);
+
 
   const addDay = () => {
     const nextDay = days.length + 1;
