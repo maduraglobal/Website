@@ -11,7 +11,9 @@ import { useRouter } from 'next/navigation';
 import {
   Clock, MapPin, CheckCircle2, Star, Calendar, Users, Camera, ChevronRight,
   Plane, Check, X, Utensils, Phone, MessageCircle, Heart, Download, Mail, Share2,
-  Map as MapIcon, HelpCircle, Bed, Bus, Shield
+  Map as MapIcon, HelpCircle, Bed, Bus, Shield,
+  ChevronDown,
+  Pencil
 } from 'lucide-react';
 import { formatRegionalPrice } from '@/config/country';
 import TourMap from '@/app/components/tours/TourMap';
@@ -32,6 +34,7 @@ const TABS = [
 ];
 
 import BookingDetailsForm from '@/app/components/tours/BookingDetailsForm';
+import { span } from 'framer-motion/client';
 
 export default function TourDetailContent({ tour, itinerary, region }: TourDetailContentProps) {
   const [activeTab, setActiveTab] = useState('itinerary');
@@ -92,9 +95,9 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     </span>
                   </div>
 
-                  <h1 className="text-[32px] font-bold text-gray-900 leading-tight">
+                  <h4 className="text-[32px] font-bold text-gray-900 leading-tight">
                     {tour.title}
-                  </h1>
+                  </h4>
 
                   <div className="flex items-center gap-4 text-[13px] font-medium">
                     <span className="bg-gray-100 px-3 py-1 rounded-full">{tour.duration || "5 Days"}</span>
@@ -187,7 +190,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <span className="text-[13px] text-[#191974] font-bold">
                       {travellerCount.adults}A | {travellerCount.children}C | {travellerCount.infants}I
                     </span>
-                    <ChevronDown className="w-3.5 h-3.5 text-[#191974]" />
+                    <Pencil className="w-3 h-3 text-gray-300" />
                   </div>
 
                   <p className="text-[13px] text-gray-400 font-medium tracking-tight">Rooms</p>
