@@ -218,14 +218,14 @@ export default function BookingPage() {
                           required type={name === 'email' ? 'email' : name === 'phone' ? 'tel' : 'text'}
                           name={name} value={(lead as any)[name]} onChange={handleLeadChange}
                           placeholder={ph}
-                          className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm"
+                          className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm"
                         />
                       </div>
                     ))}
                     <div className="space-y-2 md:col-span-2">
                       <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">Full Address</label>
                       <input required type="text" name="address" value={lead.address} onChange={handleLeadChange} placeholder="Street, City, State, Country"
-                        className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm" />
+                        className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm" />
                     </div>
                   </div>
                 </div>
@@ -240,25 +240,7 @@ export default function BookingPage() {
                   <Counter label="Children" hint="Age 2–11" value={children} onChange={setChildren} />
                   <Counter label="Infants" hint="Under 2 years" value={infants} onChange={setInfants} />
 
-                  {totalTravelers > 0 && (
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {[...Array(adults)].map((_, i) => (
-                        <span key={`a${i}`} className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#191974]/10 text-[#191974] text-xs font-bold">
-                          <UserCheck className="w-3.5 h-3.5" /> Adult {i + 1}
-                        </span>
-                      ))}
-                      {[...Array(children)].map((_, i) => (
-                        <span key={`c${i}`} className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-xs font-bold">
-                          <User className="w-3.5 h-3.5" /> Child {i + 1}
-                        </span>
-                      ))}
-                      {[...Array(infants)].map((_, i) => (
-                        <span key={`inf${i}`} className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-100 text-pink-600 text-xs font-bold">
-                          <Baby className="w-3.5 h-3.5" /> Infant {i + 1}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+      {/* Removed traveler summary badges */}
                 </div>
 
                 {/* Co-Traveler Details */}
@@ -286,7 +268,7 @@ export default function BookingPage() {
                                 required type={type} value={(t as any)[field]}
                                 onChange={e => handleTravelerChange(t.id, field as keyof Traveler, e.target.value)}
                                 placeholder={label}
-                                className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#ee2229] focus:bg-white px-3 py-3 rounded-lg outline-none transition-all font-semibold text-[#191974] text-sm"
+                                className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-3 py-3 rounded-lg outline-none transition-all font-semibold text-[#191974] text-sm"
                               />
                             </div>
                           ))}
@@ -294,13 +276,13 @@ export default function BookingPage() {
                             <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Date of Birth</label>
                             <input required type="date" value={t.dob}
                               onChange={e => handleTravelerChange(t.id, 'dob', e.target.value)}
-                              className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#ee2229] focus:bg-white px-3 py-3 rounded-lg outline-none transition-all font-semibold text-[#191974] text-sm"
+                              className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-3 py-3 rounded-lg outline-none transition-all font-semibold text-[#191974] text-sm"
                             />
                           </div>
                           <div className="space-y-1.5">
                             <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Gender</label>
                             <select required value={t.gender} onChange={e => handleTravelerChange(t.id, 'gender', e.target.value)}
-                              className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#ee2229] focus:bg-white px-3 py-3 rounded-lg outline-none transition-all font-semibold text-[#191974] text-sm appearance-none">
+                              className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-3 py-3 rounded-lg outline-none transition-all font-semibold text-[#191974] text-sm appearance-none">
                               <option value="">Select Gender</option>
                               <option>Male</option>
                               <option>Female</option>
@@ -313,7 +295,7 @@ export default function BookingPage() {
                               <input type="text" value={t.passportNo}
                                 onChange={e => handleTravelerChange(t.id, 'passportNo', e.target.value)}
                                 placeholder="e.g. A1234567"
-                                className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#ee2229] focus:bg-white px-3 py-3 rounded-lg outline-none transition-all font-semibold text-[#191974] text-sm"
+                                className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-3 py-3 rounded-lg outline-none transition-all font-semibold text-[#191974] text-sm"
                               />
                             </div>
                           )}
@@ -410,10 +392,10 @@ export default function BookingPage() {
                 </div>
 
                 <div className="space-y-4">
-                  <input type="text" placeholder="Card Number" className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#ee2229] px-4 py-4 rounded-xl outline-none font-semibold text-[#191974] transition-all" />
+                  <input type="text" placeholder="Card Number" className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] px-4 py-4 rounded-xl outline-none font-semibold text-[#191974] transition-all" />
                   <div className="grid grid-cols-2 gap-4">
-                    <input type="text" placeholder="MM / YY" className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#ee2229] px-4 py-4 rounded-xl outline-none font-semibold text-[#191974] transition-all" />
-                    <input type="password" placeholder="CVV" className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#ee2229] px-4 py-4 rounded-xl outline-none font-semibold text-[#191974] transition-all" />
+                    <input type="text" placeholder="MM / YY" className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] px-4 py-4 rounded-xl outline-none font-semibold text-[#191974] transition-all" />
+                    <input type="password" placeholder="CVV" className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] px-4 py-4 rounded-xl outline-none font-semibold text-[#191974] transition-all" />
                   </div>
                 </div>
 

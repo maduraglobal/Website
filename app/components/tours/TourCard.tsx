@@ -91,7 +91,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row group"
+      className="bg-white rounded-2xl overflow-hidden border border-gray-100 transition-all duration-300 flex flex-col md:flex-row group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -106,7 +106,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
         {/* Badges */}
         <div className="absolute top-4 left-4 flex flex-col gap-2">
           {tags.slice(0, 2).map((tag: string, i: number) => (
-            <span key={i} className={`text-xs font-bold px-3 py-1.5 rounded-md  tracking-wider shadow-sm ${i === 0 ? 'bg-[#ee2229] text-white' : 'bg-white text-[#191974]'}`}>
+            <span key={i} className={`text-xs font-bold px-3 py-1.5 rounded-md  tracking-wider border border-white/20 ${i === 0 ? 'bg-[#ee2229] text-white' : 'bg-white text-[#191974]'}`}>
               {tag}
             </span>
           ))}
@@ -115,7 +115,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
         <div className="absolute top-4 right-4 flex gap-2">
           <button 
             onClick={toggleWishlist}
-            className={`w-8 h-8 rounded-full bg-white/80 backdrop-blur flex items-center justify-center transition-all shadow-sm ${isWishlisted ? 'text-[#ee2229] bg-white' : 'text-gray-500 hover:text-[#ee2229] hover:bg-white'}`}
+            className={`w-8 h-8 rounded-full bg-white/80 backdrop-blur flex items-center justify-center transition-all border border-gray-100 ${isWishlisted ? 'text-[#ee2229] bg-white' : 'text-gray-500 hover:text-[#ee2229] hover:bg-white'}`}
           >
             <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
           </button>
@@ -197,7 +197,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
             <div className="space-y-2.5 w-full flex flex-col relative z-20 ">
               <Link
                 href={`/${region}/booking?tour=${tour.slug || tour.id}&price=${price || 0}&savings=0`}
-                className="w-full block text-center bg-[#191974] hover:bg-[#ee2229] text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-900/10 transition-all text-[15px]  tracking-wider"
+                className="w-full block text-center bg-[#191974] hover:bg-[#ee2229] text-white font-bold py-3.5 px-4 rounded-xl border border-[#191974] transition-all text-[15px]  tracking-wider"
               >
                 Book Now
               </Link>
@@ -227,7 +227,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
             className="absolute inset-0 bg-[#0a0a1a]/95 backdrop-blur-xl cursor-pointer"
             onClick={() => setIsMapOpen(false)}
           />
-          <div className="relative w-full max-w-6xl aspect-square md:aspect-21/9 bg-white rounded-[40px] overflow-hidden shadow-2xl z-50">
+          <div className="relative w-full max-w-6xl aspect-square md:aspect-21/9 bg-white rounded-[40px] overflow-hidden border border-gray-800 z-50">
             <button
               onClick={() => setIsMapOpen(false)}
               className="absolute top-6 right-6 z-50 w-12 h-12 bg-gray-900/10 hover:bg-gray-900/20 rounded-full flex items-center justify-center cursor-pointer"
@@ -251,7 +251,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
             className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"
             onClick={() => setIsHighlightsOpen(false)}
           />
-          <div className="relative bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl z-50">
+          <div className="relative bg-white w-full max-w-md rounded-2xl p-6 border border-gray-100 z-50">
             <button
               onClick={() => setIsHighlightsOpen(false)}
               className="absolute top-4 right-4 w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center cursor-pointer"

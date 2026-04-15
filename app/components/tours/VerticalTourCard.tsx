@@ -69,7 +69,7 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-gray-100"
+      className="bg-white rounded-xl overflow-hidden transition-all duration-300 flex flex-col h-full border border-gray-100"
     >
 
       {/* Image Container */}
@@ -87,14 +87,14 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
         <div className="absolute top-3 right-3 z-10">
           <button 
             onClick={toggleWishlist}
-            className={`w-8 h-8 rounded-full bg-white/80 backdrop-blur flex items-center justify-center transition-all shadow-sm ${isWishlisted ? 'text-[#ee2229] bg-white' : 'text-gray-500 hover:text-[#ee2229] hover:bg-white'}`}
+            className={`w-8 h-8 rounded-full bg-white/80 backdrop-blur flex items-center justify-center transition-all border border-gray-100 ${isWishlisted ? 'text-[#ee2229] bg-white' : 'text-gray-500 hover:text-[#ee2229] hover:bg-white'}`}
           >
             <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
           </button>
         </div>
 
         {/* Bottom Left Duration Badge */}
-        <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-md shadow-sm">
+        <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-md border border-gray-100">
           <span className="text-[11px] font-bold text-gray-800">{duration}</span>
         </div>
 
@@ -164,7 +164,7 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
           </Link>
           <button
             onClick={() => router.push(`/${region}/booking?tour=${tour.slug || tour.id}&price=${tour.price || 0}&savings=0`)}
-            className="flex items-center justify-center bg-[#ee2229] border-2 border-[#ee2229] text-white hover:bg-transparent hover:text-[#ee2229] py-2.5 rounded-xl text-[12px] font-bold transition-all shadow-lg shadow-red-500/10 active:scale-95 uppercase tracking-wider"
+            className="flex items-center justify-center bg-[#ee2229] border-2 border-[#ee2229] text-white hover:bg-transparent hover:text-[#ee2229] py-2.5 rounded-xl text-[12px] font-bold transition-all active:scale-95 uppercase tracking-wider"
           >
             Book Online
           </button>

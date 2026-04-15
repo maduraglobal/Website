@@ -43,9 +43,9 @@ export default async function AllDestinationsPage({ params }: { params: Promise<
           </svg>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h1 className="text-4xl md:text-5xl  mb-4 text-white  tracking-tight font-poppins">
+          <h3 className="text-4xl md:text-5xl  mb-4 text-white  tracking-tight font-poppins">
             Explore All Destinations
-          </h1>
+          </h3>
           <p className="text-[#e2e2e2] text-lg max-w-2xl mx-auto">
             Find your next perfect getaway. Browse by region, state, or city and uncover the incredible premium tour packages waiting for you.
           </p>

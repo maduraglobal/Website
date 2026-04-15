@@ -13,7 +13,8 @@ import {
   Clock, MapPin, CheckCircle2, Star, Calendar, Users, Camera, ChevronRight,
   Plane, Check, X, Utensils, Phone, MessageCircle, Heart, Download, Mail, Share2,
   Map as MapIcon, HelpCircle, Bed, Bus, Shield, CloudRain, Navigation, FileText,
-  CreditCard, AlertCircle, Zap, ArrowRight, ThumbsUp, Plus, Minus, ChevronDown
+  CreditCard, AlertCircle, Zap, ArrowRight, ThumbsUp, Plus, Minus, ChevronDown,
+  Heading4
 } from 'lucide-react';
 import { formatRegionalPrice } from '@/config/country';
 import TourMap from '@/app/components/tours/TourMap';
@@ -52,6 +53,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
   const [isTravellerMenuOpen, setIsTravellerMenuOpen] = useState(false);
   const [isEditingCity, setIsEditingCity] = useState(false);
   const [isEditingDate, setIsEditingDate] = useState(false);
+  const [customDate, setCustomDate] = useState<{ date: string, month: string, year: string } | null>(null);
   const { openBooking } = useBooking();
 
   const updateTraveller = (type: keyof typeof travellerCount, delta: number) => {
@@ -75,6 +77,8 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
   const handleCityChange = (city: string) => {
     setSelectedCity(city);
+    setSelectedDateId('d1');
+    setCustomDate(null);
     // Automatically select the first date for the new city
     if (mockDates[city] && mockDates[city].length > 0) {
       setSelectedDateId(mockDates[city][0].id);
@@ -139,7 +143,9 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
     ]
   };
 
-  const selectedDateObject = mockDates[selectedCity]?.find((d: any) => d.id === selectedDateId) || mockDates[selectedCity]?.[0] || mockDates[cityList[0]][0];
+  const selectedDateObject = selectedDateId === 'custom' && customDate
+    ? { ...customDate, price: tour.price || 105000, savings: 0 }
+    : (mockDates[selectedCity]?.find((d: any) => d.id === selectedDateId) || mockDates[selectedCity]?.[0] || mockDates[cityList[0]][0]);
 
   return (
     <>
@@ -163,9 +169,9 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     </span>
                   </div>
 
-                  <p className="text-[36px] font-bold text-gray-900 leading-tight">
+                  <h3 className="font-bold text-gray-900 leading-tight">
                     {tour.title}
-                  </p>
+                  </h3>
 
                   <div className="flex flex-wrap items-center gap-4 text-[13px] font-medium">
                     <span className="bg-gray-100 px-3 py-1.5 rounded-full text-gray-700">{tour.duration || "5 Days"}</span>
@@ -177,7 +183,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     {/* Download Details Button */}
                     <button
                       onClick={() => window.print()}
-                      className="flex items-center gap-2 bg-blue-50 text-[#191974] px-4 py-1.5 rounded-full text-[12px] font-bold hover:bg-blue-100 transition-all border border-blue-100 shadow-sm group"
+                      className="flex items-center gap-2 bg-blue-50 text-[#191974] px-4 py-1.5 rounded-full text-[12px] font-bold hover:bg-blue-100 transition-all border border-blue-100 group"
                     >
                       <Download className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
                       Download Details
@@ -187,7 +193,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     {isAdmin && (
                       <Link
                         href="/admin/tours"
-                        className="ml-auto flex items-center gap-2 bg-gray-900 text-white px-4 py-1.5 rounded-full text-[12px] font-bold hover:bg-black transition-all shadow-lg animate-bounce hover:animate-none"
+                        className="ml-auto flex items-center gap-2 bg-gray-900 text-white px-4 py-1.5 rounded-full text-[12px] font-bold hover:bg-black transition-all border border-gray-800 animate-bounce hover:animate-none"
                       >
                         <Pencil className="w-3.5 h-3.5" />
                         Edit Tour Details
@@ -253,7 +259,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 </div>
 
                 {/* Section: Itinerary (Day Wise) */}
-                <section id="itinerary" className="pt-8 md:pt-16 space-y-6">
+                <section id="itinerary" className="pt-8 space-y-4">
                   {/* <div className="flex items-center justify-between border-b border-gray-50 pb-6">
                     <h2 className="text-[28px] font-bold text-gray-900">Itinerary <span className="text-gray-400 font-normal text-[14px] lowercase">(Day Wise)</span></h2>
                     <button className="text-[#191974] font-bold text-[14px] hover:underline flex items-center gap-1">View all days <ChevronRight className="w-4 h-4" /></button>
@@ -292,10 +298,10 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 </section>
 
                 {/* Section: Details (Image 5 Style) */}
-                <section id="details" className="pt-12 md:pt-24 space-y-5 md:space-y-8">
+                <section id="details" className="pt-8 space-y-6">
                   <div>
-                    <h2 className="text-[28px] font-bold text-gray-900">Tour details</h2>
-                    <p className="text-[14px] font-normal text-gray-400 italic mt-1">Best facilities with no added cost.</p>
+                    <h2 className="font-bold text-gray-900">Tour details</h2>
+                    <p className="text-[13px] font-normal text-gray-400 italic">Best facilities with no added cost.</p>
                   </div>
 
                   {/* Sub Tabs */}
@@ -366,10 +372,10 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 </section>
 
                 {/* Section: Information (Image 5 Style) */}
-                <section id="info" className="pt-12 md:pt-24 space-y-6 md:space-y-12">
+                <section id="info" className="pt-8 space-y-6">
                   <div>
-                    <h2 className="text-[28px] font-bold text-gray-900">Tour Information</h2>
-                    <p className="text-[14px] font-normal text-gray-400 italic mt-1">Read this to prepare for your tour in the best way!</p>
+                    <h2 className="font-bold text-gray-900">Tour Information</h2>
+                    <p className="text-[13px] font-normal text-gray-400 italic">Read this to prepare for your tour in the best way!</p>
                   </div>
 
                   {/* Sub Tabs */}
@@ -531,8 +537,8 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   />
                 </section>
 
-                <section id="policy" className="pt-12 md:pt-24 space-y-5 md:space-y-8">
-                  <h2 className="text-[28px] font-bold text-gray-900">Cancellation Policy &amp; Payment Terms</h2>
+                <section id="policy" className="pt-8 space-y-6">
+                  <h2 className="font-bold text-gray-900">Cancellation Policy &amp; Payment Terms</h2>
 
                   <div className="bg-blue-50/30 border border-blue-100 rounded-2xl p-5 flex flex-wrap items-center gap-6">
                     <div>
@@ -581,7 +587,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
             {/* RIGHT COLUMN (1/3) - SIDEBAR */}
             <div className="lg:w-1/3 space-y-6 h-fit pt-6 sticky top-24">
               {/* Sidebar Booking Summary Card (Screenshot 2 Match) */}
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden font-inter">
+              <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden font-inter">
                 <div className="p-6 border-b border-gray-100 flex items-center gap-3">
                   <div className="w-5 h-5 flex items-center justify-center">
                     <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
@@ -595,7 +601,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <div className="flex items-center justify-end">
                       {isEditingCity ? (
                         <div className="flex items-center gap-1">
-                          <select 
+                          <select
                             value={selectedCity}
                             onChange={(e) => {
                               handleCityChange(e.target.value);
@@ -613,7 +619,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                           </button>
                         </div>
                       ) : (
-                        <button 
+                        <button
                           onClick={() => setIsEditingCity(true)}
                           className="text-[13px] text-[#191974] font-bold text-left flex items-center justify-end gap-1 hover:text-[#ee2229] transition-colors group"
                         >
@@ -627,25 +633,28 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <div className="flex items-center justify-end">
                       {isEditingDate ? (
                         <div className="flex items-center gap-1">
-                          <select 
-                            value={selectedDateId}
+                          <input
+                            type="date"
                             onChange={(e) => {
-                              setSelectedDateId(e.target.value);
+                              const date = new Date(e.target.value);
+                              if (!isNaN(date.getTime())) {
+                                const day = date.getDate().toString().padStart(2, '0');
+                                const month = date.toLocaleDateString('en-GB', { month: 'short' });
+                                const year = date.getFullYear().toString();
+                                setCustomDate({ date: day, month: month, year: year });
+                                setSelectedDateId('custom');
+                              }
                               setIsEditingDate(false);
                             }}
                             className="text-[13px] text-[#191974] font-bold bg-gray-50 border border-gray-200 rounded px-1 outline-none"
                             autoFocus
-                          >
-                            {mockDates[selectedCity]?.map((d: any) => (
-                              <option key={d.id} value={d.id}>{d.date} {d.month} {d.year}</option>
-                            ))}
-                          </select>
+                          />
                           <button onClick={() => setIsEditingDate(false)} className="text-gray-400">
                             <X className="w-3 h-3" />
                           </button>
                         </div>
                       ) : (
-                        <button 
+                        <button
                           onClick={() => setIsEditingDate(true)}
                           className="text-[13px] text-[#191974] font-bold text-left flex items-center justify-end gap-1 hover:text-[#ee2229] transition-colors group"
                         >
@@ -657,7 +666,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
                     <p className="text-[13px] text-gray-400 font-medium tracking-tight">Travellers</p>
                     <div className="relative">
-                      <button 
+                      <button
                         onClick={() => setIsTravellerMenuOpen(!isTravellerMenuOpen)}
                         className="flex items-center justify-end gap-1 text-[13px] text-[#191974] font-bold hover:text-[#ee2229] transition-all cursor-pointer group w-full"
                       >
@@ -680,7 +689,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                                   <p className="text-[10px] text-gray-400">{type.sub}</p>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                  <button 
+                                  <button
                                     onClick={(e) => { e.stopPropagation(); updateTraveller(type.key as any, -1); }}
                                     className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-600 disabled:opacity-30"
                                     disabled={type.key === 'adults' ? travellerCount.adults <= 1 : (travellerCount as any)[type.key] <= 0}
@@ -688,7 +697,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                                     <Minus className="w-3 h-3" />
                                   </button>
                                   <span className="text-[13px] font-bold text-[#191974] w-4 text-center">{(travellerCount as any)[type.key]}</span>
-                                  <button 
+                                  <button
                                     onClick={(e) => { e.stopPropagation(); updateTraveller(type.key as any, 1); }}
                                     className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-600"
                                   >
@@ -700,26 +709,26 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
                             {/* Room Selector in the same menu */}
                             <div className="flex items-center justify-between py-2 border-t border-gray-100 mt-2">
-                                <div>
-                                    <p className="text-[13px] font-bold text-[#191974]">Rooms</p>
-                                    <p className="text-[10px] text-gray-400">Total rooms</p>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <button 
-                                      onClick={(e) => { e.stopPropagation(); setRoomCount(Math.max(Math.ceil((travellerCount.adults + travellerCount.children) / 2), roomCount - 1)); }}
-                                      className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-600 disabled:opacity-30"
-                                      disabled={roomCount <= Math.ceil((travellerCount.adults + travellerCount.children) / 2)}
-                                    >
-                                      <Minus className="w-3 h-3" />
-                                    </button>
-                                    <span className="text-[13px] font-bold text-[#191974] w-4 text-center">{roomCount}</span>
-                                    <button 
-                                      onClick={(e) => { e.stopPropagation(); setRoomCount(roomCount + 1); }}
-                                      className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-600"
-                                    >
-                                      <Plus className="w-3 h-3" />
-                                    </button>
-                                </div>
+                              <div>
+                                <p className="text-[13px] font-bold text-[#191974]">Rooms</p>
+                                <p className="text-[10px] text-gray-400">Total rooms</p>
+                              </div>
+                              <div className="flex items-center gap-3">
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); setRoomCount(Math.max(Math.ceil((travellerCount.adults + travellerCount.children) / 2), roomCount - 1)); }}
+                                  className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-600 disabled:opacity-30"
+                                  disabled={roomCount <= Math.ceil((travellerCount.adults + travellerCount.children) / 2)}
+                                >
+                                  <Minus className="w-3 h-3" />
+                                </button>
+                                <span className="text-[13px] font-bold text-[#191974] w-4 text-center">{roomCount}</span>
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); setRoomCount(roomCount + 1); }}
+                                  className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-600"
+                                >
+                                  <Plus className="w-3 h-3" />
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </>
@@ -727,13 +736,13 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     </div>
 
                     <p className="text-[13px] text-gray-400 font-medium tracking-tight">Rooms</p>
-                     <button 
-                        onClick={() => setIsTravellerMenuOpen(true)}
-                        className="text-[13px] text-[#191974] font-bold text-left flex items-center justify-end gap-1 hover:text-[#ee2229] transition-colors"
-                     >
-                       {roomCount} Room{roomCount > 1 ? 's' : ''}
-                       <Pencil className="w-3 h-3 text-gray-300 ml-1" />
-                     </button>
+                    <button
+                      onClick={() => setIsTravellerMenuOpen(true)}
+                      className="text-[13px] text-[#191974] font-bold text-left flex items-center justify-end gap-1 hover:text-[#ee2229] transition-colors"
+                    >
+                      {roomCount} Room{roomCount > 1 ? 's' : ''}
+                      <Pencil className="w-3 h-3 text-gray-300 ml-1" />
+                    </button>
                   </div>
 
                   <div className="pt-6 border-t border-dashed border-gray-200">
@@ -854,7 +863,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
                   <div className="relative">
                     <div className="flex rounded-xl border border-gray-200 bg-white overflow-hidden focus-within:border-[#ee2229] transition-all relative">
-                      <PhonePrefixSelector 
+                      <PhonePrefixSelector
                         selectedCode={selectedCountryCode}
                         onSelect={(code) => setSelectedCountryCode(code)}
                         variant="sidebar"

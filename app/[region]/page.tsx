@@ -97,7 +97,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
   const [isDepartOpen, setIsDepartOpen] = useState(false);
   const [isGoingOpen, setIsGoingOpen] = useState(false);
   const [searchMonth, setSearchMonth] = useState("");
-  
+
   const destScrollRef = useRef<HTMLDivElement>(null);
 
   const allPlaces = [
@@ -168,8 +168,8 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-[#171717] text-[14px]">
-      {/* HERO SECTION - 60vh */}
-      <section className="relative w-full h-[70vh] flex flex-col pt-6 md:pt-10 pb-6 overflow-visible">
+      {/* HERO SECTION - Tighter Height */}
+      <section className="relative w-full h-[50vh] flex flex-col pt-4 md:pt-6 pb-4 overflow-visible">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -178,17 +178,15 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
             alt="Hero Background"
             className="w-full h-full object-cover transition-all"
           />
-          {/* Overlay to darken image slightly for text readability */}
+          {/* Overlay */}
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto w-full px-6 lg:px-8 relative z-10 flex-1 flex flex-col items-center justify-center mt-10">
-          {/* Centered Text */}
-          <div className="w-full text-[#191974] space-y-3">
-            <h1 className="text-[32px] md:text-[56px]  tracking-tight leading-[1.1] text-white drop-shadow-xl text-center mt-6 md:mt-0">
-              The World is Waiting.<br />
-              Start Exploring.
-            </h1>
+        <div className="max-w-7xl mx-auto w-full px-6 lg:px-8 relative z-10 flex-1 flex flex-col items-center justify-center">
+          <div className="w-full text-center space-y-2">
+            <h3 className="text-white text-center mt-6 md:mt-0">
+              The World is Waiting. Start Exploring.
+            </h3>
           </div>
         </div>
       </section>
@@ -196,7 +194,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
       {/* SEARCH BAR SECTION - Overlapping Hero */}
       <div className="w-full relative z-30 -mt-10 md:-mt-14">
         <div className="max-w-6xl mx-auto w-full px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center border border-gray-200 rounded-2xl md:rounded-full bg-white shadow-2xl py-2 px-3 transition-shadow hover:shadow-[0_25px_60px_rgba(0,0,0,0.15)]">
+          <div className="flex flex-col lg:flex-row items-center border border-gray-200 rounded-2xl md:rounded-full bg-white py-2 px-3 transition-colors hover:border-[#191974]">
             <div className="w-full lg:flex-1 px-8 py-1 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 group relative">
               <label className="text-[14px]  tracking-widest text-[#ee2229] mb-0.5 ">Depart From</label>
               <div className="flex items-center justify-between w-full relative">
@@ -212,7 +210,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                 />
                 <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </div>
-              
+
               {isDepartOpen && (
                 <div className="absolute top-[48px] left-4 right-4 bg-white shadow-2xl rounded-xl z-50 border border-gray-100 overflow-hidden max-h-60 overflow-y-auto [&::-webkit-scrollbar]:hidden">
                   <div className="px-4 py-2 border-b border-gray-50">
@@ -251,7 +249,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                 />
                 <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </div>
-              
+
               {isGoingOpen && (
                 <div className="absolute top-[48px] left-4 right-4 bg-white shadow-2xl rounded-xl z-50 border border-gray-100 overflow-hidden max-h-60 overflow-y-auto [&::-webkit-scrollbar]:hidden">
                   <div className="px-4 py-2 border-b border-gray-50">
@@ -319,20 +317,20 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
           </div>
 
           <div className="relative group">
-            <button 
+            <button
               onClick={() => scrollDest('left')}
               className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 backdrop-blur shadow-lg rounded-full flex items-center justify-center text-[#191974] hover:bg-[#ee2229] hover:text-white transition-all -ml-5 opacity-0 group-hover:opacity-100 border border-gray-100"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
-            <button 
+            <button
               onClick={() => scrollDest('right')}
               className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 backdrop-blur shadow-lg rounded-full flex items-center justify-center text-[#191974] hover:bg-[#ee2229] hover:text-white transition-all -mr-5 opacity-0 group-hover:opacity-100 border border-gray-100"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
 
-            <div 
+            <div
               ref={destScrollRef}
               className="flex overflow-x-auto gap-4 lg:gap-5 pb-6 snap-x snap-mandatory no-scrollbar scroll-smooth"
             >
