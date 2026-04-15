@@ -5,23 +5,24 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import FallbackImage from '@/app/components/FallbackImage';
-import { 
-  Users, 
-  Award, 
-  Globe, 
-  CheckCircle2, 
-  Calendar, 
-  Briefcase, 
-  Music, 
-  Camera, 
-  Heart, 
-  MapPin, 
+import {
+  Users,
+  Award,
+  Globe,
+  CheckCircle2,
+  Calendar,
+  Briefcase,
+  Music,
+  Camera,
+  Heart,
+  MapPin,
   ArrowRight,
   ChevronDown,
   Plane,
   Building2,
   BadgeCheck,
-  Mail
+  Mail,
+  Heading4Icon
 } from 'lucide-react';
 
 export default function MICEPage() {
@@ -144,10 +145,10 @@ export default function MICEPage() {
               <span className="w-12 h-px bg-[#ee2229]"></span>
               <span className="text-[14px] font-bold uppercase tracking-[0.3em] text-[#ee2229]">Empowering Business Travel</span>
             </div>
-            <h1 className="text-[48px] md:text-[72px] font-extrabold leading-[1.1] mb-8">
+            <h4 className="text-[48px] md:text-[72px] font-extrabold leading-[1.1] mb-8">
               Corporate MICE <br />
               <span className="text-white/80">Tailored to Perfection</span>
-            </h1>
+            </h4>
             <p className="text-[18px] md:text-[20px] mb-10 text-gray-200 leading-relaxed font-medium">
               Meetings, Incentives, Conferences & Exhibitions. Madura Travel Service brings 40+ years of expertise to your corporate journeys.
             </p>
@@ -514,7 +515,7 @@ export default function MICEPage() {
           <div className="space-y-4">
             {[
               { q: "What is MICE Tourism?", a: "MICE stands for Meetings, Incentives, Conferences, and Exhibitions. It caters to corporate groups and organizations looking to host professional events or reward teams." },
-              { q: "Can you handle international groups?", a: "Yes, we handle end-to-end logistics for international MICE travel, including venue selection across 60+ countries, visa processing, and global freight for event gear." },
+              { q: "Can you handle international groups?", a: "Yes, we handle end-to-end logistics for international MICE travel, including venue selection across 195+ countries, visa processing, and global freight for event gear." },
               { q: "Do you offer on-site event support?", a: "Absolutely. We provide a dedicated team of on-ground tour managers and event coordinators to ensure 24/7 support throughout your journey." },
               { q: "What is your experience with large-scale events?", a: "We have coordinated over 550 international concerts and handled massive corporate delegations of up to 20,000 travelers with seamless precision." }
             ].map((faq, i) => (

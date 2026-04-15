@@ -39,9 +39,12 @@ export default async function AdminLayout({
       {/* Sidebar */}
       <aside className="w-64 bg-[#191974] text-white flex flex-col fixed h-full z-50">
         <div className="p-6 border-b border-white/10">
-          <Link href="/admin" className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#ee2229] rounded-lg flex items-center justify-center font-bold">W</div>
-            <span className="text-xl font-bold tracking-tight">Website Content Manager</span>
+          <Link href="/en-in" className="flex items-center gap-3 group">
+            <div className="w-8 h-8 bg-[#ee2229] group-hover:bg-white rounded-lg flex items-center justify-center font-bold group-hover:text-[#ee2229] transition-all">M</div>
+            <div>
+              <span className="text-xl font-bold tracking-tight block">Madura Admin</span>
+              <span className="text-[10px] text-white/40 group-hover:text-white/60 transition-colors">← Back to Website</span>
+            </div>
           </Link>
         </div>
 

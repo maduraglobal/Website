@@ -59,6 +59,7 @@ export default function Navbar() {
   const [sidebarDestRegion, setSidebarDestRegion] = useState<DestinationKey>("India");
   const [isSearchOverlayOpen, setIsSearchOverlayOpen] = useState(false);
   const [isContactDropdownOpen, setIsContactDropdownOpen] = useState(false);
+  const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -339,8 +340,12 @@ export default function Navbar() {
             )}
 
             {/* Country Selector */}
-            <div className="relative group cursor-pointer z-150">
-              <div className="flex items-center gap-1.5 sm:gap-3 border border-gray-100 p-1.5 sm:px-3 sm:py-1.5 rounded-lg font-bold text-[13px] hover:border-gray-200 bg-white transition-all">
+            <div className="relative z-150">
+              <button
+                suppressHydrationWarning
+                onClick={() => setIsCountryDropdownOpen(!isCountryDropdownOpen)}
+                className="flex items-center gap-1.5 sm:gap-3 border border-gray-100 p-1.5 sm:px-3 sm:py-1.5 rounded-lg font-bold text-[13px] hover:border-gray-200 bg-white transition-all cursor-pointer"
+              >
                 <div className="flex items-center gap-1.5 sm:border-r border-gray-100 sm:pr-2">
                   <Globe className="w-4 h-4 text-[#191974]" />
                   <span className="text-[12px] text-[#191974] hidden sm:inline">{activeCountryConfig.language}</span>
@@ -356,46 +361,64 @@ export default function Navbar() {
                     <span className="text-[9px] font-bold text-gray-400">{activeCountryConfig.currencySymbol} {activeCountryConfig.currencyCode}</span>
                   </div>
                 </div>
-                <svg className="w-2.5 h-2.5 ml-1 opacity-40 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M19 9l-7 7-7-7" /></svg>
-              </div>
+                <svg className={`w-2.5 h-2.5 ml-1 opacity-40 transition-transform ${isCountryDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M19 9l-7 7-7-7" /></svg>
+              </button>
 
-              {/* FLYOUT MENU */}
-              <div className="absolute top-full right-0 mt-1 w-[280px] bg-white shadow-2xl rounded-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-200 overflow-hidden">
-                <div className="px-4 py-3 border-b border-gray-100 bg-gray-50">
-                  <p className="text-[10px]  text-gray-400  tracking-widest capitalize">Select Region & Language</p>
-                </div>
-                <div className="p-2 flex flex-col gap-1">
-                  {Object.values(countryConfigs).map((config) => (
+              <AnimatePresence>
+                {isCountryDropdownOpen && (
+                  <>
+                    {/* Backdrop for mobile */}
                     <div
-                      key={config.id}
-                      onClick={() => switchRegion(config.id)}
-                      className={`flex items-center justify-between px-3 py-2.5 rounded-lg transition-all cursor-pointer ${activeCountryConfig.id === config.id
-                        ? 'bg-[#191974]/5 border border-[#191974]/10'
-                        : 'hover:bg-gray-50 border border-transparent'
-                        }`}
+                      className="fixed inset-0 z-190 bg-black/20 backdrop-blur-[1px]"
+                      onClick={() => setIsCountryDropdownOpen(false)}
+                    />
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      className="absolute top-full right-0 mt-2 w-[280px] bg-white shadow-2xl rounded-xl border border-gray-100 z-200 overflow-hidden"
                     >
-                      <div className="flex items-center gap-3">
-                        <img src={getFlagURL(config.id)} alt={config.name} className="w-6 h-4 object-cover rounded-sm shadow-sm" />
-                        <div className="flex flex-col">
-                          <span className="text-[12px]  text-[#191974]">{config.name}</span>
-                          <div className="flex items-center gap-2 mt-0.5">
-                            <span className="text-[10px] font-bold text-[#ee2229] ">{config.language}</span>
-                            <span className="text-[10px] text-gray-400">·</span>
-                            <span className="text-[10px] font-bold text-gray-400">{config.currencySymbol} - {config.currencyCode}</span>
-                          </div>
-                        </div>
+                      <div className="px-4 py-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
+                        <p className="text-[10px] text-gray-400 tracking-widest capitalize">Select Region & Language</p>
+                        <button onClick={() => setIsCountryDropdownOpen(false)} className="text-gray-400">
+                          <X className="w-4 h-4" />
+                        </button>
                       </div>
-                      {activeCountryConfig.id === config.id
-                        ? <div className="w-2 h-2 rounded-full bg-[#ee2229]" />
-                        : <svg className="w-3 h-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg>
-                      }
-                    </div>
-                  ))}
-                </div>
-                <div className="bg-[#191974] px-4 py-2.5 flex items-center justify-center gap-2">
-                  <span className="text-[9px] text-white   tracking-widest ">Global Pricing Support Active</span>
-                </div>
-              </div>
+                      <div className="p-2 flex flex-col gap-1">
+                        {Object.values(countryConfigs).map((config) => (
+                          <div
+                            key={config.id}
+                            onClick={() => { switchRegion(config.id); setIsCountryDropdownOpen(false); }}
+                            className={`flex items-center justify-between px-3 py-2.5 rounded-lg transition-all cursor-pointer ${activeCountryConfig.id === config.id
+                              ? 'bg-[#191974]/5 border border-[#191974]/10'
+                              : 'hover:bg-gray-50 border border-transparent'
+                              }`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <img src={getFlagURL(config.id)} alt={config.name} className="w-6 h-4 object-cover rounded-sm shadow-sm" />
+                              <div className="flex flex-col">
+                                <span className="text-[12px] text-[#191974]">{config.name}</span>
+                                <div className="flex items-center gap-2 mt-0.5">
+                                  <span className="text-[10px] font-bold text-[#ee2229]">{config.language}</span>
+                                  <span className="text-[10px] text-gray-400">·</span>
+                                  <span className="text-[10px] font-bold text-gray-400">{config.currencySymbol} - {config.currencyCode}</span>
+                                </div>
+                              </div>
+                            </div>
+                            {activeCountryConfig.id === config.id
+                              ? <div className="w-2 h-2 rounded-full bg-[#ee2229]" />
+                              : <svg className="w-3 h-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg>
+                            }
+                          </div>
+                        ))}
+                      </div>
+                      <div className="bg-[#191974] px-4 py-2.5 flex items-center justify-center gap-2">
+                        <span className="text-[9px] text-white tracking-widest">Global Pricing Support Active</span>
+                      </div>
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* â˜° HAMBURGER BUTTON */}
@@ -430,9 +453,9 @@ export default function Navbar() {
       <div className={`fixed top-0 right-0 h-full flex z-10003 transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}>
 
         {/* Testimonials Section (White BG, Left of Sidebar) */}
-        <div className="hidden lg:flex w-[340px] h-full bg-white border-r border-gray-100 flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.05)] overflow-hidden">
+        {/* <div className="hidden lg:flex w-[340px] h-full bg-white border-r border-gray-100 flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.05)] overflow-hidden">
           <SidebarFeaturedContent isVisible={sidebarOpen} />
-        </div>
+        </div> */}
 
         {/* Drawer (Right Sidebar) */}
         <div className="h-full w-[340px] max-w-[90vw] bg-white flex flex-col shadow-2xl">

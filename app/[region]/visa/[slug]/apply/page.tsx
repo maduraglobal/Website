@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, use } from 'react';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import React, { useState, use, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import {
   ChevronLeft, Info, HelpCircle, User, Plane, Building2, Briefcase, Plus,
@@ -12,7 +12,20 @@ import { motion } from 'framer-motion';
 import { getDestinationBySlug } from '@/app/data/visaData';
 import { getCountryConfig, formatRegionalPrice } from '@/config/country';
 
+// Default export wraps in Suspense to satisfy Next.js 14 useSearchParams() requirement
 export default function VisaApplyPage({ params }: { params: Promise<{ region: string, slug: string }> }) {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#f8f9fc] flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-[#191974]/20 border-t-[#191974] rounded-full animate-spin" />
+      </div>
+    }>
+      <VisaApplyContent params={params} />
+    </Suspense>
+  );
+}
+
+function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: string }> }) {
   const resolvedParams = use(params);
   const { region, slug } = resolvedParams;
   const router = useRouter();

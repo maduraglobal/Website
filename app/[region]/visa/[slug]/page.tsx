@@ -291,9 +291,14 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           </div>
 
           {/* 3. Social Proof */}
-          <div className="bg-[#191974]/5 border border-[#191974]/10 p-8 rounded-[32px] flex flex-col sm:flex-row items-center justify-between gap-6">
+          <a
+            href="https://www.google.com/search?sca_esv=21f0f7159a2b44ff&rlz=1C1UEAD_en-GBIN1074IN1074&sxsrf=ANbL-n7BW-cKFC0Z0Qrk7pEdQo9N59Gx2w:1776254198373&si=AL3DRZHrmvnFAVQPOO2Bzhf8AX9KZZ6raUI_dT7DG_z0kV2_x0MpVVn9OA5hG89nwRSIi5PHQo7yfEknDvepDRnjGaWelQUElaca8ATNAojLYehobbGeXz_azHFLjMxRm-QxYhB9fwkonn654d_Hzxt03onm7QPx4g%3D%3D&q=Madura+Travel+Service+%28P%29+Ltd+Reviews&sa=X&ved=2ahUKEwj_i5nE5u-TAxWlslYBHReDMZwQ0bkNegQIJhAH&biw=1536&bih=730&dpr=1.25"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#191974]/5 border border-[#191974]/10 p-8 rounded-[32px] flex flex-col sm:flex-row items-center justify-between gap-6 hover:bg-[#191974]/10 transition-all group/review active:scale-[0.99] cursor-pointer"
+          >
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-white rounded-full p-2.5 flex items-center justify-center shadow-sm">
+              <div className="w-14 h-14 bg-white rounded-full p-2.5 flex items-center justify-center shadow-sm group-hover/review:scale-110 transition-transform">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" className="w-full" alt="Google" />
               </div>
               <div>
@@ -301,10 +306,10 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                 <div className="flex text-amber-500 gap-0.5 mt-0.5"><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /></div>
               </div>
             </div>
-            <div className="text-[14px] font-bold text-[#191974] bg-white px-6 py-2.5 rounded-full border border-gray-200 shadow-sm">
+            <div className="text-[14px] font-bold text-[#191974] bg-white px-6 py-2.5 rounded-full border border-gray-200 shadow-sm group-hover/review:border-[#ee2229] transition-colors">
               Rated <strong className="text-[#ee2229]">4.9/5</strong> by 272+ travelers
             </div>
-          </div>
+          </a>
 
           {/* 4. Documents Required */}
           <div id="documents" className="space-y-8">
