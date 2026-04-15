@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import BookingModal, { BookingProvider } from "./components/BookingModal";
 import ScrollToTop from "./components/ScrollToTop";
 import NewsletterPopup from "./components/NewsletterPopup";
+import FloatingEnquiry from "./components/FloatingEnquiry";
 
 export const metadata: Metadata = {
   title: "Madura Travel | Explore the World",
@@ -27,6 +28,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <NewsletterPopup />
+          <FloatingEnquiry />
         </BookingProvider>
       </body>
     </html>

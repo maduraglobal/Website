@@ -6,7 +6,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { countryConfigs } from "../../config/country";
 import LoginPopup from "./LoginPopup";
-import { Globe, ShieldCheck, LogOut, Search, X, Clock } from "lucide-react";
+import { Globe, ShieldCheck, LogOut, Search, X, Clock, Phone, ChevronDown, Mail, MapPin, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from '@/utils/supabase/client';
 
 const destinations = {
@@ -53,11 +54,15 @@ export default function Navbar() {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [sidebarDestRegion, setSidebarDestRegion] = useState<DestinationKey>("India");
   const [isSearchOverlayOpen, setIsSearchOverlayOpen] = useState(false);
+  const [isContactDropdownOpen, setIsContactDropdownOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const supabase = React.useMemo(() => createClient(), []);
 
@@ -137,6 +142,15 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ''; };
   }, [sidebarOpen]);
 
+  // Handle Search Input Focus
+  useEffect(() => {
+    if (isSearchOverlayOpen) {
+      setTimeout(() => {
+        searchInputRef.current?.focus();
+      }, 100);
+    }
+  }, [isSearchOverlayOpen]);
+
   // Handle Session
   useEffect(() => {
     const checkAdmin = async (email: string | undefined) => {
@@ -187,6 +201,7 @@ export default function Navbar() {
           <div className="flex items-center gap-1.5 sm:gap-4 ml-auto shrink-0">            {/* 🔍 SEARCH BAR */}
             <div className="relative w-10 sm:w-64 group">
               <button
+                suppressHydrationWarning
                 onClick={() => setIsSearchOverlayOpen(true)}
                 className="w-full h-10 flex items-center gap-3 px-3 sm:px-4 rounded-full border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-gray-300 transition-all text-gray-400"
               >
@@ -196,91 +211,111 @@ export default function Navbar() {
             </div>
 
             {/* Contact info box with Dropdown */}
-            <div className="hidden xl:block relative group">
-              <div className="flex items-center border border-gray-200 px-4 py-1.5 rounded-lg gap-2 cursor-pointer hover:border-[#191974] transition-all group-hover:bg-gray-50">
-                <span className="text-[14px] font-bold text-[#191974]">+91 90 92 94 94 94</span>
-                <svg className="w-2.5 h-2.5 opacity-40 group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
+            <div className="relative">
+              {/* Desktop Button */}
+              <div
+                onClick={() => setIsContactDropdownOpen(!isContactDropdownOpen)}
+                className="hidden xl:flex items-center border border-gray-200 px-4 py-1.5 rounded-lg gap-2 cursor-pointer hover:border-[#191974] transition-all hover:bg-gray-50 bg-white"
+              >
+                <Phone className="w-4 h-4 text-[#ee2229]" />
+                <span className="text-[14px] font-bold text-[#191974]">1800 313 5555</span>
+                <ChevronDown className={`w-3 h-3 transition-transform ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
               </div>
 
-              {/* Phone Numbers Dropdown */}
-              <div className="absolute top-full right-0 mt-2 w-[320px] bg-white shadow-2xl rounded-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-200 z-200 overflow-hidden">
-                <div className="px-5 py-3.5 border-b border-gray-100 bg-gray-50">
-                  <p className="text-[13px] text-[#191974] font-bold tracking-widest">Contact Us</p>
-                </div>
-                <div className="px-5 py-4 flex flex-col gap-4">
+              {/* Mobile Button (Icon only) */}
+              <button
+                onClick={() => setIsContactDropdownOpen(!isContactDropdownOpen)}
+                className="xl:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-[#191974]/5 border border-[#191974]/10 text-[#191974] hover:bg-[#191974]/10 transition-all"
+              >
+                <Phone className="w-5 h-5" />
+              </button>
 
-                  {/* Call us */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-7 h-7 rounded-full font-bold bg-[#191974]/8 flex items-center justify-center shrink-0 mt-0.5">
-                      <svg className="w-3.5 h-3.5 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                    </div>
-                    <div className="flex flex-col gap-0.5">
-                      <p className="text-[10px]  text-gray-400 font-bold tracking-wider">Call us</p>
-                      <a href="tel:18003135555" className="text-[16px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
-                    </div>
-                  </div>
+              {/* Phone Numbers Dropdown (Matching Image 2) */}
+              <AnimatePresence>
+                {isContactDropdownOpen && (
+                  <>
+                    {/* Overlay for closing on mobile */}
+                    <div
+                      className="fixed inset-0 z-190 xl:hidden"
+                      onClick={() => setIsContactDropdownOpen(false)}
+                    />
 
-                  {/* WhatsApp */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-7 h-7 rounded-full bg-[#191974]/8  font-bold flex items-center justify-center shrink-0 mt-0.5">
-                      <svg className="w-3.5 h-3.5 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-                    </div>
-                    <div className="flex flex-col gap-0.5">
-                      <p className="text-[10px] text-gray-400  font-bold tracking-wider">whatsapp Number</p>
-                      <a href="https://wa.me/919092949494" className="text-[15px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
-                    </div>
-                  </div>
-
-                  {/* International */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-7 h-7 rounded-full bg-[#191974]/8 flex items-center justify-center shrink-0 mt-0.5">
-                      <svg className="w-3.5 h-3.5 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-
-
-                    <div>
-                      <p className="text-[10px] text-gray-400 font-semibold">International</p>
-                      <a href="tel:+61434500743" className="text-[15px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+61 434 500 743</a>
-                    </div>
-                  </div>
-
-
-                  <div className="h-px bg-gray-100" />
-
-                  {/* Email */}
-                  <a href="mailto:mail@maduratravel.com" className="flex items-center gap-3 group/email">
-                    <div className="w-7 h-7 rounded-full bg-[#191974]/8 flex items-center justify-center shrink-0">
-                      <svg className="w-3.5 h-3.5 text-[#191974] group-hover/email:text-[#ee2229] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                    </div>
-                    <span className="text-[13px] font-bold text-[#191974] group-hover/email:text-[#ee2229] transition-colors underline underline-offset-2">mail@maduratravel.com</span>
-                  </a>
-
-                  {/* Office */}
-                  {/* <Link href={`/${currentRegionCode}/contact`} className="flex items-center justify-between gap-3 group/office">
-                    <div className="flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-full bg-[#191974]/8 flex items-center justify-center shrink-0">
-                        <svg className="w-3.5 h-3.5 text-[#191974] group-hover/office:text-[#ee2229] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      className="absolute top-full right-0 mt-3 w-[300px] sm:w-[360px] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.15)] rounded-3xl border border-gray-100 z-200 overflow-hidden"
+                    >
+                      <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+                        <p className="text-[14px] text-[#191974] font-bold">Contact Us</p>
+                        <button onClick={() => setIsContactDropdownOpen(false)} className="text-gray-400 xl:hidden">
+                          <X className="w-4 h-4" />
+                        </button>
                       </div>
-                      <span className="text-[13px] font-bold text-[#191974] group-hover/office:text-[#ee2229] transition-colors underline underline-offset-2">Nearest Madura Office</span>
-                    </div>
-                    <svg className="w-3.5 h-3.5 text-gray-400 group-hover/office:text-[#ee2229] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg>
-                  </Link> */}
 
-                  {/* Business Hours */}
-                  {/* <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 rounded-full bg-[#191974]/8 flex items-center justify-center shrink-0">
-                      <svg className="w-3.5 h-3.5 text-[#191974]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <p className="text-[13px] text-gray-500 font-semibold">Business hours <span className="text-[#191974]">10 AM - 7 PM</span></p>
-                  </div> */}
-                </div>
+                      <div className="p-6 space-y-5">
+                        {/* Toll Free */}
 
-                {/* 24/7 Marker */}
-                <div className="bg-[#191974] px-4 py-2.5 flex items-center justify-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                  <span className="text-[10px] text-white tracking-widest">24/7 Support Active</span>
-                </div>
-              </div>
+
+                        {/* Call us also */}
+                        <div className="flex items-start gap-4">
+                          <div className="w-5 h-5 flex items-center justify-center shrink-0 mt-0.5">
+                            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" /></svg>
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">call us on:</p>
+                            <a href="tel:+919092949494" className="block text-[15px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
+                            <a href="tel:+914428193030" className="block text-[15px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 44 2819 3030</a>
+                          </div>
+                        </div>
+
+                        {/* Foreign Nationals */}
+                        <div className="flex items-start gap-4">
+                          <Globe className="w-5 h-5 text-gray-400 mt-0.5 shrink-0" />
+                          <div className="flex-1">
+                            <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider mb-1.5 flex justify-between items-center">
+                              International Number
+                            </p>
+                            <div className="grid grid-cols-2 gap-4">
+
+
+
+                              <a href="tel:+61434500743" className="text-[13px] font-bold text-[#191974] block hover:text-[#ee2229]">+61 434 500 743</a>
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="h-px bg-gray-50" />
+
+                        {/* Email */}
+                        <a href="mailto:mail@maduratravel.com" className="flex items-center gap-4 text-[#191974] hover:text-[#ee2229] transition-colors">
+                          <Mail className="w-5 h-5 text-gray-400 shrink-0" />
+                          <span className="text-[14px] font-bold underline underline-offset-2">mail@maduratravel.com</span>
+                        </a>
+
+                        {/* Nearest Office */}
+                        {/* <Link href={`/${currentRegionCode}/contact`} className="flex items-center gap-4 text-[#191974] hover:text-[#ee2229] transition-colors group/office">
+                          <MapPin className="w-5 h-5 text-gray-400 shrink-0" />
+                          <span className="text-[14px] font-bold underline underline-offset-2">Nearest Madura Office</span>
+                          <ChevronRight className="w-4 h-4 ml-auto text-gray-300 group-hover/office:translate-x-1 transition-transform" />
+                        </Link> */}
+
+                        {/* Business Hours */}
+                        {/* <div className="flex items-center gap-4">
+                          <Clock className="w-5 h-5 text-gray-400 shrink-0" />
+                          <p className="text-[13px] text-gray-400 font-medium">Business hours <span className="text-[#191974] font-bold">10AM - 7PM</span></p>
+                        </div>*/}
+                      </div>
+
+                      <div className="bg-[#191974] px-6 py-3 flex items-center justify-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                        <span className="text-[10px] text-white font-bold tracking-[0.2em] uppercase">24/7 Support Available</span>
+                      </div>
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Login */}
@@ -409,6 +444,7 @@ export default function Navbar() {
               <Image src="/logo.webp" alt="Madura Travel" width={120} height={38} className="object-contain brightness-0 invert" />
             </Link>
             <button
+              suppressHydrationWarning
               onClick={() => setSidebarOpen(false)}
               className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
             >
@@ -440,6 +476,7 @@ export default function Navbar() {
             {/* â”€â”€â”€ DESTINATIONS â”€â”€â”€ */}
             <div className="border-b border-gray-100">
               <button
+                suppressHydrationWarning
                 onClick={() => toggleSection('destinations')}
                 className="w-full flex items-center justify-between px-6 py-4 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
               >
@@ -455,6 +492,7 @@ export default function Navbar() {
                     {Object.keys(destinations).map((region) => (
                       <div key={region}>
                         <button
+                          suppressHydrationWarning
                           onClick={() => setSidebarDestRegion(region as DestinationKey)}
                           className={`w-full text-left px-4 py-2.5 rounded-lg text-[12px]   tracking-wider flex items-center justify-between transition-all ${sidebarDestRegion === region ? 'bg-[#191974] text-white' : 'text-[#191974]/60 hover:text-[#191974] hover:bg-gray-50'}`}
                         >
@@ -514,6 +552,7 @@ export default function Navbar() {
             {/* â”€â”€â”€ SPECIALITY TOURS â”€â”€â”€ */}
             <div className="border-b border-gray-100">
               <button
+                suppressHydrationWarning
                 onClick={() => toggleSection('speciality')}
                 className="w-full flex items-center justify-between px-6 py-4 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
               >
@@ -558,6 +597,7 @@ export default function Navbar() {
             {/* --- COMPANY --- */}
             <div className="border-b border-gray-100">
               <button
+                suppressHydrationWarning
                 onClick={() => toggleSection('company')}
                 className="w-full flex items-center justify-between px-6 py-4 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
               >
@@ -583,10 +623,10 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* --- MORE SIMPLE LINKS --- */}
             {[
-              { label: "Inbound", href: `/${currentRegionCode}/inbound` },
+              // { label: "Inbound", href: `/${currentRegionCode}/inbound` },
               { label: "Weddings", href: "#" },
+              { label: "FAQ", href: `/${currentRegionCode}/faq` },
               { label: "Contact Us", href: `/${currentRegionCode}/contact` },
             ].map(({ label, href }) => (
               <Link
@@ -654,7 +694,7 @@ export default function Navbar() {
 
       {/* 🔍 GLOBAL SEARCH OVERLAY */}
       <div
-        className={`fixed inset-0 z-[20000] bg-white/95 backdrop-blur-xl transition-all duration-500 ease-out ${isSearchOverlayOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        className={`fixed inset-0 z-20000 bg-white/95 backdrop-blur-xl transition-all duration-500 ease-out ${isSearchOverlayOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
       >
         {/* Background Decorative Map (inspired by screenshot) */}
@@ -668,6 +708,7 @@ export default function Navbar() {
 
         {/* Close Button */}
         <button
+          suppressHydrationWarning
           onClick={() => setIsSearchOverlayOpen(false)}
           className="absolute top-8 right-8 w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#191974] hover:text-white transition-all duration-300 shadow-lg z-50 group"
         >
@@ -676,21 +717,20 @@ export default function Navbar() {
 
         <div className="max-w-4xl mx-auto h-full flex flex-col pt-24 px-6 relative z-10">
           <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
-            <h2 className="text-[28px] md:text-[36px] font-bold text-[#191974] tracking-tight mb-2">
-              What's <span className="text-[#3ed49e] italic">your pick</span> for your next vacation?
-            </h2>
+
           </div>
 
           {/* Large Search Input */}
           <div className="relative group animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-300 group-focus-within:text-[#191974] transition-colors" />
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-[#191974] transition-colors" />
             <input
-              autoFocus
+              suppressHydrationWarning
+              ref={searchInputRef}
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search Destinations (e.g. Dubai, Australia, London)"
-              className="w-full h-16 sm:h-20 pl-16 pr-20 rounded-3xl bg-white border-2 border-gray-100 shadow-xl text-[18px] sm:text-[22px] font-medium text-[#191974] outline-none focus:border-[#3ed49e] focus:ring-8 focus:ring-[#3ed49e]/5 transition-all"
+              className="w-full h-14 sm:h-16 pl-14 pr-16 rounded-2xl bg-white border-2 border-gray-100 shadow-xl text-[16px] sm:text-[18px] font-medium text-[#191974] outline-none focus:border-[#3ed49e] focus:ring-8 focus:ring-[#3ed49e]/5 transition-all"
             />
             {query && (
               <button
@@ -714,16 +754,17 @@ export default function Navbar() {
 
                   return (
                     <button
+                      suppressHydrationWarning
                       key={index}
                       onClick={() => {
                         handleSelect(place);
                         setIsSearchOverlayOpen(false);
                       }}
-                      className="w-full group flex items-center justify-between p-5 rounded-[24px] hover:bg-[#3ed49e]/5 border border-transparent hover:border-[#3ed49e]/10 transition-all duration-300"
+                      className="w-full group flex items-center justify-between p-3.5 rounded-[20px] hover:bg-[#3ed49e]/5 border border-transparent hover:border-[#3ed49e]/10 transition-all duration-300"
                     >
                       <div className="flex items-center gap-6">
-                        <div className="w-2 h-2 rounded-full bg-gray-200 group-hover:bg-[#3ed49e] group-hover:scale-125 transition-all duration-300" />
-                        <span className="text-[20px] sm:text-[24px] font-bold text-[#191974] group-hover:translate-x-2 transition-transform duration-300">
+                        <div className="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover:bg-[#3ed49e] group-hover:scale-125 transition-all duration-300" />
+                        <span className="text-[16px] sm:text-[18px] font-bold text-[#191974] group-hover:translate-x-2 transition-transform duration-300">
                           {place}
                         </span>
                       </div>

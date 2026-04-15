@@ -159,7 +159,7 @@ export default function Footer() {
               {[
                 { label: "Tour Packages", path: "/tours" },
                 { label: "Tourism Blog & Tips", path: "/media" },
-                { label: "FAQ", path: "/contact" },
+                { label: "FAQ", path: "/faq" },
                 { label: "Visa", path: "/visa" },
                 { label: "MICE", path: "/mice" }
               ].map((link) => (

@@ -5,6 +5,7 @@ import { notFound, useParams } from 'next/navigation';
 import { createClient } from '../../../../utils/supabase/client';
 import DestinationHeader from '@/app/components/tours/DestinationHeader';
 import TourCard from '@/app/components/tours/TourCard';
+import { SlidersHorizontal, X, Clock } from 'lucide-react';
 
 interface Tour {
   id: string;
@@ -29,6 +30,7 @@ export default function DestinationToursPage() {
   const [sortBy, setSortBy] = useState('Recommended');
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['All Tours']);
   const [selectedDurations, setSelectedDurations] = useState<string[]>([]);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const supabase = createClient();
 
@@ -169,8 +171,15 @@ export default function DestinationToursPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-[14px] text-[#191974]">Sort By:</span>
-            <select 
+            <button
+              onClick={() => setIsFilterOpen(true)}
+              className="flex items-center gap-2 bg-white border border-gray-200 px-5 py-2.5 rounded-xl text-[14px] font-bold text-[#191974] hover:border-[#191974] transition-all"
+            >
+              <SlidersHorizontal className="w-4 h-4" /> Filter Tours
+            </button>
+            <div className="w-[1px] h-6 bg-gray-200 hidden sm:block"></div>
+            <span className="text-[14px] text-[#191974] hidden sm:block">Sort By:</span>
+            <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className="bg-white border border-gray-200 text-[14px] rounded-lg p-2.5 font-bold text-[#191974] outline-none"
@@ -183,42 +192,82 @@ export default function DestinationToursPage() {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 items-start">
-          <div className="w-full lg:w-1/4 shrink-0">
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sticky top-24">
-              <h3 className="text-[14px] font-bold text-[#191974] mb-5 tracking-widest uppercase">Filter Tours</h3>
+        {/* 🔹 FILTER DRAWER */}
+        {isFilterOpen && (
+          <div
+            className="fixed inset-0 bg-black/40 z-[10005] backdrop-blur-sm transition-opacity duration-300"
+            onClick={() => setIsFilterOpen(false)}
+          />
+        )}
+        <div
+          className={`fixed top-0 left-0 h-full w-[85vw] max-w-[340px] bg-white z-[10006] transform transition-transform duration-300 ease-in-out shadow-2xl flex flex-col ${isFilterOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}
+        >
+          <div className="flex items-center justify-between p-6 border-b border-gray-100 shrink-0">
+            <h2 className="text-[18px] font-bold text-[#191974] flex items-center gap-2">
+              <SlidersHorizontal className="w-5 h-5 text-[#ee2229]" />
+              Filters
+            </h2>
+            <button
+              onClick={() => setIsFilterOpen(false)}
+              className="p-2 -mr-2 bg-gray-50 hover:bg-gray-100 text-gray-500 rounded-full transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto p-6 space-y-8 bg-gray-50/30">
+            <div>
+              <h3 className="text-[14px] font-bold text-[#191974] mb-5 tracking-widest uppercase">Package Types</h3>
               <div className="space-y-4">
                 {["All Tours", "Family", "Honeymoon", "Adventure", "Premium"].map((label) => (
-                  <label key={label} className="flex items-center gap-3 cursor-pointer group">
-                    <input 
-                      type="checkbox" 
-                      checked={selectedCategories.includes(label)} 
+                  <label key={label} className="flex items-center gap-3 cursor-pointer group p-3 bg-white rounded-xl border border-transparent hover:border-[#191974]/10 transition-all">
+                    <input
+                      type="checkbox"
+                      checked={selectedCategories.includes(label)}
                       onChange={() => toggleCategory(label)}
-                      className="w-4 h-4 rounded accent-[#191974]" 
+                      className="w-5 h-5 rounded accent-[#191974]"
                     />
-                    <span className="text-[13px] text-gray-600 group-hover:text-[#191974] transition-colors">{label}</span>
+                    <span className="text-[14px] font-semibold text-gray-600 group-hover:text-[#191974] transition-colors">{label}</span>
                   </label>
                 ))}
               </div>
-              <hr className="my-5 border-gray-100" />
-              <h3 className="text-[14px] font-bold text-[#191974] mb-4 tracking-widest uppercase">Duration</h3>
+            </div>
+
+            <hr className="border-gray-100" />
+
+            <div>
+              <h3 className="text-[14px] font-bold text-[#191974] mb-5 tracking-widest uppercase flex items-center gap-2">
+                <Clock className="w-4 h-4" /> Duration
+              </h3>
               <div className="space-y-3">
                 {["1–3 Days", "4–6 Days", "7–10 Days", "11+ Days"].map((d) => (
-                  <label key={d} className="flex items-center gap-3 cursor-pointer group">
-                    <input 
-                      type="checkbox" 
+                  <label key={d} className="flex items-center gap-3 cursor-pointer group p-3 bg-white rounded-xl border border-transparent hover:border-[#191974]/10 transition-all">
+                    <input
+                      type="checkbox"
                       checked={selectedDurations.includes(d)}
                       onChange={() => toggleDuration(d)}
-                      className="w-4 h-4 rounded accent-[#191974]" 
+                      className="w-5 h-5 rounded accent-[#191974]"
                     />
-                    <span className="text-[13px] text-gray-600 group-hover:text-[#191974] transition-colors">{d}</span>
+                    <span className="text-[14px] font-semibold text-gray-600 group-hover:text-[#191974] transition-colors">{d}</span>
                   </label>
                 ))}
               </div>
             </div>
           </div>
 
-          <div className="w-full lg:w-3/4 flex flex-col space-y-6">
+          <div className="p-6 border-t border-gray-100 bg-white shrink-0">
+            <button
+              onClick={() => setIsFilterOpen(false)}
+              className="w-full h-12 bg-[#191974] text-white rounded-xl font-bold tracking-widest uppercase text-[14px] hover:bg-[#191974]/90 transition-all shadow-xl shadow-[#191974]/10"
+            >
+              Show {filteredTours.length} results
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-8 items-start">
+          <div className="w-full flex flex-col space-y-6">
             <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4 min-h-[60px]">
               <span className="text-[12px] text-[#191974] tracking-widest">Results: {filteredTours.length}</span>
               <div className="flex flex-wrap gap-2">

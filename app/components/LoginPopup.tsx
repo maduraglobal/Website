@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { X, Loader2, User, Mail, Lock } from "lucide-react";
+import { X, Loader2, Phone, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "@/utils/supabase/client";
-import { useRouter } from "next/navigation";
 
 interface LoginPopupProps {
   isOpen: boolean;
@@ -13,18 +12,10 @@ interface LoginPopupProps {
 }
 
 export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
-  const router = useRouter();
   const supabase = createClient();
-  const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    firstName: '',
-    lastName: ''
-  });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [showPassword, setShowPassword] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [countryCode, setCountryCode] = useState("+91");
 
   // Prevent scroll when open
   useEffect(() => {
@@ -32,9 +23,7 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
-      setFormData({ email: '', password: '', firstName: '', lastName: '' });
-      setError(null);
-      setIsLogin(true);
+      setPhoneNumber("");
     }
     return () => {
       document.body.style.overflow = "unset";
@@ -44,264 +33,131 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
-
-    try {
-      if (isLogin) {
-        // LOGIN LOGIC
-        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-          email: formData.email,
-          password: formData.password,
-        });
-
-        if (authError || !authData.user) {
-          setError(authError?.message || "Incorrect email or password.");
-          setLoading(false);
-          return;
-        }
-
-        const user = authData.user;
-        const { data: adminCheck } = await supabase.from('admin_users').select('email').eq('email', user.email).single();
-        
-        if (adminCheck) {
-          router.push('/admin');
-        } else {
-          window.location.reload();
-        }
-      } else {
-        // SIGNUP LOGIC
-        const currentPath = window.location.pathname;
-        const region = currentPath.split('/')[1] || 'en-in';
-
-        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-          email: formData.email,
-          password: formData.password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/${region}`,
-            data: {
-              first_name: formData.firstName,
-              last_name: formData.lastName,
-              full_name: `${formData.firstName} ${formData.lastName}`.trim(),
-            }
-          }
-        });
-
-        if (signUpError) {
-          setError(signUpError.message);
-          setLoading(false);
-          return;
-        }
-
-        if (signUpData.user) {
-          // 🔹 CRM Integration: Insert new signup as a lead immediately
-          try {
-            await supabase.from('leads').insert([{
-              email: formData.email,
-              first_name: formData.firstName,
-              last_name: formData.lastName,
-              source: 'Website Signup',
-              status: 'New'
-            }]);
-          } catch (leadErr) {
-            console.error('Failed to create lead entry:', leadErr);
-          }
-
-          if (signUpData.session) {
-             window.location.reload();
-          } else {
-             setError("Success! Please check your email to confirm your account.");
-             setLoading(false);
-          }
-        }
-      }
-    } catch (err) {
-      setError("An unexpected error occurred. Please try again.");
-      setLoading(false);
-    }
+    // Logic for phone authentication would go here
+    setTimeout(() => setLoading(false), 1500);
   };
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-210 flex items-center justify-center p-4 overflow-y-auto pt-20 pb-10">
+        <div className="fixed inset-0 z-210 flex items-end sm:items-center justify-center">
+          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-[#191974]/40 backdrop-blur-md"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
           />
 
+          {/* Modal Content */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-[380px] bg-white rounded-[24px] shadow-[0_32px_80px_rgba(25,25,116,0.3)] overflow-hidden flex flex-col items-center my-auto"
+            initial={{ y: "100%", opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: "100%", opacity: 0 }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="relative w-full max-w-lg bg-white rounded-t-[32px] sm:rounded-[32px] shadow-2xl overflow-hidden z-220 pb-10"
           >
+            {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 p-2 rounded-full bg-gray-50 text-gray-400 hover:bg-gray-100 hover:text-[#191974] transition-all z-10"
+              className="absolute top-6 right-6 p-2 rounded-full bg-gray-50 text-gray-400 hover:bg-gray-100 transition-all z-10"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="w-full p-6 flex flex-col items-center">
-              <div className="mb-4">
+            <div className="p-8 sm:p-12 flex flex-col items-center">
+              {/* Logo Area */}
+              <div className="mb-8 hidden sm:block">
                 <Image
                   src="/logo.webp"
                   alt="Madura Travel"
-                  width={110}
-                  height={35}
+                  width={140}
+                  height={45}
                   className="object-contain"
                 />
               </div>
 
-              <div className="text-center mb-5">
-                <h2 className="text-[20px] font-bold text-[#191974] tracking-tight">
-                  {isLogin ? "Welcome Back" : "Create Account"}
+              {/* Title Section */}
+              <div className="text-center mb-10 mt-4 sm:mt-0">
+                <h2 className="text-[24px] sm:text-[28px] font-bold text-[#191974] tracking-tight mb-3">
+                  Welcome to Madura Travel
                 </h2>
-                <p className="text-[11px] text-gray-400 font-medium mt-1">
-                  {isLogin ? "Sign in to continue your journey" : "Join us for exclusive travel deals"}
+                <p className="text-[14px] sm:text-[15px] text-gray-400 font-medium leading-relaxed max-w-[280px] mx-auto">
+                  Please enter your mobile number to receive a verification code
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="w-full space-y-3.5">
-                {error && (
-                  <div className={`border px-3 py-2.5 rounded-xl text-[12px] font-medium text-center ${error.includes('Success') ? 'bg-green-50 border-green-200 text-green-600' : 'bg-red-50 border-red-200 text-red-600'}`}>
-                    {error}
-                  </div>
-                )}
-
-                {!isLogin && (
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-1">
-                      <label className="text-[10px] font-bold text-[#191974]/40 uppercase tracking-wider ml-1">First Name</label>
-                      <input
-                        required
-                        type="text"
-                        value={formData.firstName}
-                        onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                        placeholder="John"
-                        className="w-full bg-gray-50 border border-gray-200 focus:border-[#191974] focus:bg-white rounded-xl px-4 py-2 text-[14px] font-bold text-[#191974] outline-none transition-all placeholder:text-gray-300 placeholder:font-normal"
-                      />
+              {/* Phone Input Group (Matching Image 1) */}
+              <form onSubmit={handleSubmit} className="w-full max-w-md space-y-8">
+                <div className="relative group">
+                  <label className="absolute -top-3 left-6 px-2 bg-white text-[12px] font-bold text-gray-400 z-100 group-focus-within:text-[#191974]">
+                    Mobile No.*
+                  </label>
+                  <div className="flex h-[60px] sm:h-[64px] bg-white border-2 border-gray-100 rounded-2xl overflow-hidden focus-within:border-[#191974] transition-all">
+                    {/* Flag/Country Selector Section */}
+                    <div className="w-[100px] border-r border-gray-100 flex items-center justify-center gap-2 px-3 bg-gray-50/30 cursor-pointer hover:bg-gray-50 transition-colors">
+                      <div className="flex items-center gap-1">
+                        <img 
+                          src="https://flagcdn.com/w40/in.png" 
+                          alt="ID" 
+                          className="w-6 h-4 object-cover rounded shadow-xs" 
+                        />
+                        <span className="text-[10px] text-gray-400">▼</span>
+                      </div>
                     </div>
-                    <div className="space-y-1">
-                      <label className="text-[10px] font-bold text-[#191974]/40 uppercase tracking-wider ml-1">Last Name</label>
-                      <input
-                        required
-                        type="text"
-                        value={formData.lastName}
-                        onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                        placeholder="Doe"
-                        className="w-full bg-gray-50 border border-gray-200 focus:border-[#191974] focus:bg-white rounded-xl px-4 py-2 text-[14px] font-bold text-[#191974] outline-none transition-all placeholder:text-gray-300 placeholder:font-normal"
-                      />
+                    
+                    <div className="flex items-center px-4 border-r border-gray-50 bg-gray-50/10">
+                      <span className="text-[16px] font-bold text-gray-500">{countryCode}</span>
                     </div>
-                  </div>
-                )}
 
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-[#191974]/40 uppercase tracking-wider ml-1">Email</label>
-                  <input
-                    required
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="travel@example.com"
-                    className="w-full bg-gray-50 border border-gray-200 focus:border-[#191974] focus:bg-white rounded-xl px-4 py-2.5 text-[14px] font-bold text-[#191974] outline-none transition-all placeholder:text-gray-300 placeholder:font-normal"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <div className="flex justify-between">
-                    <label className="text-[10px] font-bold text-[#191974]/40 uppercase tracking-wider ml-1">Password</label>
-                    {isLogin && <button type="button" className="text-[10px] text-[#ee2229] font-bold hover:underline">Forgot?</button>}
-                  </div>
-                  <div className="relative">
                     <input
                       required
-                      type={showPassword ? "text" : "password"}
-                      value={formData.password}
-                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                      placeholder="••••••••"
-                      className="w-full bg-gray-50 border border-gray-200 focus:border-[#191974] focus:bg-white rounded-xl px-4 py-2.5 pr-12 text-[14px] font-bold text-[#191974] outline-none transition-all placeholder:text-gray-300 placeholder:font-normal"
+                      autoFocus
+                      type="tel"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ""))}
+                      placeholder="Mobile Number"
+                      className="flex-1 px-4 text-[18px] font-bold text-[#191974] outline-none placeholder:text-gray-200"
                     />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#191974]"
-                    >
-                      {showPassword ? (
-                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268-2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>
-                      ) : (
-                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268-2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                      )}
-                    </button>
                   </div>
+                </div>
+
+                {/* Google reCAPTCHA Placeholder UI */}
+                <div className="bg-gray-50/50 p-4 rounded-xl border border-gray-100 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 border-2 border-gray-300 rounded bg-white" />
+                    <span className="text-sm font-medium text-gray-600">I&apos;m not a robot</span>
+                  </div>
+                  <div className="flex flex-col items-center opacity-40">
+                    <ShieldCheck className="w-6 h-6 text-[#191974]" />
+                    <span className="text-[8px] font-bold uppercase tracking-tight">reCAPTCHA</span>
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <p className="text-[12px] text-gray-400 font-medium">
+                    By continuing you agree to our <br/>
+                    <a href="#" className="underline text-[#191974] font-bold">Terms of Use</a> & <a href="#" className="underline text-[#191974] font-bold">Privacy Policy</a>
+                  </p>
                 </div>
 
                 <button
                   type="submit"
-                  disabled={loading}
-                  className="w-full bg-[#ee2229] hover:bg-[#191974] text-white font-bold py-3 rounded-xl text-[13px] tracking-widest transition-all active:scale-95 flex items-center justify-center gap-2 mt-2 disabled:bg-gray-300 shadow-lg shadow-red-500/20"
+                  disabled={loading || phoneNumber.length < 10}
+                  className="w-full h-[60px] bg-[#ee2229] hover:bg-[#191974] disabled:bg-gray-200 text-white font-bold rounded-2xl text-[16px] tracking-widest shadow-xl shadow-red-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-3"
                 >
-                  {loading ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    isLogin ? "PROCEED" : "CREATE ACCOUNT"
-                  )}
+                  {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "GET OTP"}
                 </button>
               </form>
-
-              <div className="w-full flex items-center gap-3 my-4">
-                <div className="h-px flex-1 bg-gray-100" />
-                <span className="text-[9px] text-gray-300 font-bold uppercase tracking-widest">Or continue with</span>
-                <div className="h-px flex-1 bg-gray-100" />
-              </div>
-
-              <button
-                onClick={async () => {
-                  try {
-                    setLoading(true);
-                    setError(null);
-                    const { error } = await supabase.auth.signInWithOAuth({
-                      provider: 'google',
-                      options: {
-                        redirectTo: `${window.location.origin}${window.location.pathname}`
-                      }
-                    });
-                    if (error) throw error;
-                  } catch (err: any) {
-                    setError(err.message || 'Error occurred');
-                    setLoading(false);
-                  }
-                }}
-                type="button"
-                className="w-full flex items-center justify-center gap-2 bg-white border border-gray-200 py-2.5 rounded-xl text-[12px] font-bold text-[#171717] hover:bg-gray-50 transition-all shadow-xs"
-              >
-                <svg className="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" /><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" /><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" /><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" /></svg>
-                Google Account
-              </button>
-
-              <div className="mt-5 text-center">
-                <p className="text-[12px] text-gray-500">
-                  {isLogin ? "New to Madura?" : "Already have an account?"}
-                  <button 
-                    onClick={() => {
-                        setIsLogin(!isLogin);
-                        setError(null);
-                    }} 
-                    className="text-[#ee2229] font-bold hover:underline ml-1"
-                  >
-                    {isLogin ? "Create Account" : "Sign In"}
-                  </button>
-                </p>
-              </div>
             </div>
 
-            <div className="w-full h-1.5 bg-linear-to-r from-[#191974] via-[#ee2229] to-[#191974] shrink-0" />
+            {/* Bottom Accent */}
+            <div className="h-2 bg-linear-to-r from-[#191974] via-[#ee2229] to-[#191974]" />
           </motion.div>
         </div>
       )}
     </AnimatePresence>
   );
 }
+
