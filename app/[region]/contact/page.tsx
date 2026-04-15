@@ -5,14 +5,17 @@ import { motion } from 'framer-motion';
 import CorporateOffice from '../../components/CorporateOffice';
 import BranchLocations from '../../components/BranchLocations';
 import { Mail, Phone, MapPin, Clock, MessageSquare, Send } from 'lucide-react';
+import PhonePrefixSelector from '../../components/ui/PhonePrefixSelector';
+import { useState } from 'react';
 
 export default function ContactPage({ params }: { params: Promise<{ region: string }> }) {
   const { region } = use(params);
+  const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
 
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-[#191974] relative overflow-hidden">
+      <section className="pt-12 md:pt-16 pb-16 bg-[#191974] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#ee2229] rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
@@ -81,7 +84,15 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
             </div>
             <div className="space-y-2">
               <label className="text-[12px]  text-[#191974]  tracking-widest ml-1">Mobile Number</label>
-              <input type="tel" placeholder="+91 00000 00000" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#ee2229] outline-none transition-all " />
+              <div className="flex bg-gray-50 border border-gray-200 rounded-2xl focus-within:border-[#ee2229] transition-all overflow-hidden">
+                <PhonePrefixSelector 
+                  selectedCode={selectedCountryCode}
+                  onSelect={(code) => setSelectedCountryCode(code)}
+                  variant="minimal"
+                  className="scale-90"
+                />
+                <input type="tel" placeholder="00000 00000" className="flex-1 px-4 py-4 bg-transparent outline-none" />
+              </div>
             </div>
             <div className="space-y-2">
               <label className="text-[12px]  text-[#191974]  tracking-widest ml-1">Tour Interest</label>

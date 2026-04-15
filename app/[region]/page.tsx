@@ -169,7 +169,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
   return (
     <div className="flex flex-col min-h-screen bg-background text-[#171717] text-[14px]">
       {/* HERO SECTION - 60vh */}
-      <section className="relative w-full h-[70vh] flex flex-col pt-12 lg:pt-16 pb-6 overflow-visible">
+      <section className="relative w-full h-[70vh] flex flex-col pt-6 md:pt-10 pb-6 overflow-visible">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -311,9 +311,9 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         <InfiniteMovingCards items={logoItems} speed="slow" direction="left" className="bg-transparent w-full" />
       </div>
 
-      <section className="py-8 bg-white overflow-hidden">
+      <section className="py-6 md:py-8 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="mb-8">
+          <div className="mb-4 md:mb-8">
             <p className="text-[26px]  text-[#191974] ">Top Destinations</p>
             <p className="text-[14px] text-black ">Discover the world&apos;s most sought-after holiday spots.</p>
           </div>
@@ -384,9 +384,9 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
       </section>
 
       {/* Featured Tours Section */}
-      <section className="py-8 bg-[#F8F9FF]">
+      <section className="py-6 md:py-12 bg-[#F8F9FF]">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 md:mb-10 gap-4">
             <div>
               <p className="text-[26px]  text-[#191974]  ">Featured Tours</p>
               <p className="text-[14px] text-black ">Explore some of our most popular tours selected for you.</p>
@@ -422,7 +422,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
       </section>
 
       {/* Featured Offers Banner Section */}
-      <section className="py-8 bg-white">
+      <section className="py-6 md:py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="relative w-full h-100 lg:h-112.5 rounded-3xl overflow-hidden group shadow-2xl">
             <motion.img

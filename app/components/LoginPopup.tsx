@@ -5,6 +5,7 @@ import { X, Loader2, Phone, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "@/utils/supabase/client";
+import PhonePrefixSelector from "./ui/PhonePrefixSelector";
 
 interface LoginPopupProps {
   isOpen: boolean;
@@ -96,20 +97,12 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
                   </label>
                   <div className="flex h-[60px] sm:h-[64px] bg-white border-2 border-gray-100 rounded-2xl overflow-hidden focus-within:border-[#191974] transition-all">
                     {/* Flag/Country Selector Section */}
-                    <div className="w-[100px] border-r border-gray-100 flex items-center justify-center gap-2 px-3 bg-gray-50/30 cursor-pointer hover:bg-gray-50 transition-colors">
-                      <div className="flex items-center gap-1">
-                        <img 
-                          src="https://flagcdn.com/w40/in.png" 
-                          alt="ID" 
-                          className="w-6 h-4 object-cover rounded shadow-xs" 
-                        />
-                        <span className="text-[10px] text-gray-400">▼</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center px-4 border-r border-gray-50 bg-gray-50/10">
-                      <span className="text-[16px] font-bold text-gray-500">{countryCode}</span>
-                    </div>
+                    <PhonePrefixSelector 
+                      selectedCode={countryCode}
+                      onSelect={(code) => setCountryCode(code)}
+                      variant="outline"
+                      className="h-full"
+                    />
 
                     <input
                       required

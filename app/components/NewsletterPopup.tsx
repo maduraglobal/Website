@@ -4,12 +4,14 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, User, Phone, Percent } from 'lucide-react';
 import Image from 'next/image';
+import PhonePrefixSelector from './ui/PhonePrefixSelector';
 
 export default function NewsletterPopup() {
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
 
   useEffect(() => {
     // Show popup after 5 seconds if not closed before
@@ -120,18 +122,22 @@ export default function NewsletterPopup() {
                 </div>
 
                 <div className="relative group">
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 flex items-center gap-2 pr-2 border-r border-gray-200 mr-2">
-                    <span className="text-[14px] font-bold text-gray-600">🇮🇳</span>
-                    <span className="text-[14px] font-bold text-gray-600">+91</span>
+                  <div className="flex bg-gray-50 border-b-2 border-transparent focus-within:border-[#191974] focus-within:bg-white rounded-xl transition-all">
+                    <PhonePrefixSelector 
+                      selectedCode={selectedCountryCode}
+                      onSelect={(code) => setSelectedCountryCode(code)}
+                      variant="minimal"
+                      className="scale-90"
+                    />
+                    <input 
+                      required
+                      type="tel"
+                      placeholder="Mobile No.*"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="flex-1 bg-transparent outline-none px-4 py-4 font-semibold text-[#191974] text-[14px]"
+                    />
                   </div>
-                  <input 
-                    required
-                    type="tel"
-                    placeholder="Mobile No.*"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#191974] focus:bg-white outline-none pl-[90px] pr-4 py-4 rounded-xl font-semibold text-[#191974] text-[14px] transition-all"
-                  />
                 </div>
 
                 <button 

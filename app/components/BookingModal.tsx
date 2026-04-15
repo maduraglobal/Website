@@ -6,6 +6,7 @@ import { X, Calendar, Users, Phone, Mail, User, Send, CheckCircle, Info, Plus, C
 import { usePathname } from 'next/navigation';
 import { formatRegionalPrice, getCountryConfig } from '@/config/country';
 import BookingDetailsForm from './tours/BookingDetailsForm';
+import PhonePrefixSelector from './ui/PhonePrefixSelector';
 
 // ─── Context ────────────────────────────────────────────────────────────────
 
@@ -112,6 +113,7 @@ const BookingModal = () => {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [selectedCountryCode, setSelectedCountryCode] = useState(region === 'en-au' ? '+61' : region === 'en-us' ? '+1' : '+91');
 
   useEffect(() => {
     if (isOpen) {
@@ -139,6 +141,8 @@ const BookingModal = () => {
     if (!validateForm()) return;
 
     setIsLoading(true);
+    // Include the country code in the final payload
+    console.log('Final Phone:', selectedCountryCode + formData.phone);
     setTimeout(() => {
       setIsLoading(false);
       setIsSubmitted(true);
@@ -240,10 +244,12 @@ const BookingModal = () => {
                     {/* Mobile Number */}
                     <div className="relative">
                       <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Mobile No.*</label>
-                      <div className={`flex rounded-xl border overflow-hidden transition-all ${errors.phone ? 'border-red-500' : 'border-gray-200 focus-within:border-[#191974]'}`}>
-                        <div className="flex items-center px-4 bg-gray-50/50 text-gray-500 text-[15px] font-bold border-r border-gray-100">
-                          {region === 'en-au' ? '+61' : region === 'en-us' ? '+1' : '+91'}
-                        </div>
+                      <div className={`flex rounded-xl border transition-all ${errors.phone ? 'border-red-500' : 'border-gray-200 focus-within:border-[#191974]'}`}>
+                        <PhonePrefixSelector 
+                          selectedCode={selectedCountryCode}
+                          onSelect={(code) => setSelectedCountryCode(code)}
+                          variant="outline"
+                        />
                         <input
                           name="phone"
                           value={formData.phone}

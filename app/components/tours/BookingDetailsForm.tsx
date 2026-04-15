@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Info, Plus, ChevronDown, Calendar, Smartphone } from 'lucide-react';
+import PhonePrefixSelector from '../ui/PhonePrefixSelector';
 
 interface TravelerFormData {
   firstName: string;
@@ -29,6 +30,7 @@ export default function BookingDetailsForm({ onCountUpdate }: BookingDetailsForm
     gender: '',
     dob: ''
   });
+  const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
 
   const [addGST, setAddGST] = useState(false);
   const [coTravelers, setCoTravelers] = useState<any[]>([]);
@@ -142,12 +144,13 @@ export default function BookingDetailsForm({ onCountUpdate }: BookingDetailsForm
         </div>
         <div className="relative">
           <label className="absolute -top-2.5 left-3 bg-white px-2 text-[12px] text-gray-400 font-medium z-10">Mobile No.*</label>
-          <div className={`flex rounded-xl border overflow-hidden transition-all ${errors.mobile ? 'border-red-500' : 'border-gray-200 focus-within:border-[#191974]'}`}>
-            <div className="flex items-center gap-2 px-3 bg-gray-50 border-r border-gray-100 cursor-pointer">
-              <img src="https://flagcdn.com/w40/in.png" alt="India" className="w-5 h-3.5 object-cover rounded-sm" />
-              <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
-            </div>
-            <div className="flex items-center px-4 bg-gray-50/50 text-gray-500 text-[15px] font-medium border-r border-gray-100">+91</div>
+          <div className={`flex rounded-xl border transition-all ${errors.mobile ? 'border-red-500' : 'border-gray-200 focus-within:border-[#191974]'}`}>
+            <PhonePrefixSelector 
+              selectedCode={selectedCountryCode}
+              onSelect={(code) => setSelectedCountryCode(code)}
+              variant="outline"
+              className="h-[54px]"
+            />
             <input 
               type="tel" 
               value={formData.mobile} 

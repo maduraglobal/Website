@@ -36,7 +36,7 @@ export default async function AllDestinationsPage({ params }: { params: Promise<
 
 
       {/* Header */}
-      <div className="bg-[#191974] text-white py-16 md:py-24 relative overflow-hidden">
+      <div className="bg-[#191974] text-white py-12 md:py-16 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
             <path d="M0,0 L100,100 L100,0 Z" fill="white" />

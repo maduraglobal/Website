@@ -184,7 +184,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link
             href={`/${currentRegionCode}`}
-            className="flex items-center shrink-0 w-32 sm:w-[160px]"
+            className="flex items-center shrink-0 w-28 sm:w-[160px]"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
             <Image
@@ -198,7 +198,8 @@ export default function Navbar() {
           </Link>
 
           {/* Right side: Search + Phone + Login + Country + Hamburger */}
-          <div className="flex items-center gap-1.5 sm:gap-4 ml-auto shrink-0">            {/* 🔍 SEARCH BAR */}
+          <div className="flex items-center gap-1 sm:gap-4 ml-auto shrink-0">
+            {/* 🔍 SEARCH BAR */}
             <div className="relative w-10 sm:w-64 group">
               <button
                 suppressHydrationWarning
@@ -225,7 +226,7 @@ export default function Navbar() {
               {/* Mobile Button (Icon only) */}
               <button
                 onClick={() => setIsContactDropdownOpen(!isContactDropdownOpen)}
-                className="xl:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-[#191974]/5 border border-[#191974]/10 text-[#191974] hover:bg-[#191974]/10 transition-all"
+                className={`xl:hidden w-10 h-10 flex items-center justify-center rounded-xl border transition-all ${isContactDropdownOpen ? 'bg-[#191974] text-white border-[#191974]' : 'bg-[#191974]/5 border-[#191974]/10 text-[#191974] hover:bg-[#191974]/10'}`}
               >
                 <Phone className="w-5 h-5" />
               </button>
@@ -236,7 +237,7 @@ export default function Navbar() {
                   <>
                     {/* Overlay for closing on mobile */}
                     <div
-                      className="fixed inset-0 z-190 xl:hidden"
+                      className="fixed inset-0 z-190 xl:hidden bg-black/20 backdrop-blur-[1px]"
                       onClick={() => setIsContactDropdownOpen(false)}
                     />
 
@@ -244,7 +245,7 @@ export default function Navbar() {
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute top-full right-0 mt-3 w-[300px] sm:w-[360px] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.15)] rounded-3xl border border-gray-100 z-200 overflow-hidden"
+                      className="absolute top-full right-[-145px] sm:right-[-100px] xl:right-0 mt-3 w-[calc(100vw-32px)] sm:w-[360px] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.15)] rounded-3xl border border-gray-100 z-200 overflow-hidden"
                     >
                       <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
                         <p className="text-[14px] text-[#191974] font-bold">Contact Us</p>
@@ -719,7 +720,7 @@ export default function Navbar() {
           <X className="w-6 h-6 group-hover:rotate-90 transition-transform" />
         </button>
 
-        <div className="max-w-4xl mx-auto h-full flex flex-col pt-24 px-6 relative z-10">
+        <div className="max-w-4xl mx-auto h-full flex flex-col pt-12 md:pt-20 px-6 relative z-10">
           <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
 
           </div>
@@ -734,7 +735,7 @@ export default function Navbar() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search Destinations (e.g. Dubai, Australia, London)"
-              className="w-full h-14 sm:h-16 pl-14 pr-16 rounded-2xl bg-white border-2 border-gray-100 shadow-xl text-[16px] sm:text-[18px] font-medium text-[#191974] outline-none focus:border-[#3ed49e] focus:ring-8 focus:ring-[#3ed49e]/5 transition-all"
+              className="w-full h-14 sm:h-16 pl-14 pr-16 rounded-2xl bg-white border-2 border-gray-100 shadow-xl text-[16px] sm:text-[18px] font-medium text-[#191974] outline-none focus:border-[#191974] focus:ring-8 focus:ring-[#3ed49e]/5 transition-all"
             />
             {query && (
               <button

@@ -54,12 +54,12 @@ export default function Footer() {
   const prefixed = (path: string) => `/${currentRegion}${path}`;
 
   return (
-    <footer className="bg-[#191974] text-white pt-16 pb-8 font-inter">
+    <footer className="bg-[#191974] text-white pt-10 md:pt-16 pb-8 font-inter">
       <div className="max-w-7xl mx-auto px-4">
 
         {/* === TOP SECTION: BRAND STORY === */}
-        <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16">
-          <div className="lg:w-2/3 space-y-8">
+        <div className="flex flex-col lg:flex-row justify-between gap-6 lg:gap-8 mb-8 lg:mb-16">
+          <div className="lg:w-2/3 space-y-3 md:space-y-8">
             <Link
               href={`/${currentRegion}`}
               className="inline-block"
@@ -82,7 +82,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex flex-col items-center lg:items-end gap-6">
+          <div className="flex flex-col items-center lg:items-end gap-3 md:gap-6">
             <h4 className="text-[18px] font-bold">Follow to stay updated</h4>
             <div className="flex gap-4">
               {[
@@ -103,8 +103,8 @@ export default function Footer() {
         </div>
 
         {/* === POPULAR DESTINATIONS === */}
-        <div className="py-8 border-y border-white/10 mb-12">
-          <h4 className="text-[18px] font-bold text-[#ee2229] mb-6 uppercase tracking-wider">Popular Destinations for 2026</h4>
+        <div className="py-4 md:py-8 border-y border-white/10 mb-6 md:mb-12">
+          <h4 className="text-[18px] font-bold text-[#ee2229] mb-3 md:mb-6 uppercase tracking-wider">Popular Destinations for 2026</h4>
           <div className="flex flex-wrap gap-x-4 gap-y-3 text-[13px] text-white">
             {destinations.map((dest, i) => (
               <React.Fragment key={i}>
@@ -121,7 +121,7 @@ export default function Footer() {
         </div>
 
         {/* === MAIN LINKS GRID === */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-12 mb-8 md:mb-16">
 
           {/* Company */}
           <div className="space-y-6">

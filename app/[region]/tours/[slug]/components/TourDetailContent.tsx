@@ -19,6 +19,7 @@ import { formatRegionalPrice } from '@/config/country';
 import TourMap from '@/app/components/tours/TourMap';
 import { createClient } from '@/utils/supabase/client';
 import { Pencil } from 'lucide-react';
+import PhonePrefixSelector from '@/app/components/ui/PhonePrefixSelector';
 
 
 interface TourDetailContentProps {
@@ -41,6 +42,7 @@ import { useBooking } from '@/app/components/BookingModal';
 
 export default function TourDetailContent({ tour, itinerary, region }: TourDetailContentProps) {
   const [activeTab, setActiveTab] = useState('itinerary');
+  const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
   const [detailsSubTab, setDetailsSubTab] = useState('accommodation');
   const [infoSubTab, setInfoSubTab] = useState('inclusions');
   const [isAdmin, setIsAdmin] = useState(false);
@@ -587,32 +589,32 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
                 <div className="p-6 space-y-6">
                   <div className="grid grid-cols-2 gap-y-6">
-                    <p className="text-[13px] text-gray-500 font-medium">Dept. city</p>
+                    <p className="text-[13px] text-gray-400 font-medium tracking-tight">Dept. city</p>
                     <button 
                       onClick={() => scrollToSection('pricing')}
-                      className="text-[13px] text-[#191974] font-bold text-left flex items-center gap-1 hover:text-[#ee2229] transition-colors"
+                      className="text-[13px] text-[#191974] font-bold text-left flex items-center justify-end gap-1 hover:text-[#ee2229] transition-colors"
                     >
                       {selectedCity}
-                      <Pencil className="w-2.5 h-2.5 opacity-50" />
+                      <Pencil className="w-3 h-3 text-gray-300 ml-1" />
                     </button>
 
-                    <p className="text-[13px] text-gray-500 font-medium">Dept. date</p>
+                    <p className="text-[13px] text-gray-400 font-medium tracking-tight">Dept. date</p>
                     <button 
                       onClick={() => scrollToSection('pricing')}
-                      className="text-[13px] text-[#191974] font-bold text-left flex items-center gap-1 hover:text-[#ee2229] transition-colors"
+                      className="text-[13px] text-[#191974] font-bold text-left flex items-center justify-end gap-1 hover:text-[#ee2229] transition-colors"
                     >
                       {selectedDateObject.date} {selectedDateObject.month} {selectedDateObject.year}
-                      <Pencil className="w-2.5 h-2.5 opacity-50" />
+                      <Pencil className="w-3 h-3 text-gray-300 ml-1" />
                     </button>
 
-                    <p className="text-[13px] text-gray-500 font-medium">Travellers</p>
+                    <p className="text-[13px] text-gray-400 font-medium tracking-tight">Travellers</p>
                     <div className="relative">
                       <button 
                         onClick={() => setIsTravellerMenuOpen(!isTravellerMenuOpen)}
-                        className="flex items-center gap-1.5 text-[13px] text-[#191974] font-bold hover:text-[#ee2229] transition-all cursor-pointer group"
+                        className="flex items-center justify-end gap-1 text-[13px] text-[#191974] font-bold hover:text-[#ee2229] transition-all cursor-pointer group w-full"
                       >
-                        {travellerCount.adults} A | {travellerCount.children} C | {travellerCount.infants} I
-                        <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isTravellerMenuOpen ? 'rotate-180' : ''}`} />
+                        {travellerCount.adults}A | {travellerCount.children}C | {travellerCount.infants}I
+                        <ChevronDown className={`w-3.5 h-3.5 text-[#191974] transition-transform ${isTravellerMenuOpen ? 'rotate-180' : ''}`} />
                       </button>
 
                       {isTravellerMenuOpen && (
@@ -676,13 +678,13 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                       )}
                     </div>
 
-                    <p className="text-[13px] text-gray-500 font-medium">Rooms</p>
+                    <p className="text-[13px] text-gray-400 font-medium tracking-tight">Rooms</p>
                     <button 
                        onClick={() => setIsTravellerMenuOpen(true)}
-                       className="text-[13px] text-[#191974] font-bold text-left flex items-center gap-1 hover:text-[#ee2229] transition-colors"
+                       className="text-[13px] text-[#191974] font-bold text-left flex items-center justify-end gap-1 hover:text-[#ee2229] transition-colors"
                     >
                       {roomCount} Room(s)
-                      <Pencil className="w-2.5 h-2.5 opacity-50" />
+                      <Pencil className="w-3 h-3 text-gray-300 ml-1" />
                     </button>
                   </div>
 
@@ -803,12 +805,12 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   </div>
 
                   <div className="relative">
-                    <div className="flex rounded-xl border border-gray-200 bg-white overflow-hidden focus-within:border-[#ee2229] transition-all">
-                      <div className="flex items-center gap-2 px-3 bg-gray-50/50 border-r border-gray-100 cursor-pointer">
-                        <img src="https://flagcdn.com/w40/in.png" alt="India" className="w-5 h-3.5 object-cover rounded-sm" />
-                        <ChevronRight className="w-3 h-3 rotate-90 text-gray-400" />
-                      </div>
-                      <div className="flex items-center px-4 text-gray-400 text-[14px] font-bold border-r border-gray-100">+91</div>
+                    <div className="flex rounded-xl border border-gray-200 bg-white overflow-hidden focus-within:border-[#ee2229] transition-all relative">
+                      <PhonePrefixSelector 
+                        selectedCode={selectedCountryCode}
+                        onSelect={(code) => setSelectedCountryCode(code)}
+                        variant="sidebar"
+                      />
                       <input
                         type="text"
                         placeholder="Mobile No.*"

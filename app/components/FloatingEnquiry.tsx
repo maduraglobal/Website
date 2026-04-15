@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, MessageSquare, Phone, User, Mail, Check } from 'lucide-react';
 import Image from 'next/image';
+import PhonePrefixSelector from './ui/PhonePrefixSelector';
 
 export default function FloatingEnquiry() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +13,7 @@ export default function FloatingEnquiry() {
     email: '',
     phone: '',
   });
+  const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Close with Escape key
@@ -141,19 +143,18 @@ export default function FloatingEnquiry() {
                         />
                       </div>
 
-                      {/* Phone with Flag Selector UI (inspired by screenshot) */}
+                      {/* Phone with Flag Selector UI */}
                       <div className="relative">
                         <label className="absolute -top-2.5 left-4 px-2 bg-white text-[12px] font-bold text-gray-400 z-10 group-focus-within:text-[#191974]">
                           Mobile No.*
                         </label>
-                        <div className="flex h-[54px] bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#191974] transition-all">
-                          <div className="w-[85px] border-r border-gray-100 flex items-center justify-center gap-2 px-3 bg-gray-50/30">
-                            <span className="text-[18px]">🇮🇳</span>
-                            <span className="text-[13px] font-bold text-[#191974]">▼</span>
-                          </div>
-                          <div className="flex items-center px-4 border-r border-gray-50">
-                            <span className="text-[14px] font-bold text-gray-500">+91</span>
-                          </div>
+                        <div className="flex h-[54px] bg-white border border-gray-200 rounded-xl focus-within:border-[#191974] transition-all relative">
+                          <PhonePrefixSelector 
+                            selectedCode={selectedCountryCode}
+                            onSelect={(code) => setSelectedCountryCode(code)}
+                            variant="minimal"
+                            className="bg-transparent border-none scale-90 -ml-1"
+                          />
                           <input
                             required
                             type="tel"

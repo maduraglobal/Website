@@ -89,7 +89,7 @@ export default function VisaServicesPage() {
   const params = useParams();
   const region = params?.region as string || "en-in";
   const countryConfig = getCountryConfig(region);
-  
+
   const [citizenOf, setCitizenOf] = useState(countryConfig.name);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeContinent, setActiveContinent] = useState("All");
@@ -101,7 +101,7 @@ export default function VisaServicesPage() {
   // Logic for accurate data based on source
   const getDisplayDestinations = () => {
     let baseDestinations = [...destinations];
-    
+
     // Check if we have source-aware accurate data for the selected citizen country
     const sourceData = sourceAwareData[citizenOf];
     if (sourceData) {
@@ -136,7 +136,7 @@ export default function VisaServicesPage() {
       {/* 1. HERO SECTION */}
       <section className="bg-[#191974] pt-24 pb-16 px-4 relative overflow-hidden flex-1">
         <div className="max-w-6xl mx-auto text-center relative z-10 pt-10">
-          <motion.h5 
+          <motion.h5
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-white text-3xl md:text-6xl mb-8 tracking-tight leading-tight"
@@ -151,20 +151,20 @@ export default function VisaServicesPage() {
               <MapPin className="text-[#ee2229] w-5 h-5 mr-3 shrink-0" />
               <div className="flex flex-col items-start text-left w-full">
                 <span className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-0.5">Citizen of</span>
-                <input 
-                  type="text" 
-                  value={citizenOf} 
+                <input
+                  type="text"
+                  value={citizenOf}
                   onChange={(e) => { setCitizenOf(e.target.value); setCitizenOpen(true); }}
                   onFocus={() => setCitizenOpen(true)}
                   onBlur={() => setTimeout(() => setCitizenOpen(false), 200)}
-                  className="w-full text-[#191974] font-bold p-0 border-none outline-none bg-transparent" 
+                  className="w-full text-[#191974] font-bold p-0 border-none outline-none bg-transparent"
                 />
               </div>
-              
+
               {citizenOpen && (
                 <div className="absolute top-full left-0 w-full md:w-64 bg-white shadow-2xl rounded-2xl mt-4 z-50 border border-gray-100 overflow-hidden py-2 text-left">
                   {allCountries.filter(c => c.toLowerCase().includes(citizenOf.toLowerCase())).map(country => (
-                    <div 
+                    <div
                       key={country}
                       onClick={() => { setCitizenOf(country); setCitizenOpen(false); }}
                       className="px-6 py-2.5 hover:bg-gray-50 cursor-pointer text-[#191974] font-medium text-sm transition-colors"
@@ -195,7 +195,7 @@ export default function VisaServicesPage() {
               {destinationOpen && (
                 <div className="absolute top-full left-0 w-full bg-white shadow-2xl rounded-2xl mt-4 z-50 border border-gray-100 overflow-hidden py-2 text-left">
                   {destinations.map(d => d.name).filter(c => c.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 8).map(country => (
-                    <div 
+                    <div
                       key={country}
                       onClick={() => { setSearchQuery(country); setDestinationOpen(false); }}
                       className="px-6 py-2.5 hover:bg-gray-50 cursor-pointer text-[#191974] font-medium text-sm transition-colors"
@@ -275,164 +275,15 @@ export default function VisaServicesPage() {
         </div>
       </section>
 
-      {/* 3. MEET OUR VISA EXPERTS */}
-      <section className="py-12 px-4 bg-[#f8f9fa] overflow-hidden border-y border-gray-100">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 gap-6">
-            <div className="text-center md:text-left">
-              <h2 className="text-3xl lg:text-4xl text-[#191974]">Meet Our Visa Experts</h2>
-              <p className="text-gray-500 mt-3 font-medium text-lg">Professionals dedicated to securing your visa smoothly</p>
-            </div>
-            <div className="hidden md:flex gap-3">
-              <button className="w-12 h-12 rounded-full border-2 border-[#191974] text-[#191974] flex items-center justify-center hover:bg-[#191974] hover:text-white transition-colors">
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button className="w-12 h-12 rounded-full bg-[#191974] text-white flex items-center justify-center shadow-xl shadow-[#191974]/30 hover:bg-[#111155] transition-colors hover:scale-105 transform">
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            </div>
-          </div>
+      3. MEET OUR VISA EXPERTS
 
-          <div className="flex gap-4 overflow-x-auto pb-8 snap-x no-scrollbar">
-            {experts.map((expert, i) => (
-              <div key={i} className="min-w-[280px] md:min-w-[300px] bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl transition-shadow snap-start text-center">
-                <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-6 border-4 border-gray-50 shadow-inner">
-                  <img src={expert.img} className="w-full h-full object-cover" alt={expert.name} />
-                </div>
-                <h4 className="text-xl text-[#191974] mb-1">{expert.name}</h4>
-                <p className="text-sm text-gray-500 font-bold tracking-wide  mb-4">{expert.role}</p>
-                <p className="text-xs text-[#ee2229] bg-red-50 inline-block px-4 py-1.5 rounded-lg border border-red-100">{expert.exp} Experience</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section >
 
       {/* 4. HOW IT WORKS */}
-      < section className="py-12 px-4 bg-[#FAF8F5]" >
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl  text-[#191974] text-center mb-12 leading-tight">Applying Is This Simple</h2>
 
-          <div className="relative">
-            {/* Line connecting the steps (desktop) */}
-            <div className="hidden md:block absolute top-[48px] left-[15%] right-[15%] h-1 bg-gray-200"></div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
-              {/* Step 1 */}
-              <div className="text-center group">
-                <div className="w-24 h-24 mx-auto rounded-full bg-white border-[6px] border-gray-200 group-hover:border-[#191974] flex items-center justify-center transition-colors mb-6 shadow-md relative group-hover:-translate-y-2 transform duration-300">
-                  <span className="text-3xl text-[#191974]">1</span>
-                </div>
-                <div className="w-14 h-14 mx-auto bg-[#191974]/5 rounded-2xl flex items-center justify-center mb-5 text-[#191974]">
-                  <CreditCard className="w-6 h-6" />
-                </div>
-                <h4 className="text-xl text-[#191974] mb-3 leading-tight">Submit documents <br />& pay online</h4>
-              </div>
 
-              {/* Step 2 (Active) */}
-              <div className="text-center group">
-                <div className="w-24 h-24 mx-auto rounded-full bg-[#ee2229] border-[6px] border-[#ee2229]/20 flex items-center justify-center mb-6 shadow-xl shadow-[#ee2229]/30 relative -translate-y-2">
-                  <span className="text-3xl text-white">2</span>
-                </div>
-                <div className="w-14 h-14 mx-auto bg-[#ee2229]/10 rounded-2xl flex items-center justify-center mb-5 text-[#ee2229]">
-                  <ShieldCheck className="w-6 h-6" />
-                </div>
-                <h4 className="text-xl text-[#191974] mb-3 leading-tight">We verify & process <br />your Visa application</h4>
-              </div>
 
-              {/* Step 3 */}
-              <div className="text-center group">
-                <div className="w-24 h-24 mx-auto rounded-full bg-white border-[6px] border-gray-200 group-hover:border-[#191974] flex items-center justify-center transition-colors mb-6 shadow-md relative group-hover:-translate-y-2 transform duration-300">
-                  <span className="text-3xl text-[#191974]">3</span>
-                </div>
-                <div className="w-14 h-14 mx-auto bg-[#191974]/5 rounded-2xl flex items-center justify-center mb-5 text-[#191974]">
-                  <Map className="w-6 h-6" />
-                </div>
-                <h4 className="text-xl text-[#191974] mb-3 leading-tight">Receive Visa <br />documents</h4>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section >
 
-      {/* 5. WHY CHOOSE US */}
-      < section className="py-12 px-4 bg-white border-y border-gray-100" >
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl  text-[#191974] text-center mb-10">Why Choose Us</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-12">
-            {[
-              { icon: Globe, title: "Visa Services for 180+ Countries" },
-              { icon: Star, title: "45+\nyears of expertise" },
-              { icon: Building2, title: "150+\nBranches Worldwide" },
-              { icon: Users, title: "Support from Start to Stamp" },
-              { icon: MapPin, title: "Doorstep\nConvenience" },
-              { icon: ShieldCheck, title: "Safety &\nConfidentiality" }
-            ].map((usp, i) => (
-              <div key={i} className="flex flex-col items-center text-center group cursor-pointer">
-                <div className="bg-[#191974] group-hover:bg-[#ee2229] group-hover:-translate-y-2 transition-all duration-300 w-20 h-20 rounded-[1.25rem] flex items-center justify-center text-white mb-5 shadow-xl shadow-gray-200">
-                  <usp.icon className="w-8 h-8" />
-                </div>
-                <p className="text-sm md:text-base text-[#191974] whitespace-pre-line leading-snug">{usp.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section >
-
-      {/* 6. CUSTOMER REVIEWS */}
-      < section className="py-24 px-4 bg-[#f8f9fa]" >
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl text-[#191974] text-center mb-16">What Customers Say About Us</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div className="bg-white p-10 rounded-4xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow">
-              <div className="flex text-[#ee2229] mb-6 gap-1">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-6 h-6 fill-current" />)}
-              </div>
-              <p className="text-gray-600 mb-8 font-medium text-lg leading-relaxed">"Excellent service handling our visas. Everything was communicated clearly, and we got our approvals well before time. Really highly recommend Madura travel service."</p>
-              <div className="flex items-center justify-between border-t border-gray-100 pt-6">
-                <h4 className="text-lg text-[#191974]">Nupur Sawant</h4>
-                <span className="text-[#ee2229] text-sm tracking-widest  cursor-pointer hover:underline">Read more</span>
-              </div>
-            </div>
-
-            <div className="bg-white p-10 rounded-4xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow">
-              <div className="flex text-[#ee2229] mb-6 gap-1">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-6 h-6 fill-current" />)}
-              </div>
-              <p className="text-gray-600 mb-8 font-medium text-lg leading-relaxed">"Super fast and flawless process. The team provided checklist for required documents explicitly. My Australia visa was perfectly arranged without any hiccups."</p>
-              <div className="flex items-center justify-between border-t border-gray-100 pt-6">
-                <h4 className="text-lg text-[#191974]">Mayur Waman</h4>
-                <span className="text-[#ee2229] text-sm tracking-widest  cursor-pointer hover:underline">Read more</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section >
-
-      {/* 7. VISIT US / LOCATIONS */}
-      < section className="py-24 px-4 bg-[#FAF8F5] border-t border-gray-200" >
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl text-[#191974] text-center mb-16">Visit Us</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { city: "Mumbai", addr: "Antigravity HQ, Andheri East, Mumbai, Maharashtra 400059." },
-              { city: "Delhi", addr: "Antigravity Towers, Connaught Place, New Delhi 110001." },
-              { city: "Chennai", addr: "Madura travel service, T Nagar, Chennai, Tamil Nadu 600017." }
-            ].map((loc, i) => (
-              <div key={i} className="bg-white p-10 rounded-3xl shadow-sm border border-gray-200 hover:border-[#191974]/30 transition-colors">
-                <div className="w-16 h-16 bg-[#191974]/5 text-[#191974] rounded-2xl flex items-center justify-center mb-8 border border-[#191974]/10">
-                  <Building2 className="w-8 h-8" />
-                </div>
-                <h3 className="text-2xl text-[#191974] mb-4">{loc.city}</h3>
-                <p className="text-gray-500 text-base font-medium mb-8 leading-relaxed">{loc.addr}</p>
-                <p className="text-[#191974] text-xs  tracking-widest flex items-center gap-2 hover:text-[#ee2229] cursor-pointer group">
-                  View on Google Maps <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section >
 
       {/* 8. COUNTRY DIRECTORY FOOTER */}
       < section className="py-20 px-4 bg-white border-t border-gray-200" >

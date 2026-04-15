@@ -170,21 +170,33 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
               <div className="p-6 space-y-6">
                 <div className="grid grid-cols-2 gap-y-6">
-                  <p className="text-[13px] text-gray-500 font-medium">Dept. city</p>
-                  <p className="text-[13px] text-gray-300 font-medium">Mumbai</p>
+                  <p className="text-[13px] text-gray-400 font-medium tracking-tight">Dept. city</p>
+                  <div className="flex items-center justify-end gap-1 cursor-pointer hover:text-[#ee2229] transition-colors group">
+                    <span className="text-[13px] text-[#191974] font-bold">Mumbai</span>
+                    <Pencil className="w-3 h-3 text-gray-300" />
+                  </div>
 
-                  <p className="text-[13px] text-gray-500 font-medium">Dept. date</p>
-                  <p className="text-[13px] text-[#191974] font-bold">23 Jun 2026 &rarr; 28 Jun 2026</p>
+                  <p className="text-[13px] text-gray-400 font-medium tracking-tight">Dept. date</p>
+                  <div className="flex items-center justify-end gap-1 cursor-pointer hover:text-[#ee2229] transition-colors group">
+                    <span className="text-[13px] text-[#191974] font-bold">23 Jun 2026 &rarr; 28 Jun 2026</span>
+                    <Pencil className="w-3 h-3 text-gray-300" />
+                  </div>
 
-                  <p className="text-[13px] text-gray-500 font-medium">Travellers</p>
-                  <p className="text-[13px] text-[#191974] font-bold">
-                    {travellerCount.adults} Adult(s) | {travellerCount.children} Child | {travellerCount.infants} Infant
-                  </p>
+                  <p className="text-[13px] text-gray-400 font-medium tracking-tight">Travellers</p>
+                  <div className="flex items-center justify-end gap-1 cursor-pointer hover:text-[#ee2229] transition-colors group">
+                    <span className="text-[13px] text-[#191974] font-bold">
+                      {travellerCount.adults}A | {travellerCount.children}C | {travellerCount.infants}I
+                    </span>
+                    <ChevronDown className="w-3.5 h-3.5 text-[#191974]" />
+                  </div>
 
-                  <p className="text-[13px] text-gray-500 font-medium">Rooms</p>
-                  <p className="text-[13px] text-[#191974] font-bold">
-                    {Math.ceil(travellerCount.adults / 2)} Room(s)
-                  </p>
+                  <p className="text-[13px] text-gray-400 font-medium tracking-tight">Rooms</p>
+                  <div className="flex items-center justify-end gap-1 cursor-pointer hover:text-[#ee2229] transition-colors group">
+                    <span className="text-[13px] text-[#191974] font-bold">
+                      {Math.ceil(travellerCount.adults / 2)} Room(s)
+                    </span>
+                    <Pencil className="w-3 h-3 text-gray-300" />
+                  </div>
                 </div>
 
                 <div className="pt-6 border-t border-dashed border-gray-200">

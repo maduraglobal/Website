@@ -4,6 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/utils/cn';
 import { formatRegionalPrice } from '@/config/country';
+import { Pencil, ChevronDown } from 'lucide-react';
 
 interface BookingSidebarProps {
   price?: number;
@@ -52,23 +53,35 @@ export default function BookingSidebar({
         <div className="p-6">
           {/* Booking Summary Details */}
           <div className="space-y-4 mb-8">
-            <div className="flex justify-between items-center text-[13px]">
-              <span className="text-gray-400 font-medium tracking-tight">Dept. city</span>
-              <span className="text-gray-900 font-bold">{selectedCity}</span>
+            <div className="flex justify-between items-center">
+              <span className="text-[13px] text-gray-400 font-medium tracking-tight">Dept. city</span>
+              <div className="flex items-center gap-1 cursor-pointer hover:text-[#ee2229] transition-colors group">
+                <span className="text-[13px] text-[#191974] font-bold">{selectedCity}</span>
+                <Pencil className="w-3 h-3 text-gray-300" />
+              </div>
             </div>
-            <div className="flex justify-between items-center text-[13px]">
-              <span className="text-gray-400 font-medium tracking-tight">Dept. date</span>
-              <span className="text-gray-900 font-bold">{selectedDate}</span>
+            <div className="flex justify-between items-center">
+              <span className="text-[13px] text-gray-400 font-medium tracking-tight">Dept. date</span>
+              <div className="flex items-center gap-1 cursor-pointer hover:text-[#ee2229] transition-colors group">
+                <span className="text-[13px] text-[#191974] font-bold">{selectedDate}</span>
+                <Pencil className="w-3 h-3 text-gray-300" />
+              </div>
             </div>
-            <div className="flex justify-between items-center text-[13px]">
-              <span className="text-gray-400 font-medium tracking-tight">Travellers</span>
-              <span className="text-[#191974] font-bold">
-                {travellerCount.adults} Adult(s) | {travellerCount.children} Child | {travellerCount.infants} Infant
-              </span>
+            <div className="flex justify-between items-center">
+              <span className="text-[13px] text-gray-400 font-medium tracking-tight">Travellers</span>
+              <div className="flex items-center gap-1 cursor-pointer hover:text-[#ee2229] transition-colors group">
+                <span className="text-[13px] text-[#191974] font-bold">
+                  {travellerCount.adults}A | {travellerCount.children}C | {travellerCount.infants}I
+                </span>
+                <ChevronDown className="w-3.5 h-3.5 text-[#191974]" />
+              </div>
             </div>
-            <div className="flex justify-between items-center text-[13px]">
-              <span className="text-gray-400 font-medium tracking-tight">Rooms</span>
-              <span className="text-[#191974] font-bold">{Math.ceil(travellerCount.adults / 2)} Room(s)</span>
+            <div className="flex justify-between items-center">
+              <span className="text-[13px] text-gray-400 font-medium tracking-tight">Rooms</span>
+              <div className="flex items-center gap-1 cursor-pointer hover:text-[#ee2229] transition-colors group">
+                <span className="text-[13px] text-[#191974] font-bold">{Math.ceil(travellerCount.adults / 2)} Room(s)</span>
+                <Pencil className="w-3 h-3 text-gray-300" />
+              </div>
             </div>
           </div>
 
