@@ -86,7 +86,7 @@ export default function BookingDetailsForm({ onCountUpdate }: BookingDetailsForm
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white p-8 rounded-3xl shadow-sm border border-gray-100 font-inter">
+    <div className="max-w-4xl mx-auto bg-white p-8 rounded-3xl  border border-gray-100 font-inter">
       {/* Warning Header */}
       <div className="bg-red-50 text-[#ee2229] p-4 rounded-xl flex items-center gap-3 mb-10 border border-red-100/50">
         <div className="w-5 h-5 rounded-full border-2 border-[#ee2229] flex items-center justify-center font-bold text-[12px]">!</div>
@@ -212,7 +212,7 @@ export default function BookingDetailsForm({ onCountUpdate }: BookingDetailsForm
       <div className="mt-12">
         <button 
           onClick={handleReview}
-          className="w-full bg-[#191974] text-white font-bold py-5 rounded-2xl text-[16px] shadow-xl shadow-yellow-500/10 hover:bg-[#ee2229] transition-all uppercase tracking-widest active:scale-[0.98]"
+          className="w-full bg-[#191974] text-white font-bold py-5 rounded-2xl text-[16px]   hover:bg-[#ee2229] transition-all uppercase tracking-widest active:scale-[0.98]"
         >
           Review Details
         </button>

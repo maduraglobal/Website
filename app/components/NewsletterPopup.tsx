@@ -55,7 +55,7 @@ export default function NewsletterPopup() {
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative w-full max-w-[440px] bg-white rounded-[32px] overflow-hidden shadow-2xl"
+            className="relative w-full max-w-[440px] bg-white rounded-[32px] overflow-hidden "
           >
             {/* Discount Badge */}
             <div className="absolute top-4 left-4 z-20 w-12 h-12 bg-[#191974]/10 rounded-2xl flex items-center justify-center rotate-[-15deg]">
@@ -65,7 +65,7 @@ export default function NewsletterPopup() {
             {/* Close Button */}
             <button 
               onClick={handleClose}
-              className="absolute top-4 right-4 z-20 p-2 bg-white/80 hover:bg-white rounded-full transition-colors shadow-sm"
+              className="absolute top-4 right-4 z-20 p-2 bg-white/80 hover:bg-white rounded-full transition-colors "
             >
               <X className="w-5 h-5 text-gray-500" />
             </button>
@@ -142,7 +142,7 @@ export default function NewsletterPopup() {
 
                 <button 
                   type="submit"
-                  className="w-full bg-yellow-400 hover:bg-yellow-500 text-[#191974] font-bold py-4 rounded-xl shadow-lg shadow-yellow-400/20 active:scale-[0.98] transition-all text-[15px] mt-2 uppercase tracking-wider"
+                  className="w-full bg-yellow-400 hover:bg-yellow-500 text-[#191974] font-bold py-4 rounded-xl   active:scale-[0.98] transition-all text-[15px] mt-2 uppercase tracking-wider"
                 >
                   Subscribe
                 </button>

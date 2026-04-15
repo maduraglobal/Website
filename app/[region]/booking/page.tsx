@@ -132,7 +132,7 @@ export default function BookingPage() {
         <div className="max-w-md w-full text-center space-y-8">
           <div className="relative mx-auto w-24 h-24">
             <div className="absolute inset-0 bg-green-100 rounded-full scale-150 opacity-20 animate-pulse"></div>
-            <div className="relative w-24 h-24 bg-green-500 rounded-full flex items-center justify-center text-white shadow-xl">
+            <div className="relative w-24 h-24 bg-green-500 rounded-full flex items-center justify-center text-white ">
               <Check className="w-12 h-12" strokeWidth={3} />
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function BookingPage() {
               <span className="font-bold text-[#ee2229]">{formatRegionalPrice(totalPrice, region)}</span>
             </div>
           </div>
-          <button onClick={() => router.push(`/${region}/tours`)} className="w-full bg-[#191974] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#ee2229] transition-all shadow-xl">
+          <button onClick={() => router.push(`/${region}/tours`)} className="w-full bg-[#191974] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#ee2229] transition-all ">
             Explore More Tours <ArrowRight className="w-5 h-5" />
           </button>
         </div>
@@ -183,12 +183,12 @@ export default function BookingPage() {
           <div className="flex-1 min-w-0 space-y-6">
 
             {/* Stepper */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 px-8 py-6">
+            <div className="bg-white rounded-2xl  border border-gray-100 px-8 py-6">
               <div className="flex items-center">
                 {[1, 2, 3].map((s) => (
                   <React.Fragment key={s}>
                     <div className="flex flex-col items-center gap-2 shrink-0">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${step >= s ? 'bg-[#ee2229] text-white shadow-md shadow-red-500/20' : 'bg-gray-100 text-gray-400'}`}>
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${step >= s ? 'bg-[#ee2229] text-white  ' : 'bg-gray-100 text-gray-400'}`}>
                         {step > s ? <Check className="w-5 h-5" strokeWidth={3} /> : s}
                       </div>
                       <span className={`text-[10px] font-bold uppercase tracking-widest whitespace-nowrap ${step >= s ? 'text-[#191974]' : 'text-gray-300'}`}>
@@ -205,7 +205,7 @@ export default function BookingPage() {
             {step === 1 && (
               <form onSubmit={handleNextStep} className="space-y-6">
                 {/* Lead Booker */}
-                <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 space-y-6">
+                <div className="bg-white rounded-3xl border border-gray-100  p-8 space-y-6">
                   <div>
                     <h2 className="text-xl font-bold text-[#191974]">Lead Passenger Details</h2>
                     <p className="text-sm text-gray-400 mt-1">Primary contact for this booking (as per passport).</p>
@@ -231,7 +231,7 @@ export default function BookingPage() {
                 </div>
 
                 {/* Traveler Count Selection */}
-                <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 space-y-4">
+                <div className="bg-white rounded-3xl border border-gray-100  p-8 space-y-4">
                   <div>
                     <h2 className="text-xl font-bold text-[#191974]">Select Travelers</h2>
                     <p className="text-sm text-gray-400 mt-1">How many people are travelling?</p>
@@ -263,7 +263,7 @@ export default function BookingPage() {
 
                 {/* Co-Traveler Details */}
                 {travelers.length > 0 && (
-                  <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 space-y-8">
+                  <div className="bg-white rounded-3xl border border-gray-100  p-8 space-y-8">
                     <div>
                       <h2 className="text-xl font-bold text-[#191974]">Co-Traveler Details</h2>
                       <p className="text-sm text-gray-400 mt-1">Please fill in details for all travelers (as per passport/birth certificate).</p>
@@ -324,7 +324,7 @@ export default function BookingPage() {
                 )}
 
                 <div className="flex justify-end">
-                  <button type="submit" className="bg-[#ee2229] text-white px-12 py-5 rounded-2xl font-bold flex items-center gap-3 hover:bg-[#191974] transition-all shadow-xl shadow-red-500/20 active:scale-95 group">
+                  <button type="submit" className="bg-[#ee2229] text-white px-12 py-5 rounded-2xl font-bold flex items-center gap-3 hover:bg-[#191974] transition-all   active:scale-95 group">
                     Continue to Review <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>
@@ -333,7 +333,7 @@ export default function BookingPage() {
 
             {/* STEP 2: Review */}
             {step === 2 && (
-              <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 space-y-8">
+              <div className="bg-white rounded-3xl border border-gray-100  p-8 space-y-8">
                 <div>
                   <h2 className="text-xl font-bold text-[#191974]">Review Your Booking</h2>
                   <p className="text-sm text-gray-400 mt-1">Please confirm all details before payment.</p>
@@ -380,7 +380,7 @@ export default function BookingPage() {
                   <button type="button" onClick={() => setStep(1)} className="text-[#191974] font-bold flex items-center gap-2 hover:text-[#ee2229] transition-colors">
                     <ArrowLeft className="w-5 h-5" /> Edit Details
                   </button>
-                  <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setStep(3); }} className="bg-[#ee2229] text-white px-12 py-5 rounded-2xl font-bold flex items-center gap-3 hover:bg-[#191974] transition-all shadow-xl active:scale-95 group">
+                  <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setStep(3); }} className="bg-[#ee2229] text-white px-12 py-5 rounded-2xl font-bold flex items-center gap-3 hover:bg-[#191974] transition-all  active:scale-95 group">
                     Proceed to Payment <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>
@@ -389,7 +389,7 @@ export default function BookingPage() {
 
             {/* STEP 3: Payment */}
             {step === 3 && (
-              <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 space-y-8">
+              <div className="bg-white rounded-3xl border border-gray-100  p-8 space-y-8">
                 <div>
                   <h2 className="text-xl font-bold text-[#191974]">Secure Payment</h2>
                   <p className="text-sm text-gray-400 mt-1">Your payment is encrypted and fully secure.</p>
@@ -419,7 +419,7 @@ export default function BookingPage() {
 
                 <div className="space-y-4">
                   <button onClick={initiatePayment} disabled={loading}
-                    className="w-full bg-[#ee2229] text-white py-5 rounded-2xl font-bold text-base hover:bg-[#191974] transition-all shadow-xl shadow-red-500/20 active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3">
+                    className="w-full bg-[#ee2229] text-white py-5 rounded-2xl font-bold text-base hover:bg-[#191974] transition-all   active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3">
                     {loading ? <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
                       : <><ShieldCheck className="w-5 h-5" /> Pay {formatRegionalPrice(totalPrice, region)} Securely</>}
                   </button>
@@ -433,7 +433,7 @@ export default function BookingPage() {
 
           {/* RIGHT: Sticky Summary */}
           <div className="lg:w-[380px] shrink-0 sticky top-28">
-            <div className="bg-white rounded-[28px] shadow-2xl shadow-blue-900/10 border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-[28px]   border border-gray-100 overflow-hidden">
               <div className="relative h-44">
                 <div className="absolute inset-0 bg-linear-to-t from-black/60 to-black/20 z-10"></div>
                 <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=1200')] bg-cover bg-center"></div>

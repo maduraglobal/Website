@@ -155,7 +155,7 @@ export default function MICEPage() {
             <div className="flex flex-wrap gap-4">
               <button
                 onClick={() => document.getElementById('enquiry-form')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-[#ee2229] hover:bg-white hover:text-[#191974] px-10 py-5 rounded-full font-bold text-[16px] transition-all duration-300 shadow-xl flex items-center gap-2 group"
+                className="bg-[#ee2229] hover:bg-white hover:text-[#191974] px-10 py-5 rounded-full font-bold text-[16px] transition-all duration-300  flex items-center gap-2 group"
               >
                 Inquire Now
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -196,9 +196,9 @@ export default function MICEPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="group p-8 rounded-[40px] bg-white border border-gray-100 shadow-[0_15px_60px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] transition-all duration-500 flex flex-col items-center text-center hover:-translate-y-2"
+                className="group p-8 rounded-[40px] bg-white border border-gray-100  hover: transition-all duration-500 flex flex-col items-center text-center hover:-translate-y-2"
               >
-                <div className={`w-20 h-20 rounded-[28px] bg-linear-to-br ${s.color} text-white flex items-center justify-center mb-8 shadow-lg transform group-hover:rotate-10deg transition-transform duration-500`}>
+                <div className={`w-20 h-20 rounded-[28px] bg-linear-to-br ${s.color} text-white flex items-center justify-center mb-8  transform group-hover:rotate-10deg transition-transform duration-500`}>
                   {s.icon}
                 </div>
                 <h4 className="text-[22px] font-bold text-[#191974] mb-4">{s.title}</h4>
@@ -225,7 +225,7 @@ export default function MICEPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {nicheExpertise.map((item, i) => (
-                  <div key={i} className={`${item.bg} p-6 rounded-3xl border border-white hover:shadow-md transition-all group`}>
+                  <div key={i} className={`${item.bg} p-6 rounded-3xl border border-white hover: transition-all group`}>
                     <div className="flex items-center gap-4 mb-3">
                       <div className="text-[#191974]">{item.icon}</div>
                       <h5 className="font-bold text-[#191974]">{item.title}</h5>
@@ -237,7 +237,7 @@ export default function MICEPage() {
             </div>
 
             <div className="relative">
-              <div className="relative aspect-square rounded-[60px] overflow-hidden shadow-2xl">
+              <div className="relative aspect-square rounded-[60px] overflow-hidden ">
                 <FallbackImage src="/mice-expertise.png" alt="MICE Expertise" className="object-cover w-full h-full" fallbackSrc="/logo.webp" />
                 <div className="absolute inset-0 bg-linear-to-t from-[#191974]/80 to-transparent"></div>
                 <div className="absolute bottom-10 left-10 text-white">
@@ -248,7 +248,7 @@ export default function MICEPage() {
                   <h4 className="text-[28px] font-bold leading-tight">Limca Record for International <br />Cultural Outreach</h4>
                 </div>
               </div>
-              <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#ee2229] rounded-full flex flex-col items-center justify-center text-white p-6 shadow-xl border-4 border-white rotate-12">
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#ee2229] rounded-full flex flex-col items-center justify-center text-white p-6  border-4 border-white rotate-12">
                 <p className="text-[28px] font-black">40+</p>
                 <p className="text-[10px] font-bold text-center uppercase tracking-tighter">Years of <br />Excellence</p>
               </div>
@@ -269,7 +269,7 @@ export default function MICEPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="group relative h-[400px] rounded-[40px] overflow-hidden cursor-pointer shadow-xl">
+            <div className="group relative h-[400px] rounded-[40px] overflow-hidden cursor-pointer ">
               <FallbackImage src="https://images.unsplash.com/photo-1542151408-aff34a97321c?q=80&w=1200&auto=format&fit=crop" alt="Domestic Destinations" className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700" fallbackSrc="/logo.webp" />
               <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"></div>
               <div className="absolute bottom-10 left-10 text-white">
@@ -281,7 +281,7 @@ export default function MICEPage() {
                 </div>
               </div>
             </div>
-            <div className="group relative h-[400px] rounded-[40px] overflow-hidden cursor-pointer shadow-xl">
+            <div className="group relative h-[400px] rounded-[40px] overflow-hidden cursor-pointer ">
               <FallbackImage src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop" alt="International Destinations" className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700" fallbackSrc="/logo.webp" />
               <div className="absolute inset-0 bg-linear-to-t from-[#191974]/90 via-[#191974]/20 to-transparent"></div>
               <div className="absolute bottom-10 left-10 text-white">
@@ -330,7 +330,7 @@ export default function MICEPage() {
               </div>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl p-10 rounded-[60px] border border-white/10 shadow-3xl">
+            <div className="bg-white/5 backdrop-blur-xl p-10 rounded-[60px] border border-white/10 ">
               <div className="text-center mb-10">
                 <BadgeCheck className="w-16 h-16 text-[#ee2229] mx-auto mb-4" />
                 <h4 className="text-[24px] font-bold mb-2">Ready to Innovate?</h4>
@@ -372,7 +372,7 @@ export default function MICEPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="bg-white rounded-[50px] p-10 md:p-16 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] border border-gray-100"
+            className="bg-white rounded-[50px] p-10 md:p-16  border border-gray-100"
           >
             {!submitted ? (
               <>
@@ -473,7 +473,7 @@ export default function MICEPage() {
                     ></textarea>
                   </div>
 
-                  <button type="submit" className="w-full h-18 bg-[#ee2229] hover:bg-[#191974] text-white rounded-full font-black text-[18px] transition-all duration-300 shadow-2xl shadow-[#ee2229]/20 flex items-center justify-center gap-3">
+                  <button type="submit" className="w-full h-18 bg-[#ee2229] hover:bg-[#191974] text-white rounded-full font-black text-[18px] transition-all duration-300   flex items-center justify-center gap-3">
                     Submit Proposal Request
                     <ArrowRight className="w-6 h-6" />
                   </button>
@@ -534,7 +534,7 @@ export default function MICEPage() {
           <div className="mt-20 text-center p-12 rounded-[50px] bg-[#ee2229] text-white">
             <h4 className="text-[28px] font-black mb-6">Want to create business impact?</h4>
             <p className="mb-8 opacity-90 font-medium text-[16px]">Join 350+ corporates who trust Madura Travel for their strategic events.</p>
-            <button className="bg-white text-[#ee2229] px-12 py-4 rounded-full font-black text-[16px] hover:shadow-2xl transition-all">
+            <button className="bg-white text-[#ee2229] px-12 py-4 rounded-full font-black text-[16px] hover: transition-all">
               Contact Corporate Desk
             </button>
           </div>

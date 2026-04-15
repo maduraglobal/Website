@@ -175,7 +175,7 @@ const BookingModal = () => {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className={`relative w-full ${bookingData?.isDetailed ? 'max-w-4xl' : 'max-w-2xl'} bg-white rounded-[2.5rem] shadow-2xl overflow-hidden overflow-y-auto max-h-[95vh] font-inter`}
+            className={`relative w-full ${bookingData?.isDetailed ? 'max-w-4xl' : 'max-w-2xl'} bg-white rounded-[2.5rem]  overflow-hidden overflow-y-auto max-h-[95vh] font-inter`}
           >
             <button
               onClick={closeBooking}
@@ -293,7 +293,7 @@ const BookingModal = () => {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full bg-[#191974] text-white py-5 rounded-2xl font-bold text-[16px] hover:bg-[#ee2229] transition-all shadow-xl shadow-blue-500/10 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 group"
+                      className="w-full bg-[#191974] text-white py-5 rounded-2xl font-bold text-[16px] hover:bg-[#ee2229] transition-all   active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 group"
                     >
                       {isLoading ? "Processing..." : "Submit Enquiry"}
                       <Send className={`w-5 h-5 transition-transform group-hover:translate-x-1 ${isLoading ? 'animate-pulse' : ''}`} />

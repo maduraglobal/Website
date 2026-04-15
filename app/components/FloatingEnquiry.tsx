@@ -42,7 +42,7 @@ export default function FloatingEnquiry() {
       <button
         suppressHydrationWarning
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-1000 flex items-center gap-3 bg-[#f8d448] text-[#191974] px-6 py-4 rounded-full shadow-[0_10px_30px_rgba(248,212,72,0.4)] hover:shadow-[0_15px_40px_rgba(248,212,72,0.6)] hover:-translate-y-1 active:scale-95 transition-all duration-300 font-bold group"
+        className="fixed bottom-6 right-6 z-1000 flex items-center gap-3 bg-[#f8d448] text-[#191974] px-6 py-4 rounded-full  hover: hover:-translate-y-1 active:scale-95 transition-all duration-300 font-bold group"
       >
 
         <span className="hidden md:inline">Enquire Now</span>
@@ -67,7 +67,7 @@ export default function FloatingEnquiry() {
               initial={{ scale: 0.9, opacity: 0, y: 50 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 50 }}
-              className="relative w-full max-w-[420px] bg-white rounded-[32px] overflow-hidden shadow-2xl flex flex-col"
+              className="relative w-full max-w-[420px] bg-white rounded-[32px] overflow-hidden  flex flex-col"
             >
               {/* Close Button */}
               <button
@@ -92,7 +92,7 @@ export default function FloatingEnquiry() {
                     alt="Travel Landmarks"
                     width={320}
                     height={160}
-                    className="object-contain drop-shadow-xl"
+                    className="object-contain drop-"
                   />
                 </div>
 
@@ -169,7 +169,7 @@ export default function FloatingEnquiry() {
                       <button
                         suppressHydrationWarning
                         type="submit"
-                        className="w-full h-[56px] bg-[#f8d448] hover:bg-[#ffe066] text-[#191974] font-bold rounded-xl text-[15px] uppercase tracking-widest shadow-lg shadow-yellow-400/10 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-2"
+                        className="w-full h-[56px] bg-[#f8d448] hover:bg-[#ffe066] text-[#191974] font-bold rounded-xl text-[15px] uppercase tracking-widest   active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-2"
                       >
                         Subscribe
                       </button>

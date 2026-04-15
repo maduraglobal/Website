@@ -57,7 +57,7 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: "100%", opacity: 0 }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="relative w-full max-w-lg bg-white rounded-t-[32px] sm:rounded-[32px] shadow-2xl overflow-hidden z-220 pb-10"
+            className="relative w-full max-w-lg bg-white rounded-t-[32px] sm:rounded-[32px]  overflow-hidden z-220 pb-10"
           >
             {/* Close Button */}
             <button
@@ -138,7 +138,7 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
                 <button
                   type="submit"
                   disabled={loading || phoneNumber.length < 10}
-                  className="w-full h-[60px] bg-[#ee2229] hover:bg-[#191974] disabled:bg-gray-200 text-white font-bold rounded-2xl text-[16px] tracking-widest shadow-xl shadow-red-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-3"
+                  className="w-full h-[60px] bg-[#ee2229] hover:bg-[#191974] disabled:bg-gray-200 text-white font-bold rounded-2xl text-[16px] tracking-widest   active:scale-[0.98] transition-all flex items-center justify-center gap-3"
                 >
                   {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "GET OTP"}
                 </button>

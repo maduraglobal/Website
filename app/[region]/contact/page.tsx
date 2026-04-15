@@ -45,8 +45,8 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
             { icon: <Mail className="w-6 h-6 text-[#ee2229]" />, title: "Email Us", detail: "mail@maduratravel.com", sub: "We'll get back within 24 hours" },
             { icon: <Clock className="w-6 h-6 text-[#ee2229]" />, title: "whatsapp", detail: "+91 90929 49494", sub: "24/7 WhatsApp Support" }
           ].map((item, idx) => (
-            <div key={idx} className="flex items-center gap-5 p-6 rounded-2xl bg-white border border-gray-100 hover:shadow-xl hover:shadow-blue-900/5 transition-all">
-              <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0">
+            <div key={idx} className="flex items-center gap-5 p-6 rounded-2xl bg-white border border-gray-100 hover: hover: transition-all">
+              <div className="w-12 h-12 rounded-xl bg-white  flex items-center justify-center shrink-0">
                 {item.icon}
               </div>
               <div>
@@ -108,7 +108,7 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
               <textarea rows={5} placeholder="How can we help you?" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#ee2229] outline-none transition-all resize-none"></textarea>
             </div>
             <div className="md:col-span-2 pt-4">
-              <button className="w-full bg-[#191974] hover:bg-[#ee2229] text-white  py-5 rounded-2xl  tracking-[0.2em] transition-all flex items-center justify-center gap-3 group shadow-xl shadow-blue-900/10">
+              <button className="w-full bg-[#191974] hover:bg-[#ee2229] text-white  py-5 rounded-2xl  tracking-[0.2em] transition-all flex items-center justify-center gap-3 group  ">
                 Send Enquiry
                 <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </button>

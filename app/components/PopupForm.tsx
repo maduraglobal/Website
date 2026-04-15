@@ -68,7 +68,7 @@ export default function PopupForm() {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative w-full max-w-[850px] bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row min-h-[500px]"
+            className="relative w-full max-w-[850px] bg-white rounded-3xl overflow-hidden  flex flex-col md:flex-row min-h-[500px]"
           >
             {/* Close Button */}
             <button
@@ -90,7 +90,7 @@ export default function PopupForm() {
                 <img
                   src="https://img.freepik.com/free-vector/travel-tourism-illustration-with-world-famous-landmarks-suitcase_1284-33031.jpg"
                   alt="Travel Suitcase"
-                  className="w-full h-auto max-w-[320px] drop-shadow-2xl animate-float"
+                  className="w-full h-auto max-w-[320px] drop- animate-float"
                 />
               </div>
             </div>
@@ -142,7 +142,7 @@ export default function PopupForm() {
                   </div>
 
                   {isCountryDropdownOpen && (
-                    <div className="absolute top-full left-0 mt-2 w-[220px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.15)] rounded-2xl border border-gray-100 z-100 py-2 overflow-hidden">
+                    <div className="absolute top-full left-0 mt-2 w-[220px] bg-white  rounded-2xl border border-gray-100 z-100 py-2 overflow-hidden">
                       {[
                         { code: '+91', flag: '🇮🇳', name: 'India' },
                         { code: '+61', flag: '🇦🇺', name: 'Australia' },
@@ -181,7 +181,7 @@ export default function PopupForm() {
 
                 <button
                   type="submit"
-                  className="w-full bg-[#f4a021] hover:bg-[#e89410] text-black  py-4.5 rounded-2xl text-[16px] transition-all shadow-xl shadow-orange-500/20 active:scale-[0.98] mt-4  tracking-widest"
+                  className="w-full bg-[#f4a021] hover:bg-[#e89410] text-black  py-4.5 rounded-2xl text-[16px] transition-all   active:scale-[0.98] mt-4  tracking-widest"
                 >
                   Send Enquiry
                 </button>
