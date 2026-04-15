@@ -303,3 +303,5 @@ const BookingModal = () => {
     </AnimatePresence>
   );
 };
+
+export default BookingModal;
