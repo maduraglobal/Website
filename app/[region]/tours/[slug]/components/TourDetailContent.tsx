@@ -46,14 +46,23 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
   const [isAdmin, setIsAdmin] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [travellerCount, setTravellerCount] = useState({ adults: 1, children: 0, infants: 0 });
+  const [roomCount, setRoomCount] = useState(1);
   const [isTravellerMenuOpen, setIsTravellerMenuOpen] = useState(false);
   const { openBooking } = useBooking();
 
   const updateTraveller = (type: keyof typeof travellerCount, delta: number) => {
-    setTravellerCount(prev => ({
-      ...prev,
-      [type]: Math.max(type === 'adults' ? 1 : 0, prev[type] + delta)
-    }));
+    setTravellerCount(prev => {
+      const newCount = {
+        ...prev,
+        [type]: Math.max(type === 'adults' ? 1 : 0, prev[type] + delta)
+      };
+      // Auto-update rooms: minimum rooms needed for adults + children
+      const minRooms = Math.ceil((newCount.adults + newCount.children) / 2);
+      if (roomCount < minRooms) {
+        setRoomCount(minRooms);
+      }
+      return newCount;
+    });
   };
 
   const cityList = tour.cities?.split('▶') || ["Hanoi", "Halong Bay", "Hoi An", "Da Nang"];
@@ -78,7 +87,11 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
       city: selectedCity,
       date: `${selectedDateObject.date} ${selectedDateObject.month} ${selectedDateObject.year}`,
       price: selectedDateObject.price.toString(),
-      savings: selectedDateObject.savings.toString()
+      savings: selectedDateObject.savings.toString(),
+      rooms: roomCount.toString(),
+      adults: travellerCount.adults.toString(),
+      children: travellerCount.children.toString(),
+      infants: travellerCount.infants.toString()
     });
     router.push(`/${region}/booking?${searchParams.toString()}`);
   };
@@ -575,12 +588,22 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 <div className="p-6 space-y-6">
                   <div className="grid grid-cols-2 gap-y-6">
                     <p className="text-[13px] text-gray-500 font-medium">Dept. city</p>
-                    <p className="text-[13px] text-[#191974] font-bold">{selectedCity}</p>
+                    <button 
+                      onClick={() => scrollToSection('pricing')}
+                      className="text-[13px] text-[#191974] font-bold text-left flex items-center gap-1 hover:text-[#ee2229] transition-colors"
+                    >
+                      {selectedCity}
+                      <Pencil className="w-2.5 h-2.5 opacity-50" />
+                    </button>
 
                     <p className="text-[13px] text-gray-500 font-medium">Dept. date</p>
-                    <p className="text-[13px] text-[#191974] font-bold">
+                    <button 
+                      onClick={() => scrollToSection('pricing')}
+                      className="text-[13px] text-[#191974] font-bold text-left flex items-center gap-1 hover:text-[#ee2229] transition-colors"
+                    >
                       {selectedDateObject.date} {selectedDateObject.month} {selectedDateObject.year}
-                    </p>
+                      <Pencil className="w-2.5 h-2.5 opacity-50" />
+                    </button>
 
                     <p className="text-[13px] text-gray-500 font-medium">Travellers</p>
                     <div className="relative">
@@ -608,7 +631,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                                 </div>
                                 <div className="flex items-center gap-3">
                                   <button 
-                                    onClick={() => updateTraveller(type.key as any, -1)}
+                                    onClick={(e) => { e.stopPropagation(); updateTraveller(type.key as any, -1); }}
                                     className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-600 disabled:opacity-30"
                                     disabled={type.key === 'adults' ? travellerCount.adults <= 1 : (travellerCount as any)[type.key] <= 0}
                                   >
@@ -616,7 +639,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                                   </button>
                                   <span className="text-[13px] font-bold text-[#191974] w-4 text-center">{(travellerCount as any)[type.key]}</span>
                                   <button 
-                                    onClick={() => updateTraveller(type.key as any, 1)}
+                                    onClick={(e) => { e.stopPropagation(); updateTraveller(type.key as any, 1); }}
                                     className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-600"
                                   >
                                     <Plus className="w-3 h-3" />
@@ -624,15 +647,43 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                                 </div>
                               </div>
                             ))}
+
+                            {/* Room Selector in the same menu */}
+                            <div className="flex items-center justify-between py-2 border-t border-gray-100 mt-2">
+                                <div>
+                                    <p className="text-[13px] font-bold text-[#191974]">Rooms</p>
+                                    <p className="text-[10px] text-gray-400">Total rooms</p>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <button 
+                                      onClick={(e) => { e.stopPropagation(); setRoomCount(Math.max(Math.ceil((travellerCount.adults + travellerCount.children) / 2), roomCount - 1)); }}
+                                      className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-600 disabled:opacity-30"
+                                      disabled={roomCount <= Math.ceil((travellerCount.adults + travellerCount.children) / 2)}
+                                    >
+                                      <Minus className="w-3 h-3" />
+                                    </button>
+                                    <span className="text-[13px] font-bold text-[#191974] w-4 text-center">{roomCount}</span>
+                                    <button 
+                                      onClick={(e) => { e.stopPropagation(); setRoomCount(roomCount + 1); }}
+                                      className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-600"
+                                    >
+                                      <Plus className="w-3 h-3" />
+                                    </button>
+                                </div>
+                            </div>
                           </div>
                         </>
                       )}
                     </div>
 
                     <p className="text-[13px] text-gray-500 font-medium">Rooms</p>
-                    <p className="text-[13px] text-[#191974] font-bold">
-                      {Math.ceil((travellerCount.adults + travellerCount.children) / 2)} Room(s)
-                    </p>
+                    <button 
+                       onClick={() => setIsTravellerMenuOpen(true)}
+                       className="text-[13px] text-[#191974] font-bold text-left flex items-center gap-1 hover:text-[#ee2229] transition-colors"
+                    >
+                      {roomCount} Room(s)
+                      <Pencil className="w-2.5 h-2.5 opacity-50" />
+                    </button>
                   </div>
 
                   <div className="pt-6 border-t border-dashed border-gray-200">

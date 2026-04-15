@@ -1,190 +1,294 @@
-'use client';
+"use client";
 
-import React, { use } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Star, Quote, MapPin, CheckCircle } from 'lucide-react';
+import { Star, Quote, ChevronRight, MessageSquare, Award, Users, ShieldCheck, Heart } from 'lucide-react';
 import Image from 'next/image';
 
-export default function TestimonialsPage({ params }: { params: Promise<{ region: string }> }) {
-  const { region } = use(params);
+const CELEBRITY_TESTIMONIALS = [
+  {
+    name: "Mr. Anbil Mahesh",
+    role: "Minister for Education - Government of Tamilnadu",
+    quote: "I extend my heartfelt thanks to the entire Madura Travel Service team for their professional assistance in organizing international trips for the students of Tamil Nadu's government schools. Traveling with the students made me feel like a young boy again. Kudos to Madura for their incredible efforts.",
+    image: "https://images.unsplash.com/photo-1556157382-97dee2dcb34e?q=80&w=200&h=200&auto=format&fit=crop", // placeholder
+    badge: "Government"
+  },
+  {
+    name: "Mr. Napoleon",
+    role: "Cine Actor & Politician",
+    quote: "Mr. Sriharan Balan and his exceptional team provided seamless service, taking on the monumental task of organizing my son’s wedding in Tokyo, Japan, in November 2024, with absolute ease. Every guest was treated like a VIP from start to finish.",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&h=200&auto=format&fit=crop", // placeholder
+    badge: "Tokyo Wedding 2024"
+  },
+  {
+    name: "Mr. Kamal Haasan",
+    role: "Cine Actor & Director",
+    quote: "Mr. V.K.T. Balan was more than just a travel consultant; he was a cherished friend and pillar of support throughout my decades-long journey in cinema. His guidance and expertise enriched numerous travel programs and shoots.",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&h=200&auto=format&fit=crop", // placeholder
+    badge: "Cinematic Legend"
+  },
+  {
+    name: "Mr. Venkatesh Bhat",
+    role: "TCDC Fame & CEO, Accord Hotels",
+    quote: "My long-standing association with Madura Travel Service has made my global travels seamless and stress-free. Their expertise in handling visas ensures timely approvals without any delays. Truly exceptional service every time!",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&h=200&auto=format&fit=crop", // placeholder
+    badge: "CEO Accord Hotels"
+  },
+  {
+    name: "Mrs. P. Susheela",
+    role: "Legendary Singer",
+    quote: "My journey with Madura Travel Service began when Mr. VKT Balan helped me obtain my first passport. Since then, he has been a constant support, helping me travel the world and share my voice globally. Madura Travel Service feels like family.",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&h=200&auto=format&fit=crop", // placeholder
+    badge: "Symphony of Travel"
+  },
+  {
+    name: "Mr. Sandy",
+    role: "Dance Master",
+    quote: "Mr. Sriharan Balan has been a tremendous support during my international shows. His professional team is always available 24/7, ensuring that my travel experiences are smooth and enjoyable.",
+    image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200&h=200&auto=format&fit=crop", // placeholder
+    badge: "International Shows"
+  }
+];
 
-  const stats = [
-    { val: "4.9/5", label: "Average Rating" },
-    { val: "10K+", label: "Verified Reviews" },
-    { val: "98%", label: "Customer Satisfaction" }
-  ];
+const CUSTOMER_REVIEWS = [
+  {
+    name: "S Vijay",
+    platform: "Google Review",
+    rating: 5,
+    text: "We had a wonderful experience with Madura Travel Service for our Sri Lanka trip. All the arrangements were well taken care of, and everything went smoothly. A special thanks to Mr. Sudharsan, who was very polite and ensuring we were comfortable throughout.",
+    date: "2 months ago"
+  },
+  {
+    name: "Shiv Sash",
+    platform: "Google Review",
+    rating: 5,
+    text: "We had an amazing trip organized by Madura Travels! It was well planned Bali trip. The local guides were very friendly, kind and patient. We had a car with a separate tour guide. They were responsive and connected through the journey.",
+    date: "1 month ago"
+  },
+  {
+    name: "Vasu_digital",
+    platform: "Google Review",
+    rating: 5,
+    text: "Madura Travels arranged Singapore packages for my vacation, excellently designed travel plan within the budget. Team support us in all ways and easily reachable wherever required. Good hospitality and more supportive. My next vacation also will be Madura Travels.",
+    date: "3 weeks ago"
+  },
+  {
+    name: "Hariharan Balasubramanian",
+    platform: "Google Review",
+    rating: 5,
+    text: "Systematic and cautious approach to each and every step of the VISA processing. My sincere thanks to the whole team mates for your courteous and warm welcome. Timely updates were provided and my family is delighted.",
+    date: "4 months ago"
+  },
+  {
+    name: "Sushmitha Sudhakar",
+    platform: "Google Review",
+    rating: 5,
+    text: "I had travelled to Sri Lanka from Madura Travels. It was good experience there we had nice service especially Mathulani mam who guided and the driver they given was so professional and very good service. Thank you.",
+    date: "Recent"
+  },
+  {
+    name: "Jagadeesh Jayaraman",
+    platform: "Google Review",
+    rating: 5,
+    text: "Recently we took their tour services! By understanding our requirements, Ms. Fathima gave a right tour plan! Good planning, co-ordination, gave us a wonderful experience! Thank you!",
+    date: "2 months ago"
+  }
+];
 
-  const testimonials = [
-    {
-      name: "Rajesh Subramanian",
-      location: "Chennai, India",
-      role: "Europe Traveler",
-      stars: 5,
-      image: "https://i.pravatar.cc/150?u=rajesh",
-      quote: "My 15-day Grand Europe tour with Madura Travel was absolutely flawless. From the visa assistance to the accommodation and the expert tour manager, everything was handled with extreme professionalism. A truly premium experience!"
-    },
-    {
-      name: "Priya Venkatesh",
-      location: "Bangalore, India",
-      role: "Japan Tour",
-      stars: 5,
-      image: "https://i.pravatar.cc/150?u=priya",
-      quote: "The Japan Cherry Blossom tour was a dream come true. The itinerary was perfectly balanced between sightseeing and relaxation. Their attention to detail is why they have been in business for 40 years."
-    },
-    {
-      name: "Amit Kumar",
-      location: "Delhi, India",
-      role: "Australian Grandeur",
-      stars: 5,
-      image: "https://i.pravatar.cc/150?u=amit",
-      quote: "I was worried about my complex visa situation, but the experts at Madura Travel made it look easy. Their knowledge of global visa policies is unmatched. My Australia trip was smooth as silk!"
-    },
-    {
-      name: "Dr. Ananya Rao",
-      location: "Hyderabad, India",
-      role: "Family Vacation",
-      stars: 5,
-      image: "https://i.pravatar.cc/150?u=ananya",
-      quote: "Travelled with my elderly parents to Dubai. The team ensured we had accessible transport and the hotels were top-notch. Madura Travel doesn't just sell tours; they care for their guests."
-    },
-    {
-      name: "Suresh Menon",
-      location: "Mumbai, India",
-      role: "Corporate Travel",
-      stars: 4,
-      image: "https://i.pravatar.cc/150?u=suresh",
-      quote: "Handling our corporate MICE travel for 200+ employees was no small feat. Madura Travel managed the logistics, flights, and event planning perfectly. Highly reliable partner for corporate travel."
-    },
-    {
-      name: "Neha Deshmukh",
-      location: "Pune, India",
-      role: "Swiss Escapade",
-      stars: 5,
-      image: "https://i.pravatar.cc/150?u=neha",
-      quote: "Swiss Alps were breathtaking, and so was the service! Every meal was curated, and our tour manager felt like family. Looking forward to my next trip with them."
-    }
-  ];
-
+export default function TestimonialPage() {
   return (
-    <div className="min-h-screen bg-white ">
-      {/* â”€â”€ HERO SECTION â”€â”€ */}  
-      <section className="pt-40 pb-20 bg-[#191974] relative overflow-hidden">
+    <main className="bg-white min-h-screen">
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-20 overflow-hidden bg-[#191974]">
         <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-0 right-0 w-96 h-96  29] rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-white rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
         </div>
-
-        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
+        <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-[32px] md:text-[72px]  text-white  tracking-tighter leading-none mb-6">
-              What Our <span className="text-[#ee2229]">Guests Say</span>
+            <span className="inline-block px-4 py-1.5 bg-[#ee2229] text-white text-[12px] font-bold rounded-full uppercase tracking-widest mb-6">
+              Testimonials
+            </span>
+            <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+              Trusted by Celebrities, <br />
+              <span className="text-[#ee2229]">Loved by Travelers.</span>
             </h1>
-            <p className="text-[26px] md:text-[22px] text-white/60  max-w-2xl mx-auto">
-              Real stories from our global community of travelers. Trust built over 40 years of excellence.
+            <p className="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+              For nearly four decades, Madura Travel Service has been the preferred choice for leaders, legends, and world-class travelers.
             </p>
-
-            <div className="flex flex-wrap justify-center gap-10 mt-12">
-              {stats.map((s, i) => (
-                <div key={i} className="text-center">
-                  <p className="text-[36px]  text-white leading-none mb-1">{s.val}</p>
-                  <p className="text-[12px] text-white/40  tracking-widest font-bold">{s.label}</p>
-                </div>
-              ))}
-            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* â”€â”€ FEATURED TESTIMONIAL â”€â”€ */}
-      <section className="py-24 px-6 relative -mt-16 z-20">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-[3rem] p-8 md:p-16 shadow-2xl shadow-blue-900/10 border border-gray-100 flex flex-col md:flex-row items-center gap-12"
-          >
-            <div className="md:w-1/3 text-center">
-              <div className="relative w-40 h-40 mx-auto mb-6">
-                <Image
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300"
-                  alt="Featured Customer"
-                  width={160} height={160}
-                  className="rounded-full border-4 border-[#ee2229]/20"
-                />
-                <div className="absolute -bottom-2 -right-2 bg-[#ee2229] w-10 h-10 rounded-full flex items-center justify-center text-white border-4 border-white">
-                  <CheckCircle className="w-5 h-5" />
-                </div>
-              </div>
-              <h3 className="text-[26px]  text-[#191974]">Vikram Sathya</h3>
-              <p className="text-gray-400 font-bold  tracking-widest text-[11px]">USA Grand Tour</p>
-            </div>
-
-            <div className="md:w-2/3 relative">
-              <Quote className="absolute -top-10 -left-10 w-24 h-24 text-gray-400/10" />
-              <div className="flex gap-1 mb-4">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-[#ee2229] text-[#ee2229]" />)}
-              </div>
-              <p className="text-[14px] md:text-[24px] text-gray-600  leading-relaxed italic">
-                "Our USA West Coast tour was beyond incredible. Every detail, from the luxury coaches to the perfectly located hotels, was meticulously planned. Madura Travel's legacy of trust is evident in every step they take."
-              </p>
-              <div className="mt-8 flex items-center gap-3 text-[#191974] font-bold">
-                <MapPin className="w-5 h-5 text-[#ee2229]" />
-                San Francisco, USA
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* â”€â”€ TESTIMONIALS GRID â”€â”€ */}
-      <section className="py-24 px-6 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.map((t, i) => (
-              <motion.div
+      {/* Stats Section */}
+      <section className="py-12 bg-gray-50 border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { icon: Users, label: "Happy Travelers", value: "1M+" },
+              { icon: Award, label: "Awards Won", value: "50+" },
+              { icon: ShieldCheck, label: "Years Experience", value: "40+" },
+              { icon: Star, label: "Google Rating", value: "4.8/5" },
+            ].map((stat, i) => (
+              <motion.div 
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-white p-8 rounded-4xl border border-gray-100 shadow-xl shadow-blue-900/5 hover:-translate-y-2 transition-all group"
+                className="flex flex-col items-center text-center p-4"
               >
-                <div className="flex items-center gap-4 mb-6">
-                  <Image src={t.image} alt={t.name} width={60} height={60} className="rounded-2xl grayscale group-hover:grayscale-0 transition-all" />
-                  <div>
-                    <p className="text-[26px]  text-[#191974] leading-none mb-1">{t.name}</p>
-                    <p className="text-[14px] text-[#ee2229] font-bold  tracking-widest">{t.role}</p>
+                <div className="w-12 h-12 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center text-[#191974] mb-3">
+                  <stat.icon className="w-6 h-6" />
+                </div>
+                <p className="text-3xl font-bold text-[#191974] mb-1">{stat.value}</p>
+                <p className="text-[13px] text-gray-500 font-bold uppercase tracking-wider">{stat.label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Celebrity Testimonials */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div className="max-w-2xl">
+              <h2 className="text-3xl md:text-5xl font-extrabold text-[#191974] mb-6">
+                Endorsed by Excellence
+              </h2>
+              <p className="text-gray-500 text-lg leading-relaxed italic">
+                Hear from the visionaries and leaders who trust us with their global journeys.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 text-[#ee2229] font-bold uppercase tracking-widest text-[13px]">
+              <Users className="w-5 h-5" />
+              Celebrity Partners
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {CELEBRITY_TESTIMONIALS.map((tc, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="group relative bg-[#191974]/5 rounded-[40px] p-8 hover:bg-[#191974] transition-all duration-500 hover:-translate-y-2 cursor-pointer border border-[#191974]/10"
+              >
+                <div className="flex flex-col h-full">
+                  <div className="relative w-20 h-20 mb-6 group-hover:scale-110 transition-transform duration-500">
+                    <div className="absolute inset-0 bg-[#ee2229] rounded-2xl rotate-12 -z-10 opacity-20 group-hover:opacity-100 group-hover:rotate-45 transition-all"></div>
+                    <img 
+                      src={tc.image} 
+                      alt={tc.name} 
+                      className="w-full h-full object-cover rounded-2xl shadow-xl grayscale-[0.8] group-hover:grayscale-0 transition-all border-2 border-white"
+                    />
+                    <div className="absolute -bottom-2 -right-2 bg-white text-[#191974] p-1.5 rounded-lg shadow-md group-hover:bg-[#ee2229] group-hover:text-white transition-colors">
+                      <Quote className="w-4 h-4" />
+                    </div>
+                  </div>
+
+                  <span className="inline-block px-3 py-1 bg-white/80 group-hover:bg-white text-[#191974] text-[10px] font-bold rounded-full uppercase tracking-tighter mb-4 w-fit shadow-sm">
+                    {tc.badge}
+                  </span>
+
+                  <blockquote className="text-[15px] font-medium text-gray-700 leading-relaxed group-hover:text-blue-50 mb-8 flex-grow">
+                    "{tc.quote}"
+                  </blockquote>
+
+                  <div className="pt-6 border-t border-[#191974]/10 group-hover:border-white/10">
+                    <h4 className="text-[18px] font-bold text-[#191974] group-hover:text-white mb-1">{tc.name}</h4>
+                    <p className="text-[12px] text-gray-500 group-hover:text-blue-200 font-medium">{tc.role}</p>
                   </div>
                 </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                <div className="flex gap-1 mb-4">
-                  {[...Array(t.stars)].map((_, i) => <Star key={i} className="w-4 h-4 fill-[#ee2229] text-[#ee2229]" />)}
+      {/* Customer Wall of Love */}
+      <section className="py-24 bg-[#f8faff] rounded-t-[100px] md:rounded-t-[200px]">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-20">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-[#191974] mb-6">Real Stories, Real Smiles</h2>
+            <div className="flex items-center justify-center gap-2 mb-4">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
+              ))}
+              <span className="text-[#191974] font-bold ml-2">4.8 Rating on Google</span>
+            </div>
+          </div>
+
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
+            {CUSTOMER_REVIEWS.map((review, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="break-inside-avoid bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all group"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex gap-1">
+                    {[...Array(review.rating)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <img 
+                      src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" 
+                      alt="Google" 
+                      className="h-3 opacity-30 group-hover:opacity-100 transition-opacity"
+                    />
+                  </div>
                 </div>
-
-                <p className="text-gray-600  leading-relaxed mb-6 italic">
-                  "{t.quote}"
+                <p className="text-[15px] text-gray-700 leading-relaxed mb-6 font-medium italic">
+                  "{review.text}"
                 </p>
-
-                <div className="pt-4 border-t border-gray-50 flex items-center gap-2 text-gray-400 text-[13px] font-medium">
-                  <MapPin className="w-4 h-4 text-gray-300" />
-                  {t.location}
+                <div className="flex items-center justify-between pt-4 border-t border-gray-50">
+                  <div>
+                    <h5 className="text-[14px] font-bold text-[#191974]">{review.name}</h5>
+                    <p className="text-[11px] text-gray-400">{review.platform}</p>
+                  </div>
+                  <span className="text-[11px] text-gray-300 font-bold uppercase tracking-widest">{review.date}</span>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          <div className="text-center mt-20">
-            <button className="bg-transparent border-2 border-[#191974] text-[#191974] px-10 py-4 rounded-full   tracking-widest hover:bg-[#191974] hover:text-white transition-all">
-              Load More Stories
+          <div className="mt-20 text-center">
+            <button className="bg-[#191974] text-white px-10 py-5 rounded-full font-bold text-[15px] hover:bg-[#ee2229] transition-all shadow-xl hover:-translate-y-1 flex items-center mx-auto gap-3 group">
+              View More Reviews on Google
+              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         </div>
       </section>
-    </div>
+
+      {/* Trust Banner */}
+      <section className="py-24 bg-[#191974] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#ee2229] rounded-full filter blur-[150px] opacity-20 -translate-y-1/2 translate-x-1/2"></div>
+        <div className="max-w-5xl mx-auto px-4 text-center relative z-10">
+          <Heart className="w-16 h-16 text-[#ee2229] mx-auto mb-8 animate-pulse" />
+          <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-8">
+            Ready to start your own incredible journey?
+          </h2>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <button className="w-full sm:w-auto bg-[#ee2229] text-white px-10 py-5 rounded-2xl font-bold text-[15px] hover:bg-white hover:text-[#191974] transition-all shadow-xl uppercase tracking-widest">
+              Plan My Trip Now
+            </button>
+            <button className="w-full sm:w-auto border-2 border-white/20 text-white px-10 py-5 rounded-2xl font-bold text-[15px] hover:bg-white/10 transition-all uppercase tracking-widest">
+              Contact Support
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

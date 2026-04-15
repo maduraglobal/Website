@@ -218,7 +218,7 @@ export default function Navbar() {
                 className="hidden xl:flex items-center border border-gray-200 px-4 py-1.5 rounded-lg gap-2 cursor-pointer hover:border-[#191974] transition-all hover:bg-gray-50 bg-white"
               >
                 <Phone className="w-4 h-4 text-[#ee2229]" />
-                <span className="text-[14px] font-bold text-[#191974]">1800 313 5555</span>
+                <span className="text-[14px] font-bold text-[#191974]">+91 90929 49494</span>
                 <ChevronDown className={`w-3 h-3 transition-transform ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
               </div>
 
@@ -265,9 +265,13 @@ export default function Navbar() {
                           <div className="space-y-1">
                             <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">call us on:</p>
                             <a href="tel:+919092949494" className="block text-[15px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
-                            <a href="tel:+914428193030" className="block text-[15px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 44 2819 3030</a>
+
                           </div>
+
                         </div>
+                        <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">Whatsapp Number:</p>
+
+                        <a href="https://wa.me/91909299494" className="block text-[15px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90929 49494</a>
 
                         {/* Foreign Nationals */}
                         <div className="flex items-start gap-4">
@@ -280,7 +284,7 @@ export default function Navbar() {
 
 
 
-                              <a href="tel:+61434500743" className="text-[13px] font-bold text-[#191974] block hover:text-[#ee2229]">+61 434 500 743</a>
+                              <a href="tel:+61434500743" className="text-[15px] font-bold text-[#191974] block hover:text-[#ee2229]">+61 434 500 743</a>
 
                             </div>
                           </div>
@@ -608,7 +612,7 @@ export default function Navbar() {
               </button>
               {expandedSection === 'company' && (
                 <div className="px-6 pb-3 flex flex-col gap-1">
-                  {["Our Story", "Careers", "Testimonials", "Media"].map((item) => (
+                  {["Our Story", "Careers", "Testimonials", "Media", "MICE"].map((item) => (
                     <Link
                       key={item}
                       href={`/${currentRegionCode}/${item.toLowerCase().replace(/ /g, "-")}`}

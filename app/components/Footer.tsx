@@ -209,21 +209,23 @@ export default function Footer() {
             </h4>
             <div className="space-y-5 pt-2">
               <div className="flex gap-4">
-                <MapPin className="w-5 h-5 text-[#ee2229] shrink-0" />
+                <MapPin className="w-5 h-5 text-[#ee2229] shrink-0 mt-1" />
                 <p className="text-[14px] text-white leading-relaxed">
                   25-3, Gandhi Irwin Rd, Egmore, Chennai, Tamil Nadu 600008
                 </p>
               </div>
-              <div className="flex gap-4 items-center">
-                <Phone className="w-5 h-5 text-[#ee2229] shrink-0" />
-                <div className="space-y-1">
-                  <p className="text-[15px] font-bold">+91 9092949494</p>
-
+              <div className="flex gap-4 items-start">
+                <Phone className="w-5 h-5 text-[#ee2229] shrink-0 mt-1" />
+                <div className="space-y-2">
+                  <a href="tel:+919092949494" className="block text-[15px] font-bold hover:text-[#ee2229] transition-colors">+91 90929 49494</a>
+                  <a href="tel:+914428192002" className="block text-[15px] font-bold hover:text-[#ee2229] transition-colors">+91 44 2819 2002</a>
                 </div>
               </div>
-              <div className="flex gap-4 items-center">
+              <div className="flex gap-4 items-center overflow-hidden">
                 <Mail className="w-5 h-5 text-[#ee2229] shrink-0" />
-                <p className="text-[15px] font-bold">mail@maduratravel.com</p>
+                <a href="mailto:mail@maduratravel.com" className="text-[15px] font-bold hover:text-[#ee2229] transition-colors break-all">
+                  mail@maduratravel.com
+                </a>
               </div>
             </div>
           </div>
