@@ -50,6 +50,8 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
   const [travellerCount, setTravellerCount] = useState({ adults: 1, children: 0, infants: 0 });
   const [roomCount, setRoomCount] = useState(1);
   const [isTravellerMenuOpen, setIsTravellerMenuOpen] = useState(false);
+  const [isEditingCity, setIsEditingCity] = useState(false);
+  const [isEditingDate, setIsEditingDate] = useState(false);
   const { openBooking } = useBooking();
 
   const updateTraveller = (type: keyof typeof travellerCount, delta: number) => {
@@ -590,22 +592,68 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 <div className="p-6 space-y-6">
                   <div className="grid grid-cols-2 gap-y-6">
                     <p className="text-[13px] text-gray-400 font-medium tracking-tight">Dept. city</p>
-                    <button 
-                      onClick={() => scrollToSection('pricing')}
-                      className="text-[13px] text-[#191974] font-bold text-left flex items-center justify-end gap-1 hover:text-[#ee2229] transition-colors"
-                    >
-                      {selectedCity}
-                      <Pencil className="w-3 h-3 text-gray-300 ml-1" />
-                    </button>
+                    <div className="flex items-center justify-end">
+                      {isEditingCity ? (
+                        <div className="flex items-center gap-1">
+                          <select 
+                            value={selectedCity}
+                            onChange={(e) => {
+                              handleCityChange(e.target.value);
+                              setIsEditingCity(false);
+                            }}
+                            className="text-[13px] text-[#191974] font-bold bg-gray-50 border border-gray-200 rounded px-1 outline-none"
+                            autoFocus
+                          >
+                            {cityList.map((city: string) => (
+                              <option key={city} value={city}>{city}</option>
+                            ))}
+                          </select>
+                          <button onClick={() => setIsEditingCity(false)} className="text-gray-400">
+                            <X className="w-3 h-3" />
+                          </button>
+                        </div>
+                      ) : (
+                        <button 
+                          onClick={() => setIsEditingCity(true)}
+                          className="text-[13px] text-[#191974] font-bold text-left flex items-center justify-end gap-1 hover:text-[#ee2229] transition-colors group"
+                        >
+                          {selectedCity}
+                          <Pencil className="w-3 h-3 text-gray-300 group-hover:text-[#ee2229]" />
+                        </button>
+                      )}
+                    </div>
 
                     <p className="text-[13px] text-gray-400 font-medium tracking-tight">Dept. date</p>
-                    <button 
-                      onClick={() => scrollToSection('pricing')}
-                      className="text-[13px] text-[#191974] font-bold text-left flex items-center justify-end gap-1 hover:text-[#ee2229] transition-colors"
-                    >
-                      {selectedDateObject.date} {selectedDateObject.month} {selectedDateObject.year}
-                      <Pencil className="w-3 h-3 text-gray-300 ml-1" />
-                    </button>
+                    <div className="flex items-center justify-end">
+                      {isEditingDate ? (
+                        <div className="flex items-center gap-1">
+                          <select 
+                            value={selectedDateId}
+                            onChange={(e) => {
+                              setSelectedDateId(e.target.value);
+                              setIsEditingDate(false);
+                            }}
+                            className="text-[13px] text-[#191974] font-bold bg-gray-50 border border-gray-200 rounded px-1 outline-none"
+                            autoFocus
+                          >
+                            {mockDates[selectedCity]?.map((d: any) => (
+                              <option key={d.id} value={d.id}>{d.date} {d.month} {d.year}</option>
+                            ))}
+                          </select>
+                          <button onClick={() => setIsEditingDate(false)} className="text-gray-400">
+                            <X className="w-3 h-3" />
+                          </button>
+                        </div>
+                      ) : (
+                        <button 
+                          onClick={() => setIsEditingDate(true)}
+                          className="text-[13px] text-[#191974] font-bold text-left flex items-center justify-end gap-1 hover:text-[#ee2229] transition-colors group"
+                        >
+                          {selectedDateObject.date} {selectedDateObject.month} {selectedDateObject.year}
+                          <Pencil className="w-3 h-3 text-gray-300 group-hover:text-[#ee2229]" />
+                        </button>
+                      )}
+                    </div>
 
                     <p className="text-[13px] text-gray-400 font-medium tracking-tight">Travellers</p>
                     <div className="relative">
@@ -679,13 +727,13 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     </div>
 
                     <p className="text-[13px] text-gray-400 font-medium tracking-tight">Rooms</p>
-                    <button 
-                       onClick={() => setIsTravellerMenuOpen(true)}
-                       className="text-[13px] text-[#191974] font-bold text-left flex items-center justify-end gap-1 hover:text-[#ee2229] transition-colors"
-                    >
-                      {roomCount} Room(s)
-                      <Pencil className="w-3 h-3 text-gray-300 ml-1" />
-                    </button>
+                     <button 
+                        onClick={() => setIsTravellerMenuOpen(true)}
+                        className="text-[13px] text-[#191974] font-bold text-left flex items-center justify-end gap-1 hover:text-[#ee2229] transition-colors"
+                     >
+                       {roomCount} Room{roomCount > 1 ? 's' : ''}
+                       <Pencil className="w-3 h-3 text-gray-300 ml-1" />
+                     </button>
                   </div>
 
                   <div className="pt-6 border-t border-dashed border-gray-200">

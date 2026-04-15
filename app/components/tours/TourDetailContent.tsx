@@ -40,6 +40,10 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
   const [activeTab, setActiveTab] = useState('itinerary');
   const [isBookingMode, setIsBookingMode] = useState(false);
   const [travellerCount, setTravellerCount] = useState({ adults: 1, children: 0, infants: 0 });
+  const [deptCity, setDeptCity] = useState("Mumbai");
+  const [deptDate, setDeptDate] = useState("23 Jun 2026");
+  const [isEditingCity, setIsEditingCity] = useState(false);
+  const [isEditingDate, setIsEditingDate] = useState(false);
   const router = useRouter();
 
   const scrollToSection = (id: string) => {
@@ -174,15 +178,70 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
               <div className="p-6 space-y-6">
                 <div className="grid grid-cols-2 gap-y-6">
                   <p className="text-[13px] text-gray-400 font-medium tracking-tight">Dept. city</p>
-                  <div className="flex items-center justify-end gap-1 cursor-pointer hover:text-[#ee2229] transition-colors group">
-                    <span className="text-[13px] text-[#191974] font-bold">Mumbai</span>
-                    <Pencil className="w-3 h-3 text-gray-300" />
+                  <div className="flex items-center justify-end gap-1">
+                    {isEditingCity ? (
+                      <div className="flex items-center gap-1">
+                        <select 
+                          value={deptCity}
+                          onChange={(e) => {
+                            setDeptCity(e.target.value);
+                            setIsEditingCity(false);
+                          }}
+                          className="text-[13px] text-[#191974] font-bold bg-gray-50 border border-gray-200 rounded px-1 outline-none"
+                        >
+                          {["Mumbai", "Delhi", "Chennai", "Bangalore", "Kolkata", "Hyderabad", "Ahmedabad", "Pune"].map(city => (
+                            <option key={city} value={city}>{city}</option>
+                          ))}
+                        </select>
+                        <button onClick={() => setIsEditingCity(false)} className="text-gray-400 hover:text-red-500">
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div 
+                        onClick={() => setIsEditingCity(true)}
+                        className="flex items-center justify-end gap-1 cursor-pointer hover:text-[#ee2229] transition-colors group"
+                      >
+                        <span className="text-[13px] text-[#191974] font-bold">{deptCity}</span>
+                        <Pencil className="w-3 h-3 text-gray-300 group-hover:text-[#ee2229]" />
+                      </div>
+                    )}
                   </div>
 
                   <p className="text-[13px] text-gray-400 font-medium tracking-tight">Dept. date</p>
-                  <div className="flex items-center justify-end gap-1 cursor-pointer hover:text-[#ee2229] transition-colors group">
-                    <span className="text-[13px] text-[#191974] font-bold">23 Jun 2026 &rarr; 28 Jun 2026</span>
-                    <Pencil className="w-3 h-3 text-gray-300" />
+                  <div className="flex items-center justify-end gap-1">
+                    {isEditingDate ? (
+                      <div className="flex items-center gap-1">
+                        <input 
+                          type="date"
+                          onChange={(e) => {
+                            const date = new Date(e.target.value);
+                            if (!isNaN(date.getTime())) {
+                              const formatted = date.toLocaleDateString('en-GB', {
+                                day: '2-digit',
+                                month: 'short',
+                                year: 'numeric'
+                              });
+                              setDeptDate(formatted);
+                            }
+                            setIsEditingDate(false);
+                          }}
+                          className="text-[13px] text-[#191974] font-bold bg-gray-50 border border-gray-200 rounded px-2 py-0.5 outline-none"
+                          autoFocus
+                        />
+                        <button onClick={() => setIsEditingDate(false)} className="text-gray-400 hover:text-red-500">
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div 
+                        onClick={() => setIsEditingDate(true)}
+                        className="flex items-center justify-end gap-1 cursor-pointer hover:text-[#ee2229] transition-colors group"
+                      >
+                        <span className="text-[13px] text-[#191974] font-bold">{deptDate}</span>
+                        <Pencil className="w-3 h-3 text-gray-300 group-hover:text-[#ee2229]" />
+                      </div>
+                    )}
                   </div>
 
                   <p className="text-[13px] text-gray-400 font-medium tracking-tight">Travellers</p>
@@ -196,7 +255,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   <p className="text-[13px] text-gray-400 font-medium tracking-tight">Rooms</p>
                   <div className="flex items-center justify-end gap-1 cursor-pointer hover:text-[#ee2229] transition-colors group">
                     <span className="text-[13px] text-[#191974] font-bold">
-                      {Math.ceil(travellerCount.adults / 2)} Room(s)
+                      {Math.max(1, Math.ceil(travellerCount.adults / 2))} Room{Math.max(1, Math.ceil(travellerCount.adults / 2)) > 1 ? 's' : ''}
                     </span>
                     <Pencil className="w-3 h-3 text-gray-300" />
                   </div>

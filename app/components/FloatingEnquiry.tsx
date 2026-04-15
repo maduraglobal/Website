@@ -42,7 +42,7 @@ export default function FloatingEnquiry() {
       <button
         suppressHydrationWarning
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-1000 flex items-center gap-3 bg-[#f8d448] text-[#191974] px-6 py-4 rounded-full  hover: hover:-translate-y-1 active:scale-95 transition-all duration-300 font-bold group"
+        className="fixed bottom-6 right-6 z-1000 flex items-center gap-3 bg-[#191974] text-white px-6 py-4 rounded-full  hover: hover:-translate-y-1 active:scale-95 transition-all duration-300 font-bold group"
       >
 
         <span className="hidden md:inline">Enquire Now</span>
@@ -81,9 +81,9 @@ export default function FloatingEnquiry() {
               {/* 📷 Header Illustration (Inspired by screenshot) */}
               <div className="relative h-[200px] w-full bg-[#f8f9fc] overflow-hidden pt-6">
                 <div className="absolute inset-0 opacity-40">
-                  <div className="absolute top-10 left-10 w-2 h-2 rounded-full bg-yellow-400"></div>
-                  <div className="absolute top-20 right-20 w-3 h-3 rounded-full bg-blue-300"></div>
-                  <div className="absolute bottom-10 left-1/2 w-2 h-2 rounded-full bg-red-400"></div>
+                  <div className="absolute top-10 left-10 w-2 h-2 rounded-full bg-[#191974]"></div>
+                  <div className="absolute top-20 right-20 w-3 h-3 rounded-full bg-[#191974]"></div>
+                  <div className="absolute bottom-10 left-1/2 w-2 h-2 rounded-full bg-[#191974]"></div>
                 </div>
 
                 <div className="relative w-full h-full flex justify-center">
@@ -98,7 +98,7 @@ export default function FloatingEnquiry() {
 
                 {/* Decoration */}
                 <div className="absolute top-6 left-6 w-12 h-12 bg-white/40 rounded-2xl rotate-12 flex items-center justify-center">
-                  <div className="w-8 h-8 rounded-lg bg-yellow-400 opacity-20 transform -rotate-12"></div>
+                  <div className="w-8 h-8 rounded-lg bg-[#191974] opacity-20 transform -rotate-12"></div>
                 </div>
               </div>
 
@@ -109,7 +109,7 @@ export default function FloatingEnquiry() {
                     <div className="text-center mb-8">
                       <h3 className="text-[20px] font-bold text-[#191974] leading-tight mb-2">
                         Join a community of <br />
-                        <span className="text-[#3ed49e]">9,44,008 happy guests</span>
+                        <span className="text-[#191974]">9,44,008 happy guests</span>
                       </h3>
                       <p className="text-[12px] text-gray-400 font-medium leading-relaxed max-w-[280px] mx-auto">
                         Get the latest travel deals, new tour announcements, travel ideas & a whole lot more.
@@ -149,7 +149,7 @@ export default function FloatingEnquiry() {
                           Mobile No.*
                         </label>
                         <div className="flex h-[54px] bg-white border border-gray-200 rounded-xl focus-within:border-[#191974] transition-all relative">
-                          <PhonePrefixSelector 
+                          <PhonePrefixSelector
                             selectedCode={selectedCountryCode}
                             onSelect={(code) => setSelectedCountryCode(code)}
                             variant="minimal"
@@ -169,7 +169,7 @@ export default function FloatingEnquiry() {
                       <button
                         suppressHydrationWarning
                         type="submit"
-                        className="w-full h-[56px] bg-[#f8d448] hover:bg-[#ffe066] text-[#191974] font-bold rounded-xl text-[15px] uppercase tracking-widest   active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-2"
+                        className="w-full h-[56px] bg-[#191974] hover:bg-[#191974] text-white font-bold rounded-xl text-[15px] active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-2"
                       >
                         Subscribe
                       </button>

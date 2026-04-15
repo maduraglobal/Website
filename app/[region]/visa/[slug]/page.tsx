@@ -101,6 +101,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [openDocs, setOpenDocs] = useState(true);
   const [isSampleModalOpen, setIsSampleModalOpen] = useState(false);
+  const [numTravelers, setNumTravelers] = useState(1);
 
 
 
@@ -185,7 +186,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
       </section>
 
       {/* ===== STICKY NAV BAR ===== */}
-      <div className="sticky top-[74px] z-40 bg-white border-b border-gray-100 shadow-sm overflow-x-auto no-scrollbar">
+      <div className="sticky top-[64px] md:top-[74px] z-40 bg-white border-b border-gray-100 shadow-sm overflow-x-auto no-scrollbar">
         <div className="max-w-7xl mx-auto px-4 flex gap-8 items-center min-w-max">
           {tabs.map((tab) => (
             <button
@@ -515,23 +516,33 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                   <span>Travellers</span>
                 </div>
                 <div className="flex items-center gap-4 bg-white rounded-full px-4 py-1.5 border border-gray-100 shadow-sm">
-                  <button className="text-gray-400 hover:text-[#ee2229] transition-colors"><ChevronLeft className="w-4 h-4" /></button>
-                  <span className="font-bold text-[16px] min-w-[12px] text-center">1</span>
-                  <button className="text-[#191974] hover:text-[#ee2229] transition-colors"><Plus className="w-4 h-4" /></button>
+                  <button 
+                    onClick={() => setNumTravelers(Math.max(1, numTravelers - 1))}
+                    className="text-gray-400 hover:text-[#ee2229] transition-colors"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <span className="font-bold text-[16px] min-w-[12px] text-center">{numTravelers}</span>
+                  <button 
+                    onClick={() => setNumTravelers(numTravelers + 1)}
+                    className="text-[#191974] hover:text-[#ee2229] transition-colors"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
 
               {/* Price Display */}
               <div className="text-center mb-8">
                 <p className="text-[42px] font-bold text-black leading-none mb-1">
-                  {currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(1, region)}
+                  {currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(parseInt(currentData.startingPrice.toString().replace(/[^0-9]/g, '')) * numTravelers, region)}
                 </p>
                 <p className="text-[11px] font-bold text-gray-500 tracking-widest uppercase">To be paid now</p>
               </div>
 
               {/* Start Application Button */}
               <Link
-                href={`/${region}/visa/${slug}/apply?citizen=${encodeURIComponent(citizenOf)}`}
+                href={`/${region}/visa/${slug}/apply?citizen=${encodeURIComponent(citizenOf)}&travellers=${numTravelers}`}
                 className="w-full bg-[#191974] hover:bg-[#3f36d5] text-white font-bold py-4 rounded-full text-[14px] text-center transition-all shadow-xl shadow-[#191974]/20 active:scale-95 mb-10 uppercase tracking-widest"
               >
                 Start Application
@@ -544,21 +555,10 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                     <Building2 className="w-4 h-4 text-gray-400" />
                     <span>Pay Now</span>
                   </div>
-                  <span>{currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(1, region)}</span>
+                  <span>{currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(parseInt(currentData.startingPrice.toString().replace(/[^0-9]/g, '')) * numTravelers, region)}</span>
                 </div>
                 <div className="pl-6 pb-2 text-[11px] font-medium text-gray-400 border-b border-[#191974]/5">
-                  Government fee
-                </div>
-
-                <div className="flex justify-between items-center text-[13px] font-bold pt-2">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-gray-400" />
-                    <span>Pay on {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
-                  </div>
-                  <span>{currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(parseInt(currentData.startingPrice) - 1, region)}</span>
-                </div>
-                <div className="pl-6 pb-2 text-[11px] font-medium text-gray-400 border-b border-[#191974]/5">
-                  Madura Fees
+                  Total Govt. & Service Fees
                 </div>
 
                 <div className="flex justify-between items-center text-[15px] font-bold pt-4 text-[#191974]">
@@ -566,7 +566,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                     <CheckCircle2 className="w-4 h-4 text-[#191974]" />
                     <span>Total Amount</span>
                   </div>
-                  <span>{currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(currentData.startingPrice, region)}</span>
+                  <span>{currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(parseInt(currentData.startingPrice.toString().replace(/[^0-9]/g, '')) * numTravelers, region)}</span>
                 </div>
               </div>
             </div>
