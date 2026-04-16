@@ -28,13 +28,13 @@ export interface Tour {
   price: number;
   currency?: "INR" | "AUD" | "USD";
   duration: string;
-  duration_days: number;
-  duration_nights: number;
-  destination_id: string;
+  duration_days?: number;
+  duration_nights?: number;
+  destination_id?: string;
   category_id?: string;
   image_url?: string;
   images: string[];
-  travelers: {
+  travelers?: {
     adults: number;
     children: number;
     infants: number;
