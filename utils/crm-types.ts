@@ -44,11 +44,11 @@ export interface Tour {
   inclusions?: string[];
   exclusions?: string[];
   visibility?: boolean;
-  itinerary_id?: string;
+  itinerary_id: string;
   meta_title?: string;
   meta_description?: string;
   // Localized/Formatted fields for card display
-  destination?: string;
+  destination: string;
 }
 
 export interface Destination {
