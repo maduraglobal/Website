@@ -27,6 +27,7 @@ export interface Tour {
   slug: string;
   price: number;
   currency?: "INR" | "AUD" | "USD";
+  duration: string;
   duration_days: number;
   duration_nights: number;
   destination_id: string;
