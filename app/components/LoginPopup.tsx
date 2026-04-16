@@ -156,6 +156,7 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
           data: {
             full_name: fullName,
           },
+          emailRedirectTo: `https://madura-dynamic-website.vercel.app/auth/callback`,
         },
       });
 
