@@ -173,9 +173,9 @@ export default function TermsAndConditions({ params }: { params: Promise<{ regio
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-[42px] md:text-[56px]   tracking-tight mb-4 leading-none">
+            <h4 className="text-[42px] md:text-[56px]   tracking-tight mb-4 leading-none">
               Terms & Conditions
-            </h1>
+            </h4>
             <p className="text-[18px] md:text-[22px]  text-white/80 max-w-2xl mx-auto">
               Please read our travel guidelines and legal terms to ensure a smooth journey with us.
             </p>
@@ -215,9 +215,9 @@ export default function TermsAndConditions({ params }: { params: Promise<{ regio
                     <div className="w-12 h-12 rounded-2xl bg-red-50 flex items-center justify-center border border-red-100">
                       {section.icon}
                     </div>
-                    <h2 className="text-[24px] md:text-[28px]  text-[#191974]  tracking-tight leading-none">
+                    <h4 className="text-[24px] md:text-[28px]  text-[#191974]  tracking-tight leading-none">
                       {section.title}
-                    </h2>
+                    </h4>
                   </div>
                   <div className="text-[16px] md:text-[17px] leading-relaxed text-gray-600 ">
                     {section.content}

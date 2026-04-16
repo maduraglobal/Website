@@ -138,7 +138,30 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
         email: email,
         password: loginPassword,
       });
-      if (error) throw error;
+
+      if (error) {
+        if (error.message.toLowerCase().includes("email not confirmed")) {
+          // User exists but hasn't verified email. Send new OTP and move to OTP view.
+          console.log(`Sending new OTP for unverified user: ${email}`);
+          const resendResult = await supabase.auth.resend({ type: 'signup', email: email });
+          if (resendResult.error) {
+             console.error("Failed to send OTP during login:", resendResult.error);
+             if (resendResult.error.status !== 429) {
+               throw resendResult.error;
+             }
+             // If rate limited, we still transition so they can enter the previous OTP
+          }
+          setSignupEmail(email); // Sync email for OTP view
+          setDirection(1);
+          setView("otp");
+          setTimer(60);
+          setIsResendDisabled(true);
+          alert("Please verify your email. A new OTP has been sent.");
+          return;
+        }
+        throw error;
+      }
+      
       onClose();
       window.location.reload();
     } catch (err: any) {
@@ -172,10 +195,20 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
         // We handle this by allowing them to proceed to OTP view if they aren't verified.
         if (error.status === 400 && error.message.toLowerCase().includes("already registered")) {
           // Attempt to resend the code to move them to the next step
-          await supabase.auth.resend({ type: 'signup', email: email });
+          console.log(`User already registered, resending OTP for: ${email}`);
+          const resendResult = await supabase.auth.resend({ type: 'signup', email: email });
+          if (resendResult.error) {
+            console.error("Resend error during signup:", resendResult.error);
+            if (resendResult.error.status !== 429) {
+              throw resendResult.error;
+            }
+            // Proceed to OTP screen even if rate limited, to allow entry of existing OTP
+          }
         } else {
           throw error;
         }
+      } else {
+        console.log(`Signup successful, OTP should be delivered to: ${email}`);
       }
 
       setDirection(1);
@@ -194,13 +227,23 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
     setLoading(true);
     try {
       const email = signupEmail.trim().toLowerCase();
+      console.log(`Initiating manual OTP resend for: ${email}`);
       const { createClient } = await import("@/utils/supabase/client");
       const supabase = createClient();
       const { error } = await supabase.auth.resend({ type: 'signup', email: email });
-      if (error) throw error;
+      
+      if (error) {
+        console.error("Manual resend error:", error);
+        if (error.status === 429) {
+          throw new Error("Please wait a moment before requesting another code.");
+        }
+        throw error;
+      }
+      
+      console.log(`OTP successfully resent to: ${email}`);
       setTimer(60);
       setIsResendDisabled(true);
-      alert("Verification code resent to your email!");
+      alert("OTP sent successfully to your email!");
     } catch (err: any) {
       alert(err.message || "Failed to resend code.");
     } finally {

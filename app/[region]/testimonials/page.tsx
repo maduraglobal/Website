@@ -112,10 +112,10 @@ export default function TestimonialPage() {
             <span className="inline-block px-4 py-1.5 bg-[#ee2229] text-white text-[12px] font-bold rounded-full uppercase tracking-widest mb-6">
               Testimonials
             </span>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+            <h4 className="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
               Trusted by Celebrities, <br />
               <span className="text-[#ee2229]">Loved by Travelers.</span>
-            </h1>
+            </h4>
             <p className="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
               For nearly four decades, Madura Travel Service has been the preferred choice for leaders, legends, and world-class travelers.
             </p>
@@ -133,7 +133,7 @@ export default function TestimonialPage() {
               { icon: ShieldCheck, label: "Years Experience", value: "40+" },
               { icon: Star, label: "Google Rating", value: "4.8/5" },
             ].map((stat, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -157,9 +157,9 @@ export default function TestimonialPage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div className="max-w-2xl">
-              <h2 className="text-2xl md:text-4xl font-extrabold text-[#191974] mb-3">
+              <h4 className="text-2xl md:text-4xl font-extrabold text-[#191974] mb-3">
                 Endorsed by Excellence
-              </h2>
+              </h4>
               <p className="text-gray-500 text-lg leading-relaxed italic">
                 Hear from the visionaries and leaders who trust us with their global journeys.
               </p>
@@ -183,9 +183,9 @@ export default function TestimonialPage() {
                 <div className="flex flex-col h-full">
                   <div className="relative w-20 h-20 mb-6 group-hover:scale-110 transition-transform duration-500">
                     <div className="absolute inset-0 bg-[#ee2229] rounded-2xl rotate-12 -z-10 opacity-20 group-hover:opacity-100 group-hover:rotate-45 transition-all"></div>
-                    <img 
-                      src={tc.image} 
-                      alt={tc.name} 
+                    <img
+                      src={tc.image}
+                      alt={tc.name}
                       className="w-full h-full object-cover rounded-2xl shadow-xl grayscale-[0.8] group-hover:grayscale-0 transition-all border-2 border-white"
                     />
                     <div className="absolute -bottom-2 -right-2 bg-white text-[#191974] p-1.5 rounded-lg shadow-md group-hover:bg-[#ee2229] group-hover:text-white transition-colors">
@@ -197,7 +197,7 @@ export default function TestimonialPage() {
                     {tc.badge}
                   </span>
 
-                  <blockquote className="text-[15px] font-medium text-gray-700 leading-relaxed group-hover:text-blue-50 mb-8 flex-grow">
+                  <blockquote className="text-[15px] font-medium text-gray-700 leading-relaxed group-hover:text-blue-50 mb-8 grow">
                     "{tc.quote}"
                   </blockquote>
 
@@ -216,7 +216,7 @@ export default function TestimonialPage() {
       <section className="py-12 bg-[#f8faff] rounded-t-[40px] md:rounded-t-[80px]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-[#191974] mb-6">Real Stories, Real Smiles</h2>
+            <h4 className="text-3xl md:text-5xl font-extrabold text-[#191974] mb-6">Real Stories, Real Smiles</h4>
             <div className="flex items-center justify-center gap-2 mb-4">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
@@ -241,9 +241,9 @@ export default function TestimonialPage() {
                     ))}
                   </div>
                   <div className="flex items-center gap-2">
-                    <img 
-                      src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" 
-                      alt="Google" 
+                    <img
+                      src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"
+                      alt="Google"
                       className="h-3 opacity-30 group-hover:opacity-100 transition-opacity"
                     />
                   </div>
@@ -263,16 +263,16 @@ export default function TestimonialPage() {
           </div>
 
           <div className="mt-10 text-center">
-            <button className="bg-[#191974] text-white px-10 py-5 rounded-full font-bold text-[15px] hover:bg-[#ee2229] transition-all shadow-xl hover:-translate-y-1 flex items-center mx-auto gap-3 group">
+            <a href='https://www.google.com/search?rlz=1C1UEAD_en-GBIN1074IN1074&sca_esv=4074d84388868a32&sxsrf=ANbL-n7NB8oHNs9RDxuAZ_sbB77eTnoQkw:1776333679915&si=AL3DRZHrmvnFAVQPOO2Bzhf8AX9KZZ6raUI_dT7DG_z0kV2_x0MpVVn9OA5hG89nwRSIi5PHQo7yfEknDvepDRnjGaWelQUElaca8ATNAojLYehobbGeXz_azHFLjMxRm-QxYhB9fwkonn654d_Hzxt03onm7QPx4g%3D%3D&q=Madura+Travel+Service+%28P%29+Ltd+Reviews&sa=X&ved=2ahUKEwi-ufnPjvKTAxX32DgGHYyqLPgQ0bkNegQIIhAH&biw=1536&bih=730&dpr=1.25' className="bg-[#191974] text-white px-10 py-5 rounded-full font-bold text-[15px] hover:bg-[#ee2229] transition-all shadow-xl hover:-translate-y-1 flex items-center mx-auto gap-3 group">
               View More Reviews on Google
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+            </a>
           </div>
         </div>
       </section>
 
       {/* Trust Banner */}
-      <section className="py-12 bg-[#191974] relative overflow-hidden">
+      {/* <section className="py-12 bg-[#191974] relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#ee2229] rounded-full filter blur-[150px] opacity-20 -translate-y-1/2 translate-x-1/2"></div>
         <div className="max-w-5xl mx-auto px-4 text-center relative z-10">
           <Heart className="w-16 h-16 text-[#ee2229] mx-auto mb-8 animate-pulse" />
@@ -288,7 +288,7 @@ export default function TestimonialPage() {
             </button>
           </div>
         </div>
-      </section>
+      </section> */}
     </main>
   );
 }

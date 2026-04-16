@@ -267,37 +267,41 @@ export default function BookingPage() {
                     </div>
 
                     {travelers.map((t, idx) => (
-                      <div key={t.id} className="border border-gray-100 rounded-2xl overflow-hidden">
-                        <div className={`flex items-center gap-3 px-6 py-4 ${typeColor[t.type]}`}>
-                          {typeIcon[t.type]}
-                          <span className="font-bold tracking-wide text-sm">{typeLabel[t.type]} {travelers.filter(x => x.type === t.type).indexOf(t) + 1}</span>
-                          <span className="ml-auto text-[11px] opacity-60 uppercase tracking-widest">
-                            {t.type === 'adult' ? '12+ yrs' : t.type === 'child' ? '2–11 yrs' : 'Under 2 yrs'}
-                          </span>
+                      <div key={t.id} className="pt-8 mt-8 border-t border-gray-100 first:pt-4 first:mt-4 first:border-0">
+                        <div className="flex items-center gap-3 mb-6">
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${typeColor[t.type]}`}>
+                            {typeIcon[t.type]}
+                          </div>
+                          <div>
+                            <p className="font-bold text-[#191974] text-[15px]">{typeLabel[t.type]} {travelers.filter(x => x.type === t.type).indexOf(t) + 1}</p>
+                            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                              {t.type === 'adult' ? '12+ yrs' : t.type === 'child' ? '2–11 yrs' : 'Under 2 yrs'}
+                            </p>
+                          </div>
                         </div>
-                        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           {[['firstName', 'First Name', 'text'], ['lastName', 'Last Name', 'text']].map(([field, label, type]) => (
-                            <div key={field} className="space-y-1.5">
-                              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{label}</label>
+                            <div key={field} className="space-y-2">
+                              <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">{label}</label>
                               <input
                                 required type={type} value={(t as any)[field]}
                                 onChange={e => handleTravelerChange(t.id, field as keyof Traveler, e.target.value)}
-                                placeholder={label}
-                                className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-3 py-3 rounded-lg outline-none transition-all font-semibold text-[#191974] text-sm"
+                                placeholder={`e.g. ${label}`}
+                                className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm"
                               />
                             </div>
                           ))}
-                          <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Date of Birth</label>
+                          <div className="space-y-2">
+                            <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">Date of Birth</label>
                             <input required type="date" value={t.dob}
                               onChange={e => handleTravelerChange(t.id, 'dob', e.target.value)}
-                              className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-3 py-3 rounded-lg outline-none transition-all font-semibold text-[#191974] text-sm"
+                              className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm"
                             />
                           </div>
-                          <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Gender</label>
+                          <div className="space-y-2">
+                            <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">Gender</label>
                             <select required value={t.gender} onChange={e => handleTravelerChange(t.id, 'gender', e.target.value)}
-                              className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-3 py-3 rounded-lg outline-none transition-all font-semibold text-[#191974] text-sm appearance-none">
+                              className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm appearance-none">
                               <option value="">Select Gender</option>
                               <option>Male</option>
                               <option>Female</option>
@@ -305,17 +309,18 @@ export default function BookingPage() {
                             </select>
                           </div>
                           {t.type !== 'infant' && (
-                            <div className="space-y-1.5 md:col-span-2">
-                              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Passport Number (Optional)</label>
+                            <div className="space-y-2 md:col-span-2">
+                              <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">Passport Number (Optional)</label>
                               <input type="text" value={t.passportNo}
                                 onChange={e => handleTravelerChange(t.id, 'passportNo', e.target.value)}
                                 placeholder="e.g. A1234567"
-                                className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-3 py-3 rounded-lg outline-none transition-all font-semibold text-[#191974] text-sm"
+                                className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm"
                               />
                             </div>
                           )}
                         </div>
                       </div>
+
                     ))}
                   </div>
                 )}

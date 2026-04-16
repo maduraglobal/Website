@@ -76,7 +76,7 @@ export default function TeamPage({ params }: { params: Promise<{ region: string 
             className="text-center max-w-3xl mx-auto"
           >
             <p className="text-[#ee2229] font-bold tracking-[0.4em] uppercase text-[12px] mb-6">Our People, Your Journey</p>
-            <h1 className="text-[52px] md:text-[72px] font-bold tracking-tighter leading-none mb-8">Meet the Dream <span className="text-[#ee2229]">Architects.</span></h1>
+            <h4 className="text-[52px] md:text-[72px] font-bold tracking-tighter leading-none mb-8">Meet the Dream <span className="text-[#ee2229]">Architects.</span></h4>
             <p className="text-[17px] text-gray-500 font-medium leading-relaxed">
               At Madura Travel, we don't just sell tours; we build memories. Our team consists of seasoned experts dedicated to making your travel seamless, safe, and extraordinary.
             </p>
@@ -138,7 +138,7 @@ export default function TeamPage({ params }: { params: Promise<{ region: string 
                   <p className="text-[14px] text-gray-400 leading-relaxed font-medium">
                     {member.desc}
                   </p>
-                  
+
                   <div className="flex flex-wrap gap-2 justify-center pt-2">
                     {member.qualities.map(q => (
                       <span key={q} className="bg-gray-50 px-4 py-1.5 rounded-full text-[10px] font-bold text-gray-400 uppercase tracking-wider">
@@ -157,7 +157,7 @@ export default function TeamPage({ params }: { params: Promise<{ region: string 
       <section className="pb-32 px-6">
         <div className="max-w-7xl mx-auto bg-[#191974] rounded-[48px] p-12 md:p-24 text-white flex flex-col lg:flex-row items-center justify-between gap-12 overflow-hidden relative shadow-2xl">
           <div className="relative z-10 max-w-xl">
-            <h2 className="text-[42px] md:text-[52px] font-bold leading-none tracking-tighter mb-8">Work With the World.</h2>
+            <h4 className="text-[42px] md:text-[52px] font-bold leading-none tracking-tighter mb-8">Work With the World.</h4>
             <p className="text-white/70 text-lg leading-relaxed mb-10">
               We are always on the lookout for passionate travel designers, visa experts, and operations masters. Join the Madura family and build the future of travel.
             </p>
@@ -168,13 +168,13 @@ export default function TeamPage({ params }: { params: Promise<{ region: string 
               </div>
             </div>
           </div>
-          
+
           <div className="relative w-full lg:w-[400px] h-[300px] lg:h-[400px] rounded-[3rem] overflow-hidden shadow-2xl transform lg:rotate-6">
             <Image
-               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
-               alt="Team Culture"
-               fill
-               className="object-cover"
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
+              alt="Team Culture"
+              fill
+              className="object-cover"
             />
           </div>
 
