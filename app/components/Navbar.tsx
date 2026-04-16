@@ -219,7 +219,7 @@ export default function Navbar() {
                 </button>
               </div>
 
-              <button 
+              <button
                 onClick={() => !user ? setIsLoginOpen(true) : router.push(`/${currentRegionCode}/profile`)}
                 className="md:hidden w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 text-[#191974] hover:bg-gray-200 transition-all pointer-events-auto"
               >
@@ -272,7 +272,7 @@ export default function Navbar() {
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       className="absolute top-full right-0 mt-2 w-[280px] bg-white shadow-2xl rounded-xl border border-gray-100 z-200 overflow-hidden"
                     >
-                       <div className="p-2 flex flex-col gap-1">
+                      <div className="p-2 flex flex-col gap-1">
                         {Object.values(countryConfigs).map((config) => (
                           <div
                             key={config.id}
@@ -343,16 +343,16 @@ export default function Navbar() {
             {isContactDropdownOpen && (
               <>
                 {/* Backdrop for mobile */}
-                <div 
-                  className="fixed inset-0 z-[199] md:hidden bg-black/5" 
+                <div
+                  className="fixed inset-0 z-199 md:hidden bg-black/5"
                   onClick={() => setIsContactDropdownOpen(false)}
                 />
-                
+
                 <motion.div
                   initial={{ opacity: 0, y: 10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  className="absolute top-full left-4 right-4 md:left-auto md:right-8 mt-2 md:w-[360px] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.15)] rounded-3xl border border-gray-100 z-[200] overflow-hidden"
+                  className="absolute top-full left-4 right-4 md:left-auto md:right-8 mt-2 md:w-[360px] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.15)] rounded-3xl border border-gray-100 z-200 overflow-hidden"
                 >
                   <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/20">
                     <p className="text-[15px] text-[#191974] font-bold">Contact Us</p>
@@ -360,7 +360,7 @@ export default function Navbar() {
                       <X className="w-4 h-4" />
                     </button>
                   </div>
-                  
+
                   <div className="p-6 space-y-6">
                     <div className="flex items-start gap-4">
                       <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center shrink-0">
