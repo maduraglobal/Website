@@ -45,6 +45,8 @@ export interface Tour {
   exclusions?: string[];
   visibility?: boolean;
   itinerary_id: string;
+  tags?: string[];
+  rating?: number;
   meta_title?: string;
   meta_description?: string;
   // Localized/Formatted fields for card display
