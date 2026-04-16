@@ -131,10 +131,11 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
     e.preventDefault();
     setLoading(true);
     try {
+      const email = loginEmail.trim().toLowerCase();
       const { createClient } = await import("@/utils/supabase/client");
       const supabase = createClient();
       const { error } = await supabase.auth.signInWithPassword({
-        email: loginEmail,
+        email: email,
         password: loginPassword,
       });
       if (error) throw error;
@@ -156,14 +157,27 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
     setPwMismatch(false);
     setLoading(true);
     try {
+      const email = signupEmail.trim().toLowerCase();
       const { createClient } = await import("@/utils/supabase/client");
       const supabase = createClient();
-      const { error } = await supabase.auth.signUp({
-        email: signupEmail,
+      
+      const { data, error } = await supabase.auth.signUp({
+        email: email,
         password: signupPassword,
-        options: { data: { full_name: fullName } },
+        options: { data: { full_name: fullName.trim() } },
       });
-      if (error) throw error;
+
+      if (error) {
+        // If user already exists but is unconfirmed, some Supabase configs return an error.
+        // We handle this by allowing them to proceed to OTP view if they aren't verified.
+        if (error.status === 400 && error.message.toLowerCase().includes("already registered")) {
+          // Attempt to resend the code to move them to the next step
+          await supabase.auth.resend({ type: 'signup', email: email });
+        } else {
+          throw error;
+        }
+      }
+
       setDirection(1);
       setView("otp");
       setTimer(60);
@@ -179,15 +193,16 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
     if (isResendDisabled) return;
     setLoading(true);
     try {
+      const email = signupEmail.trim().toLowerCase();
       const { createClient } = await import("@/utils/supabase/client");
       const supabase = createClient();
-      const { error } = await supabase.auth.resend({ type: 'signup', email: signupEmail });
+      const { error } = await supabase.auth.resend({ type: 'signup', email: email });
       if (error) throw error;
       setTimer(60);
       setIsResendDisabled(true);
-      alert("Verification code resent!");
+      alert("Verification code resent to your email!");
     } catch (err: any) {
-      alert(err.message || "Failed to resend.");
+      alert(err.message || "Failed to resend code.");
     } finally {
       setLoading(false);
     }
@@ -198,19 +213,28 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
     if (otpCode.length !== 6) return;
     setLoading(true);
     try {
+      const email = signupEmail.trim().toLowerCase();
       const { createClient } = await import("@/utils/supabase/client");
       const supabase = createClient();
       const { error } = await supabase.auth.verifyOtp({
-        email: signupEmail,
+        email: email,
         token: otpCode,
         type: 'signup',
       });
-      if (error) throw error;
-      alert("Account verified! Welcome.");
+
+      if (error) {
+        console.error("Verification error:", error);
+        throw error;
+      }
+
+      alert("Account verified! Welcome to Madura Travel.");
       onClose();
       window.location.reload();
     } catch (err: any) {
-      alert(err.message || "Verification failed.");
+      let msg = err.message || "Verification failed.";
+      if (msg.includes("expired")) msg = "The code has expired. Please click 'Resend' to get a new one.";
+      if (msg.includes("invalid")) msg = "Invalid code. Please check your email and try again.";
+      alert(msg);
     } finally {
       setLoading(false);
     }
