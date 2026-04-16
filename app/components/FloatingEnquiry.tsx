@@ -1,20 +1,21 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { MessageSquare, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, MessageSquare, Phone, User, Mail, Check } from 'lucide-react';
-import Image from 'next/image';
 import PhonePrefixSelector from './ui/PhonePrefixSelector';
 
 export default function FloatingEnquiry() {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
     phone: '',
+    email: '',
+    travelDate: '',
+    nationality: '',
+    enquiryType: 'Air Ticket'
   });
   const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Close with Escape key & Listen for global 'openEnquiry' event
   useEffect(() => {
@@ -25,7 +26,7 @@ export default function FloatingEnquiry() {
 
     window.addEventListener('keydown', handleEsc);
     window.addEventListener('openEnquiry', handleOpen);
-    
+
     return () => {
       window.removeEventListener('keydown', handleEsc);
       window.removeEventListener('openEnquiry', handleOpen);
@@ -34,163 +35,154 @@ export default function FloatingEnquiry() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Enquiry submitted:', formData);
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setIsOpen(false);
-      setFormData({ name: '', email: '', phone: '' });
-    }, 2000);
+    console.log(formData);
+    setIsOpen(false);
   };
 
   return (
     <>
-      {/* 🚀 FLOATING BUTTON */}
       <button
-        suppressHydrationWarning
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-1000 flex items-center gap-3 bg-[#191974] text-white px-6 py-4 rounded-full  hover: hover:-translate-y-1 active:scale-95 transition-all duration-300 font-bold group"
+        className="fixed bottom-6 right-6 z-1000 flex items-center gap-3 bg-[#191974] text-white px-6 py-4 rounded-full font-bold group shadow-lg"
       >
-
         <span className="hidden md:inline">Enquire Now</span>
         <MessageSquare className="w-5 h-5 md:hidden" />
       </button>
 
-      {/* 🔹 POPUP OVERLAY */}
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-10001 flex items-center justify-center p-4">
-            {/* Backdrop */}
+          <div className="fixed inset-0 z-1000 bg-black/60 flex items-center justify-center p-4">
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            />
-
-            {/* Modal Content */}
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 50 }}
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 50 }}
-              className="relative w-full max-w-[420px] bg-white rounded-[32px] overflow-hidden  flex flex-col"
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              transition={{ type: "spring", duration: 0.3 }}
+              className="relative w-full max-w-[360px] bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col"
             >
-              {/* Close Button */}
-              <button
-                suppressHydrationWarning
-                onClick={() => setIsOpen(false)}
-                className="absolute top-4 right-4 z-20 p-2 bg-black/5 hover:bg-black/10 rounded-full transition-colors text-gray-600"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              {/* 📷 Header Illustration (Inspired by screenshot) */}
-              <div className="relative h-[200px] w-full bg-[#f8f9fc] overflow-hidden pt-6">
-                <div className="absolute inset-0 opacity-40">
-                  <div className="absolute top-10 left-10 w-2 h-2 rounded-full bg-[#191974]"></div>
-                  <div className="absolute top-20 right-20 w-3 h-3 rounded-full bg-[#191974]"></div>
-                  <div className="absolute bottom-10 left-1/2 w-2 h-2 rounded-full bg-[#191974]"></div>
+              <div className="p-4">
+                {/* Header */}
+                <div className="flex items-center justify-between pb-2 border-b border-gray-100 mb-3">
+                  <h2 className="text-[15px] font-bold text-gray-900">Planning Your Dream Trip?</h2>
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="p-1 text-gray-500 hover:bg-gray-100 rounded-full transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
 
-                <div className="relative w-full h-full flex justify-center">
-                  <Image
-                    src="https://img.freepik.com/free-vector/travel-tourism-illustration-with-world-famous-landmarks-suitcase_1284-33031.jpg"
-                    alt="Travel Landmarks"
-                    width={320}
-                    height={160}
-                    className="object-contain drop-"
-                  />
-                </div>
-
-                {/* Decoration */}
-                <div className="absolute top-6 left-6 w-12 h-12 bg-white/40 rounded-2xl rotate-12 flex items-center justify-center">
-                  <div className="w-8 h-8 rounded-lg bg-[#191974] opacity-20 transform -rotate-12"></div>
-                </div>
-              </div>
-
-              {/* ✍️ Form Area */}
-              <div className="p-8 pb-10">
-                {!isSubmitted ? (
-                  <>
-                    <div className="text-center mb-8">
-                      <h3 className="text-[20px] font-bold text-[#191974] leading-tight mb-2">
-                        Join a community of <br />
-                        <span className="text-[#191974]">9,44,008 happy guests</span>
-                      </h3>
-                      <p className="text-[12px] text-gray-400 font-medium leading-relaxed max-w-[280px] mx-auto">
-                        Get the latest travel deals, new tour announcements, travel ideas & a whole lot more.
-                      </p>
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="space-y-2.5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                    {/* Name */}
+                    <div className="flex flex-col gap-0.5">
+                      <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-tight ml-0.5">Name</label>
+                      <input
+                        type="text"
+                        placeholder="Name"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="w-full px-3 text-[12px] placeholder:text-gray-400 bg-gray-50 border border-gray-200 outline-none focus:border-[#191974] rounded focus:bg-white transition-all"
+                        style={{ height: '34px' }}
+                      />
                     </div>
-
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      {/* Name with floating label style from screenshot */}
-                      <div className="relative">
-                        <label className="absolute -top-2.5 left-4 px-2 bg-white text-[12px] font-bold text-[#191974] z-10">
-                          Full Name*
-                        </label>
+                    {/* Phone */}
+                    <div className="flex flex-col gap-0.5">
+                      <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-tight ml-0.5">Phone</label>
+                      <div className="flex bg-gray-50 border border-gray-200 rounded focus-within:border-[#191974] focus-within:bg-white transition-all overflow-hidden" style={{ height: '34px' }}>
+                        <PhonePrefixSelector
+                          selectedCode={selectedCountryCode}
+                          onSelect={(code) => setSelectedCountryCode(code)}
+                          variant="minimal"
+                          className="border-none bg-transparent scale-75 -ml-2 text-[#191974]"
+                        />
                         <input
+                          type="tel"
+                          placeholder="Phone"
                           required
-                          type="text"
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="w-full h-[54px] px-5 bg-white border-2 border-[#191974] rounded-xl text-[14px] font-bold text-[#191974] outline-none transition-all placeholder:text-transparent"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          className="flex-1 px-1 bg-transparent border-none outline-none text-[12px] placeholder:text-gray-400 font-medium"
                         />
                       </div>
-
-                      {/* Email */}
-                      <div className="relative">
-                        <input
-                          required
-                          type="email"
-                          placeholder="Email ID*"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full h-[54px] px-5 bg-white border border-gray-200 rounded-xl text-[14px] font-bold text-[#191974] outline-none transition-all placeholder:text-gray-400 focus:border-[#191974]"
-                        />
-                      </div>
-
-                      {/* Phone with Flag Selector UI */}
-                      <div className="relative">
-                        <label className="absolute -top-2.5 left-4 px-2 bg-white text-[12px] font-bold text-gray-400 z-10 group-focus-within:text-[#191974]">
-                          Mobile No.*
-                        </label>
-                        <div className="flex h-[54px] bg-white border border-gray-200 rounded-xl focus-within:border-[#191974] transition-all relative">
-                          <PhonePrefixSelector
-                            selectedCode={selectedCountryCode}
-                            onSelect={(code) => setSelectedCountryCode(code)}
-                            variant="minimal"
-                            className="bg-transparent border-none scale-90 -ml-1"
-                          />
-                          <input
-                            required
-                            type="tel"
-                            className="flex-1 px-4 text-[14px] font-bold text-[#191974] outline-none"
-                            value={formData.phone}
-                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          />
-                        </div>
-                      </div>
-
-                      {/* Subscribe Button */}
-                      <button
-                        suppressHydrationWarning
-                        type="submit"
-                        className="w-full h-[56px] bg-[#191974] hover:bg-[#191974] text-white font-bold rounded-xl text-[15px] active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-2"
-                      >
-                        Subscribe
-                      </button>
-                    </form>
-                  </>
-                ) : (
-                  <div className="py-12 flex flex-col items-center text-center animate-in fade-in zoom-in duration-500">
-                    <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6">
-                      <Check className="w-10 h-10 text-green-500" />
                     </div>
-                    <h3 className="text-[22px] font-bold text-[#191974] mb-2">Thank You!</h3>
-                    <p className="text-gray-500 font-medium">Your enquiry has been received.<br />We'll get back to you soon.</p>
                   </div>
-                )}
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                    {/* Email */}
+                    <div className="flex flex-col gap-0.5">
+                      <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-tight ml-0.5">Email</label>
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="w-full px-3 text-[12px] placeholder:text-gray-400 bg-gray-50 border border-gray-200 outline-none focus:border-[#191974] rounded focus:bg-white transition-all"
+                        style={{ height: '34px' }}
+                      />
+                    </div>
+                    {/* Date of Travel */}
+                    <div className="flex flex-col gap-0.5">
+                      <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-tight ml-0.5">Date of Travel</label>
+                      <input
+                        type="date"
+                        required
+                        value={formData.travelDate}
+                        onChange={(e) => setFormData({ ...formData, travelDate: e.target.value })}
+                        className="w-full px-3 text-[12px] text-gray-700 bg-gray-50 border border-gray-200 outline-none focus:border-[#191974] rounded focus:bg-white transition-all"
+                        style={{ height: '34px' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Nationality */}
+                  <div className="flex flex-col gap-0.5">
+                    <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-tight ml-0.5">Nationality</label>
+                    <input
+                      type="text"
+                      placeholder="Nationality"
+                      required
+                      value={formData.nationality}
+                      onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
+                      className="w-full px-3 text-[12px] placeholder:text-gray-400 bg-gray-50 border border-gray-200 outline-none focus:border-[#191974] rounded focus:bg-white transition-all"
+                      style={{ height: '34px' }}
+                    />
+                  </div>
+
+                  {/* Type of Enquiry */}
+                  <div className="flex flex-col gap-0.5 relative">
+                    <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-tight ml-0.5">Type of Enquiry?</label>
+                    <div className="relative">
+                      <select
+                        required
+                        value={formData.enquiryType}
+                        onChange={(e) => setFormData({ ...formData, enquiryType: e.target.value })}
+                        className="w-full px-3 text-[12px] text-gray-900 bg-gray-50 border border-gray-200 outline-none focus:border-[#191974] rounded appearance-none cursor-pointer focus:bg-white transition-all"
+                        style={{ height: '34px' }}
+                      >
+                        <option value="Air Ticket">Air Ticket</option>
+                        <option value="Visa">Visa</option>
+                        <option value="Tour Packages">Tour Packages</option>
+                        <option value="Hotel Booking">Hotel Booking</option>
+                        <option value="Other">Other</option>
+                      </select>
+                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" />
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      className="w-full bg-[#191974] text-white font-bold text-[13px] rounded-lg hover:bg-blue-900 transition-colors shadow-sm active:scale-[0.98]"
+                      style={{ height: '38px' }}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
               </div>
             </motion.div>
           </div>

@@ -10,42 +10,42 @@ const CELEBRITY_TESTIMONIALS = [
     name: "Mr. Anbil Mahesh",
     role: "Minister for Education - Government of Tamilnadu",
     quote: "I extend my heartfelt thanks to the entire Madura Travel Service team for their professional assistance in organizing international trips for the students of Tamil Nadu's government schools. Traveling with the students made me feel like a young boy again. Kudos to Madura for their incredible efforts.",
-    image: "https://images.unsplash.com/photo-1556157382-97dee2dcb34e?q=80&w=200&h=200&auto=format&fit=crop", // placeholder
+    image: "/celebrity/Anbil mahesh.jpg", // placeholder
     badge: "Government"
   },
   {
     name: "Mr. Napoleon",
     role: "Cine Actor & Politician",
     quote: "Mr. Sriharan Balan and his exceptional team provided seamless service, taking on the monumental task of organizing my son’s wedding in Tokyo, Japan, in November 2024, with absolute ease. Every guest was treated like a VIP from start to finish.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&h=200&auto=format&fit=crop", // placeholder
+    image: "/celebrity/Nepolean.jpg", // placeholder
     badge: "Tokyo Wedding 2024"
   },
   {
     name: "Mr. Kamal Haasan",
     role: "Cine Actor & Director",
     quote: "Mr. V.K.T. Balan was more than just a travel consultant; he was a cherished friend and pillar of support throughout my decades-long journey in cinema. His guidance and expertise enriched numerous travel programs and shoots.",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&h=200&auto=format&fit=crop", // placeholder
+    image: "/celebrity/Kamalhasan.jpg", // placeholder
     badge: "Cinematic Legend"
   },
   {
     name: "Mr. Venkatesh Bhat",
     role: "TCDC Fame & CEO, Accord Hotels",
     quote: "My long-standing association with Madura Travel Service has made my global travels seamless and stress-free. Their expertise in handling visas ensures timely approvals without any delays. Truly exceptional service every time!",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&h=200&auto=format&fit=crop", // placeholder
+    image: "/celebrity/Venkatesh-Bhat.jpg", // placeholder
     badge: "CEO Accord Hotels"
   },
   {
     name: "Mrs. P. Susheela",
     role: "Legendary Singer",
     quote: "My journey with Madura Travel Service began when Mr. VKT Balan helped me obtain my first passport. Since then, he has been a constant support, helping me travel the world and share my voice globally. Madura Travel Service feels like family.",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&h=200&auto=format&fit=crop", // placeholder
+    image: "/celebrity/susheela.jpg", // placeholder
     badge: "Symphony of Travel"
   },
   {
     name: "Mr. Sandy",
     role: "Dance Master",
     quote: "Mr. Sriharan Balan has been a tremendous support during my international shows. His professional team is always available 24/7, ensuring that my travel experiences are smooth and enjoyable.",
-    image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200&h=200&auto=format&fit=crop", // placeholder
+    image: "/celebrity/sandy.jpg", // placeholder
     badge: "International Shows"
   }
 ];

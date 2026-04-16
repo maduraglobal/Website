@@ -6,7 +6,7 @@ import { ArrowLeft, Upload, Settings, Calendar, MapPin, Italic, Bold, List, Imag
 
 export default function EditDestination() {
   const [title, setTitle] = useState('');
-  
+
   return (
     <div className="max-w-7xl">
       {/* Header */}
@@ -15,7 +15,7 @@ export default function EditDestination() {
           <Link href="/admin/destinations" className="w-8 h-8 flex items-center justify-center rounded border border-gray-300 bg-white hover:bg-gray-50 transition-colors tooltip" aria-label="Back">
             <ArrowLeft className="w-4 h-4 text-gray-600" />
           </Link>
-          <h1 className="text-2xl font-normal text-[#1d2327]">Add New Destination Hub</h1>
+          <h4 className="text-2xl font-normal text-[#1d2327]">Add New Destination Hub</h4>
         </div>
       </div>
 
@@ -24,15 +24,15 @@ export default function EditDestination() {
         <div className="flex-1 space-y-6">
           {/* Title Input */}
           <div className="bg-white border border-gray-200">
-            <input 
-              type="text" 
-              placeholder="Enter destination name (e.g. Switzerland)" 
+            <input
+              type="text"
+              placeholder="Enter destination name (e.g. Switzerland)"
               className="w-full px-4 py-3 text-2xl font-medium outline-none text-[#1d2327] placeholder:text-gray-400"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
-          
+
           {/* Permalink Preview */}
           {title && (
             <div className="text-[13px] text-gray-600 px-2 -mt-4">
@@ -50,7 +50,7 @@ export default function EditDestination() {
               <button className="p-2 hover:bg-white border border-transparent hover:border-gray-300 rounded text-gray-600"><List className="w-4 h-4" /></button>
               <button className="p-2 hover:bg-white border border-transparent hover:border-gray-300 rounded text-gray-600 flex gap-2 items-center text-[12px] font-bold"><ImageIcon className="w-4 h-4" /> Add Media</button>
             </div>
-            <textarea 
+            <textarea
               className="flex-1 w-full p-4 text-[14px] leading-relaxed outline-none resize-none focus:ring-1 focus:ring-blue-500/50"
               placeholder="Write the introduction or description for this destination hub page..."
             ></textarea>
@@ -71,12 +71,12 @@ export default function EditDestination() {
               </div>
             </div>
           </div>
-          
+
         </div>
 
         {/* Right Sidebar */}
         <div className="w-full lg:w-[320px] space-y-5">
-          
+
           {/* Publish Box */}
           <div className="bg-white border border-gray-200 shadow-sm">
             <div className="border-b border-gray-200 bg-[#f6f7f7] px-4 py-2.5">
@@ -87,7 +87,7 @@ export default function EditDestination() {
                 <button className="border border-gray-300 text-gray-700 bg-[#f6f7f7] hover:bg-gray-100 px-3 py-1.5 rounded-sm text-[13px] font-medium transition-colors">Save Draft</button>
                 <button className="border border-gray-300 text-gray-700 bg-[#f6f7f7] hover:bg-gray-100 px-3 py-1.5 rounded-sm text-[13px] font-medium transition-colors">Preview</button>
               </div>
-              
+
               <div className="pt-3 pb-1 space-y-2 border-b border-gray-100">
                 <div className="flex items-center gap-2 text-[13px]">
                   <Settings className="w-4 h-4 text-gray-500" />
@@ -104,7 +104,7 @@ export default function EditDestination() {
           {/* Region Parent */}
           <div className="bg-white border border-gray-200 shadow-sm">
             <div className="border-b border-gray-200 bg-[#f6f7f7] px-4 py-2.5">
-              <h2 className="text-[14px] font-semibold text-[#1d2327]">Parent Region</h2>
+              <h4 className="text-[14px] font-semibold text-[#1d2327]">Parent Region</h4>
             </div>
             <div className="p-4">
               <select className="w-full border border-gray-300 px-3 py-1.5 text-[13px] rounded-sm focus:border-blue-500 outline-none text-[#1d2327]">

@@ -142,8 +142,8 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
               <ChevronLeft className="w-5 h-5" />
             </button>
             <div>
-              <h1 className="text-[20px] font-bold text-[#191974] leading-none mb-1">Apply for {destName} Visa</h1>
-              <p className="text-[11px] text-gray-400 font-bold uppercase">{citizen} Citizen • {travelers.length} Traveler(s)</p>
+              <h1 className="text-[20px] font-bold text-[#191974] leading-normal mb-1">Apply for {destName} Visa</h1>
+              <p className="text-[12px] text-gray-500 font-bold uppercase tracking-wider leading-normal">{citizen} Citizen • {travelers.length} Traveler(s)</p>
             </div>
           </div>
 
@@ -158,7 +158,7 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
                     <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${isDone ? 'bg-green-500 text-white' : isActive ? 'bg-[#ee2229] text-white' : 'bg-gray-200'}`}>
                       {isDone ? <CheckCircle2 className="w-3.5 h-3.5" /> : idx + 1}
                     </div>
-                    <span className="text-[10px] font-bold uppercase tracking-widest pointer-events-none">{s}</span>
+                    <span className="text-[11px] font-bold uppercase tracking-wider pointer-events-none leading-normal">{s}</span>
                   </div>
                   {idx < 3 && <div className="w-4 h-1px bg-gray-200" />}
                 </React.Fragment>
@@ -193,12 +193,12 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
                       <InputBox label="Last Name*" placeholder="Doe" value={t.lastName} onChange={(v) => handleTravelerChange(t.id, 'lastName', v)} error={errors[`t-${t.id}-lastName`]} />
                       <InputBox label="Passport No.*" placeholder="A1234567" value={t.passportNo} onChange={(v) => handleTravelerChange(t.id, 'passportNo', v)} error={errors[`t-${t.id}-passportNo`]} />
                       <div className="flex flex-col gap-2">
-                        <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Date of Birth*</label>
+                        <label className="text-[12px] font-bold text-gray-500 uppercase tracking-wider ml-1">Date of Birth*</label>
                         <input
                           type="date"
                           value={t.dob}
                           onChange={(e) => handleTravelerChange(t.id, 'dob', e.target.value)}
-                          className="w-full bg-gray-50/50 border border-gray-100 focus:border-[#191974] focus:bg-white px-6 py-4 rounded-xl outline-none transition-all font-semibold text-[15px] shadow-sm"
+                          className="w-full bg-white border border-gray-200 focus:border-2 focus:border-[#191974] px-5 py-4 rounded-xl outline-none transition-all font-semibold text-[14px]"
                         />
                       </div>
                       <InputBox label="Email ID*" type="email" placeholder="john@email.com" value={t.email} onChange={(v) => handleTravelerChange(t.id, 'email', v)} error={errors[`t-${t.id}-email`]} />
@@ -381,13 +381,13 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
 
 function SectionHeader({ title, subtitle, icon }: { title: string, subtitle: string, icon: React.ReactNode }) {
   return (
-    <div className="flex items-start gap-5 mb-6">
-      <div className="w-12 h-12 bg-[#191974] text-white rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-[#191974]/10">
+    <div className="flex items-start gap-4 mb-6">
+      <div className="w-12 h-12 bg-[#191974] text-white rounded-2xl flex items-center justify-center shrink-0">
         {icon}
       </div>
-      <div className="pt-1">
-        <h2 className="text-[22px] font-bold tracking-tight text-[#191974] leading-tight mb-1">{title}</h2>
-        <p className="text-[13px] text-gray-500 font-medium leading-relaxed">{subtitle}</p>
+      <div className="flex-1 pt-1">
+        <h2 className="text-[20px] font-bold tracking-normal text-[#191974] leading-normal mb-1">{title}</h2>
+        <p className="text-[13px] text-gray-500 font-medium leading-normal">{subtitle}</p>
       </div>
     </div>
   );
@@ -398,13 +398,13 @@ function InputBox({ label, placeholder, value, onChange, type = "text", error }:
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">{label}</label>
+      <label className="text-[12px] font-bold text-gray-500 uppercase tracking-wider ml-1">{label}</label>
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className={`w-full bg-gray-50/50 border ${error ? 'border-red-500' : 'border-gray-100'} focus:border-[#191974] focus:bg-white px-6 py-4 rounded-xl outline-none transition-all font-semibold text-[15px] placeholder:text-gray-300 shadow-sm`}
+        className={`w-full bg-white border ${error ? 'border-red-500' : 'border-gray-200'} focus:border-2 focus:border-[#191974] px-5 py-4 rounded-xl outline-none transition-all font-semibold text-[14px] placeholder:text-gray-300`}
       />
       {error && <p className="text-[11px] text-red-500 font-bold px-1 mt-0.5">{error}</p>}
     </div>
@@ -421,7 +421,7 @@ function FileUploader({ label, file, onFileSelect, error }: { label: string, fil
 
   return (
     <div className="space-y-2">
-      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-1">{label}*</label>
+      <label className="text-[12px] font-bold text-gray-500 uppercase tracking-wider px-1">{label}*</label>
       <div
         onClick={() => !file && inputRef.current?.click()}
         className={`relative group h-[120px] rounded-2xl border-2 border-dashed ${file ? 'border-green-500 bg-green-50/30' : error ? 'border-red-500 bg-red-50/10' : 'border-gray-100 bg-gray-50/50 hover:border-[#191974]'} transition-all flex flex-col items-center justify-center cursor-pointer overflow-hidden`}
@@ -431,7 +431,7 @@ function FileUploader({ label, file, onFileSelect, error }: { label: string, fil
         {file ? (
           <div className="flex flex-col items-center gap-1 p-4 animate-in fade-in zoom-in duration-300">
             <CheckCircle2 className="w-8 h-8 text-green-500" />
-            <p className="text-[10px] font-bold text-green-600 truncate max-w-[140px]">{file.name}</p>
+            <p className="text-[10px] font-bold text-green-600 truncate max-w-[140px] tracking-normal leading-normal">{file.name}</p>
             <button onClick={(e) => { e.stopPropagation(); onFileSelect(null); }} className="absolute top-2 right-2 p-1 bg-white/50 rounded-full hover:bg-white transition-colors">
               <X className="w-3 h-3 text-gray-500" />
             </button>
@@ -439,7 +439,7 @@ function FileUploader({ label, file, onFileSelect, error }: { label: string, fil
         ) : (
           <div className="flex flex-col items-center gap-1">
             <Camera className="w-8 h-8 text-gray-300 group-hover:text-[#191974] transition-colors" />
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Click to Upload</p>
+            <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider leading-normal">Click to Upload</p>
           </div>
         )}
       </div>
@@ -450,9 +450,9 @@ function FileUploader({ label, file, onFileSelect, error }: { label: string, fil
 
 function ReviewItem({ label, value }: { label: string, value: string }) {
   return (
-    <div>
-      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{label}</p>
-      <p className="text-sm font-bold text-[#191974]">{value || '—'}</p>
+    <div className="flex flex-col gap-1">
+      <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">{label}</p>
+      <p className="text-sm font-bold text-[#191974] leading-normal">{value || '—'}</p>
     </div>
   );
 }
