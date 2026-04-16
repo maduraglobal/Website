@@ -156,7 +156,6 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
           data: {
             full_name: fullName,
           },
-          emailRedirectTo: `https://madura-dynamic-website.vercel.app/auth/callback`,
         },
       });
 
@@ -181,7 +180,7 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[11000] flex items-center justify-center px-4">
+        <div className="fixed inset-0 z-11000 flex items-center justify-center px-4">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -197,7 +196,7 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.92, opacity: 0, y: 16 }}
             transition={{ type: "spring", damping: 22, stiffness: 260 }}
-            className="relative w-full max-w-[360px] bg-white rounded-2xl overflow-hidden z-[11010]"
+            className="relative w-full max-w-[360px] bg-white rounded-2xl overflow-hidden z-11010"
           >
             {/* Close button */}
             <button

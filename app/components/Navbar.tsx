@@ -273,7 +273,7 @@ export default function Navbar() {
                         </div>
                         <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">Whatsapp Number:</p>
 
-                        <a href="https://wa.me/91909299494" className="block text-[15px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90929 49494</a>
+                        <a href="https://wa.me/919092949494" className="block text-[15px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90929 49494</a>
 
                         {/* Foreign Nationals */}
                         <div className="flex items-start gap-4">
