@@ -611,6 +611,7 @@ export default function Navbar() {
               { label: "My Wishlist", href: `/${currentRegionCode}/wishlist` },
               { label: "Customized Holidays", href: `/${currentRegionCode}/contact` },
               { label: "Visa", href: `/${currentRegionCode}/visa` },
+              { label: "Blogs", href: `/${currentRegionCode}/blogs` },
             ].map(({ label, href }) => (
               <Link
                 key={label}
@@ -636,7 +637,7 @@ export default function Navbar() {
               </button>
               {expandedSection === 'company' && (
                 <div className="px-6 pb-3 flex flex-col gap-1">
-                  {["Our Story", "Careers", "Testimonials", "Media", "MICE"].map((item) => (
+                  {["Our Story", "Our Team", "Careers", "Testimonials", "Media", "Blogs", "MICE"].map((item) => (
                     <Link
                       key={item}
                       href={`/${currentRegionCode}/${item.toLowerCase().replace(/ /g, "-")}`}
@@ -653,7 +654,7 @@ export default function Navbar() {
 
             {[
               // { label: "Inbound", href: `/${currentRegionCode}/inbound` },
-              { label: "Weddings", href: "#" },
+              { label: "Weddings", href: `/${currentRegionCode}/weddings` },
               { label: "FAQ", href: `/${currentRegionCode}/faq` },
               { label: "Contact Us", href: `/${currentRegionCode}/contact` },
             ].map(({ label, href }) => (

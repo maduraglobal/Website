@@ -103,10 +103,9 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
   const [isSampleModalOpen, setIsSampleModalOpen] = useState(false);
   const [numTravelers, setNumTravelers] = useState(1);
 
-
-
   // DATA
   const visaTypes = currentData.visaTypes;
+  const [selectedVisa, setSelectedVisa] = useState(visaTypes[0]);
 
   const faqs = [
     `How much does a ${destName} visa cost?`,
@@ -173,7 +172,13 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
             </div>
             <div className="space-y-1">
               <p className="text-[11px] text-white/50 uppercase tracking-[0.2em] ">Starting from</p>
-              <p className="text-[20px] font-bold text-[#ee2229]">{currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(currentData.startingPrice, region)}</p>
+              <p className="text-[20px] font-bold text-[#ee2229]">
+                {(() => {
+                  const fees = visaTypes.map((v: any) => parseInt(v.fees.toString().replace(/[^0-9]/g, '')) || 0);
+                  const min = Math.min(...fees);
+                  return min === 0 ? 'FREE' : formatRegionalPrice(min.toString(), region);
+                })()}
+              </p>
             </div>
           </div>
 
@@ -228,8 +233,8 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
 
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {visaTypes.map((v: { pop: any; name: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; pTime: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; valid: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; stay: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; entry: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; fees: string; }, i: React.Key | null | undefined) => (
-                <div key={i} className="bg-white rounded-[24px] border border-gray-100 p-8 hover:shadow-2xl hover:border-red-100 transition-all group flex flex-col relative overflow-hidden">
+              {visaTypes.map((v: any, i: number) => (
+                <div key={i} className="bg-white rounded-[24px] border border-gray-100 p-8 hover:border-[#ee2229] transition-all group flex flex-col relative overflow-hidden">
                   {v.pop && (
                     <div className="absolute top-0 right-0 bg-[#ee2229] text-white text-[10px] font-bold px-6 py-1.5 rounded-bl-2xl uppercase tracking-widest">
                       Popular
@@ -278,13 +283,20 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                         {v.fees === "0" ? 'FREE' : formatRegionalPrice(v.fees, region)}
                       </p>
                     </div>
-                    <Link
-                      href={`/${region}/visa/${slug}/apply?citizen=${encodeURIComponent(citizenOf)}`}
-                      className="bg-[#191974] text-white px-8 py-3.5 rounded-full font-bold text-[12px] tracking-widest hover:bg-[#ee2229] transition-all shadow-xl active:scale-95 flex items-center gap-2"
+                    <button
+                      onClick={() => {
+                        setSelectedVisa(v);
+                        const el = document.getElementById('sidebar-checkout');
+                        if (el && window.innerWidth < 1024) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className={`px-10 py-3.5 rounded-full font-bold text-[12px] tracking-widest transition-all active:scale-95 flex items-center gap-2 ${
+                        selectedVisa?.name === v.name 
+                          ? 'bg-[#ee2229] text-white shadow-lg' 
+                          : 'bg-[#191974] text-white hover:bg-[#ee2229]'
+                      }`}
                     >
-                      APPLY NOW
-                      <Zap className="w-4 h-4" />
-                    </Link>
+                      {selectedVisa?.name === v.name ? 'SELECTED' : 'SELECT'}
+                    </button>
                   </div>
                 </div>
               ))}
@@ -495,8 +507,8 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
         </div>
 
         {/* RIGHT SIDEBAR (Indigo Premium Checkout Card) */}
-        <div className="w-full lg:w-[32%] lg:sticky lg:top-[160px] space-y-6">
-          <div className="bg-[#f0f4ff] rounded-[32px] shadow-2xl overflow-hidden border border-[#191974]/10 flex flex-col">
+        <div id="sidebar-checkout" className="w-full lg:w-[32%] lg:sticky lg:top-[160px] space-y-6">
+          <div className="bg-[#f0f4ff] rounded-[32px] overflow-hidden border border-[#191974]/10 flex flex-col">
             {/* Guarantee / Info Bar */}
             <div className="bg-[#191974]/5 py-3 px-6 flex items-center justify-between border-b border-[#191974]/10">
               <div className="flex items-center gap-2 text-[#191974] text-[11px] font-bold uppercase tracking-wider">
@@ -534,16 +546,17 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
 
               {/* Price Display */}
               <div className="text-center mb-8">
-                <p className="text-[42px] font-bold text-black leading-none mb-1">
-                  {currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(parseInt(currentData.startingPrice.toString().replace(/[^0-9]/g, '')) * numTravelers, region)}
+                <p className="text-[11px] font-bold text-[#ee2229] uppercase tracking-[0.2em] mb-2">{selectedVisa?.name || 'Tourist Visa'}</p>
+                <p className="text-[42px] font-bold text-black leading-none">
+                  {selectedVisa?.fees === "0" ? 'FREE' : formatRegionalPrice(parseInt((selectedVisa?.fees || '0').toString().replace(/[^0-9]/g, '')) * numTravelers, region)}
                 </p>
-                <p className="text-[11px] font-bold text-gray-500 tracking-widest uppercase">To be paid now</p>
+                <p className="text-[11px] font-bold text-gray-500 tracking-widest uppercase mt-1">To be paid now</p>
               </div>
 
               {/* Start Application Button */}
               <Link
-                href={`/${region}/visa/${slug}/apply?citizen=${encodeURIComponent(citizenOf)}&travellers=${numTravelers}`}
-                className="w-full bg-[#191974] hover:bg-[#3f36d5] text-white font-bold py-4 rounded-full text-[14px] text-center transition-all shadow-xl shadow-[#191974]/20 active:scale-95 mb-10 uppercase tracking-widest"
+                href={`/${region}/visa/${slug}/apply?citizen=${encodeURIComponent(citizenOf)}&travellers=${numTravelers}&visaType=${encodeURIComponent(selectedVisa?.name || '')}`}
+                className="w-full bg-[#191974] hover:bg-[#3f36d5] text-white font-bold py-4 rounded-full text-[12px] tracking-[0.2em] text-center transition-all shadow-xl shadow-[#191974]/20 active:scale-95 mb-10 uppercase"
               >
                 Start Application
               </Link>
@@ -555,7 +568,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                     <Building2 className="w-4 h-4 text-gray-400" />
                     <span>Pay Now</span>
                   </div>
-                  <span>{currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(parseInt(currentData.startingPrice.toString().replace(/[^0-9]/g, '')) * numTravelers, region)}</span>
+                  <span>{selectedVisa?.fees === "0" ? 'FREE' : formatRegionalPrice(parseInt((selectedVisa?.fees || '0').toString().replace(/[^0-9]/g, '')) * numTravelers, region)}</span>
                 </div>
                 <div className="pl-6 pb-2 text-[11px] font-medium text-gray-400 border-b border-[#191974]/5">
                   Total Govt. & Service Fees
@@ -566,7 +579,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
                     <CheckCircle2 className="w-4 h-4 text-[#191974]" />
                     <span>Total Amount</span>
                   </div>
-                  <span>{currentData.startingPrice === "0" ? 'FREE' : formatRegionalPrice(parseInt(currentData.startingPrice.toString().replace(/[^0-9]/g, '')) * numTravelers, region)}</span>
+                  <span>{selectedVisa?.fees === "0" ? 'FREE' : formatRegionalPrice(parseInt((selectedVisa?.fees || '0').toString().replace(/[^0-9]/g, '')) * numTravelers, region)}</span>
                 </div>
               </div>
             </div>

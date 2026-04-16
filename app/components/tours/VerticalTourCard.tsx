@@ -59,8 +59,14 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
     }
   };
 
-  const price = tour.base_price_inr || tour.price || 345000;
-  const emi = Math.round(price / 27); // Example EMI calculation if not provided
+  const formatPrice = (p: number) => {
+    if (tour.currency === "AUD") return `A$${p.toLocaleString()}`;
+    if (tour.currency === "USD") return `$${p.toLocaleString()}`;
+    return formatRegionalPrice(p, region);
+  };
+
+  const pVal = tour.price || tour.base_price_inr || 345000;
+  const emi = Math.round(pVal / 27); // Example EMI calculation if not provided
   const duration = tour.duration || "12N/13D";
   const slug = tour.slug || tour.id;
 
@@ -73,7 +79,7 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
     >
 
       {/* Image Container */}
-      <div className="relative h-64 overflow-hidden">
+      <div className="relative h-52 overflow-hidden">
         <FallbackImage
           src={tour.image_url || 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=800'}
           fallbackSrc="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=800"
@@ -134,12 +140,11 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
         </div>
 
         {/* Pricing Area */}
-        <div className="mt-auto pt-3 border-t border-gray-100 bg-gray-50/30 -mx-5 px-5 py-2">
+        <div className="mt-auto pt-2 border-t border-gray-100 bg-gray-50/30 -mx-5 px-5 py-2">
           <div className="flex justify-between items-end">
             <div>
-              {/* <p className="text-[10px] text-gray-500 mb-0.5">All inclusive price starts</p> */}
               <p className="text-[22px] font-bold text-gray-900 leading-none">
-                {formatRegionalPrice(price, region)}<span className="text-[14px] align-top">*</span>
+                {formatPrice(pVal)}<span className="text-[14px] align-top">*</span>
               </p>
             </div>
             <div className="text-right">
@@ -148,14 +153,14 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
                 <p className="text-[14px] ">EMI from</p>
               </div>
               <p className="text-[14px] text-[#191974] font-bold leading-none">
-                {formatRegionalPrice(emi, region)}/month
+                {formatPrice(emi)}/month
               </p>
             </div>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-3 mt-4">
+        <div className="grid grid-cols-2 gap-2 mt-3">
           <Link
             href={`/${region}/tours/${slug}`}
             className="flex items-center justify-center border-2 border-[#191974] text-[#191974] hover:bg-[#191974] hover:text-white py-2.5 rounded-xl text-[12px] font-bold transition-all uppercase tracking-wider"

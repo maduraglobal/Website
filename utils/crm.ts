@@ -14,17 +14,33 @@ export async function getTours(params: { country?: string; destination?: string 
   if (params.country) query.append('country', params.country);
   if (params.destination) query.append('destination', params.destination);
 
-  const res = await fetch(`/api/tours?${query.toString()}`);
-  if (!res.ok) throw new Error('Failed to fetch tours');
-  return res.json();
+  try {
+    const res = await fetch(`/api/tours?${query.toString()}`);
+    if (!res.ok) {
+      console.warn('getTours failed, returning empty array');
+      return [];
+    }
+    return res.json();
+  } catch (err) {
+    console.error('getTours error:', err);
+    return [];
+  }
 }
 
 export async function getDestinations(): Promise<Destination[]> {
   if (typeof window === 'undefined') return [];
 
-  const res = await fetch('/api/destinations');
-  if (!res.ok) throw new Error('Failed to fetch destinations');
-  return res.json();
+  try {
+    const res = await fetch('/api/destinations');
+    if (!res.ok) {
+      console.warn('getDestinations failed, returning empty array');
+      return [];
+    }
+    return res.json();
+  } catch (err) {
+    console.error('getDestinations error:', err);
+    return [];
+  }
 }
 
 /**

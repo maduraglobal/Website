@@ -22,26 +22,26 @@ export default function CorporateOffice() {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-gray-50 px-4 md:px-6">
+    <section className="py-8 md:py-12 bg-gray-50 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-white rounded-4xl overflow-hidden shadow-2xl shadow-blue-900/5 border border-gray-100 flex flex-col lg:flex-row min-h-[600px]"
+          className="bg-white rounded-2xl overflow-hidden border border-gray-100 flex flex-col lg:flex-row min-h-[480px]"
         >
           {/* Left Section: Details */}
-          <div className="w-full lg:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-50 text-[#ee2229] rounded-full text-[13px] font-bold  tracking-widest mb-6">
+          <div className="w-full lg:w-1/2 p-6 md:p-8 flex flex-col justify-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-50 text-[#ee2229] rounded-full text-[12px] font-bold tracking-widest mb-4">
               <Building2 className="w-4 h-4" />
               Our Headquarters
             </div>
 
-            <h2 className="text-[36px] md:text-[48px]  text-[#191974] leading-tight mb-4 ">
+            <h2 className="text-[28px] md:text-[36px] text-[#191974] leading-tight mb-3">
               Corporate Office
             </h2>
 
-            <div className="space-y-8 mt-4">
+            <div className="space-y-4 mt-2">
               {/* Company Identity */}
               <div>
                 <h3 className="text-[20px] font-bold text-[#191974] mb-2 ">
@@ -57,7 +57,7 @@ export default function CorporateOffice() {
               </div>
 
               {/* Contact Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <a href="tel:+914428192002" className="group flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#191974] transition-all">
                   <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm text-[#ee2229] group-hover:bg-[#191974] group-hover:text-white transition-colors">
                     <Phone className="w-5 h-5" />
@@ -90,7 +90,7 @@ export default function CorporateOffice() {
               </div>
 
               {/* Office Stats */}
-              <div className="pt-8 border-t border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="pt-4 border-t border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-4">
                 {officeInfo.map((info, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <div className="text-[#ee2229]">

@@ -43,16 +43,16 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
   // --- STATE ---
   const [step, setStep] = useState<VisStep>('details');
   const [travelers, setTravelers] = useState([
-    { 
-      id: 1, 
-      firstName: '', 
-      lastName: '', 
-      dob: '', 
-      gender: '', 
-      passportNo: '', 
-      passportExpiry: '', 
-      email: '', 
-      phone: '', 
+    {
+      id: 1,
+      firstName: '',
+      lastName: '',
+      dob: '',
+      gender: '',
+      passportNo: '',
+      passportExpiry: '',
+      email: '',
+      phone: '',
       countryCode: 'in',
       documents: {} as Record<string, File | null>
     }
@@ -67,9 +67,9 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
   };
 
   const handleDocUpload = (travelerId: number, docType: string, file: File | null) => {
-    setTravelers(prev => prev.map(t => 
-      t.id === travelerId 
-        ? { ...t, documents: { ...t.documents, [docType]: file } } 
+    setTravelers(prev => prev.map(t =>
+      t.id === travelerId
+        ? { ...t, documents: { ...t.documents, [docType]: file } }
         : t
     ));
   };
@@ -89,7 +89,7 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
   const validateDocuments = () => {
     const newErrors: Record<string, string> = {};
     const requiredDocs = destination?.docs || ['Passport', 'Photo'];
-    
+
     travelers.forEach(t => {
       requiredDocs.forEach(doc => {
         if (!t.documents[doc]) {
@@ -97,7 +97,7 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
         }
       });
     });
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -135,41 +135,41 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
   return (
     <div className="min-h-screen bg-[#f8f9fc] text-[#191974] font-inter">
       {/* HEADER BAR */}
-      <div className="bg-white border-b border-gray-100 sticky top-0 z-50">
+      <div className="bg-white border-b border-gray-100 sticky top-[64px] md:top-[74px] z-50">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button onClick={() => router.back()} className="p-2 hover:bg-gray-50 rounded-full transition-colors">
               <ChevronLeft className="w-5 h-5" />
             </button>
             <div>
-              <h1 className="text-lg font-bold">Apply for {destName} Visa</h1>
-              <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{citizen} Citizen • {travelers.length} Traveler(s)</p>
+              <h1 className="text-[20px] font-bold text-[#191974] leading-none mb-1">Apply for {destName} Visa</h1>
+              <p className="text-[11px] text-gray-400 font-bold uppercase">{citizen} Citizen • {travelers.length} Traveler(s)</p>
             </div>
           </div>
-          
+
           {/* STEPPER COMPACT */}
           <div className="hidden md:flex items-center gap-3">
-             {['details', 'documents', 'review', 'payment'].map((s, idx) => {
-               const isActive = s === step;
-               const isDone = ['details', 'documents', 'review', 'payment'].indexOf(step) > idx;
-               return (
-                 <React.Fragment key={s}>
-                   <div className={`flex items-center gap-2 ${isActive ? 'opacity-100' : 'opacity-40'}`}>
-                     <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${isDone ? 'bg-green-500 text-white' : isActive ? 'bg-[#ee2229] text-white' : 'bg-gray-200'}`}>
-                       {isDone ? <CheckCircle2 className="w-3.5 h-3.5" /> : idx + 1}
-                     </div>
-                     <span className="text-[10px] font-bold uppercase tracking-widest pointer-events-none">{s}</span>
-                   </div>
-                   {idx < 3 && <div className="w-4 h-[1px] bg-gray-200" />}
-                 </React.Fragment>
-               );
-             })}
+            {['details', 'documents', 'review', 'payment'].map((s, idx) => {
+              const isActive = s === step;
+              const isDone = ['details', 'documents', 'review', 'payment'].indexOf(step) > idx;
+              return (
+                <React.Fragment key={s}>
+                  <div className={`flex items-center gap-2 ${isActive ? 'opacity-100' : 'opacity-40'}`}>
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${isDone ? 'bg-green-500 text-white' : isActive ? 'bg-[#ee2229] text-white' : 'bg-gray-200'}`}>
+                      {isDone ? <CheckCircle2 className="w-3.5 h-3.5" /> : idx + 1}
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-widest pointer-events-none">{s}</span>
+                  </div>
+                  {idx < 3 && <div className="w-4 h-1px bg-gray-200" />}
+                </React.Fragment>
+              );
+            })}
           </div>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-6 py-12 flex flex-col lg:flex-row gap-10">
-        
+
         {/* LEFT: FORM AREA */}
         <div className="flex-1 space-y-8">
           <AnimatePresence mode="wait">
@@ -180,28 +180,33 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
                   <div key={t.id} className="bg-white border border-gray-100 rounded-[24px] p-8 space-y-6">
                     <div className="flex items-center justify-between border-b border-gray-50 pb-4">
                       <h4 className="font-bold flex items-center gap-2">
-                         <span className="w-7 h-7 bg-blue-50 text-[#191974] rounded-full flex items-center justify-center text-[12px]">{index + 1}</span>
-                         Traveler {index + 1}
+                        <span className="w-7 h-7 bg-blue-50 text-[#191974] rounded-full flex items-center justify-center text-[12px]">{index + 1}</span>
+                        Traveler {index + 1}
                       </h4>
                       {travelers.length > 1 && (
-                         <button onClick={() => setTravelers(prev => prev.filter(x => x.id !== t.id))} className="text-red-500 text-[10px] font-bold uppercase tracking-widest hover:underline">Remove</button>
+                        <button onClick={() => setTravelers(prev => prev.filter(x => x.id !== t.id))} className="text-red-500 text-[10px] font-bold uppercase tracking-widest hover:underline">Remove</button>
                       )}
                     </div>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <InputBox label="First Name*" placeholder="John" value={t.firstName} onChange={(v) => handleTravelerChange(t.id, 'firstName', v)} error={errors[`t-${t.id}-firstName`]} />
                       <InputBox label="Last Name*" placeholder="Doe" value={t.lastName} onChange={(v) => handleTravelerChange(t.id, 'lastName', v)} error={errors[`t-${t.id}-lastName`]} />
                       <InputBox label="Passport No.*" placeholder="A1234567" value={t.passportNo} onChange={(v) => handleTravelerChange(t.id, 'passportNo', v)} error={errors[`t-${t.id}-passportNo`]} />
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-1">Date of Birth*</label>
-                        <input type="date" value={t.dob} onChange={(e) => handleTravelerChange(t.id, 'dob', e.target.value)} className="w-full bg-gray-50 border border-gray-100 focus:border-[#191974] px-5 py-3.5 rounded-xl outline-none transition-all font-semibold text-sm" />
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Date of Birth*</label>
+                        <input
+                          type="date"
+                          value={t.dob}
+                          onChange={(e) => handleTravelerChange(t.id, 'dob', e.target.value)}
+                          className="w-full bg-gray-50/50 border border-gray-100 focus:border-[#191974] focus:bg-white px-6 py-4 rounded-xl outline-none transition-all font-semibold text-[15px] shadow-sm"
+                        />
                       </div>
                       <InputBox label="Email ID*" type="email" placeholder="john@email.com" value={t.email} onChange={(v) => handleTravelerChange(t.id, 'email', v)} error={errors[`t-${t.id}-email`]} />
                       <InputBox label="Phone*" type="tel" placeholder="+91 90000 00000" value={t.phone} onChange={(v) => handleTravelerChange(t.id, 'phone', v)} error={errors[`t-${t.id}-phone`]} />
                     </div>
                   </div>
                 ))}
-                
+
                 <button onClick={() => setTravelers([...travelers, { id: Date.now(), firstName: '', lastName: '', dob: '', gender: '', passportNo: '', passportExpiry: '', email: '', phone: '', countryCode: 'in', documents: {} }])} className="w-full py-4 border-2 border-dashed border-gray-200 rounded-2xl text-gray-400 font-bold flex items-center justify-center gap-2 hover:border-[#191974] hover:text-[#191974] transition-all">
                   <Plus className="w-4 h-4" /> Add Another Traveler
                 </button>
@@ -214,17 +219,17 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
                 {travelers.map((t, index) => (
                   <div key={t.id} className="bg-white border border-gray-100 rounded-[24px] p-8 space-y-6">
                     <h4 className="font-bold flex items-center gap-2 text-sm">
-                       <span className="w-6 h-6 bg-blue-50 text-[#191974] rounded-full flex items-center justify-center text-[10px]">{index + 1}</span>
-                       {t.firstName || 'Traveler'} {t.lastName} • Documents
+                      <span className="w-6 h-6 bg-blue-50 text-[#191974] rounded-full flex items-center justify-center text-[10px]">{index + 1}</span>
+                      {t.firstName || 'Traveler'} {t.lastName} • Documents
                     </h4>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {(destination?.docs || ['Passport Front', 'Passport Back', 'Photo']).map(doc => (
-                        <FileUploader 
-                          key={doc} 
-                          label={doc} 
-                          file={t.documents[doc]} 
-                          onFileSelect={(f) => handleDocUpload(t.id, doc, f)} 
+                        <FileUploader
+                          key={doc}
+                          label={doc}
+                          file={t.documents[doc]}
+                          onFileSelect={(f) => handleDocUpload(t.id, doc, f)}
                           error={errors[`t-${t.id}-${doc}`]}
                         />
                       ))}
@@ -238,18 +243,18 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="space-y-8">
                 <SectionHeader title="Review Application" subtitle="Please check all details before proceeding to payment." icon={<FileText className="w-5 h-5" />} />
                 {travelers.map((t, idx) => (
-                   <div key={t.id} className="bg-white border border-gray-100 rounded-[24px] p-8 space-y-4">
-                     <div className="flex justify-between items-center mb-2">
-                        <h4 className="font-bold text-[#191974]">Traveler {idx + 1}</h4>
-                        <button onClick={() => setStep('details')} className="text-[#ee2229] font-bold text-[10px] uppercase tracking-widest hover:underline">Edit</button>
-                     </div>
-                     <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-12">
-                        <ReviewItem label="FULL NAME" value={`${t.firstName} ${t.lastName}`} />
-                        <ReviewItem label="PASSPORT NO" value={t.passportNo} />
-                        <ReviewItem label="DATE OF BIRTH" value={t.dob} />
-                        <ReviewItem label="DOCUMENTS" value={Object.keys(t.documents).filter(k=>t.documents[k]).length + ' Uploaded'} />
-                     </div>
-                   </div>
+                  <div key={t.id} className="bg-white border border-gray-100 rounded-[24px] p-8 space-y-4">
+                    <div className="flex justify-between items-center mb-2">
+                      <h4 className="font-bold text-[#191974]">Traveler {idx + 1}</h4>
+                      <button onClick={() => setStep('details')} className="text-[#ee2229] font-bold text-[10px] uppercase tracking-widest hover:underline">Edit</button>
+                    </div>
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-12">
+                      <ReviewItem label="FULL NAME" value={`${t.firstName} ${t.lastName}`} />
+                      <ReviewItem label="PASSPORT NO" value={t.passportNo} />
+                      <ReviewItem label="DATE OF BIRTH" value={t.dob} />
+                      <ReviewItem label="DOCUMENTS" value={Object.keys(t.documents).filter(k => t.documents[k]).length + ' Uploaded'} />
+                    </div>
+                  </div>
                 ))}
               </motion.div>
             )}
@@ -258,27 +263,27 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="space-y-8">
                 <SectionHeader title="Finalize & Pay" subtitle="Secure transaction powered by Stripe & Razorpay." icon={<CreditCard className="w-5 h-5" />} />
                 <div className="bg-white border-2 border-[#191974] rounded-[24px] p-8 flex items-center justify-between">
-                   <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-[#191974]">
-                        <Fingerprint className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold">Instant E-Visa Processing</h4>
-                        <p className="text-xs text-gray-400">Your application will be verified within 6 hours.</p>
-                      </div>
-                   </div>
-                   <div className="text-right">
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total to pay</p>
-                      <h3 className="text-2xl font-bold text-[#ee2229] tracking-tight">{formatRegionalPrice(totalAmount, region)}</h3>
-                   </div>
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-[#191974]">
+                      <Fingerprint className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold">Instant E-Visa Processing</h4>
+                      <p className="text-xs text-gray-400">Your application will be verified within 6 hours.</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total to pay</p>
+                    <h3 className="text-2xl font-bold text-[#ee2229] tracking-tight">{formatRegionalPrice(totalAmount, region)}</h3>
+                  </div>
                 </div>
-                
+
                 <div className="bg-white border border-gray-100 rounded-[24px] p-8 space-y-6">
-                   <h4 className="font-bold">Select Payment Method</h4>
-                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <PaymentOption icon={<Globe className="w-5 h-5"/>} title="International Cards" desc="Visa, Mastercard, Amex" active />
-                      <PaymentOption icon={<Building2 className="w-5 h-5"/>} title="Regional Methods" desc="UPI, NetBanking, Mobile Wallets" />
-                   </div>
+                  <h4 className="font-bold">Select Payment Method</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <PaymentOption icon={<Globe className="w-5 h-5" />} title="International Cards" desc="Visa, Mastercard, Amex" active />
+                    <PaymentOption icon={<Building2 className="w-5 h-5" />} title="Regional Methods" desc="UPI, NetBanking, Mobile Wallets" />
+                  </div>
                 </div>
               </motion.div>
             )}
@@ -291,10 +296,10 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
                 <ChevronLeft className="w-5 h-5" /> Back
               </button>
             ) : <div />}
-            
-            <button 
+
+            <button
               suppressHydrationWarning
-              onClick={step === 'payment' ? handleFinalSubmit : nextStep} 
+              onClick={step === 'payment' ? handleFinalSubmit : nextStep}
               disabled={isSubmitting}
               className="bg-[#ee2229] text-white px-10 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-[#191974] transition-all   active:scale-95 group"
             >
@@ -305,65 +310,65 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
         </div>
 
         {/* RIGHT: SIDEBAR SUMMARY */}
-        <div className="lg:w-[360px] flex-shrink-0">
+        <div className="lg:w-[360px] shrink-0">
           <div className="sticky top-32 space-y-6">
-              <div className="bg-white border border-gray-100 rounded-[24px] overflow-hidden">
-                <div className="p-6 bg-gray-50/50 border-b border-gray-100">
-                   <h4 className="font-bold text-sm">Visa Details</h4>
-                </div>
-                <div className="p-6 space-y-4">
-                  <div className="flex items-center gap-3">
-                     <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
-                        <Plane className="w-4 h-4" />
-                     </div>
-                     <div>
-                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Destination</p>
-                        <p className="text-sm font-bold">{destName}</p>
-                     </div>
+            <div className="bg-white border border-gray-100 rounded-[24px] overflow-hidden">
+              <div className="p-6 bg-gray-50/50 border-b border-gray-100">
+                <h4 className="font-bold text-sm">Visa Details</h4>
+              </div>
+              <div className="p-6 space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
+                    <Plane className="w-4 h-4" />
                   </div>
-                  <div className="flex items-center gap-3">
-                     <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
-                        <Calendar className="w-4 h-4" />
-                     </div>
-                     <div>
-                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Type</p>
-                        <p className="text-sm font-bold">{destination?.type || 'E-Tourist Visa'}</p>
-                     </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                     <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
-                        <Clock className="w-4 h-4" />
-                     </div>
-                     <div>
-                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Validity</p>
-                        <p className="text-sm font-bold">{destination?.valid || '30 Days'}</p>
-                     </div>
+                  <div>
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Destination</p>
+                    <p className="text-sm font-bold">{destName}</p>
                   </div>
                 </div>
-                
-                <div className="p-6 pt-0 space-y-3 border-t border-gray-100 mt-2">
-                   <div className="flex justify-between text-xs pt-4 text-gray-400">
-                      <span>Visa Fee (x{travelers.length})</span>
-                      <span className="font-bold text-[#191974]">{formatRegionalPrice(totalAmount, region)}</span>
-                   </div>
-                   <div className="flex justify-between text-xs text-gray-400">
-                      <span>Service Charge</span>
-                      <span className="font-bold text-green-500">Free</span>
-                   </div>
-                   <div className="pt-4 flex justify-between items-center">
-                      <p className="font-bold text-[#191974]">TOTAL Amount</p>
-                      <p className="text-xl font-bold text-[#ee2229] tracking-tight">{formatRegionalPrice(totalAmount, region)}</p>
-                   </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
+                    <Calendar className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Type</p>
+                    <p className="text-sm font-bold">{destination?.type || 'E-Tourist Visa'}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
+                    <Clock className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Validity</p>
+                    <p className="text-sm font-bold">{destination?.valid || '30 Days'}</p>
+                  </div>
                 </div>
               </div>
-              
-              <div className="p-5 bg-blue-50/50 rounded-2xl border border-blue-100 flex items-start gap-4">
+
+              <div className="p-6 pt-0 space-y-4 border-t border-gray-100 mt-2">
+                <div className="flex justify-between items-center text-[13px] pt-6">
+                  <span className="text-gray-400 font-medium">Visa Fee (x{travelers.length})</span>
+                  <span className="font-bold text-[#191974]">{formatRegionalPrice(totalAmount, region)}</span>
+                </div>
+                <div className="flex justify-between items-center text-[13px]">
+                  <span className="text-gray-400 font-medium">Service Charge</span>
+                  <span className="font-bold text-green-500 uppercase tracking-widest text-[10px]">Free</span>
+                </div>
+                <div className="pt-6 flex justify-between items-center border-t border-dashed border-gray-100">
+                  <p className="font-bold text-[#191974] uppercase tracking-wider text-[11px]">TOTAL Amount</p>
+                  <p className="text-2xl font-bold text-[#ee2229] tracking-tight">{formatRegionalPrice(totalAmount, region)}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* <div className="p-5 bg-blue-50/50 rounded-2xl border border-blue-100 flex items-start gap-4">
                  <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
                  <div>
                     <p className="text-[12px] font-bold text-[#191974]">Madura Secure Payment</p>
                     <p className="text-[10px] text-blue-700 leading-relaxed mt-1">Your data is encrypted and protected. We use industry-standard security protocols to keep your information safe.</p>
                  </div>
-              </div>
+              </div> */}
           </div>
         </div>
 
@@ -376,13 +381,13 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
 
 function SectionHeader({ title, subtitle, icon }: { title: string, subtitle: string, icon: React.ReactNode }) {
   return (
-    <div className="flex items-start gap-4 mb-2">
-      <div className="w-10 h-10 bg-[#191974] text-white rounded-2xl flex items-center justify-center flex-shrink-0">
+    <div className="flex items-start gap-5 mb-6">
+      <div className="w-12 h-12 bg-[#191974] text-white rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-[#191974]/10">
         {icon}
       </div>
-      <div>
-        <h2 className="text-xl font-bold tracking-tight">{title}</h2>
-        <p className="text-sm text-gray-400">{subtitle}</p>
+      <div className="pt-1">
+        <h2 className="text-[22px] font-bold tracking-tight text-[#191974] leading-tight mb-1">{title}</h2>
+        <p className="text-[13px] text-gray-500 font-medium leading-relaxed">{subtitle}</p>
       </div>
     </div>
   );
@@ -392,16 +397,16 @@ function InputBox({ label, placeholder, value, onChange, type = "text", error }:
   label: string, placeholder: string, value: string, onChange: (v: string) => void, type?: string, error?: string
 }) {
   return (
-    <div className="space-y-2">
-      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-1">{label}</label>
-      <input 
-        type={type} 
-        value={value} 
-        onChange={(e) => onChange(e.target.value)} 
+    <div className="flex flex-col gap-2">
+      <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">{label}</label>
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className={`w-full bg-gray-50 border ${error ? 'border-red-500' : 'border-gray-100'} focus:border-[#191974] px-5 py-3.5 rounded-xl outline-none transition-all font-semibold text-sm placeholder:text-gray-300`}
+        className={`w-full bg-gray-50/50 border ${error ? 'border-red-500' : 'border-gray-100'} focus:border-[#191974] focus:bg-white px-6 py-4 rounded-xl outline-none transition-all font-semibold text-[15px] placeholder:text-gray-300 shadow-sm`}
       />
-      {error && <p className="text-[10px] text-red-500 font-bold px-1">{error}</p>}
+      {error && <p className="text-[11px] text-red-500 font-bold px-1 mt-0.5">{error}</p>}
     </div>
   );
 }
@@ -417,12 +422,12 @@ function FileUploader({ label, file, onFileSelect, error }: { label: string, fil
   return (
     <div className="space-y-2">
       <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-1">{label}*</label>
-      <div 
+      <div
         onClick={() => !file && inputRef.current?.click()}
         className={`relative group h-[120px] rounded-2xl border-2 border-dashed ${file ? 'border-green-500 bg-green-50/30' : error ? 'border-red-500 bg-red-50/10' : 'border-gray-100 bg-gray-50/50 hover:border-[#191974]'} transition-all flex flex-col items-center justify-center cursor-pointer overflow-hidden`}
       >
         <input ref={inputRef} type="file" className="hidden" accept="image/*,.pdf" onChange={handleFileChange} />
-        
+
         {file ? (
           <div className="flex flex-col items-center gap-1 p-4 animate-in fade-in zoom-in duration-300">
             <CheckCircle2 className="w-8 h-8 text-green-500" />
@@ -455,11 +460,11 @@ function ReviewItem({ label, value }: { label: string, value: string }) {
 function PaymentOption({ icon, title, desc, active = false }: { icon: React.ReactNode, title: string, desc: string, active?: boolean }) {
   return (
     <div className={`p-5 rounded-2xl border-2 cursor-pointer transition-all ${active ? 'border-[#191974] bg-blue-50/30' : 'border-gray-50 bg-white hover:border-gray-200'}`}>
-       <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${active ? 'bg-[#191974] text-white' : 'bg-gray-100 text-gray-400'}`}>
-          {icon}
-       </div>
-       <h5 className="font-bold text-sm">{title}</h5>
-       <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">{desc}</p>
+      <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${active ? 'bg-[#191974] text-white' : 'bg-gray-100 text-gray-400'}`}>
+        {icon}
+      </div>
+      <h5 className="font-bold text-sm">{title}</h5>
+      <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">{desc}</p>
     </div>
   );
 }
@@ -473,20 +478,20 @@ function SuccessScreen({ tourName, travelersCount, total, region }: { tourName: 
         </div>
         <h2 className="text-3xl font-bold mb-4">Application Sent!</h2>
         <p className="text-gray-500 mb-8 leading-relaxed">Your visa application for <span className="text-[#ee2229] font-bold">{tourName}</span> has been received. Our experts will review your documents and get back to you within 6 hours.</p>
-        
+
         <div className="bg-gray-50 rounded-3xl p-8 mb-8 text-left space-y-4">
-           <div className="flex justify-between items-center text-xs">
-              <span className="text-gray-400 font-bold uppercase tracking-widest">Order ID</span>
-              <span className="font-bold tracking-tight">#VIS-{Math.floor(Math.random() * 89999) + 10000}</span>
-           </div>
-           <div className="flex justify-between items-center text-xs">
-              <span className="text-gray-400 font-bold uppercase tracking-widest">Travelers</span>
-              <span className="font-bold">{travelersCount} Person(s)</span>
-           </div>
-           <div className="flex justify-between items-center text-xs">
-              <span className="text-gray-400 font-bold uppercase tracking-widest">Amount Paid</span>
-              <span className="font-bold text-[#ee2229] text-lg">{formatRegionalPrice(total, region)}</span>
-           </div>
+          <div className="flex justify-between items-center text-xs">
+            <span className="text-gray-400 font-bold uppercase tracking-widest">Order ID</span>
+            <span className="font-bold tracking-tight">#VIS-{Math.floor(Math.random() * 89999) + 10000}</span>
+          </div>
+          <div className="flex justify-between items-center text-xs">
+            <span className="text-gray-400 font-bold uppercase tracking-widest">Travelers</span>
+            <span className="font-bold">{travelersCount} Person(s)</span>
+          </div>
+          <div className="flex justify-between items-center text-xs">
+            <span className="text-gray-400 font-bold uppercase tracking-widest">Amount Paid</span>
+            <span className="font-bold text-[#ee2229] text-lg">{formatRegionalPrice(total, region)}</span>
+          </div>
         </div>
 
         <Link href={`/${region}/visa`} className="inline-flex items-center gap-2 bg-[#191974] text-white px-8 py-4 rounded-xl font-bold   hover:bg-[#ee2229] transition-all">

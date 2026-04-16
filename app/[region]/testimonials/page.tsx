@@ -99,7 +99,7 @@ export default function TestimonialPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden bg-[#191974]">
+      <section className="relative pt-20 pb-10 overflow-hidden bg-[#191974]">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
         </div>
@@ -124,7 +124,7 @@ export default function TestimonialPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 bg-gray-50 border-b border-gray-100">
+      <section className="py-6 bg-gray-50 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
@@ -153,11 +153,11 @@ export default function TestimonialPage() {
       </section>
 
       {/* Celebrity Testimonials */}
-      <section className="py-24 bg-white">
+      <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div className="max-w-2xl">
-              <h2 className="text-3xl md:text-5xl font-extrabold text-[#191974] mb-6">
+              <h2 className="text-2xl md:text-4xl font-extrabold text-[#191974] mb-3">
                 Endorsed by Excellence
               </h2>
               <p className="text-gray-500 text-lg leading-relaxed italic">
@@ -213,9 +213,9 @@ export default function TestimonialPage() {
       </section>
 
       {/* Customer Wall of Love */}
-      <section className="py-24 bg-[#f8faff] rounded-t-[100px] md:rounded-t-[200px]">
+      <section className="py-12 bg-[#f8faff] rounded-t-[40px] md:rounded-t-[80px]">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-20">
+          <div className="text-center mb-8">
             <h2 className="text-3xl md:text-5xl font-extrabold text-[#191974] mb-6">Real Stories, Real Smiles</h2>
             <div className="flex items-center justify-center gap-2 mb-4">
               {[...Array(5)].map((_, i) => (
@@ -262,7 +262,7 @@ export default function TestimonialPage() {
             ))}
           </div>
 
-          <div className="mt-20 text-center">
+          <div className="mt-10 text-center">
             <button className="bg-[#191974] text-white px-10 py-5 rounded-full font-bold text-[15px] hover:bg-[#ee2229] transition-all shadow-xl hover:-translate-y-1 flex items-center mx-auto gap-3 group">
               View More Reviews on Google
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -272,7 +272,7 @@ export default function TestimonialPage() {
       </section>
 
       {/* Trust Banner */}
-      <section className="py-24 bg-[#191974] relative overflow-hidden">
+      <section className="py-12 bg-[#191974] relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#ee2229] rounded-full filter blur-[150px] opacity-20 -translate-y-1/2 translate-x-1/2"></div>
         <div className="max-w-5xl mx-auto px-4 text-center relative z-10">
           <Heart className="w-16 h-16 text-[#ee2229] mx-auto mb-8 animate-pulse" />

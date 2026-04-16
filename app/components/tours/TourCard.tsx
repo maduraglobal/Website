@@ -79,12 +79,14 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
   }, [isMapOpen, tour.id, itinerary.length]);
 
   // Format price based on region using central configuration
-  const formatPrice = (price: number) => {
-    return formatRegionalPrice(price, region);
+  const formatPrice = (p: number) => {
+    if (tour.currency === "AUD") return `A$${p.toLocaleString()}`;
+    if (tour.currency === "USD") return `$${p.toLocaleString()}`;
+    return formatRegionalPrice(p, region);
   };
 
-  const price = tour.base_price_inr || tour.price || 45000;
-  const emi = Math.round(price / 12);
+  const pVal = tour.price || tour.base_price_inr || 45000;
+  const emi = Math.round(pVal / 12);
   const tags = tour.tags || ["Family", "Best Seller"];
 
   return (
@@ -130,7 +132,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
       </div>
 
       {/* Content Area */}
-      <div className="flex-1 p-4 md:p-6 flex flex-col">
+      <div className="flex-1 p-4 md:p-5 flex flex-col">
         <div className="flex flex-col md:flex-row justify-between gap-4 flex-1">
           {/* Main Info */}
           <div className="flex-1 space-y-3">
@@ -155,7 +157,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
               </div>
             </Link>
 
-            <div className="pt-4 flex flex-wrap items-center gap-6 border-t border-gray-50 mt-auto">
+            <div className="pt-3 flex flex-wrap items-center gap-4 border-t border-gray-50 mt-auto">
               <div className="flex flex-col items-center gap-1 group/item">
                 <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#191974] group-hover/item:bg-[#ee2229] group-hover/item:text-white transition-colors">
                   <Clock className="w-4 h-4" />
@@ -184,8 +186,8 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
           </div>
 
           {/* Pricing & CTA */}
-          <div className="md:w-56 shrink-0 flex flex-col justify-end md:items-end border-t md:border-t-0 md:border-l border-gray-100 pt-4 md:pt-0 md:pl-6">
-            <div className="text-left md:text-right w-full mb-4 md:mb-6">
+          <div className="md:w-56 shrink-0 flex flex-col justify-end md:items-end border-t md:border-t-0 md:border-l border-gray-100 pt-3 md:pt-0 md:pl-4">
+            <div className="text-left md:text-right w-full mb-3 md:mb-4">
               <p className="text-[10px] text-gray-400   tracking-widest mb-1">Starting From</p>
               <div className="flex md:flex-col items-baseline md:items-end gap-2 md:gap-0">
                 <span className="text-2xl  text-[#171717] ">{formatPrice(price)}</span>

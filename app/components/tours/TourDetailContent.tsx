@@ -65,10 +65,10 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
     <div className="bg-white min-h-screen">
       <div className="max-w-7xl mx-auto px-4">
         {/* Main 2-Column Grid */}
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-6">
 
           {/* LEFT COLUMN (2/3) */}
-          <div className="lg:w-2/3 space-y-8">
+          <div className="lg:w-2/3 space-y-6">
             {isBookingMode ? (
               <div className="space-y-6">
                 <button
@@ -127,8 +127,8 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 </div>
 
                 {/* Tour Includes Icons Row */}
-                <div className="py-8 border-t border-gray-100">
-                  <div className="grid grid-cols-2 md:grid-cols-6 gap-6">
+                <div className="py-5 border-t border-gray-100">
+                  <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
                     {[
                       { icon: Bed, label: "Hotel" },
                       { icon: Utensils, label: "Meals" },
@@ -137,8 +137,8 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                       { icon: Bus, label: "Transport" },
                       { icon: Shield, label: "Visa" },
                     ].map((item, i) => (
-                      <div key={i} className="flex flex-col items-center gap-2 text-center">
-                        <div className="w-12 h-12 bg-yellow-50 rounded-lg flex items-center justify-center text-yellow-600">
+                      <div key={i} className="flex flex-col items-center gap-1.5 text-center">
+                        <div className="w-10 h-10 bg-yellow-50 rounded-lg flex items-center justify-center text-yellow-600">
                           <item.icon className="w-6 h-6" />
                         </div>
                         <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">{item.label}</span>
@@ -149,14 +149,14 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
 
                 <TourTabs tabs={TABS} activeTab={activeTab} onTabChange={scrollToSection} />
 
-                <section id="itinerary" className="pt-8 space-y-6">
+                <section id="itinerary" className="pt-5 space-y-4">
                   <div className="flex items-center justify-between">
                     <h2 className="text-[24px] font-bold text-gray-900">Itinerary <span className="text-gray-400 font-normal text-[14px]">(Day Wise)</span></h2>
                   </div>
                   <ItineraryTimeline itinerary={itinerary} />
                 </section>
 
-                <section id="details" className="pt-16 space-y-8">
+                <section id="details" className="pt-8 space-y-5">
                   <h2 className="text-[24px] font-bold text-gray-900">Tour details</h2>
                   <AccommodationTable />
                 </section>
@@ -165,18 +165,18 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
           </div>
 
           {/* RIGHT COLUMN (1/3) - SIDEBAR */}
-          <div className="lg:w-1/3 space-y-6">
+          <div className="lg:w-1/3 space-y-4">
             {/* Sidebar Booking Summary Card (Screenshot 2 Match) */}
             <div className="bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden sticky top-30 font-inter">
-              <div className="p-6 border-b border-gray-100 flex items-center gap-3">
+              <div className="p-4 border-b border-gray-100 flex items-center gap-3">
                 <div className="w-5 h-5 flex items-center justify-center">
                   <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                 </div>
                 <h3 className="text-[14px] font-bold text-[#191974] uppercase tracking-wider">Booking Summary</h3>
               </div>
 
-              <div className="p-6 space-y-6">
-                <div className="grid grid-cols-2 gap-y-6">
+              <div className="p-4 space-y-4">
+                <div className="grid grid-cols-2 gap-y-4">
                   <p className="text-[13px] text-gray-400 font-medium tracking-tight">Dept. city</p>
                   <div className="flex items-center justify-end gap-1">
                     {isEditingCity ? (
@@ -312,7 +312,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
             </div>
 
             {/* Request a Quote Card (Screenshot 3 Match) */}
-            <div className="bg-white rounded-3xl border border-gray-100 shadow-xl p-8 space-y-6 font-inter">
+            <div className="bg-white rounded-2xl border border-gray-100 p-5 space-y-4 font-inter">
               <div>
                 <h3 className="text-[20px] font-bold text-[#191974]">Request a Quote</h3>
                 <p className="text-[14px] text-gray-500 mt-1">Let our experts craft the perfect package for you.</p>
@@ -341,12 +341,12 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 </div>
 
                 <div className="pt-4 space-y-3">
-                  <button className="w-full bg-[#ee2229] text-white py-4 rounded-xl font-bold text-[14px] hover:bg-[#d91d24] transition-all shadow-lg shadow-red-500/20 active:scale-95">
+                  <button className="w-full bg-[#ee2229] text-white py-3 rounded-xl font-bold text-[14px] hover:bg-[#d91d24] transition-all active:scale-95">
                     Enquire Now
                   </button>
                   <button
                     onClick={() => router.push(`/${region}/booking?tour=${tour.slug || tour.id}&price=${tour.price || 0}&savings=0`)}
-                    className="w-full bg-[#191974] text-white py-4 rounded-xl font-bold text-[14px] hover:bg-[#ffbb00] transition-all shadow-lg shadow-yellow-500/10 active:scale-95"
+                    className="w-full bg-[#191974] text-white py-3 rounded-xl font-bold text-[14px] hover:bg-[#ffbb00] transition-all active:scale-95"
                   >
                     Book Online Instantly
                   </button>

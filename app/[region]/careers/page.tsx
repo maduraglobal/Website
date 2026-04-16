@@ -25,7 +25,7 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
   return (
     <div className="min-h-screen bg-white ">
       {/* â”€â”€ HERO SECTION â”€â”€ */}
-      <section className="pt-40 pb-24 bg-[#191974] relative overflow-hidden">
+      <section className="pt-24 pb-12 bg-[#191974] relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <Image
             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2000"
@@ -57,9 +57,9 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
       </section>
 
       {/* â”€â”€ WHY JOIN US â”€â”€ */}
-      <section className="py-24 px-6 bg-white">
+      <section className="py-10 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <h2 className="text-[36px]  text-[#191974]  tracking-tighter mb-4">Why Madura Travel?</h2>
             <p className="text-gray-400 font-bold  tracking-widest text-[13px]">Build your future with the travel pioneers</p>
           </div>
@@ -77,9 +77,9 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
       </section>
 
       {/* â”€â”€ JOB LISTINGS â”€â”€ */}
-      <section className="py-24 px-6 bg-gray-50 border-y border-gray-100">
+      <section className="py-10 px-6 bg-gray-50 border-y border-gray-100">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <h2 className="text-[36px]  text-[#191974]  tracking-tighter mb-4">Current Open Positions</h2>
             <div className="w-20 h-1.5 bg-[#ee2229] mx-auto rounded-full" />
           </div>
@@ -123,7 +123,7 @@ export default function CareersPage({ params }: { params: Promise<{ region: stri
       </section>
 
       {/* â”€â”€ CULTURE IMAGES â”€â”€ */}
-      <section className="py-24 px-6 overflow-hidden">
+      <section className="py-8 px-6 overflow-hidden">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-7xl mx-auto">
           {[
             "https://images.unsplash.com/photo-1542744173-8e7e5141b2b2?auto=format&fit=crop&q=80&w=800",

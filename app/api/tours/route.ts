@@ -1,84 +1,63 @@
-import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
+import { NextResponse } from 'next/server';
+import { Tour } from '@/utils/crm-types';
 
 /**
- * Tours Source of Truth API (4.2)
- * Retrieves standardized tour information exclusively from the CRM.
- * Handles multiple column naming conventions for schema resilience.
+ * GET /api/tours - List all tours with optional filters
  */
 export async function GET(request: Request) {
+  const supabase = await createClient();
   const { searchParams } = new URL(request.url);
-  const destinationSlug = searchParams.get('destination');
-  const country = searchParams.get('country');
   
-  try {
-    const supabase = await createClient();
-    const { data: rawTours, error } = await supabase.from('tours').select('*');
+  const destinationId = searchParams.get('destination_id');
+  const categoryId = searchParams.get('category_id');
+  const visibility = searchParams.get('visibility');
 
-    if (error) {
-      console.error('Tours API error:', error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+  let query = supabase.from('tours').select('*, destinations(name), tour_categories(name)');
 
-    let tours = rawTours || [];
+  if (destinationId) query = query.eq('destination_id', destinationId);
+  if (categoryId) query = query.eq('category_id', categoryId);
+  if (visibility !== null) query = query.eq('visibility', visibility === 'true');
 
-    // Filter by destination if provided
-    if (destinationSlug) {
-      const { data: dest } = await supabase
-        .from('destinations')
-        .select('id, name, slug')
-        .or(`slug.eq.${destinationSlug},id.eq.${destinationSlug}`);
-      const targetDest = dest?.[0];
-      if (targetDest) {
-        tours = tours.filter((t: any) =>
-          t.destination_id === targetDest.id ||
-          t.destination_name === targetDest.name ||
-          t.destination === targetDest.name ||
-          t.destination?.toLowerCase() === targetDest.name?.toLowerCase()
-        );
-      }
-    }
+  const { data, error } = await query.order('created_at', { ascending: false });
 
-    // Filter by country if provided
-    if (country) {
-      tours = tours.filter((t: any) => t.country_code === country || t.country === country);
-    }
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json(data);
+}
 
-    // Normalize to standard Tour shape — handle multiple possible column names
-    const normalized = tours.map((t: any) => {
-      const price = t.base_price_inr ?? t.base_price ?? t.price_inr ?? t.price ?? 0;
-      const duration = t.duration_days
-        ? `${t.duration_days} Days`
-        : t.duration_nights
-        ? `${t.duration_nights} Nights`
-        : t.duration ?? 'N/A';
-      const imageUrl = t.image_url ?? t.cover_image_url ?? t.thumbnail ?? t.images?.[0] ?? null;
-      const destination = t.destination_name ?? t.destination ?? t.country ?? 'N/A';
-      const slug = t.slug ?? t.id;
+/**
+ * POST /api/tours - Create a new tour package
+ */
+export async function POST(request: Request) {
+  const supabase = await createClient();
+  const { itinerary, ...body } = await request.json();
 
-      return {
-        id: t.id,
-        title: t.title ?? t.name ?? t.creative_title ?? 'Tour',
-        slug,
-        price,
-        duration,
-        destination,
-        images: imageUrl ? [imageUrl] : [],
-        itinerary_id: t.id,
-        tags: t.tags ?? t.highlights ?? [],
-        rating: t.rating ?? null,
-        duration_days: t.duration_days ?? null,
-        cities_count: t.cities_count ?? t.stops ?? null,
-        cities: t.cities ?? null,
-        // Pass through raw fields for TourCard to use
-        base_price_inr: price,
-        image_url: imageUrl,
-        destination_name: destination,
-      };
-    });
-
-    return NextResponse.json(normalized);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  // Basic validation
+  if (!body.title || !body.price || !body.destination_id) {
+    return NextResponse.json({ error: 'Missing required fields: title, price, destination_id' }, { status: 400 });
   }
+
+  // 1. Create the Tour
+  const { data: tour, error: tourError } = await supabase
+    .from('tours')
+    .insert([{
+      ...body,
+      slug: body.slug || body.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '')
+    }])
+    .select()
+    .single();
+
+  if (tourError) return NextResponse.json({ error: tourError.message }, { status: 500 });
+
+  // 2. Create the Itinerary if provided
+  if (itinerary && Array.isArray(itinerary) && itinerary.length > 0) {
+    await supabase.from('tour_itineraries').insert([{
+      tour_id: tour.id,
+      days: itinerary,
+      version: 1,
+      is_published: true
+    }]);
+  }
+
+  return NextResponse.json(tour, { status: 201 });
 }

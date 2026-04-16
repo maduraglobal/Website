@@ -56,7 +56,7 @@ export default function MediaPage({ params }: { params: Promise<{ region: string
   return (
     <div className="min-h-screen bg-white ">
       {/* â”€â”€ HERO SECTION â”€â”€ */}
-      <section className="pt-40 pb-20 bg-gray-50 border-b border-gray-100 relative overflow-hidden">
+      <section className="pt-24 pb-10 bg-gray-50 border-b border-gray-100 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -78,7 +78,7 @@ export default function MediaPage({ params }: { params: Promise<{ region: string
       </section>
 
       {/* â”€â”€ FEATURED NEWS (Magazine Style) â”€â”€ */}
-      <section className="py-24 px-6 relative z-10 -mt-10">
+      <section className="py-10 px-6 relative z-10 -mt-6">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -116,9 +116,9 @@ export default function MediaPage({ params }: { params: Promise<{ region: string
       </section>
 
       {/* â”€â”€ NEWS GRID â”€â”€ */}
-      <section className="py-24 px-6">
+      <section className="py-10 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {news.map((item, i) => (
               <motion.article
                 key={i}
@@ -165,7 +165,7 @@ export default function MediaPage({ params }: { params: Promise<{ region: string
           </div>
 
           {/* â”€â”€ PAGINATION â”€â”€ */}
-          <div className="flex justify-center items-center gap-2 mt-24">
+          <div className="flex justify-center items-center gap-2 mt-10">
             <button className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-200 flex items-center justify-center text-[#191974] font-bold hover:bg-[#191974] hover:text-white transition-all">1</button>
             <button className="w-12 h-12 rounded-2xl bg-white border border-gray-200 flex items-center justify-center text-[#191974] font-bold hover:bg-[#191974] hover:text-white transition-all">2</button>
             <button className="w-12 h-12 rounded-2xl bg-white border border-gray-200 flex items-center justify-center text-[#191974] font-bold hover:bg-[#191974] hover:text-white transition-all">3</button>

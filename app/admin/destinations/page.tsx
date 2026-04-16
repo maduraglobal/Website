@@ -1,86 +1,166 @@
 "use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React, { useState, useEffect } from 'react';
+import { 
+  Globe, 
+  ChevronRight, 
+  Plus, 
+  MapPin, 
+  Search, 
+  RefreshCw,
+  FolderTree,
+  ChevronDown,
+  Edit2,
+  Trash2,
+  Layout
+} from 'lucide-react';
+import { Destination } from '@/utils/crm-types';
 
-export default function DestinationsList() {
-  const [activeTab, setActiveTab] = useState('All');
-  
-  const mockItems = [
-    { id: 1, title: 'Europe', region: 'Mainland Europe', pageViews: '14,230', status: 'Published', date: '2026/01/15', checked: false },
-    { id: 2, title: 'Dubai', region: 'Middle East', pageViews: '8,400', status: 'Published', date: '2026/02/20', checked: false },
-    { id: 3, title: 'Vietnam - Hub Pending', region: 'South East Asia', pageViews: '-', status: 'Draft', date: 'Last Modified', checked: false },
-    { id: 4, title: 'Australia', region: 'Australasia', pageViews: '11,200', status: 'Published', date: '2025/11/10', checked: false },
-  ];
+export default function DestinationsPanel() {
+  const [destinations, setDestinations] = useState<Destination[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [expandedParents, setExpandedParents] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetchDestinations();
+  }, []);
+
+  async function fetchDestinations() {
+    setLoading(true);
+    const res = await fetch('/api/destinations');
+    const data = await res.json();
+    setDestinations(data);
+    setLoading(false);
+  }
+
+  const toggleParent = (id: string) => {
+    setExpandedParents(prev => 
+      prev.includes(id) ? prev.filter(p => p !== id) : [...prev, id]
+    );
+  };
+
+  const parents = destinations.filter(d => !d.parent_id);
+  const getChildren = (parentId: string) => destinations.filter(d => d.parent_id === parentId);
 
   return (
-    <div className="max-w-6xl space-y-6">
-      {/* Header */}
-      <div className="flex items-center gap-4">
-        <h1 className="text-2xl font-normal text-[#1d2327]">Destinations</h1>
-        <Link href="/admin/destinations/new" className="px-3 py-1 border border-blue-600/30 text-blue-600 text-sm font-medium rounded hover:bg-blue-50 transition-colors">
-          Add New Hub
-        </Link>
+    <div className="space-y-8 animate-in fade-in duration-700">
+      <div className="flex justify-between items-end">
+        <div>
+          <h1 className="text-[32px] font-bold text-[#191974] mb-2 tracking-tight">Geographic Hierarchy</h1>
+          <p className="text-gray-500 font-medium italic">Mapping global regions and child destinations for optimized content routing.</p>
+        </div>
+        <div className="flex gap-3">
+          <button 
+            onClick={fetchDestinations}
+            className="w-10 h-10 bg-white border border-gray-100 text-gray-400 hover:text-[#ee2229] rounded-xl flex items-center justify-center transition-all shadow-sm"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+          </button>
+          <button className="bg-[#191974] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-xl flex items-center gap-2 hover:bg-[#ee2229] transition-all">
+            <Plus className="w-4 h-4" />
+            Add Region/City
+          </button>
+        </div>
       </div>
 
-      <div className="flex items-center gap-4 text-[13px]">
-        <button onClick={() => setActiveTab('All')} className={`transition-colors ${activeTab === 'All' ? 'font-semibold text-[#1d2327]' : 'text-blue-600 hover:text-blue-800'}`}>All <span className="text-gray-500 font-normal">({mockItems.length})</span></button>
-        <span className="text-gray-300">|</span>
-        <button onClick={() => setActiveTab('Published')} className={`transition-colors ${activeTab === 'Published' ? 'font-semibold text-[#1d2327]' : 'text-blue-600 hover:text-blue-800'}`}>Published <span className="text-gray-500 font-normal">({mockItems.filter(p => p.status === 'Published').length})</span></button>
-        <span className="text-gray-300">|</span>
-        <button onClick={() => setActiveTab('Draft')} className={`transition-colors ${activeTab === 'Draft' ? 'font-semibold text-[#1d2327]' : 'text-blue-600 hover:text-blue-800'}`}>Draft <span className="text-gray-500 font-normal">({mockItems.filter(p => p.status === 'Draft').length})</span></button>
-      </div>
-
-      <div className="bg-white border border-gray-200 shadow-sm rounded-sm">
-        <div className="p-3 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <select className="border border-gray-300 rounded px-2 py-1 text-[13px] bg-white w-36 outline-none focus:border-blue-500 hover:border-gray-400 text-gray-700">
-              <option>Bulk actions</option>
-              <option>Edit</option>
-              <option>Move to Bin</option>
-            </select>
-            <button className="px-3 py-1 border border-gray-300 text-gray-700 text-[13px] rounded hover:bg-gray-100 bg-gray-50 transition-colors whitespace-nowrap">
-              Apply
-            </button>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Left Tree View */}
+        <div className="md:col-span-2 bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden min-h-[500px]">
+          <div className="p-6 border-b border-gray-100 bg-gray-50/50 flex items-center gap-3">
+            <FolderTree className="w-5 h-5 text-[#ee2229]" />
+            <h3 className="font-bold text-[#191974] uppercase text-[12px] tracking-widest">Global Destination Tree</h3>
           </div>
+
+          {loading ? (
+             <div className="py-20 flex flex-col items-center justify-center gap-3">
+                <div className="w-8 h-8 border-4 border-gray-100 border-t-[#ee2229] rounded-full animate-spin" />
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Mapping World...</p>
+             </div>
+          ) : (
+            <div className="divide-y divide-gray-50">
+              {parents.map(parent => (
+                <div key={parent.id} className="group">
+                  <div className="flex items-center justify-between p-6 hover:bg-gray-50/50 transition-all cursor-pointer" onClick={() => toggleParent(parent.id)}>
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
+                        <Globe className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-[15px] font-bold text-[#191974]">{parent.name}</p>
+                        <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest">{getChildren(parent.id).length} Child Destinations</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                       <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                         <button className="p-2 text-gray-400 hover:text-blue-600 transition-colors"><Edit2 className="w-4 h-4" /></button>
+                         <button className="p-2 text-gray-400 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                       </div>
+                       {expandedParents.includes(parent.id) ? <ChevronDown className="w-5 h-5 text-gray-300" /> : <ChevronRight className="w-5 h-5 text-gray-300" />}
+                    </div>
+                  </div>
+
+                  {/* Children Sub-tree */}
+                  {expandedParents.includes(parent.id) && (
+                    <div className="bg-gray-50/50 border-t border-gray-50 py-2">
+                       {getChildren(parent.id).map(child => (
+                         <div key={child.id} className="flex items-center justify-between px-10 py-4 hover:bg-white transition-all ml-4 border-l-2 border-gray-100">
+                            <div className="flex items-center gap-3">
+                              <MapPin className="w-4 h-4 text-gray-300" />
+                              <span className="text-[14px] font-medium text-gray-600">{child.name}</span>
+                              <span className="text-[10px] bg-white border border-gray-200 text-gray-400 px-1.5 py-0.5 rounded font-bold uppercase">/{child.slug}</span>
+                            </div>
+                            <div className="flex gap-2">
+                               <button className="p-1.5 text-gray-300 hover:text-blue-600"><Edit2 className="w-3.5 h-3.5" /></button>
+                            </div>
+                         </div>
+                       ))}
+                       <button className="flex items-center gap-2 px-10 py-4 text-[11px] font-bold text-[#ee2229] hover:text-[#191974] transition-colors group/add">
+                         <Plus className="w-3 h-3 transition-transform group-hover/add:rotate-90" />
+                         Add Child Destination to {parent.name}
+                       </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-[13px]">
-            <thead>
-              <tr className="border-b border-gray-200 bg-white text-[#1d2327]">
-                <th className="w-10 px-4 py-3 align-middle"><input type="checkbox" className="rounded-sm border-gray-300 cursor-pointer" /></th>
-                <th className="px-4 py-3 font-semibold hover:text-blue-600 cursor-pointer">Title</th>
-                <th className="px-4 py-3 font-semibold hover:text-blue-600 cursor-pointer">Parent Region</th>
-                <th className="px-4 py-3 font-semibold hover:text-blue-600 cursor-pointer">Views</th>
-                <th className="px-4 py-3 font-semibold hover:text-blue-600 cursor-pointer">Date</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100 bg-white">
-              {mockItems.filter(p => activeTab === 'All' || p.status === activeTab).map((item) => (
-                <tr key={item.id} className="hover:bg-gray-50 group transition-colors">
-                  <td className="px-4 py-3 align-top"><input type="checkbox" className="mt-1 rounded-sm border-gray-300 cursor-pointer" /></td>
-                  <td className="px-4 py-3 align-top">
-                    <Link href={`/admin/destinations/new`} className={`font-semibold text-blue-700 hover:text-blue-600 transition-colors`}>
-                      {item.title}
-                    </Link>
-                    {item.status === 'Draft' && <span className="ml-2 font-bold text-gray-500">— Draft</span>}
-                    <div className="h-5 flex items-center gap-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity text-[12px] pt-1">
-                      <Link href={`/admin/destinations/new`} className="text-blue-600 hover:text-blue-800 hover:underline">Edit Content</Link>
-                      <span className="text-gray-300">|</span>
-                      <button className="text-red-600 hover:text-red-800 hover:underline">Bin</button>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 align-top text-gray-600">{item.region}</td>
-                  <td className="px-4 py-3 align-top text-gray-600 font-medium">{item.pageViews}</td>
-                  <td className="px-4 py-3 align-top text-gray-600">
-                    <p className="font-semibold text-[#1d2327] mb-0.5">{item.status === 'Draft' ? 'Last Modified' : 'Published'}</p>
-                    <p>{item.date}</p>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        {/* Right Info Panel */}
+        <div className="space-y-6">
+          <div className="bg-[#191974] p-8 rounded-3xl text-white shadow-xl relative overflow-hidden group">
+            <div className="absolute -right-10 -bottom-10 opacity-10 rotate-12 transition-transform group-hover:scale-110">
+              <Globe className="w-48 h-48" />
+            </div>
+            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <Layout className="w-5 h-5 text-[#ee2229]" />
+              SEO Routing
+            </h3>
+            <p className="text-white/60 text-sm leading-relaxed mb-6">
+              Hierarchy management ensures that your tours are automatically routed to the correct regional pages, maintaining perfect SEO integrity across India, Europe, and beyond.
+            </p>
+            <div className="space-y-3">
+              <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-[11px] font-bold tracking-widest uppercase">/destinations/[region]</div>
+              <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-[11px] font-bold tracking-widest uppercase">/destinations/[region]/[city]</div>
+            </div>
+          </div>
+
+          <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-4">
+             <div className="w-12 h-12 bg-red-50 text-[#ee2229] rounded-2xl flex items-center justify-center">
+               <MapPin className="w-6 h-6" />
+             </div>
+             <p className="text-sm font-bold text-[#191974]">Quick Stats</p>
+             <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 bg-gray-50 rounded-2xl">
+                   <p className="text-2xl font-bold text-[#191974]">{parents.length}</p>
+                   <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Regions</p>
+                </div>
+                <div className="p-4 bg-gray-50 rounded-2xl">
+                   <p className="text-2xl font-bold text-[#191974]">{destinations.filter(d => d.parent_id).length}</p>
+                   <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Cities</p>
+                </div>
+             </div>
+          </div>
         </div>
       </div>
     </div>

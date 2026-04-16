@@ -54,12 +54,12 @@ export default function Footer() {
   const prefixed = (path: string) => `/${currentRegion}${path}`;
 
   return (
-    <footer className="bg-[#191974] text-white pt-10 md:pt-16 pb-8 font-inter">
+    <footer className="bg-[#191974] text-white pt-8 md:pt-12 pb-6 font-inter">
       <div className="max-w-7xl mx-auto px-4">
 
         {/* === TOP SECTION: BRAND STORY === */}
-        <div className="flex flex-col lg:flex-row justify-between gap-6 lg:gap-8 mb-8 lg:mb-16">
-          <div className="lg:w-2/3 space-y-3 md:space-y-8">
+        <div className="flex flex-col lg:flex-row justify-between gap-4 lg:gap-6 mb-6 lg:mb-8">
+          <div className="lg:w-2/3 space-y-3 md:space-y-4">
             <Link
               href={`/${currentRegion}`}
               className="inline-block"
@@ -103,8 +103,8 @@ export default function Footer() {
         </div>
 
         {/* === POPULAR DESTINATIONS === */}
-        <div className="py-4 md:py-8 border-y border-white/10 mb-6 md:mb-12">
-          <h4 className="text-[18px] font-bold text-[#ee2229] mb-3 md:mb-6 uppercase tracking-wider">Popular Destinations for 2026</h4>
+        <div className="py-3 md:py-5 border-y border-white/10 mb-4 md:mb-6">
+          <h4 className="text-[14px] font-bold text-[#ee2229] mb-2 md:mb-4 uppercase tracking-wider">Popular Destinations for 2026</h4>
           <div className="flex flex-wrap gap-x-4 gap-y-3 text-[13px] text-white">
             {destinations.map((dest, i) => (
               <React.Fragment key={i}>
@@ -121,7 +121,7 @@ export default function Footer() {
         </div>
 
         {/* === MAIN LINKS GRID === */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-12 mb-8 md:mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-6 md:mb-10">
 
           {/* Company */}
           <div className="space-y-6">
@@ -129,13 +129,15 @@ export default function Footer() {
               Company
               <span className="absolute -bottom-2 left-0 w-8 h-1 bg-[#ee2229] rounded-full"></span>
             </h4>
-            <ul className="space-y-4 pt-2">
+            <ul className="space-y-2 pt-2">
               {[
                 { label: "Our Story", path: "/our-story" },
+                { label: "Our Team", path: "/our-team" },
                 { label: "Careers", path: "/careers" },
                 { label: "Become a Sub Agent", path: "/contact" },
                 { label: "Testimonial", path: "/testimonials" },
-                { label: "Media", path: "/media" }
+                { label: "Media", path: "/media" },
+                { label: "Latest Blogs", path: "/blogs" }
               ].map((link) => (
                 <li key={link.label}>
                   <Link
@@ -155,10 +157,11 @@ export default function Footer() {
               Quick Links
               <span className="absolute -bottom-2 left-0 w-8 h-1 bg-[#ee2229] rounded-full"></span>
             </h4>
-            <ul className="space-y-4 pt-2">
+            <ul className="space-y-2 pt-2">
               {[
                 { label: "Tour Packages", path: "/tours" },
-                { label: "Tourism Blog & Tips", path: "/media" },
+                { label: "Weddings", path: "/weddings" },
+                { label: "Tourism Blog & Tips", path: "/blogs" },
                 { label: "FAQ", path: "/faq" },
                 { label: "Visa", path: "/visa" },
                 { label: "MICE", path: "/mice" }
@@ -181,7 +184,7 @@ export default function Footer() {
               Legal
               <span className="absolute -bottom-2 left-0 w-8 h-1 bg-[#ee2229] rounded-full"></span>
             </h4>
-            <ul className="space-y-4 pt-2">
+            <ul className="space-y-2 pt-2">
               {[
                 { label: "Terms And Conditions", path: "/terms-and-conditions" },
                 { label: "Privacy Policy", path: "/privacy-policy" },
@@ -207,7 +210,7 @@ export default function Footer() {
               Contact
               <span className="absolute -bottom-2 left-0 w-8 h-1 bg-[#ee2229] rounded-full"></span>
             </h4>
-            <div className="space-y-5 pt-2">
+            <div className="space-y-3 pt-2">
               <div className="flex gap-4">
                 <MapPin className="w-5 h-5 text-[#ee2229] shrink-0 mt-1" />
                 <p className="text-[14px] text-white leading-relaxed">
@@ -233,7 +236,7 @@ export default function Footer() {
         </div>
 
         {/* === BOTTOM BAR === */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="pt-5 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
 
           <div className="text-[12px] text-white text-center">
             © 2026 Madura Travel Service (P) Ltd. All Rights Reserved.

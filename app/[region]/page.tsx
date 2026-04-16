@@ -13,7 +13,7 @@ import CorporateOffice from "../components/CorporateOffice";
 import AwardsSection from "../components/AwardsSection";
 import TestimonialsDraggable from "../components/TestimonialsDraggable";
 import TestimonialsDraggableInHero from "../components/TestimonialsDraggableInHero";
-import { Users, Globe, Award, Star as StarIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import { Users, Globe, Award, Star as StarIcon, ChevronLeft, ChevronRight, Heading1 } from "lucide-react";
 import TourInclusions from "../components/tours/TourInclusions";
 import TourCard from "../components/tours/TourCard";
 import VerticalTourCard from "../components/tours/VerticalTourCard";
@@ -169,7 +169,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
   return (
     <div className="flex flex-col min-h-screen bg-background text-[#171717] text-[14px]">
       {/* HERO SECTION - Tighter Height */}
-      <section className="relative w-full h-[50vh] flex flex-col pt-4 md:pt-6 pb-4 overflow-visible">
+      <section className="relative w-full h-[70vh] flex flex-col pt-4 md:pt-6 pb-4 overflow-visible">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -184,9 +184,9 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
         <div className="max-w-7xl mx-auto w-full px-6 lg:px-8 relative z-10 flex-1 flex flex-col items-center justify-center">
           <div className="w-full text-center space-y-2">
-            <h3 className="text-white text-center mt-6 md:mt-0">
+            <h1 className="text-white text-center mt-6 md:mt-0">
               The World is Waiting. Start Exploring.
-            </h3>
+            </h1>
           </div>
         </div>
       </section>
@@ -309,11 +309,11 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
         <InfiniteMovingCards items={logoItems} speed="slow" direction="left" className="bg-transparent w-full" />
       </div>
 
-      <section className="py-6 md:py-8 bg-white overflow-hidden">
+      <section className="py-4 md:py-6 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="mb-4 md:mb-8">
-            <p className="text-[26px]  text-[#191974] ">Top Destinations</p>
-            <p className="text-[14px] text-black ">Discover the world&apos;s most sought-after holiday spots.</p>
+          <div className="mb-3 md:mb-5">
+            <p className="text-[22px] text-[#191974]">Top Destinations</p>
+            <p className="text-[13px] text-gray-500">Discover the world&apos;s most sought-after holiday spots.</p>
           </div>
 
           <div className="relative group">
@@ -382,18 +382,18 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
       </section>
 
       {/* Featured Tours Section */}
-      <section className="py-6 md:py-12 bg-[#F8F9FF]">
+      <section className="py-4 md:py-8 bg-[#F8F9FF]">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 md:mb-10 gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-4 md:mb-6 gap-3">
             <div>
-              <p className="text-[26px]  text-[#191974]  ">Featured Tours</p>
-              <p className="text-[14px] text-black ">Explore some of our most popular tours selected for you.</p>
+              <p className="text-[22px] text-[#191974]">Featured Tours</p>
+              <p className="text-[13px] text-gray-500">Explore some of our most popular tours selected for you.</p>
             </div>
           </div>
 
           <div className="w-full">
             {loading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
                 {Array.from({ length: 3 }).map((_, i) => (
                   <TourCardSkeleton key={i} />
                 ))}
@@ -409,7 +409,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                 <p className="text-gray-500 text-xs">Please check back soon.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
                 {displayTours.map((tour, idx) => (
                   <VerticalTourCard key={idx} tour={tour} region={region} />
                 ))}
@@ -420,7 +420,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
       </section>
 
       {/* Featured Offers Banner Section */}
-      <section className="py-6 md:py-12 bg-white">
+      <section className="py-4 md:py-8 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="relative w-full h-100 lg:h-112.5 rounded-3xl overflow-hidden group shadow-2xl">
             <motion.img

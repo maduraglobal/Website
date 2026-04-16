@@ -35,7 +35,7 @@ const VisaCard: React.FC<VisaCardProps> = ({ dest, region, index, citizenOf }) =
     >
       <Link
         href={`/${region}/visa/${dest.slug}${citizenOf ? `?citizen=${encodeURIComponent(citizenOf)}` : ''}`}
-        className="group relative rounded-[24px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 cursor-pointer block h-[400px] bg-white"
+        className="group relative rounded-[24px] overflow-hidden transition-all duration-500 border border-gray-100 hover:border-[#ee2229] cursor-pointer block h-[400px] bg-white text-center"
       >
         {/* Optimized Image Container (Aspect Ratio ~4:5 focused) */}
         <div className="absolute inset-x-0 top-0 h-[220px] overflow-hidden">

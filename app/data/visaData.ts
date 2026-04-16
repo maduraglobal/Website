@@ -54,10 +54,10 @@ export const destinations: VisaDestination[] = [
     sampleVisaImg: "/images/visas/thailand.png"
   },
   {
-    name: "Dubai", slug: "dubai", price: "6,900", 
+    name: "Dubai", slug: "dubai", price: "3,499", 
     image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=1200", 
-    type: "E-VISA / VOA", valid: "60 DAYS", docs: ["Photo", "Passport"], flag: "ae", continent: "Asia",
-    startingPrice: "6,900", partner: "Authorised UAE Visa Agent",
+    type: "E-VISA / VOA", valid: "30 DAYS", docs: ["Photo", "Passport"], flag: "ae", continent: "Asia",
+    startingPrice: "3,499", partner: "Authorised UAE Visa Agent",
     visaTypes: [
       { name: "48 Hours Transit Visa", pop: false, pTime: "Upto 3 days", stay: "2 days", valid: "30 days", entry: "Single", fees: "3,499" },
       { name: "30 Days Tourist Visa", pop: true, pTime: "Upto 5 days", stay: "30 days", valid: "30 days", entry: "Single", fees: "6,900" },

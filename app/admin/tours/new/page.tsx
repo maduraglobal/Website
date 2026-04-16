@@ -3,24 +3,9 @@ import { createClient } from '@/utils/supabase/server';
 import TourForm from '@/app/components/admin/TourForm';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 
-export default async function EditTourPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
+export default async function NewTourPage() {
   const supabase = await createClient();
-
-  // Fetch tour data with itinerary
-  const { data: tour } = await supabase
-    .from('tours')
-    .select('*, itineraries(*)')
-    .eq('id', id)
-    .single();
-
-  if (!tour) notFound();
 
   // Fetch data for dropdowns
   const { data: destinations } = await supabase.from('destinations').select('*').order('name');
@@ -36,13 +21,12 @@ export default async function EditTourPage({
           <ChevronLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-[32px] font-bold text-[#191974] tracking-tight">Edit Package Details</h1>
-          <p className="text-gray-500 font-medium italic">Refining the details for: <span className="text-[#ee2229]">{tour.title}</span></p>
+          <h1 className="text-[32px] font-bold text-[#191974] tracking-tight">Create New Tour Package</h1>
+          <p className="text-gray-500 font-medium italic">Design a high-conversion travel experience for your global customers.</p>
         </div>
       </div>
 
       <TourForm 
-        initialData={tour}
         destinations={destinations || []} 
         categories={categories || []} 
       />
