@@ -40,15 +40,15 @@ const countries: CountryInfo[] = [
 ];
 
 interface PhonePrefixSelectorProps {
-  selectedCode: string;
-  onSelect: (code: string, flag: string) => void;
+  value: string;
+  onChange: (code: string) => void;
   className?: string;
-  variant?: 'outline' | 'minimal' | 'sidebar';
+  variant?: 'outline' | 'minimal' | 'sidebar' | 'simple';
 }
 
 export default function PhonePrefixSelector({
-  selectedCode,
-  onSelect,
+  value,
+  onChange,
   className = "",
   variant = 'outline'
 }: PhonePrefixSelectorProps) {
@@ -56,7 +56,7 @@ export default function PhonePrefixSelector({
   const [searchQuery, setSearchQuery] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const activeCountry = countries.find(c => c.code === selectedCode) || countries[0];
+  const activeCountry = countries.find(c => c.code === value) || countries[0];
 
   const filteredCountries = countries.filter(c =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -78,7 +78,8 @@ export default function PhonePrefixSelector({
   const variantStyles = {
     outline: "bg-gray-50 border-r border-gray-100 hover:bg-gray-100",
     minimal: "bg-white border-2 border-gray-100 rounded-2xl hover:border-gray-200",
-    sidebar: "bg-gray-50/50 border-r border-gray-100 hover:bg-white"
+    sidebar: "bg-gray-50/50 border-r border-gray-100 hover:bg-white",
+    simple: "bg-white border border-gray-200 rounded-xl hover:border-[#191974]"
   };
 
   return (
@@ -93,7 +94,7 @@ export default function PhonePrefixSelector({
       </div>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-[240px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.15)] rounded-2xl border border-gray-100 z-[100] py-2 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="absolute top-full left-0 mt-2 w-[240px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.15)] rounded-2xl border border-gray-100 z-100 py-2 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
           <div className="px-3 py-2">
             <input
               autoFocus
@@ -113,11 +114,11 @@ export default function PhonePrefixSelector({
                 <div
                   key={`${c.name}-${c.code}`}
                   onClick={() => {
-                    onSelect(c.code, c.flag);
+                    onChange(c.code);
                     setIsOpen(false);
                     setSearchQuery("");
                   }}
-                  className={`px-5 py-3 hover:bg-gray-50 flex items-center justify-between cursor-pointer transition-colors ${selectedCode === c.code ? 'bg-blue-50/50' : ''}`}
+                  className={`px-5 py-3 hover:bg-gray-50 flex items-center justify-between cursor-pointer transition-colors ${value === c.code ? 'bg-blue-50/50' : ''}`}
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-xl">{c.flag}</span>
@@ -126,7 +127,7 @@ export default function PhonePrefixSelector({
                       <span className="text-[12px] text-gray-400">{c.code}</span>
                     </div>
                   </div>
-                  {selectedCode === c.code && (
+                  {value === c.code && (
                     <div className="w-1.5 h-1.5 rounded-full bg-[#ee2229]" />
                   )}
                 </div>

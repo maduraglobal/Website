@@ -246,8 +246,8 @@ const BookingModal = () => {
                       <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Mobile No.*</label>
                       <div className={`flex rounded-xl border transition-all ${errors.phone ? 'border-red-500' : 'border-gray-200 focus-within:border-[#191974]'}`}>
                         <PhonePrefixSelector 
-                          selectedCode={selectedCountryCode}
-                          onSelect={(code) => setSelectedCountryCode(code)}
+                          value={selectedCountryCode}
+                          onChange={(code: string) => setSelectedCountryCode(code)}
                           variant="outline"
                         />
                         <input

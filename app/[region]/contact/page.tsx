@@ -86,10 +86,10 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
               <label className="text-[12px]  text-[#191974]  tracking-widest ml-1">Mobile Number</label>
               <div className="flex bg-gray-50 border border-gray-200 rounded-2xl focus-within:border-[#ee2229] transition-all overflow-hidden">
                 <PhonePrefixSelector 
-                  selectedCode={selectedCountryCode}
-                  onSelect={(code) => setSelectedCountryCode(code)}
-                  variant="minimal"
-                  className="scale-90"
+                  value={selectedCountryCode}
+                  onChange={(code: string) => setSelectedCountryCode(code)}
+                  variant="simple"
+                  className="w-[85px] shrink-0"
                 />
                 <input type="tel" placeholder="00000 00000" className="flex-1 px-4 py-4 bg-transparent outline-none" />
               </div>

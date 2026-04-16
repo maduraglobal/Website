@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import PhonePrefixSelector from './ui/PhonePrefixSelector';
 
 export default function PopupForm() {
   const [isVisible, setIsVisible] = useState(false);
@@ -132,40 +133,11 @@ export default function PopupForm() {
                   {errors.email && <p className="text-[10px] text-red-500 font-bold mt-1 px-2">{errors.email}</p>}
                 </div>
 
-                <div className="flex gap-3 relative">
-                  <div
-                    onClick={() => setIsCountryDropdownOpen(!isCountryDropdownOpen)}
-                    className="w-[100px] border-2 border-gray-100 rounded-2xl px-3 py-4 flex items-center justify-center gap-2 bg-gray-50 cursor-pointer hover:bg-gray-100 transition-all"
-                  >
-                    <span className="text-[18px]">{selectedCountry.flag}</span>
-                    <span className="text-[14px] font-bold text-gray-500">{selectedCountry.code}</span>
-                  </div>
-
-                  {isCountryDropdownOpen && (
-                    <div className="absolute top-full left-0 mt-2 w-[220px] bg-white  rounded-2xl border border-gray-100 z-100 py-2 overflow-hidden">
-                      {[
-                        { code: '+91', flag: '🇮🇳', name: 'India' },
-                        { code: '+61', flag: '🇦🇺', name: 'Australia' },
-                        { code: '+1', flag: '🇺🇸', name: 'USA' },
-                        { code: '+44', flag: '🇬🇧', name: 'UK' },
-                        { code: '+971', flag: '🇦🇪', name: 'UAE' },
-                      ].map((c) => (
-                        <div
-                          key={c.code}
-                          onClick={() => {
-                            setSelectedCountry(c);
-                            setIsCountryDropdownOpen(false);
-                          }}
-                          className="px-5 py-3 hover:bg-gray-50 flex items-center gap-3 cursor-pointer transition-colors"
-                        >
-                          <span className="text-xl">{c.flag}</span>
-                          <span className="text-[14px] font-bold text-[#191974]">{c.code}</span>
-                          <span className="text-[12px] text-gray-400">{c.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
+                <div className="flex gap-2">
+                  <PhonePrefixSelector 
+                    value={selectedCountry.code} 
+                    onChange={(v) => setSelectedCountry({ ...selectedCountry, code: v })} 
+                  />
                   <input
                     required
                     type="tel"

@@ -525,7 +525,7 @@ export default function Navbar() {
             {/* --- SIMPLE LINKS --- */}
             {[
               { label: "My Wishlist", href: `/${currentRegionCode}/wishlist` },
-              { label: "Customized Holidays", href: `/${currentRegionCode}/contact` },
+              { label: "Customized Holidays", href: `/${currentRegionCode}/customized-holidays` },
               { label: "Visa", href: `/${currentRegionCode}/visa` },
               { label: "Blogs", href: `/${currentRegionCode}/blogs` },
             ].map(({ label, href }) => (

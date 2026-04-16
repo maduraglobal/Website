@@ -146,10 +146,10 @@ export default function BookingDetailsForm({ onCountUpdate }: BookingDetailsForm
           <label className="absolute -top-2.5 left-3 bg-white px-2 text-[12px] text-gray-400 font-medium z-10">Mobile No.*</label>
           <div className={`flex rounded-xl border transition-all ${errors.mobile ? 'border-red-500' : 'border-gray-200 focus-within:border-[#191974]'}`}>
             <PhonePrefixSelector 
-              selectedCode={selectedCountryCode}
-              onSelect={(code) => setSelectedCountryCode(code)}
-              variant="outline"
-              className="h-[54px]"
+              value={selectedCountryCode}
+              onChange={(code: string) => setSelectedCountryCode(code)}
+              variant="simple"
+              className="w-[85px] shrink-0"
             />
             <input 
               type="tel" 

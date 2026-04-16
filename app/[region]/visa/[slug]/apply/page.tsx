@@ -12,6 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 import { getDestinationBySlug } from '@/app/data/visaData';
 import { getCountryConfig, formatRegionalPrice } from '@/config/country';
+import PhonePrefixSelector from '@/app/components/ui/PhonePrefixSelector';
 
 // --- TYPES ---
 type VisStep = 'details' | 'documents' | 'review' | 'payment';
@@ -135,32 +136,36 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
   return (
     <div className="min-h-screen bg-[#f8f9fc] text-[#191974] font-inter">
       {/* HEADER BAR */}
-      <div className="bg-white border-b border-gray-100 sticky top-[158px] md:top-[74px] z-50">
-        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button onClick={() => router.back()} className="p-2 hover:bg-gray-50 rounded-full transition-colors">
+      <div className="bg-white border-b border-gray-200 sticky top-[158px] md:top-[74px] z-10010">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3 md:gap-4 overflow-hidden">
+            <button onClick={() => router.back()} className="p-2 hover:bg-gray-100 rounded-full transition-colors shrink-0">
               <ChevronLeft className="w-5 h-5" />
             </button>
-            <div>
-              <h1 className="text-[20px] font-bold text-[#191974] leading-normal mb-1">Apply for {destName} Visa</h1>
-              <p className="text-[12px] text-gray-500 font-bold uppercase tracking-wider leading-normal">{citizen} Citizen • {travelers.length} Traveler(s)</p>
+            <div className="truncate">
+              <h1 className="text-[16px] md:text-[20px] font-extrabold text-[#191974] leading-tight truncate">Apply: {destName} Visa</h1>
+              <p className="text-[10px] md:text-[12px] text-gray-500 font-bold uppercase tracking-wider">{citizen} Citizen • {travelers.length} Traveler(s)</p>
             </div>
           </div>
 
           {/* STEPPER COMPACT */}
-          <div className="hidden md:flex items-center gap-3">
-            {['details', 'documents', 'review', 'payment'].map((s, idx) => {
-              const isActive = s === step;
-              const isDone = ['details', 'documents', 'review', 'payment'].indexOf(step) > idx;
+          <div className="flex items-center gap-1.5 md:gap-4 shrink-0">
+            {[1, 2, 3, 4].map((s, idx) => {
+              const stepMap: Record<number, VisStep> = { 1: 'details', 2: 'documents', 3: 'review', 4: 'payment' };
+              const stepName = stepMap[s];
+              const stepsOrder: VisStep[] = ['details', 'documents', 'review', 'payment'];
+              const currentIndex = stepsOrder.indexOf(step);
+              const isPast = currentIndex > idx;
+              const isActive = currentIndex === idx;
+
               return (
                 <React.Fragment key={s}>
-                  <div className={`flex items-center gap-2 ${isActive ? 'opacity-100' : 'opacity-40'}`}>
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${isDone ? 'bg-green-500 text-white' : isActive ? 'bg-[#ee2229] text-white' : 'bg-gray-200'}`}>
-                      {isDone ? <CheckCircle2 className="w-3.5 h-3.5" /> : idx + 1}
+                  <div className={`flex items-center gap-1.5 ${isActive ? 'opacity-100' : 'opacity-40'}`}>
+                    <div className={`w-6 h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center text-[10px] md:text-[11px] font-bold ${isPast ? 'bg-green-500 text-white' : isActive ? 'bg-[#ee2229] text-white' : 'bg-gray-100 text-gray-400'}`}>
+                      {isPast ? <CheckCircle2 className="w-3.5 h-3.5" /> : s}
                     </div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider pointer-events-none leading-normal">{s}</span>
                   </div>
-                  {idx < 3 && <div className="w-4 h-1px bg-gray-200" />}
+                  {idx < 3 && <div className={`w-2 md:w-4 h-[1px] ${currentIndex > idx ? 'bg-green-500' : 'bg-gray-200'}`} />}
                 </React.Fragment>
               );
             })}
@@ -168,10 +173,11 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-12 flex flex-col lg:flex-row gap-10">
+      {/* MAIN CONTENT */}
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-12 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
 
         {/* LEFT: FORM AREA */}
-        <div className="flex-1 space-y-8">
+        <div className="md:col-span-2 space-y-8">
           <AnimatePresence mode="wait">
             {step === 'details' && (
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="space-y-8">
@@ -202,7 +208,24 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
                         />
                       </div>
                       <InputBox label="Email ID*" type="email" placeholder="john@email.com" value={t.email} onChange={(v) => handleTravelerChange(t.id, 'email', v)} error={errors[`t-${t.id}-email`]} />
-                      <InputBox label="Phone*" type="tel" placeholder="+91 90000 00000" value={t.phone} onChange={(v) => handleTravelerChange(t.id, 'phone', v)} error={errors[`t-${t.id}-phone`]} />
+                      
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[12px] font-bold text-gray-500 uppercase tracking-wider ml-1">Phone Number*</label>
+                        <div className="flex gap-2">
+                          <PhonePrefixSelector 
+                            value={t.countryCode} 
+                            onChange={(v: string) => handleTravelerChange(t.id, 'countryCode', v)} 
+                          />
+                          <input
+                            type="tel"
+                            value={t.phone}
+                            onChange={(e) => handleTravelerChange(t.id, 'phone', e.target.value)}
+                            placeholder="90000 00000"
+                            className={`flex-1 bg-white border ${errors[`t-${t.id}-phone`] ? 'border-red-500' : 'border-gray-200'} focus:border-2 focus:border-[#191974] px-5 py-4 rounded-xl outline-none transition-all font-semibold text-[14px] placeholder:text-gray-300`}
+                          />
+                        </div>
+                        {errors[`t-${t.id}-phone`] && <p className="text-[11px] text-red-500 font-bold px-1 mt-0.5">{errors[`t-${t.id}-phone`]}</p>}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -310,65 +333,55 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
         </div>
 
         {/* RIGHT: SIDEBAR SUMMARY */}
-        <div className="lg:w-[360px] shrink-0">
-          <div className="sticky top-32 space-y-6">
-            <div className="bg-white border border-gray-100 rounded-[24px] overflow-hidden">
-              <div className="p-6 bg-gray-50/50 border-b border-gray-100">
-                <h4 className="font-bold text-sm">Visa Details</h4>
-              </div>
-              <div className="p-6 space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
-                    <Plane className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Destination</p>
-                    <p className="text-sm font-bold">{destName}</p>
-                  </div>
+        <div className="md:col-span-1">
+          <div className="bg-white rounded-[24px] border border-gray-100 p-6 md:p-8 sticky top-[234px] md:top-[174px]">
+            <div className="p-6 bg-gray-50/50 border-b border-gray-100">
+              <h4 className="font-bold text-sm">Visa Details</h4>
+            </div>
+            <div className="p-6 space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
+                  <Plane className="w-4 h-4" />
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
-                    <Calendar className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Type</p>
-                    <p className="text-sm font-bold">{destination?.type || 'E-Tourist Visa'}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
-                    <Clock className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Validity</p>
-                    <p className="text-sm font-bold">{destination?.valid || '30 Days'}</p>
-                  </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Destination</p>
+                  <p className="text-sm font-bold">{destName}</p>
                 </div>
               </div>
-
-              <div className="p-6 pt-0 space-y-4 border-t border-gray-100 mt-2">
-                <div className="flex justify-between items-center text-[13px] pt-6">
-                  <span className="text-gray-400 font-medium">Visa Fee (x{travelers.length})</span>
-                  <span className="font-bold text-[#191974]">{formatRegionalPrice(totalAmount, region)}</span>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
+                  <Calendar className="w-4 h-4" />
                 </div>
-                <div className="flex justify-between items-center text-[13px]">
-                  <span className="text-gray-400 font-medium">Service Charge</span>
-                  <span className="font-bold text-green-500 uppercase tracking-widest text-[10px]">Free</span>
+                <div>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Type</p>
+                  <p className="text-sm font-bold">{destination?.type || 'E-Tourist Visa'}</p>
                 </div>
-                <div className="pt-6 flex justify-between items-center border-t border-dashed border-gray-100">
-                  <p className="font-bold text-[#191974] uppercase tracking-wider text-[11px]">TOTAL Amount</p>
-                  <p className="text-2xl font-bold text-[#ee2229] tracking-tight">{formatRegionalPrice(totalAmount, region)}</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-[#191974]/10 flex items-center justify-center text-[#191974]">
+                  <Clock className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Validity</p>
+                  <p className="text-sm font-bold">{destination?.valid || '30 Days'}</p>
                 </div>
               </div>
             </div>
 
-            {/* <div className="p-5 bg-blue-50/50 rounded-2xl border border-blue-100 flex items-start gap-4">
-                 <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
-                 <div>
-                    <p className="text-[12px] font-bold text-[#191974]">Madura Secure Payment</p>
-                    <p className="text-[10px] text-blue-700 leading-relaxed mt-1">Your data is encrypted and protected. We use industry-standard security protocols to keep your information safe.</p>
-                 </div>
-              </div> */}
+            <div className="p-6 pt-0 space-y-4 border-t border-gray-100 mt-2">
+              <div className="flex justify-between items-center text-[13px] pt-6">
+                <span className="text-gray-400 font-medium">Visa Fee (x{travelers.length})</span>
+                <span className="font-bold text-[#191974]">{formatRegionalPrice(totalAmount, region)}</span>
+              </div>
+              <div className="flex justify-between items-center text-[13px]">
+                <span className="text-gray-400 font-medium">Service Charge</span>
+                <span className="font-bold text-green-500 uppercase tracking-widest text-[10px]">Free</span>
+              </div>
+              <div className="pt-6 flex justify-between items-center border-t border-dashed border-gray-100">
+                <p className="font-bold text-[#191974] uppercase tracking-wider text-[11px]">TOTAL Amount</p>
+                <p className="text-2xl font-bold text-[#ee2229] tracking-tight">{formatRegionalPrice(totalAmount, region)}</p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -379,15 +392,20 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
 
 // --- SUB-COMPONENTS ---
 
-function SectionHeader({ title, subtitle, icon }: { title: string, subtitle: string, icon: React.ReactNode }) {
+function SectionHeader({ title, subtitle, icon }: { title: string, subtitle: string, icon: any }) {
+  const Icon = icon;
   return (
-    <div className="flex items-start gap-4 mb-6">
-      <div className="w-12 h-12 bg-[#191974] text-white rounded-2xl flex items-center justify-center shrink-0">
-        {icon}
+    <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+      <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-[#191974]/5 flex items-center justify-center text-[#191974] shrink-0">
+        {React.isValidElement(icon) ? (
+          React.cloneElement(icon as React.ReactElement<any>, { className: "w-5 h-5 md:w-6 md:h-6" })
+        ) : (
+          <Icon className="w-5 h-5 md:w-6 md:h-6" />
+        )}
       </div>
-      <div className="flex-1 pt-1">
-        <h2 className="text-[20px] font-bold tracking-normal text-[#191974] leading-normal mb-1">{title}</h2>
-        <p className="text-[13px] text-gray-500 font-medium leading-normal">{subtitle}</p>
+      <div>
+        <h2 className="text-[18px] md:text-[20px] font-bold tracking-normal text-[#191974] leading-tight mb-0.5">{title}</h2>
+        <p className="text-[11px] md:text-[12px] text-gray-500 font-bold uppercase tracking-widest">{subtitle}</p>
       </div>
     </div>
   );

@@ -124,10 +124,10 @@ export default function NewsletterPopup() {
                 <div className="relative group">
                   <div className="flex bg-gray-50 border-b-2 border-transparent focus-within:border-[#191974] focus-within:bg-white rounded-xl transition-all">
                     <PhonePrefixSelector 
-                      selectedCode={selectedCountryCode}
-                      onSelect={(code) => setSelectedCountryCode(code)}
-                      variant="minimal"
-                      className="scale-90"
+                      value={selectedCountryCode}
+                      onChange={(code: string) => setSelectedCountryCode(code)}
+                      variant="simple"
+                      className="w-[85px] shrink-0"
                     />
                     <input 
                       required

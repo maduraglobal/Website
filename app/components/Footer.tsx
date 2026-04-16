@@ -160,6 +160,7 @@ export default function Footer() {
             <ul className="space-y-2 pt-2">
               {[
                 { label: "Tour Packages", path: "/tours" },
+                { label: "Tailor-made Holidays", path: "/customized-holidays" },
                 { label: "Weddings", path: "/weddings" },
                 { label: "Tourism Blog & Tips", path: "/blogs" },
                 { label: "FAQ", path: "/faq" },

@@ -274,6 +274,26 @@ export default function ToursListingContent({ initialTours, region, layout = 'gr
             </button>
           </div>
         )}
+
+        {/* Customized Holidays CTA */}
+        <div className="mt-20 bg-linear-to-br from-[#191974] to-[#3b2db5] rounded-[40px] p-8 md:p-12 text-white relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32 blur-3xl group-hover:scale-150 transition-transform duration-1000" />
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="max-w-xl text-center md:text-left">
+              <span className="inline-flex items-center gap-2 bg-[#ee2229] px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4">
+                Exclusive Bespoke Tours
+              </span>
+              <h3 className="text-3xl md:text-4xl font-extrabold mb-4">Planning a uniquely different journey?</h3>
+              <p className="text-white/70 text-lg font-medium">Create a personalized itinerary with our travel specialists. From private villas to exclusive experiences, we design it all.</p>
+            </div>
+            <Link 
+              href={`/${region}/customized-holidays`}
+              className="bg-white text-[#191974] px-10 py-5 rounded-2xl font-extrabold text-[14px] uppercase tracking-widest hover:bg-[#ee2229] hover:text-white transition-all shadow-2xl active:scale-95 whitespace-nowrap"
+            >
+              Start Customizing
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

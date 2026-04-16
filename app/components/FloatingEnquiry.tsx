@@ -43,7 +43,7 @@ export default function FloatingEnquiry() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-[10010] flex items-center gap-3 bg-[#191974] text-white px-6 py-4 rounded-full font-bold group shadow-lg"
+        className="fixed bottom-6 right-6 z-10010 flex items-center gap-3 bg-[#191974] text-white px-6 py-4 rounded-full font-bold group shadow-lg"
       >
         <span className="hidden md:inline">Enquire Now</span>
         <MessageSquare className="w-5 h-5 md:hidden" />
@@ -51,7 +51,7 @@ export default function FloatingEnquiry() {
 
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-[10020] bg-black/60 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="fixed inset-0 z-10020 bg-black/60 flex items-center justify-center p-4 overflow-y-auto">
             <motion.div
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -92,10 +92,10 @@ export default function FloatingEnquiry() {
                       <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-tight ml-0.5">Phone</label>
                       <div className="flex bg-gray-50 border border-gray-200 rounded focus-within:border-[#191974] focus-within:bg-white transition-all overflow-hidden" style={{ height: '34px' }}>
                         <PhonePrefixSelector
-                          selectedCode={selectedCountryCode}
-                          onSelect={(code) => setSelectedCountryCode(code)}
-                          variant="minimal"
-                          className="border-none bg-transparent scale-75 -ml-2 text-[#191974]"
+                          value={selectedCountryCode}
+                          onChange={(code: string) => setSelectedCountryCode(code)}
+                          variant="simple"
+                          className="w-[85px] shrink-0"
                         />
                         <input
                           type="tel"

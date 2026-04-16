@@ -14,7 +14,7 @@ import {
   Plane, Check, X, Utensils, Phone, MessageCircle, Heart, Download, Mail, Share2,
   Map as MapIcon, HelpCircle, Bed, Bus, Shield, CloudRain, Navigation, FileText,
   CreditCard, AlertCircle, Zap, ArrowRight, ThumbsUp, Plus, Minus, ChevronDown,
-  Heading4
+  Heading4, Sparkles
 } from 'lucide-react';
 import { formatRegionalPrice } from '@/config/country';
 import TourMap from '@/app/components/tours/TourMap';
@@ -776,28 +776,34 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   </div>
                 </div>
 
-                <div className="bg-[#191974] p-5 flex justify-center">
+                <div className="bg-[#ee2229] p-5 flex justify-center">
                   <button
                     onClick={handleBookNow}
-                    className="w-full bg-white text-[#191974] py-4 rounded-xl font-bold text-[15px] hover:bg-[#ee2229] hover:text-white transition-all shadow-lg active:scale-95"
+                    className="w-full bg-white text-[#191974] py-4 rounded-xl font-bold text-[15px] hover:bg-[#191974] hover:text-white transition-all shadow-lg active:scale-95"
                   >
                     Book Online Now
                   </button>
                 </div>
               </div>
 
-              {/* Request a Quote Card */}
-              {/* <div className="bg-white rounded-3xl border border-gray-100 shadow-xl p-8 space-y-6 font-inter"> */}
-              {/* <div>
-                  <h3 className="text-[20px] font-bold text-[#191974]">Request a Quote</h3>
-                  <p className="text-[14px] text-gray-500 mt-1">Let our experts craft the perfect package for you.</p>
-                </div> */}
-
-              {/* <div className="space-y-4"> */}
-              {/* <div className="space-y-1.5">
-                    <label className="text-[11px] font-bold text-[#191974] uppercase tracking-wider">Full Name</label>
-                    <input type="text" placeholder="e.g. John Doe" className="w-full bg-gray-50/50 border border-gray-100 rounded-xl px-4 py-3.5 text-[14px] outline-none focus:border-[#ee2229] transition-all" />
-                  </div> */}
+              {/* Tailor-Made Holidays Card */}
+              <div className="bg-linear-to-br from-[#191974] to-[#3f36d5] rounded-3xl p-8 text-white relative overflow-hidden group shadow-xl">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl group-hover:scale-150 transition-transform duration-700" />
+                <div className="relative z-10">
+                  <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6">
+                    <Sparkles className="w-6 h-6 text-[#ee2229]" />
+                  </div>
+                  <h4 className="text-xl font-bold mb-3">Not what you're looking for?</h4>
+                  <p className="text-sm text-white/70 mb-8 font-medium leading-relaxed">Our experts can craft a personalized itinerary just for you.</p>
+                  
+                  <Link 
+                    href={`/${region}/customized-holidays`}
+                    className="inline-flex items-center gap-2 bg-[#ee2229] text-white px-6 py-3 rounded-xl font-bold text-[12px] uppercase tracking-widest hover:bg-white hover:text-[#191974] transition-all"
+                  >
+                    Tailor-Made Holidays <ChevronRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
 
               {/* <div className="space-y-1.5">
                     <label className="text-[11px] font-bold text-[#191974] uppercase tracking-wider">Email</label>
@@ -858,8 +864,8 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   <div className="relative">
                     <div className="flex rounded-xl border border-gray-200 bg-white overflow-hidden focus-within:border-[#ee2229] transition-all relative">
                       <PhonePrefixSelector
-                        selectedCode={selectedCountryCode}
-                        onSelect={(code) => setSelectedCountryCode(code)}
+                        value={selectedCountryCode}
+                        onChange={(code: string) => setSelectedCountryCode(code)}
                         variant="sidebar"
                       />
                       <input
