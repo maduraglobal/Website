@@ -141,7 +141,19 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
 
         // Fetch Dynamic Destinations
         const dests = await getDestinations();
-        setTopDestinations(dests.slice(0, 6));
+        if (dests && dests.length > 0) {
+          setTopDestinations(dests.slice(0, 6));
+        } else {
+          // Fallback static data if DB is empty
+          setTopDestinations([
+            { id: '1', name: 'Delhi', slug: 'delhi', image_url: 'https://images.unsplash.com/photo-1587474260580-5a3d0d80c356?auto=format&fit=crop&q=80&w=800' },
+            { id: '2', name: 'Kerala', slug: 'kerala', image_url: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&q=80&w=800' },
+            { id: '3', name: 'Europe', slug: 'europe', image_url: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&q=80&w=800' },
+            { id: '4', name: 'Dubai', slug: 'dubai', image_url: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=800' },
+            { id: '5', name: 'Australia', slug: 'australia', image_url: 'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&q=80&w=800' },
+            { id: '6', name: 'Japan', slug: 'japan', image_url: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0ae?auto=format&fit=crop&q=80&w=800' }
+          ]);
+        }
 
       } catch (err: any) {
         console.error('Fetch error:', err);

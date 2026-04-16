@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { countryConfigs } from "../../config/country";
 import LoginPopup from "./LoginPopup";
-import { Globe, ShieldCheck, LogOut, Search, X, Clock, Phone, ChevronDown, Mail, MapPin, ChevronRight } from "lucide-react";
+import { Globe, ShieldCheck, LogOut, Search, X, Clock, Phone, ChevronDown, Mail, MapPin, ChevronRight, Menu, User, Mic } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from '@/utils/supabase/client';
 
@@ -178,297 +178,214 @@ export default function Navbar() {
   return (
     <>
       <div className="w-full flex flex-col fixed top-0 left-0 z-10001 border-b border-gray-100">
-
-        {/* 🔹 TOP HEADER */}
-        <div className="bg-white text-[#191974] px-4 lg:px-8 py-3 flex items-center justify-between">
-
-          {/* Logo */}
-          <Link
-            href={`/${currentRegionCode}`}
-            className="flex items-center shrink-0 w-28 sm:w-[160px]"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          >
-            <Image
-              src="/logo.webp"
-              alt="Madura Travel Logo"
-              width={160}
-              height={50}
-              className="object-contain w-full h-auto"
-              priority
-            />
-          </Link>
-
-          {/* Right side: Search + Phone + Login + Country + Hamburger */}
-          <div className="flex items-center gap-1 sm:gap-4 ml-auto shrink-0">
-            {/* 🔍 SEARCH BAR */}
-            <div className="relative w-10 sm:w-64 group">
+        <div className="bg-white text-[#191974] px-4 lg:px-8 py-2 md:py-3 flex flex-col gap-2">
+          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center gap-3">
               <button
+                onClick={() => setSidebarOpen(true)}
+                className="md:hidden p-1 hover:bg-gray-100 rounded-lg transition-colors"
+                aria-label="Open menu"
                 suppressHydrationWarning
-                onClick={() => setIsSearchOverlayOpen(true)}
-                className="w-full h-10 flex items-center gap-3 px-3 sm:px-4 rounded-full border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-gray-300 transition-all text-gray-400"
               >
-                <Search className="w-4 h-4" />
-                <span className="text-[13px] font-medium hidden sm:inline">Search destinations...</span>
+                <Menu className="w-6 h-6 text-[#191974]" />
               </button>
+
+              <Link
+                href={`/${currentRegionCode}`}
+                className="flex items-center shrink-0 w-24 sm:w-[140px] md:w-[160px]"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              >
+                <Image
+                  src="/logo.webp"
+                  alt="Madura Travel Logo"
+                  width={160}
+                  height={50}
+                  className="object-contain w-full h-auto"
+                  priority
+                />
+              </Link>
             </div>
 
-            {/* Contact info box with Dropdown */}
-            <div className="relative">
-              {/* Desktop Button */}
-              <div
-                onClick={() => setIsContactDropdownOpen(!isContactDropdownOpen)}
-                className="hidden xl:flex items-center border border-gray-200 px-4 py-1.5 rounded-lg gap-2 cursor-pointer hover:border-[#191974] transition-all hover:bg-gray-50 bg-white"
-              >
-                <Phone className="w-4 h-4 text-[#ee2229]" />
-                <span className="text-[14px] font-bold text-[#191974]">+91 90929 49494</span>
-                <ChevronDown className={`w-3 h-3 transition-transform ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
-              </div>
+            <div className="flex items-center gap-2 md:gap-4 ml-auto shrink-0">
 
-              {/* Mobile Button (Icon only) */}
-              <button
-                onClick={() => setIsContactDropdownOpen(!isContactDropdownOpen)}
-                className={`xl:hidden w-10 h-10 flex items-center justify-center rounded-xl border transition-all ${isContactDropdownOpen ? 'bg-[#191974] text-white border-[#191974]' : 'bg-[#191974]/5 border-[#191974]/10 text-[#191974] hover:bg-[#191974]/10'}`}
-              >
-                <Phone className="w-5 h-5" />
-              </button>
+              <div className="hidden xl:relative xl:block">
+                <div
+                  onClick={() => setIsContactDropdownOpen(!isContactDropdownOpen)}
+                  className="hidden xl:flex items-center border border-gray-200 px-4 py-1.5 rounded-lg gap-2 cursor-pointer hover:border-[#191974] transition-all hover:bg-gray-50 bg-white"
+                >
+                  <Phone className="w-4 h-4 text-[#ee2229]" />
+                  <span className="text-[14px] font-bold text-[#191974]">+91 90929 49494</span>
+                  <ChevronDown className={`w-3 h-3 transition-transform ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
+                </div>
 
-              {/* Phone Numbers Dropdown (Matching Image 2) */}
-              <AnimatePresence>
-                {isContactDropdownOpen && (
-                  <>
-                    {/* Overlay for closing on mobile */}
-                    <div
-                      className="fixed inset-0 z-190 xl:hidden bg-black/20 backdrop-blur-[1px]"
-                      onClick={() => setIsContactDropdownOpen(false)}
-                    />
-
+                <AnimatePresence>
+                  {isContactDropdownOpen && (
                     <motion.div
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute top-full right-[-145px] sm:right-[-100px] xl:right-0 mt-3 w-[calc(100vw-32px)] sm:w-[360px] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.15)] rounded-3xl border border-gray-100 z-200 overflow-hidden"
+                      className="absolute top-full right-0 mt-3 w-[360px] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.15)] rounded-3xl border border-gray-100 z-200 overflow-hidden"
                     >
                       <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
                         <p className="text-[14px] text-[#191974] font-bold">Contact Us</p>
-                        <button onClick={() => setIsContactDropdownOpen(false)} className="text-gray-400 xl:hidden">
+                        <button onClick={() => setIsContactDropdownOpen(false)} className="text-gray-400">
                           <X className="w-4 h-4" />
                         </button>
                       </div>
-
                       <div className="p-6 space-y-5">
-                        {/* Toll Free */}
-
-
-                        {/* Call us also */}
                         <div className="flex items-start gap-4">
-                          <div className="w-5 h-5 flex items-center justify-center shrink-0 mt-0.5">
-                            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" /></svg>
-                          </div>
+                          <Phone className="w-5 h-5 text-gray-400 mt-0.5" />
                           <div className="space-y-1">
-                            <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">call us on:</p>
+                            <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider">Call us on:</p>
                             <a href="tel:+919092949494" className="block text-[15px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
-
                           </div>
-
                         </div>
-                        <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">Whatsapp Number:</p>
-
-                        <a href="https://wa.me/919092949494" className="block text-[15px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90929 49494</a>
-
-                        {/* Foreign Nationals */}
                         <div className="flex items-start gap-4">
-                          <Globe className="w-5 h-5 text-gray-400 mt-0.5 shrink-0" />
-                          <div className="flex-1">
-                            <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider mb-1.5 flex justify-between items-center">
-                              International Number
-                            </p>
-                            <div className="grid grid-cols-2 gap-4">
-
-
-
-                              <a href="tel:+61434500743" className="text-[15px] font-bold text-[#191974] block hover:text-[#ee2229]">+61 434 500 743</a>
-
-                            </div>
+                          <Globe className="w-5 h-5 text-gray-400 mt-0.5" />
+                          <div className="space-y-1">
+                            <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider">International:</p>
+                            <a href="tel:+61434500743" className="block text-[15px] font-bold text-[#191974] hover:text-[#ee2229]">+61 434 500 743</a>
                           </div>
                         </div>
-
-                        <div className="h-px bg-gray-50" />
-
-                        {/* Email */}
-                        <a href="mailto:mail@maduratravel.com" className="flex items-center gap-4 text-[#191974] hover:text-[#ee2229] transition-colors">
-                          <Mail className="w-5 h-5 text-gray-400 shrink-0" />
-                          <span className="text-[14px] font-bold underline underline-offset-2">mail@maduratravel.com</span>
-                        </a>
-
-                        {/* Nearest Office */}
-                        {/* <Link href={`/${currentRegionCode}/contact`} className="flex items-center gap-4 text-[#191974] hover:text-[#ee2229] transition-colors group/office">
-                          <MapPin className="w-5 h-5 text-gray-400 shrink-0" />
-                          <span className="text-[14px] font-bold underline underline-offset-2">Nearest Madura Office</span>
-                          <ChevronRight className="w-4 h-4 ml-auto text-gray-300 group-hover/office:translate-x-1 transition-transform" />
-                        </Link> */}
-
-                        {/* Business Hours */}
-                        {/* <div className="flex items-center gap-4">
-                          <Clock className="w-5 h-5 text-gray-400 shrink-0" />
-                          <p className="text-[13px] text-gray-400 font-medium">Business hours <span className="text-[#191974] font-bold">10AM - 7PM</span></p>
-                        </div>*/}
-                      </div>
-
-                      <div className="bg-[#191974] px-6 py-3 flex items-center justify-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                        <span className="text-[10px] text-white font-bold tracking-[0.2em] uppercase">24/7 Support Available</span>
+                        <div className="flex items-start gap-4">
+                          <Mail className="w-5 h-5 text-gray-400 mt-0.5" />
+                          <div className="space-y-1">
+                            <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider">Email:</p>
+                            <a href="mailto:mail@maduratravel.com" className="block text-[14px] font-bold underline underline-offset-2 hover:text-[#ee2229]">mail@maduratravel.com</a>
+                          </div>
+                        </div>
                       </div>
                     </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
-            </div>
+                  )}
+                </AnimatePresence>
+              </div>
 
-            {/* Login */}
-            {!user ? (
-              <button suppressHydrationWarning onClick={() => setIsLoginOpen(true)} className="hidden md:block text-[14px] font-bold hover:text-[#ee2229] transition-colors">
-                Log In
-              </button>
-            ) : (
-              <button
-                suppressHydrationWarning
-                onClick={handleSignOut}
-                className="hidden md:block text-[14px] font-bold hover:text-[#ee2229] transition-colors text-red-500"
+              <button 
+                onClick={() => !user ? setIsLoginOpen(true) : router.push(`/${currentRegionCode}/profile`)}
+                className="md:hidden w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 text-[#191974] hover:bg-gray-200 transition-all pointer-events-auto"
               >
-                Log Out
+                <User className="w-5 h-5" />
               </button>
-            )}
 
-            {/* Country Selector */}
-            <div className="relative z-150">
-              <button
-                suppressHydrationWarning
-                onClick={() => setIsCountryDropdownOpen(!isCountryDropdownOpen)}
-                className="flex items-center gap-1.5 sm:gap-3 border border-gray-100 p-1.5 sm:px-3 sm:py-1.5 rounded-lg font-bold text-[13px] hover:border-gray-200 bg-white transition-all cursor-pointer"
-              >
-                <div className="flex items-center gap-1.5 sm:border-r border-gray-100 sm:pr-2">
-                  <Globe className="w-4 h-4 text-[#191974]" />
-                  <span className="text-[12px] text-[#191974] hidden sm:inline">{activeCountryConfig.language}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <img
-                    src={getFlagURL(activeCountryConfig.id)}
-                    alt={`${activeCountryConfig.name} flag`}
-                    className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
-                  />
-                  <div className="hidden sm:flex flex-col leading-none">
-                    <span className="text-[12px] text-[#191974]">{activeCountryConfig.name}</span>
-                    <span className="text-[9px] font-bold text-gray-400">{activeCountryConfig.currencySymbol} {activeCountryConfig.currencyCode}</span>
+              {!user ? (
+                <button suppressHydrationWarning onClick={() => setIsLoginOpen(true)} className="hidden md:block text-[14px] font-bold hover:text-[#ee2229] transition-colors">
+                  Log In
+                </button>
+              ) : (
+                <button
+                  suppressHydrationWarning
+                  onClick={handleSignOut}
+                  className="hidden md:block text-[14px] font-bold hover:text-[#ee2229] transition-colors text-red-500"
+                >
+                  Log Out
+                </button>
+              )}
+
+              <div className="hidden md:block relative z-150">
+                <button
+                  suppressHydrationWarning
+                  onClick={() => setIsCountryDropdownOpen(!isCountryDropdownOpen)}
+                  className="flex items-center gap-1.5 sm:gap-3 border border-gray-100 p-1.5 sm:px-3 sm:py-1.5 rounded-lg font-bold text-[13px] hover:border-gray-200 bg-white transition-all cursor-pointer"
+                >
+                  <div className="flex items-center gap-1.5 border-r border-gray-100 pr-2">
+                    <Globe className="w-4 h-4 text-[#191974]" />
+                    <span className="text-[12px] text-[#191974] hidden lg:inline">{activeCountryConfig.language}</span>
                   </div>
-                </div>
-                <svg className={`w-2.5 h-2.5 ml-1 opacity-40 transition-transform ${isCountryDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M19 9l-7 7-7-7" /></svg>
-              </button>
-
-              <AnimatePresence>
-                {isCountryDropdownOpen && (
-                  <>
-                    {/* Backdrop for mobile */}
-                    <div
-                      className="fixed inset-0 z-190 bg-black/20 backdrop-blur-[1px]"
-                      onClick={() => setIsCountryDropdownOpen(false)}
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={getFlagURL(activeCountryConfig.id)}
+                      alt={`${activeCountryConfig.name} flag`}
+                      className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
                     />
+                    <div className="hidden lg:flex flex-col leading-none">
+                      <span className="text-[12px] text-[#191974]">{activeCountryConfig.name}</span>
+                      <span className="text-[9px] font-bold text-gray-400">{activeCountryConfig.currencySymbol} {activeCountryConfig.currencyCode}</span>
+                    </div>
+                  </div>
+                  <ChevronDown className={`w-3 h-3 transition-transform ${isCountryDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                <AnimatePresence>
+                  {isCountryDropdownOpen && (
                     <motion.div
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       className="absolute top-full right-0 mt-2 w-[280px] bg-white shadow-2xl rounded-xl border border-gray-100 z-200 overflow-hidden"
                     >
-                      <div className="px-4 py-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
-                        <p className="text-[10px] text-gray-400 tracking-widest capitalize">Select Region & Language</p>
-                        <button onClick={() => setIsCountryDropdownOpen(false)} className="text-gray-400">
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
-                      <div className="p-2 flex flex-col gap-1">
+                       <div className="p-2 flex flex-col gap-1">
                         {Object.values(countryConfigs).map((config) => (
                           <div
                             key={config.id}
                             onClick={() => { switchRegion(config.id); setIsCountryDropdownOpen(false); }}
-                            className={`flex items-center justify-between px-3 py-2.5 rounded-lg transition-all cursor-pointer ${activeCountryConfig.id === config.id
-                              ? 'bg-[#191974]/5 border border-[#191974]/10'
-                              : 'hover:bg-gray-50 border border-transparent'
-                              }`}
+                            className={`flex items-center justify-between px-3 py-2.5 rounded-lg transition-all cursor-pointer ${activeCountryConfig.id === config.id ? 'bg-[#191974]/5 border-[#191974]/10' : 'hover:bg-gray-50 border border-transparent'}`}
                           >
                             <div className="flex items-center gap-3">
                               <img src={getFlagURL(config.id)} alt={config.name} className="w-6 h-4 object-cover rounded-sm shadow-sm" />
                               <div className="flex flex-col">
                                 <span className="text-[12px] text-[#191974]">{config.name}</span>
-                                <div className="flex items-center gap-2 mt-0.5">
-                                  <span className="text-[10px] font-bold text-[#ee2229]">{config.language}</span>
-                                  <span className="text-[10px] text-gray-400">·</span>
-                                  <span className="text-[10px] font-bold text-gray-400">{config.currencySymbol} - {config.currencyCode}</span>
-                                </div>
+                                <span className="text-[10px] font-bold text-[#ee2229]">{config.language}</span>
                               </div>
                             </div>
-                            {activeCountryConfig.id === config.id
-                              ? <div className="w-2 h-2 rounded-full bg-[#ee2229]" />
-                              : <svg className="w-3 h-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg>
-                            }
+                            {activeCountryConfig.id === config.id && <div className="w-2 h-2 rounded-full bg-[#ee2229]" />}
                           </div>
                         ))}
                       </div>
-                      <div className="bg-[#191974] px-4 py-2.5 flex items-center justify-center gap-2">
-                        <span className="text-[9px] text-white tracking-widest">Global Pricing Support Active</span>
-                      </div>
                     </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="hidden md:flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-[#191974]/5 border border-[#191974]/10 hover:bg-[#191974]/10 transition-all gap-[3px] shrink-0"
+                aria-label="Open menu"
+                suppressHydrationWarning
+              >
+                <span className="w-5 h-[2.5px] bg-[#191974] rounded-full transition-all" />
+                <span className="w-5 h-[2.5px] bg-[#191974] rounded-full transition-all" />
+                <span className="w-5 h-[2.5px] bg-[#191974] rounded-full transition-all" />
+              </button>
             </div>
+          </div>
 
-            {/* â˜° HAMBURGER BUTTON */}
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-[#191974]/5 border border-[#191974]/10 hover:bg-[#191974]/10 transition-all gap-[3px] shrink-0"
-              aria-label="Open menu"
-              suppressHydrationWarning
+          {/* Row 2: Mobile Contact (Call Button) */}
+          <div className="md:hidden w-full flex justify-center py-1">
+            <a 
+              href="tel:+919092949494"
+              className="w-full bg-[#191974] text-white px-4 py-2 rounded-full flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
             >
-              <span className="w-5 h-[2.5px] bg-[#191974] rounded-full transition-all" />
-              <span className="w-5 h-[2.5px] bg-[#191974] rounded-full transition-all" />
-              <span className="w-5 h-[2.5px] bg-[#191974] rounded-full transition-all" />
-            </button>
+              <Phone className="w-4 h-4" />
+              <span className="text-[14px] font-bold">+91 90929 49494</span>
+            </a>
+          </div>
 
+          <div className="md:hidden w-full pb-1">
+            <div className="relative w-full group">
+              <input
+                type="text"
+                placeholder="Search destinations, tours..."
+                onClick={() => setIsSearchOverlayOpen(true)}
+                readOnly
+                className="w-full h-11 pl-12 pr-12 rounded-full border border-gray-200 bg-gray-50/50 text-[14px] outline-none group-focus-within:border-[#191974] group-focus-within:bg-white transition-all cursor-pointer"
+              />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-gray-400 group-focus-within:text-[#191974]" />
+              <button className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#ee2229]">
+                <Mic className="w-4.5 h-4.5" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-          SIDEBAR OVERLAY + DRAWER
-      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-
-      {/* Backdrop (Dimmed/Blurred) */}
       <div
         className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-10002 transition-opacity duration-300 ${sidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setSidebarOpen(false)}
       />
-
-      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-          SIDEBAR OVERLAY CONTENT (Testimonials + Drawer)
-      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
       <div className={`fixed top-0 right-0 h-full flex z-10003 transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-
-        {/* Testimonials Section (White BG, Left of Sidebar) */}
-        {/* <div className="hidden lg:flex w-[340px] h-full bg-white border-r border-gray-100 flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.05)] overflow-hidden">
-          <SidebarFeaturedContent isVisible={sidebarOpen} />
-        </div> */}
-
-        {/* Drawer (Right Sidebar) */}
         <div className="h-full w-[340px] max-w-[90vw] bg-white flex flex-col shadow-2xl">
-
-          {/* Sidebar Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-[#191974] shrink-0">
-            <Link
-              href={`/${currentRegionCode}`}
-              onClick={() => {
-                setSidebarOpen(false);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            >
+            <Link href={`/${currentRegionCode}`} onClick={() => { setSidebarOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
               <Image src="/logo.webp" alt="Madura Travel" width={120} height={38} className="object-contain brightness-0 invert" />
             </Link>
             <button
@@ -476,66 +393,39 @@ export default function Navbar() {
               onClick={() => setSidebarOpen(false)}
               className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
             >
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
+              <X className="w-5 h-5 text-white" />
             </button>
           </div>
-
-          {/* Scrollable Menu */}
           <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden">
-
-            {/* User Greeting Section */}
             <div className="px-6 py-6 mb-2 bg-[#191974]/2 border-b border-gray-100">
               <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mb-1.5 ">Welcome</p>
               <h3 className="text-[22px] font-bold text-[#191974] tracking-tight">
                 {user ? `Hello ${user.user_metadata?.first_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Member'}!` : 'Hello Folks'}
               </h3>
-              {isAdmin && (
-                <Link
-                  href="/admin"
-                  onClick={() => setSidebarOpen(false)}
-                  className="inline-flex items-center gap-2 mt-3 text-[11px] font-bold text-[#ee2229] bg-red-50 px-4 py-1.5 rounded-full border border-red-100 animate-pulse"
-                >
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  ADMIN PANEL ACCESSIBLE
-                </Link>
-              )}
             </div>
 
-            {/* â”€â”€â”€ DESTINATIONS â”€â”€â”€ */}
             <div className="border-b border-gray-100">
-              <button
-                suppressHydrationWarning
-                onClick={() => toggleSection('destinations')}
-                className="w-full flex items-center justify-between px-6 py-4 text-[#191974]  text-[13px]  tracking-widest hover:bg-gray-50 transition-colors"
-              >
-                <span className="flex items-center gap-3">
-                  Destinations
-                </span>
-                <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'destinations' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
+              <button suppressHydrationWarning onClick={() => toggleSection('destinations')} className="w-full flex items-center justify-between px-6 py-4 text-[#191974] text-[13px] tracking-widest hover:bg-gray-50 transition-colors">
+                Destinations
+                <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'destinations' ? 'rotate-180' : ''}`} />
               </button>
               {expandedSection === 'destinations' && (
                 <div className="pb-2">
-                  {/* Region tabs */}
                   <div className="px-4 pb-2 flex flex-col gap-px">
                     {Object.keys(destinations).map((region) => (
                       <div key={region}>
                         <button
                           suppressHydrationWarning
                           onClick={() => setSidebarDestRegion(region as DestinationKey)}
-                          className={`w-full text-left px-4 py-2.5 rounded-lg text-[12px]   tracking-wider flex items-center justify-between transition-all ${sidebarDestRegion === region ? 'bg-[#191974] text-white' : 'text-[#191974]/60 hover:text-[#191974] hover:bg-gray-50'}`}
+                          className={`w-full text-left px-4 py-2.5 rounded-lg text-[12px] tracking-wider flex items-center justify-between transition-all ${sidebarDestRegion === region ? 'bg-[#191974] text-white' : 'text-[#191974]/60 hover:text-[#191974] hover:bg-gray-50'}`}
                         >
                           {region}
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg>
+                          <ChevronRight className="w-3 h-3" />
                         </button>
                         {sidebarDestRegion === region && (
                           <div className="px-4 pt-1 pb-2 grid grid-cols-2 gap-x-3 gap-y-1">
                             {destinations[region as DestinationKey].map((place) => (
-                              <Link
-                                key={place}
-                                href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, '-')}`}
-                                onClick={() => setSidebarOpen(false)}
-                                className="text-[12px] text-[#191974] font-bold hover:text-[#ee2229] transition-colors flex items-center gap-1.5 py-1"
-                              >
+                              <Link key={place} href={`/${currentRegionCode}/destination/${place.toLowerCase().replace(/ /g, '-')}`} onClick={() => setSidebarOpen(false)} className="text-[12px] text-[#191974] font-bold hover:text-[#ee2229] transition-colors flex items-center gap-1.5 py-1">
                                 <span className="w-1 h-1 rounded-full bg-[#ee2229] shrink-0" />
                                 {place}
                               </Link>

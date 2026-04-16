@@ -254,9 +254,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                 </div>
 
                 {/* Content Tabs */}
-                <div className="sticky top-[80px] z-40 bg-white">
-                  <TourTabs tabs={TABS} activeTab={activeTab} onTabChange={scrollToSection} />
-                </div>
+                <TourTabs tabs={TABS} activeTab={activeTab} onTabChange={scrollToSection} />
 
                 {/* Section: Itinerary (Day Wise) */}
                 <section id="itinerary" className="pt-8 space-y-4">

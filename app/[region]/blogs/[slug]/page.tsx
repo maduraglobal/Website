@@ -32,7 +32,7 @@ export default function BlogDetailPage({ params }: { params: Promise<{ region: s
   return (
     <div className="min-h-screen bg-white">
       {/* --- TOP NAVIGATION BAR (SUBTLE) --- */}
-      <nav className="fixed top-[64px] md:top-[74px] left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 py-3 hidden md:block">
+      <nav className="fixed top-[158px] md:top-[74px] left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 py-3 hidden md:block">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <Link
             href={`/${region}/blogs`}

@@ -135,7 +135,7 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
   return (
     <div className="min-h-screen bg-[#f8f9fc] text-[#191974] font-inter">
       {/* HEADER BAR */}
-      <div className="bg-white border-b border-gray-100 sticky top-[64px] md:top-[74px] z-50">
+      <div className="bg-white border-b border-gray-100 sticky top-[158px] md:top-[74px] z-50">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button onClick={() => router.back()} className="p-2 hover:bg-gray-50 rounded-full transition-colors">

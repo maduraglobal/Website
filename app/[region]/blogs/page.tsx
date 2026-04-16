@@ -50,7 +50,7 @@ export default function BlogsPage({ params }: { params: Promise<{ region: string
       </section>
 
       {/* --- FILTERS & SEARCH --- */}
-      <section className="sticky top-[64px] md:top-[74px] z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 py-4">
+      <section className="sticky top-[158px] md:top-[74px] z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 py-4">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Category Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 md:pb-0 w-full md:w-auto">

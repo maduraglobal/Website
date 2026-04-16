@@ -121,7 +121,7 @@ export default function Footer() {
         </div>
 
         {/* === MAIN LINKS GRID === */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-6 md:mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-6 md:gap-8 mb-6 md:mb-10">
 
           {/* Company */}
           <div className="space-y-6">
@@ -179,7 +179,7 @@ export default function Footer() {
           </div>
 
           {/* Legal */}
-          <div className="space-y-6">
+          <div className="space-y-6 col-span-2 md:col-span-1 lg:col-span-1">
             <h4 className="text-[18px] font-bold text-white relative inline-block">
               Legal
               <span className="absolute -bottom-2 left-0 w-8 h-1 bg-[#ee2229] rounded-full"></span>
@@ -205,7 +205,7 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="space-y-6">
+          <div className="space-y-6 col-span-2 md:col-span-1 lg:col-span-1">
             <h4 className="text-[18px] font-bold text-white relative inline-block">
               Contact
               <span className="absolute -bottom-2 left-0 w-8 h-1 bg-[#ee2229] rounded-full"></span>

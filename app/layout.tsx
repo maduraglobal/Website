@@ -23,7 +23,7 @@ export default function RootLayout({
         <ScrollToTop />
         <BookingProvider>
           <Navbar />
-          <main className="flex-1 pt-[64px] md:pt-[74px]">
+          <main className="flex-1 pt-[158px] md:pt-[74px]">
             {children}
           </main>
           <Footer />

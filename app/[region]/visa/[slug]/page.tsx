@@ -191,7 +191,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
       </section>
 
       {/* ===== STICKY NAV BAR ===== */}
-      <div className="sticky top-[64px] md:top-[74px] z-40 bg-white border-b border-gray-100 shadow-sm overflow-x-auto no-scrollbar">
+      <div className="sticky top-[158px] md:top-[74px] z-40 bg-white border-b border-gray-100 shadow-sm overflow-x-auto no-scrollbar">
         <div className="max-w-7xl mx-auto px-4 flex gap-8 items-center min-w-max">
           {tabs.map((tab) => (
             <button
