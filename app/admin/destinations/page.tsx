@@ -15,8 +15,10 @@ import {
   Layout
 } from 'lucide-react';
 import { Destination } from '@/utils/crm-types';
+import { useRouter } from 'next/navigation';
 
 export default function DestinationsPanel() {
+  const router = useRouter();
   const [destinations, setDestinations] = useState<Destination[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedParents, setExpandedParents] = useState<string[]>([]);
