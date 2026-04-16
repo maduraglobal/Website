@@ -210,12 +210,12 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
                 >
                   View Details
                 </Link>
-                <Link
-                  href={`/${region}/tours/${tour.slug || tour.id}?enquire=true`}
+                <button
+                  onClick={() => window.dispatchEvent(new Event('openEnquiry'))}
                   className="w-full block text-center border-2 border-gray-100 hover:border-[#191974] hover:text-[#191974] text-gray-700 font-bold py-2.5 px-2 rounded-xl transition-all text-[12px] bg-white  tracking-tighter"
                 >
                   Enquire
-                </Link>
+                </button>
               </div>
             </div>
           </div>

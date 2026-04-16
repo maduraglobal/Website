@@ -105,11 +105,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
   };
 
   const handleEnquire = () => {
-    openBooking({
-      packageName: `Enquiry: ${tour.title} (${selectedCity} - ${selectedDateObject.date} ${selectedDateObject.month})`,
-      discountedPrice: selectedDateObject.price.toString(),
-      originalPrice: '0',
-    });
+    window.dispatchEvent(new Event('openEnquiry'));
   };
 
   React.useEffect(() => {

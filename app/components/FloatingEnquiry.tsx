@@ -16,13 +16,20 @@ export default function FloatingEnquiry() {
   const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Close with Escape key
+  // Close with Escape key & Listen for global 'openEnquiry' event
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setIsOpen(false);
     };
+    const handleOpen = () => setIsOpen(true);
+
     window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
+    window.addEventListener('openEnquiry', handleOpen);
+    
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+      window.removeEventListener('openEnquiry', handleOpen);
+    };
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {

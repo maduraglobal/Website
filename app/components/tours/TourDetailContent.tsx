@@ -299,7 +299,10 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
               </div>
 
               <div className="bg-[#191974] p-4 flex gap-3">
-                <button className="flex-1 bg-white text-[#191974] py-3 rounded-lg font-bold text-[13px] hover:bg-gray-50 transition-all">
+                <button 
+                  onClick={() => window.dispatchEvent(new Event('openEnquiry'))}
+                  className="flex-1 bg-white text-[#191974] py-3 rounded-lg font-bold text-[13px] hover:bg-gray-50 transition-all"
+                >
                   Enquire Now
                 </button>
                 <button

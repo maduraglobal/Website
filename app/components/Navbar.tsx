@@ -208,56 +208,15 @@ export default function Navbar() {
 
             <div className="flex items-center gap-2 md:gap-4 ml-auto shrink-0">
 
-              <div className="hidden xl:relative xl:block">
-                <div
+              <div className="hidden xl:relative xl:items-center xl:flex">
+                <button
                   onClick={() => setIsContactDropdownOpen(!isContactDropdownOpen)}
                   className="hidden xl:flex items-center border border-gray-200 px-4 py-1.5 rounded-lg gap-2 cursor-pointer hover:border-[#191974] transition-all hover:bg-gray-50 bg-white"
                 >
                   <Phone className="w-4 h-4 text-[#ee2229]" />
                   <span className="text-[14px] font-bold text-[#191974]">+91 90929 49494</span>
-                  <ChevronDown className={`w-3 h-3 transition-transform ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
-                </div>
-
-                <AnimatePresence>
-                  {isContactDropdownOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute top-full right-0 mt-3 w-[360px] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.15)] rounded-3xl border border-gray-100 z-200 overflow-hidden"
-                    >
-                      <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-                        <p className="text-[14px] text-[#191974] font-bold">Contact Us</p>
-                        <button onClick={() => setIsContactDropdownOpen(false)} className="text-gray-400">
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
-                      <div className="p-6 space-y-5">
-                        <div className="flex items-start gap-4">
-                          <Phone className="w-5 h-5 text-gray-400 mt-0.5" />
-                          <div className="space-y-1">
-                            <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider">Call us on:</p>
-                            <a href="tel:+919092949494" className="block text-[15px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-4">
-                          <Globe className="w-5 h-5 text-gray-400 mt-0.5" />
-                          <div className="space-y-1">
-                            <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider">International:</p>
-                            <a href="tel:+61434500743" className="block text-[15px] font-bold text-[#191974] hover:text-[#ee2229]">+61 434 500 743</a>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-4">
-                          <Mail className="w-5 h-5 text-gray-400 mt-0.5" />
-                          <div className="space-y-1">
-                            <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider">Email:</p>
-                            <a href="mailto:mail@maduratravel.com" className="block text-[14px] font-bold underline underline-offset-2 hover:text-[#ee2229]">mail@maduratravel.com</a>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                  <ChevronDown className={`w-3 h-3 transition-all ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
               </div>
 
               <button 
@@ -349,15 +308,18 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Row 2: Mobile Contact (Call Button) */}
-          <div className="md:hidden w-full flex justify-center py-1">
-            <a 
-              href="tel:+919092949494"
-              className="w-full bg-[#191974] text-white px-4 py-2 rounded-full flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
+          {/* Row 2: Mobile Contact (Trigger) */}
+          <div className="md:hidden w-full flex justify-center py-1 relative">
+            <button
+              onClick={() => setIsContactDropdownOpen(!isContactDropdownOpen)}
+              className="w-full bg-white border border-gray-100 px-5 py-2.5 rounded-xl flex items-center justify-between shadow-[0_2px_15px_rgba(0,0,0,0.05)] transition-all active:scale-[0.98]"
             >
-              <Phone className="w-4 h-4" />
-              <span className="text-[14px] font-bold">+91 90929 49494</span>
-            </a>
+              <div className="flex items-center gap-3">
+                <Phone className="w-4.5 h-4.5 text-[#ee2229]" />
+                <span className="text-[15px] font-bold text-[#191974]">+91 90929 49494</span>
+              </div>
+              <ChevronDown className={`w-4.5 h-4.5 text-gray-400 transition-transform duration-300 ${isContactDropdownOpen ? 'rotate-180 text-[#ee2229]' : ''}`} />
+            </button>
           </div>
 
           <div className="md:hidden w-full pb-1">
@@ -375,6 +337,70 @@ export default function Navbar() {
               </button>
             </div>
           </div>
+
+          {/* 🔹 SHARED CONTACT DROPDOWN (Mobile & Desktop) */}
+          <AnimatePresence>
+            {isContactDropdownOpen && (
+              <>
+                {/* Backdrop for mobile */}
+                <div 
+                  className="fixed inset-0 z-[199] md:hidden bg-black/5" 
+                  onClick={() => setIsContactDropdownOpen(false)}
+                />
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  className="absolute top-full left-4 right-4 md:left-auto md:right-8 mt-2 md:w-[360px] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.15)] rounded-3xl border border-gray-100 z-[200] overflow-hidden"
+                >
+                  <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/20">
+                    <p className="text-[15px] text-[#191974] font-bold">Contact Us</p>
+                    <button onClick={() => setIsContactDropdownOpen(false)} className="text-gray-400 p-1 hover:bg-gray-100 rounded-full">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                  
+                  <div className="p-6 space-y-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center shrink-0">
+                        <Phone className="w-5 h-5 text-gray-400" />
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider">Call us on:</p>
+                        <a href="tel:+919092949494" className="block text-[17px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+91 90 92 94 94 94</a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center shrink-0">
+                        <Globe className="w-5 h-5 text-gray-400" />
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider">International:</p>
+                        <a href="tel:+61434500743" className="block text-[17px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors tracking-tight">+61 434 500 743</a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center shrink-0">
+                        <Mail className="w-5 h-5 text-gray-400" />
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider">Email:</p>
+                        <a href="mailto:mail@maduratravel.com" className="block text-[16px] font-bold text-[#191974] hover:text-[#ee2229] transition-colors underline underline-offset-4 decoration-gray-200">mail@maduratravel.com</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-[#191974] px-6 py-3 flex items-center justify-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                    <span className="text-[10px] text-white font-bold tracking-[0.2em] uppercase">24/7 Support Active</span>
+                  </div>
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
