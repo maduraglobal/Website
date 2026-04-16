@@ -43,7 +43,7 @@ export default function FloatingEnquiry() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-1000 flex items-center gap-3 bg-[#191974] text-white px-6 py-4 rounded-full font-bold group shadow-lg"
+        className="fixed bottom-6 right-6 z-[10010] flex items-center gap-3 bg-[#191974] text-white px-6 py-4 rounded-full font-bold group shadow-lg"
       >
         <span className="hidden md:inline">Enquire Now</span>
         <MessageSquare className="w-5 h-5 md:hidden" />
@@ -51,13 +51,13 @@ export default function FloatingEnquiry() {
 
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-1000 bg-black/60 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-[10020] bg-black/60 flex items-center justify-center p-4 overflow-y-auto">
             <motion.div
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
               transition={{ type: "spring", duration: 0.3 }}
-              className="relative w-full max-w-[360px] bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col"
+              className="relative w-full max-w-[360px] my-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col"
             >
               <div className="p-4">
                 {/* Header */}

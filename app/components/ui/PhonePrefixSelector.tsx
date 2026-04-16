@@ -46,9 +46,9 @@ interface PhonePrefixSelectorProps {
   variant?: 'outline' | 'minimal' | 'sidebar';
 }
 
-export default function PhonePrefixSelector({ 
-  selectedCode, 
-  onSelect, 
+export default function PhonePrefixSelector({
+  selectedCode,
+  onSelect,
   className = "",
   variant = 'outline'
 }: PhonePrefixSelectorProps) {
@@ -58,8 +58,8 @@ export default function PhonePrefixSelector({
 
   const activeCountry = countries.find(c => c.code === selectedCode) || countries[0];
 
-  const filteredCountries = countries.filter(c => 
-    c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+  const filteredCountries = countries.filter(c =>
+    c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     c.code.includes(searchQuery)
   );
 
@@ -83,7 +83,7 @@ export default function PhonePrefixSelector({
 
   return (
     <div className={`relative ${className}`} ref={containerRef}>
-      <div 
+      <div
         onClick={() => setIsOpen(!isOpen)}
         className={`${baseStyles} ${variantStyles[variant]} h-full`}
       >
@@ -110,7 +110,7 @@ export default function PhonePrefixSelector({
           <div className="max-h-[280px] overflow-y-auto custom-scrollbar">
             {filteredCountries.length > 0 ? (
               filteredCountries.map((c) => (
-                <div 
+                <div
                   key={`${c.name}-${c.code}`}
                   onClick={() => {
                     onSelect(c.code, c.flag);
