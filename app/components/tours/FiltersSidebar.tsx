@@ -5,7 +5,7 @@ import { Search, ChevronDown, ChevronUp, X, Check } from 'lucide-react';
 
 export type TourFilters = {
   search: string;
-  category: 'India' | 'World';
+  category: 'India' | 'World' | 'All';
   priceRange: string[];
   countries: string[];
   duration: string[];
@@ -46,7 +46,7 @@ export default function FiltersSidebar({ filters, onFilterChange, availableCount
   const clearAll = () => {
     onFilterChange({
       search: '',
-      category: 'World',
+      category: 'All',
       priceRange: [],
       countries: [],
       duration: [],
@@ -85,8 +85,18 @@ export default function FiltersSidebar({ filters, onFilterChange, availableCount
       {/* India / World Toggle */}
       <div className="flex gap-2 p-1 bg-gray-50 rounded-xl">
         <button
+          onClick={() => updateFilters({ category: 'All' })}
+          className={`flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all ${
+            filters.category === 'All' 
+            ? 'bg-white text-[#ee2229] shadow-sm' 
+            : 'text-gray-400 hover:text-gray-600'
+          }`}
+        >
+          All
+        </button>
+        <button
           onClick={() => updateFilters({ category: 'India' })}
-          className={`flex-1 py-2.5 rounded-lg text-[13px] font-bold transition-all ${
+          className={`flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all ${
             filters.category === 'India' 
             ? 'bg-white text-[#ee2229] shadow-sm' 
             : 'text-gray-400 hover:text-gray-600'
@@ -96,7 +106,7 @@ export default function FiltersSidebar({ filters, onFilterChange, availableCount
         </button>
         <button
           onClick={() => updateFilters({ category: 'World' })}
-          className={`flex-1 py-2.5 rounded-lg text-[13px] font-bold transition-all ${
+          className={`flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all ${
             filters.category === 'World' 
             ? 'bg-white text-[#ee2229] shadow-sm' 
             : 'text-gray-400 hover:text-gray-600'

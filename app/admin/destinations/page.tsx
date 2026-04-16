@@ -39,6 +39,17 @@ export default function DestinationsPanel() {
     );
   };
 
+  const deleteDestination = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this destination?')) return;
+    try {
+      const res = await fetch(`/api/destinations/${id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Failed to delete');
+      setDestinations(prev => prev.filter(d => d.id !== id));
+    } catch (err) {
+      alert('Error deleting destination');
+    }
+  };
+
   const parents = destinations.filter(d => !d.parent_id);
   const getChildren = (parentId: string) => destinations.filter(d => d.parent_id === parentId);
 
@@ -56,8 +67,11 @@ export default function DestinationsPanel() {
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
-          <button className="bg-[#191974] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-xl flex items-center gap-2 hover:bg-[#ee2229] transition-all">
-            <Plus className="w-4 h-4" />
+          <button 
+            onClick={() => router.push('/admin/destinations/new')}
+            className="bg-[#191974] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-xl flex items-center gap-2 hover:bg-[#ee2229] transition-all"
+          >
+            <Globe className="w-4 h-4" />
             Add Region/City
           </button>
         </div>
@@ -80,8 +94,8 @@ export default function DestinationsPanel() {
             <div className="divide-y divide-gray-50">
               {parents.map(parent => (
                 <div key={parent.id} className="group">
-                  <div className="flex items-center justify-between p-6 hover:bg-gray-50/50 transition-all cursor-pointer" onClick={() => toggleParent(parent.id)}>
-                    <div className="flex items-center gap-4">
+                  <div className="flex items-center justify-between p-6 hover:bg-gray-50/50 transition-all cursor-pointer">
+                    <div className="flex items-center gap-4" onClick={() => toggleParent(parent.id)}>
                       <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
                         <Globe className="w-5 h-5" />
                       </div>
@@ -92,10 +106,22 @@ export default function DestinationsPanel() {
                     </div>
                     <div className="flex items-center gap-4">
                        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                         <button className="p-2 text-gray-400 hover:text-blue-600 transition-colors"><Edit2 className="w-4 h-4" /></button>
-                         <button className="p-2 text-gray-400 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                         <button 
+                            onClick={(e) => { e.stopPropagation(); router.push(`/admin/destinations/${parent.id}/edit`); }}
+                            className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
+                         >
+                            <Edit2 className="w-4 h-4" />
+                         </button>
+                         <button 
+                            onClick={(e) => { e.stopPropagation(); deleteDestination(parent.id); }}
+                            className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                         >
+                            <Trash2 className="w-4 h-4" />
+                         </button>
                        </div>
-                       {expandedParents.includes(parent.id) ? <ChevronDown className="w-5 h-5 text-gray-300" /> : <ChevronRight className="w-5 h-5 text-gray-300" />}
+                       <div onClick={() => toggleParent(parent.id)}>
+                        {expandedParents.includes(parent.id) ? <ChevronDown className="w-5 h-5 text-gray-300" /> : <ChevronRight className="w-5 h-5 text-gray-300" />}
+                       </div>
                     </div>
                   </div>
 
@@ -103,18 +129,32 @@ export default function DestinationsPanel() {
                   {expandedParents.includes(parent.id) && (
                     <div className="bg-gray-50/50 border-t border-gray-50 py-2">
                        {getChildren(parent.id).map(child => (
-                         <div key={child.id} className="flex items-center justify-between px-10 py-4 hover:bg-white transition-all ml-4 border-l-2 border-gray-100">
+                         <div key={child.id} className="flex items-center justify-between px-10 py-4 hover:bg-white transition-all ml-4 border-l-2 border-gray-100 group/child">
                             <div className="flex items-center gap-3">
                               <MapPin className="w-4 h-4 text-gray-300" />
                               <span className="text-[14px] font-medium text-gray-600">{child.name}</span>
                               <span className="text-[10px] bg-white border border-gray-200 text-gray-400 px-1.5 py-0.5 rounded font-bold uppercase">/{child.slug}</span>
                             </div>
-                            <div className="flex gap-2">
-                               <button className="p-1.5 text-gray-300 hover:text-blue-600"><Edit2 className="w-3.5 h-3.5" /></button>
+                            <div className="flex gap-2 opacity-0 group/child group-hover/child:opacity-100 transition-opacity">
+                               <button 
+                                  onClick={() => router.push(`/admin/destinations/${child.id}/edit`)}
+                                  className="p-1.5 text-gray-300 hover:text-blue-600"
+                               >
+                                  <Edit2 className="w-3.5 h-3.5" />
+                               </button>
+                               <button 
+                                  onClick={() => deleteDestination(child.id)}
+                                  className="p-1.5 text-gray-300 hover:text-red-500"
+                               >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                               </button>
                             </div>
                          </div>
                        ))}
-                       <button className="flex items-center gap-2 px-10 py-4 text-[11px] font-bold text-[#ee2229] hover:text-[#191974] transition-colors group/add">
+                       <button 
+                        onClick={() => router.push(`/admin/destinations/new?parent=${parent.id}`)}
+                        className="flex items-center gap-2 px-10 py-4 text-[11px] font-bold text-[#ee2229] hover:text-[#191974] transition-colors group/add"
+                       >
                          <Plus className="w-3 h-3 transition-transform group-hover/add:rotate-90" />
                          Add Child Destination to {parent.name}
                        </button>

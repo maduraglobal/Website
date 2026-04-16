@@ -429,7 +429,7 @@ export default function BookingPage() {
           </div>
 
           {/* RIGHT: Sticky Summary */}
-          <div className="lg:w-[380px] shrink-0 sticky top-28">
+          <div className="hidden lg:block lg:w-[380px] shrink-0 sticky top-28">
             <div className="bg-white rounded-[28px]   border border-gray-100 overflow-hidden">
               <div className="relative h-44">
                 <div className="absolute inset-0 bg-linear-to-t from-black/60 to-black/20 z-10"></div>

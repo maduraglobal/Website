@@ -1,5 +1,5 @@
 import React from 'react';
-import { getTours } from '@/utils/crm';
+import { getToursFromDB } from '@/utils/crm-server';
 import ToursListingContent from './components/ToursListingContent';
 
 export default async function ToursListingPage({ params }: { params: Promise<{ region: string }> }) {
@@ -10,7 +10,7 @@ export default async function ToursListingPage({ params }: { params: Promise<{ r
   try {
     // Note: In real app, we might filter by country based on region
     const countryCode = region.split('-')[1]?.toUpperCase() || 'IN';
-    tours = await getTours({ country: countryCode });
+    tours = await getToursFromDB({ country: countryCode });
   } catch (error) {
     console.error('Error fetching tours from CRM:', error);
   }

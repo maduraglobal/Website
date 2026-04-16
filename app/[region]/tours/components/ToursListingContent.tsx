@@ -37,7 +37,7 @@ export default function ToursListingContent({ initialTours, region, layout = 'gr
 
   const [filters, setFilters] = useState<TourFilters>({
     search: searchParams.get('search') || '',
-    category: 'World',
+    category: 'All',
     priceRange: [],
     countries: defaultDestination ? [defaultDestination] : (searchParams.get('search') ? [searchParams.get('search')!] : []),
     duration: [],
@@ -111,6 +111,7 @@ export default function ToursListingContent({ initialTours, region, layout = 'gr
       const isIndia = indianStates.some(state => tour.destination?.includes(state));
       if (filters.category === 'India' && !isIndia) return false;
       if (filters.category === 'World' && isIndia) return false;
+      // 'All' shows everything
 
       // 2. Search Filter
       if (filters.search) {

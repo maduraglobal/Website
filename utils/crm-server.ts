@@ -15,7 +15,13 @@ function formatImageUrl(url: string | null | undefined): string {
 export async function getToursFromDB(params: { country?: string; destination?: string } = {}): Promise<Tour[]> {
   const supabase = await createClient();
   
-  let { data: rawTours, error } = await supabase.from('tours').select('*');
+  let query = supabase.from('tours').select('*');
+  
+  if (params.country) {
+    query = query.ilike('country', params.country);
+  }
+
+  let { data: rawTours, error } = await query;
   if (error) {
     console.error('getToursFromDB error:', error);
     throw error;

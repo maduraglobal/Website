@@ -180,34 +180,36 @@ export default function BookingDetailsForm({ onCountUpdate }: BookingDetailsForm
       </div>
 
       {/* Dynamic Co-travellers */}
-      <div className="space-y-6">
-        <h4 className="text-[18px] font-bold text-[#191974]">Co-traveller details</h4>
+      {coTravelers.length > 0 && (
+        <div className="space-y-6 mt-10">
+          <h4 className="text-[18px] font-bold text-[#191974]">Co-traveller details</h4>
 
-        {coTravelers.map((traveler, index) => {
-          // Calculate display index for specific types
-          const typeArray = coTravelers.slice(0, index + 1).filter(t => t.type === traveler.type);
-          const displayIndex = traveler.type === 'Adult' ? typeArray.length + 1 : typeArray.length;
+          {coTravelers.map((traveler, index) => {
+            // Calculate display index for specific types
+            const typeArray = coTravelers.slice(0, index + 1).filter(t => t.type === traveler.type);
+            const displayIndex = traveler.type === 'Adult' ? typeArray.length + 1 : typeArray.length;
 
-          return (
-            <div key={traveler.id} className="p-6 bg-gray-50/50 border border-gray-200 rounded-3xl space-y-6 relative animate-in fade-in slide-in-from-top-2">
-              <div className="flex items-center gap-3">
-                <span className={`px-3 py-1 rounded-lg text-[11px] font-bold uppercase tracking-wider ${traveler.type === 'Adult' ? 'bg-blue-100 text-blue-700' :
-                  traveler.type === 'Child' ? 'bg-green-100 text-green-700' : 'bg-purple-100 text-purple-700'
-                  }`}>
-                  {traveler.type}
-                </span>
-                <h5 className="text-[16px] font-bold text-[#191974]">{traveler.type} {displayIndex}</h5>
+            return (
+              <div key={traveler.id} className="p-6 bg-gray-50/50 border border-gray-200 rounded-3xl space-y-6 relative animate-in fade-in slide-in-from-top-2">
+                <div className="flex items-center gap-3">
+                  <span className={`px-3 py-1 rounded-lg text-[11px] font-bold uppercase tracking-wider ${traveler.type === 'Adult' ? 'bg-blue-100 text-blue-700' :
+                    traveler.type === 'Child' ? 'bg-green-100 text-green-700' : 'bg-purple-100 text-purple-700'
+                    }`}>
+                    {traveler.type}
+                  </span>
+                  <h5 className="text-[16px] font-bold text-[#191974]">{traveler.type} {displayIndex}</h5>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <input type="text" placeholder="First Name*" className="w-full px-4 py-3.5 rounded-xl border border-gray-200 outline-none focus:border-[#191974] text-[14px] bg-white" />
+                  <input type="text" placeholder="Last Name*" className="w-full px-4 py-3.5 rounded-xl border border-gray-200 outline-none focus:border-[#191974] text-[14px] bg-white" />
+                  <div className="w-full px-4 py-3.5 rounded-xl border border-gray-200 flex justify-between items-center bg-white cursor-pointer hover:border-[#191974] transition-all"><span className="text-gray-400 text-[14px]">Gender*</span><ChevronDown className="w-4 h-4 text-gray-400" /></div>
+                  <div className="w-full px-4 py-3.5 rounded-xl border border-gray-200 flex justify-between items-center bg-white cursor-pointer hover:border-[#191974] transition-all"><span className="text-gray-400 text-[14px]">Date of birth*</span><Calendar className="w-5 h-5 text-gray-400" /></div>
+                </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <input type="text" placeholder="First Name*" className="w-full px-4 py-3.5 rounded-xl border border-gray-200 outline-none focus:border-[#191974] text-[14px] bg-white" />
-                <input type="text" placeholder="Last Name*" className="w-full px-4 py-3.5 rounded-xl border border-gray-200 outline-none focus:border-[#191974] text-[14px] bg-white" />
-                <div className="w-full px-4 py-3.5 rounded-xl border border-gray-200 flex justify-between items-center bg-white cursor-pointer hover:border-[#191974] transition-all"><span className="text-gray-400 text-[14px]">Gender*</span><ChevronDown className="w-4 h-4 text-gray-400" /></div>
-                <div className="w-full px-4 py-3.5 rounded-xl border border-gray-200 flex justify-between items-center bg-white cursor-pointer hover:border-[#191974] transition-all"><span className="text-gray-400 text-[14px]">Date of birth*</span><Calendar className="w-5 h-5 text-gray-400" /></div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
 
       <div className="mt-12">
         <button 
