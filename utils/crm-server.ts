@@ -62,11 +62,15 @@ export async function getToursFromDB(params: { country?: string; destination?: s
       itinerary_id: t.id,
       tags: t.highlights ?? [],
       rating: t.rating ?? null,
+      // Mapping required fields to satisfy the Tour interface
+      duration_days: t.duration_days ?? 0,
+      duration_nights: t.duration_nights ?? 0,
+      destination_id: t.destination_id ?? "",
+      travelers: t.travelers ?? { adults: 0, children: 0, infants: 0 },
       // Raw fields used by TourCard
       base_price_inr: t.base_price_inr ?? t.price ?? 0,
       image_url: formatImageUrl(imageUrl),
       destination_name: destination,
-      duration_days: t.duration_days ?? null,
       cities_count: t.cities_count ?? null,
       description: t.description ?? '',
       inclusions: t.inclusions ?? [],

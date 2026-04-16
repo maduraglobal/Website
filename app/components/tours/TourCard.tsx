@@ -190,7 +190,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
             <div className="text-left md:text-right w-full mb-3 md:mb-4">
               <p className="text-[10px] text-gray-400   tracking-widest mb-1">Starting From</p>
               <div className="flex md:flex-col items-baseline md:items-end gap-2 md:gap-0">
-                <span className="text-2xl  text-[#171717] ">{formatPrice(price)}</span>
+                <span className="text-2xl  text-[#171717] ">{formatPrice(pVal)}</span>
                 <span className="text-[11px] text-gray-500 ">per person on twin sharing</span>
               </div>
               <p className="text-[13px]  text-[#ee2229] mt-2 bg-red-50 inline-block px-2 py-0.5 rounded italic">EMI from {formatPrice(emi)}/mo</p>
@@ -198,7 +198,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
 
             <div className="space-y-2.5 w-full flex flex-col relative z-20 ">
               <Link
-                href={`/${region}/booking?tour=${tour.slug || tour.id}&price=${price || 0}&savings=0`}
+                href={`/${region}/booking?tour=${tour.slug || tour.id}&price=${pVal || 0}&savings=0`}
                 className="w-full block text-center bg-[#191974] hover:bg-[#ee2229] text-white font-bold py-3.5 px-4 rounded-xl border border-[#191974] transition-all text-[15px]  tracking-wider"
               >
                 Book Now

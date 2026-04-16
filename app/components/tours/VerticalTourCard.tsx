@@ -168,7 +168,7 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
             View Tour
           </Link>
           <button
-            onClick={() => router.push(`/${region}/booking?tour=${tour.slug || tour.id}&price=${tour.price || 0}&savings=0`)}
+            onClick={() => router.push(`/${region}/booking?tour=${tour.slug || tour.id}&price=${pVal || 0}&savings=0`)}
             className="flex items-center justify-center bg-[#ee2229] border-2 border-[#ee2229] text-white hover:bg-transparent hover:text-[#ee2229] py-2.5 rounded-xl text-[12px] font-bold transition-all active:scale-95 uppercase tracking-wider"
           >
             Book Online
