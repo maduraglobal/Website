@@ -4,7 +4,7 @@ import { headers } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-06-20',
+  apiVersion: '2026-03-25.dahlia',
 });
 
 export async function POST(request: Request) {
