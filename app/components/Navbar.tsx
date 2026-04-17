@@ -220,18 +220,14 @@ export default function Navbar() {
                 </button>
               </div>
 
-              <div className="xl:hidden flex items-center gap-1 px-1.5 py-1 rounded-full bg-gray-50 border border-gray-100">
-                <button
-                  onClick={() => setContactCountry(contactCountry.code === '+91' ? { code: '+61', flag: '🇦🇺', phone: '+61 434 500 743' } : { code: '+91', flag: '🇮🇳', phone: '+91 90929 49494' })}
-                  className="flex items-center gap-1 px-2 py-1 hover:bg-white rounded-full transition-all"
-                >
-                  <span className="text-[14px]">{contactCountry.flag}</span>
-                  <ChevronDown className="w-3 h-3 text-gray-400" />
-                </button>
-                <a href={`tel:${contactCountry.phone.replace(/\s+/g, '')}`} className="text-[12px] font-bold text-[#191974] pr-2 whitespace-nowrap">
-                  {contactCountry.phone}
-                </a>
-              </div>
+              <button
+                onClick={() => setIsContactDropdownOpen(!isContactDropdownOpen)}
+                className="xl:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-100 hover:bg-gray-100 transition-all cursor-pointer"
+              >
+                <Phone className="w-3.5 h-3.5 text-[#ee2229]" />
+                <span className="text-[12px] font-bold text-[#191974]">+91 90929 49494</span>
+                <ChevronDown className={`w-3 h-3 text-[#191974] transition-all duration-300 ${isContactDropdownOpen ? 'rotate-180 text-[#ee2229]' : ''}`} />
+              </button>
 
               <button
                 onClick={() => !user ? setIsLoginOpen(true) : router.push(`/${currentRegionCode}/profile`)}
@@ -429,74 +425,54 @@ export default function Navbar() {
                 <h3 className="text-[22px] font-bold text-[#191974] tracking-tight">
                   {user ? `Hello ${user.user_metadata?.first_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Member'}!` : 'Hello Folks'}
                 </h3>
-              </div>
-              
-              <div className="flex flex-col gap-2 p-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
-                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider px-1">Global Support</p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <button 
-                      onClick={() => setContactCountry(contactCountry.code === '+91' ? { code: '+61', flag: '🇦🇺', phone: '+61 434 500 743' } : { code: '+91', flag: '🇮🇳', phone: '+91 90929 49494' })}
-                      className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-xl border border-gray-100"
-                    >
-                      <span className="text-[18px]">{contactCountry.flag}</span>
-                      <span className="text-[13px] font-bold text-[#191974]">{contactCountry.code}</span>
-                      <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
-                    </button>
-                    <div className="flex flex-col">
-                      <a href={`tel:${contactCountry.phone.replace(/\s+/g, '')}`} className="text-[15px] font-bold text-[#191974]">{contactCountry.phone}</a>
-                      <p className="text-[10px] text-green-600 font-bold">24/7 Available</p>
-                    </div>
-                  </div>
-                  <a href={`tel:${contactCountry.phone.replace(/\s+/g, '')}`} className="w-10 h-10 bg-[#ee2229] text-white rounded-full flex items-center justify-center shadow-lg active:scale-95 transition-all">
-                    <Phone className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
 
-              <div className="relative">
-                <button
-                  suppressHydrationWarning
-                  onClick={() => toggleSection('country')}
-                  className="flex w-full items-center justify-between border border-gray-200 px-4 py-2.5 rounded-xl font-bold text-[13px] hover:border-gray-300 bg-white shadow-sm transition-all cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-2 border-r border-gray-100 pr-3">
-                      <Globe className="w-4 h-4 text-[#191974]" />
-                      <span className="text-[13px] text-[#191974]">{activeCountryConfig.language}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={getFlagURL(activeCountryConfig.id)}
-                        alt={`${activeCountryConfig.name} flag`}
-                        className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
-                      />
-                      <span className="text-[13px] text-[#191974]">{activeCountryConfig.name}</span>
-                    </div>
-                  </div>
-                  <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'country' ? 'rotate-180' : ''}`} />
-                </button>
-                
-                {expandedSection === 'country' && (
-                  <div className="mt-2 flex flex-col gap-1 w-full bg-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] rounded-xl border border-gray-100 overflow-hidden">
-                    {Object.values(countryConfigs).map((config) => (
-                      <div
-                        key={config.id}
-                        onClick={() => { switchRegion(config.id); setSidebarOpen(false); }}
-                        className={`flex items-center justify-between px-4 py-3 transition-all cursor-pointer ${activeCountryConfig.id === config.id ? 'bg-[#191974]/5 border-l-[3px] border-[#191974]' : 'hover:bg-gray-50 border-l-[3px] border-transparent'}`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <img src={getFlagURL(config.id)} alt={config.name} className="w-6 h-4 object-cover rounded-sm shadow-sm" />
-                          <div className="flex flex-col leading-tight">
-                            <span className="text-[13px] font-bold text-[#191974]">{config.name}</span>
-                            <span className="text-[11px] font-medium text-[#ee2229]">{config.language}</span>
-                          </div>
-                        </div>
-                        {activeCountryConfig.id === config.id && <div className="w-2 h-2 rounded-full bg-[#191974]" />}
+
+
+
+                <div className="relative">
+                  <button
+                    suppressHydrationWarning
+                    onClick={() => toggleSection('country')}
+                    className="flex w-full items-center justify-between border border-gray-200 px-4 py-2.5 rounded-xl font-bold text-[13px] hover:border-gray-300 bg-white shadow-sm transition-all cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2 border-r border-gray-100 pr-3">
+                        <Globe className="w-4 h-4 text-[#191974]" />
+                        <span className="text-[13px] text-[#191974]">{activeCountryConfig.language}</span>
                       </div>
-                    ))}
-                  </div>
-                )}
+                      <div className="flex items-center gap-2">
+                        <img
+                          src={getFlagURL(activeCountryConfig.id)}
+                          alt={`${activeCountryConfig.name} flag`}
+                          className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
+                        />
+                        <span className="text-[13px] text-[#191974]">{activeCountryConfig.name}</span>
+                      </div>
+                    </div>
+                    <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'country' ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  {expandedSection === 'country' && (
+                    <div className="mt-2 flex flex-col gap-1 w-full bg-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] rounded-xl border border-gray-100 overflow-hidden">
+                      {Object.values(countryConfigs).map((config) => (
+                        <div
+                          key={config.id}
+                          onClick={() => { switchRegion(config.id); setSidebarOpen(false); }}
+                          className={`flex items-center justify-between px-4 py-3 transition-all cursor-pointer ${activeCountryConfig.id === config.id ? 'bg-[#191974]/5 border-l-[3px] border-[#191974]' : 'hover:bg-gray-50 border-l-[3px] border-transparent'}`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <img src={getFlagURL(config.id)} alt={config.name} className="w-6 h-4 object-cover rounded-sm shadow-sm" />
+                            <div className="flex flex-col leading-tight">
+                              <span className="text-[13px] font-bold text-[#191974]">{config.name}</span>
+                              <span className="text-[11px] font-medium text-[#ee2229]">{config.language}</span>
+                            </div>
+                          </div>
+                          {activeCountryConfig.id === config.id && <div className="w-2 h-2 rounded-full bg-[#191974]" />}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 

@@ -118,7 +118,7 @@ export default function VerticalTourCard({ tour, region }: VerticalTourCardProps
       <div className="px-4 py-3 flex flex-col flex-1">
         <p className="text-[11px] text-gray-400 font-medium mb-0.5">Explorer</p>
         <Link href={`/${region}/tours/${slug}`}>
-          <h3 className="text-[16px] font-bold text-gray-900 leading-tight mb-1 line-clamp-2 h-10 hover:text-[#ee2229] transition-colors cursor-pointer">
+          <h3 className="text-[16px] font-bold text-gray-900 leading-tight mb-1 min-h-10 hover:text-[#ee2229] transition-colors cursor-pointer">
             {tour.title}
           </h3>
         </Link>
