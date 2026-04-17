@@ -485,6 +485,16 @@ export default function Navbar() {
             </div>
 
             {/* --- SIMPLE LINKS --- */}
+            {isAdmin && (
+              <Link
+                href="/admin"
+                onClick={() => setSidebarOpen(false)}
+                className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 text-[#ee2229] font-black text-[13px] uppercase tracking-widest hover:bg-red-50 transition-colors"
+              >
+                <ShieldCheck className="w-5 h-5" />
+                Admin Dashboard
+              </Link>
+            )}
             {[
               { label: "My Wishlist", href: `/${currentRegionCode}/wishlist` },
               { label: "Customized Holidays", href: `/${currentRegionCode}/customized-holidays` },
@@ -545,18 +555,6 @@ export default function Navbar() {
                 {label}
               </Link>
             ))}
-
-            {/* --- ADMIN OPTIONS --- */}
-            {isAdmin && (
-              <Link
-                href="/admin"
-                onClick={() => setSidebarOpen(false)}
-                className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 text-[#ee2229] font-bold text-[13px] tracking-widest hover:bg-red-50 transition-colors"
-              >
-                <ShieldCheck className="w-5 h-5" />
-                Admin Dashboard
-              </Link>
-            )}
 
           </div>
 
