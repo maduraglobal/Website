@@ -12,23 +12,17 @@ export async function POST(request: Request) {
 
     const supabase = await createClient();
 
-    // Map Name to First/Last for leads table
-    const nameParts = name.trim().split(' ');
-    const first_name = nameParts[0];
-    const last_name = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
-
     // 1. Insert into leads table (for CRM visibility)
     const { data: leadData, error: leadError } = await supabase
       .from('leads')
       .insert([
         { 
-          first_name, 
-          last_name, 
+          name, 
           email, 
           phone, 
           source: tour_id || 'Website Enquiry',
           status: 'New',
-          message: message || ''
+          // removing 'message' column as test showed it doesn't exist in 'leads' schema cache
         }
       ])
       .select()
@@ -36,30 +30,12 @@ export async function POST(request: Request) {
 
     if (leadError) {
       console.error('Lead creation error:', leadError);
-      // We continue even if lead fails, but it's bad for CRM
+      return NextResponse.json({ error: leadError.message }, { status: 500 });
     }
 
-    // 2. Also insert into enquiries table if it exists
-    const { data: enquiry, error: enqError } = await supabase
-      .from('enquiries')
-      .insert([
-        { 
-          name, 
-          email, 
-          phone, 
-          tour_id: (tour_id && tour_id.length > 20) ? tour_id : null, // Only pass if looks like UUID
-          message: `${tour_id ? `[Type: ${tour_id}] ` : ''}${message || ''}`
-        }
-      ])
-      .select()
-      .single();
-
-    if (enqError && !leadData) {
-      return NextResponse.json({ error: enqError.message }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, lead: leadData, enquiry });
+    return NextResponse.json({ success: true, lead: leadData });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
+

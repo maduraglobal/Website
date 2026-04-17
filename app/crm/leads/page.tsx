@@ -24,8 +24,8 @@ export default function LeadsPanel() {
   }, [supabase]);
 
   const filteredLeads = leads.filter(lead =>
-    (lead.first_name + ' ' + lead.last_name).toLowerCase().includes(searchQuery.toLowerCase()) ||
-    lead.email.toLowerCase().includes(searchQuery.toLowerCase())
+    (lead.name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (lead.email || '').toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -79,10 +79,10 @@ export default function LeadsPanel() {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-9 h-9 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">
-                          {(lead.first_name?.[0] || '') + (lead.last_name?.[0] || '')}
+                          {lead.name?.[0] || 'L'}
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-[#0F172A]">{lead.first_name} {lead.last_name}</p>
+                          <p className="text-sm font-bold text-[#0F172A]">{lead.name || 'No Name'}</p>
                           <p className="text-[11px] text-gray-400">Leads ID: #{lead.id.slice(0, 5)}</p>
                         </div>
                       </div>
