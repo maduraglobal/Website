@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Map, 
-  Plus, 
-  Search, 
-  Edit2, 
-  Trash2, 
+import {
+  Map,
+  Plus,
+  Search,
+  Edit2,
+  Trash2,
   RefreshCw,
   Clock,
   Calendar,
@@ -61,7 +61,7 @@ export default function ItinerariesPage() {
     }
   };
 
-  const filteredItineraries = itineraries.filter(i => 
+  const filteredItineraries = itineraries.filter(i =>
     i.tour_title?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -73,13 +73,13 @@ export default function ItinerariesPage() {
           <p className="text-gray-500 font-medium">Control day-wise travel schedules and technical versions.</p>
         </div>
         <div className="flex gap-3">
-          <button 
+          <button
             onClick={fetchItineraries}
             className="w-12 h-12 bg-white border border-gray-200 text-gray-400 hover:text-[#ee2229] rounded-xl flex items-center justify-center transition-all shadow-sm"
           >
             <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
           </button>
-          <button 
+          <button
             onClick={() => router.push('/admin/itineraries/new')}
             className="bg-[#191974] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-xl flex items-center gap-2 hover:bg-[#ee2229] transition-all"
           >
@@ -89,22 +89,22 @@ export default function ItinerariesPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-4xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="p-6 border-b border-gray-100 flex flex-col md:flex-row justify-between gap-4">
           <div className="relative w-full md:w-96">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <input 
-              type="text" 
-              placeholder="Search by tour name..." 
+            <input
+              type="text"
+              placeholder="Search by tour name..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-gray-50 border border-transparent focus:bg-white focus:border-[#ee2229] pl-10 pr-4 py-2.5 rounded-xl outline-none transition-all text-sm font-medium"
             />
           </div>
           <div className="flex items-center gap-4">
-             <div className="px-4 py-2 bg-green-50 text-green-700 rounded-xl text-[10px] font-bold uppercase tracking-widest border border-green-100 italic">
-               All Content Synced Live
-             </div>
+            <div className="px-4 py-2 bg-green-50 text-green-700 rounded-xl text-[10px] font-bold uppercase tracking-widest border border-green-100 italic">
+              All Content Synced Live
+            </div>
           </div>
         </div>
 
@@ -165,24 +165,24 @@ export default function ItinerariesPage() {
                   </td>
                   <td className="px-8 py-5">
                     <div className="flex items-center gap-2">
-                       <div className={`w-2 h-2 rounded-full ${itinerary.is_published ? 'bg-green-500' : 'bg-gray-300'}`} />
-                       <span className="text-[11px] font-bold uppercase tracking-wider text-gray-500">
-                         {itinerary.is_published ? 'Published' : 'Draft'}
-                       </span>
+                      <div className={`w-2 h-2 rounded-full ${itinerary.is_published ? 'bg-green-500' : 'bg-gray-300'}`} />
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-gray-500">
+                        {itinerary.is_published ? 'Published' : 'Draft'}
+                      </span>
                     </div>
                   </td>
                   <td className="px-8 py-5">
                     <div className="flex items-center justify-end gap-2">
-                      <button 
-                         onClick={() => router.push(`/admin/itineraries/${itinerary.id}/edit`)}
-                         className="p-2 text-gray-400 hover:text-[#191974] hover:bg-gray-100 rounded-lg transition-all"
+                      <button
+                        onClick={() => router.push(`/admin/itineraries/${itinerary.id}/edit`)}
+                        className="p-2 text-gray-400 hover:text-[#191974] hover:bg-gray-100 rounded-lg transition-all"
                       >
                         <Edit2 className="w-4 h-4" />
                       </button>
                       <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all">
                         <Eye className="w-4 h-4" />
                       </button>
-                      <button 
+                      <button
                         onClick={() => handleDelete(itinerary.id)}
                         className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
                       >

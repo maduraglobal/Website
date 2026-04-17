@@ -42,7 +42,7 @@ export default function AdminLayoutClient({
   }, [pathname]);
 
   const navItems = [
-    { label: 'Dashboard', href: '/admin', icon: <LayoutDashboard className="w-4 h-4" />, type: 'main' },
+    { label: 'Admin Dashboard', href: '/admin', icon: <LayoutDashboard className="w-4 h-4" />, type: 'main' },
     { type: 'header', label: 'Inventory' },
     { label: 'Tours', href: '/admin/tours', icon: <Compass className="w-4 h-4" />, type: 'main' },
     { label: 'Itineraries', href: '/admin/itineraries', icon: <Map className="w-4 h-4" />, type: 'main' },

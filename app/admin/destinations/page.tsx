@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 import { Destination } from '@/utils/crm-types';
 import { useRouter } from 'next/navigation';
+import { createClient } from '@/utils/supabase/client';
+import { AdminHeader, AdminCard, Badge } from '../components/AdminUI';
 
 export default function DestinationsPanel() {
   const router = useRouter();
