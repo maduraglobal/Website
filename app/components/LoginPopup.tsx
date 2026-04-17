@@ -191,30 +191,26 @@ export default function LoginPopup({ isOpen, onClose }: LoginPopupProps) {
       });
 
       if (error) {
-        // If user already exists but is unconfirmed, some Supabase configs return an error.
-        // We handle this by allowing them to proceed to OTP view if they aren't verified.
         if (error.status === 400 && error.message.toLowerCase().includes("already registered")) {
-          // Attempt to resend the code to move them to the next step
-          console.log(`User already registered, resending OTP for: ${email}`);
-          const resendResult = await supabase.auth.resend({ type: 'signup', email: email });
-          if (resendResult.error) {
-            console.error("Resend error during signup:", resendResult.error);
-            if (resendResult.error.status !== 429) {
-              throw resendResult.error;
-            }
-            // Proceed to OTP screen even if rate limited, to allow entry of existing OTP
-          }
-        } else {
-          throw error;
+          // Attempt to login instead if already registered
+          return handleLogin(e);
         }
-      } else {
-        console.log(`Signup successful, OTP should be delivered to: ${email}`);
+        throw error;
       }
 
+      // If Supabase is configured to skip email confirmation, it returns a session immediately
+      if (data?.session) {
+        onClose();
+        window.location.reload();
+        return;
+      }
+
+      // Only go to OTP view if session is NOT present (meaning confirmation is required)
       setDirection(1);
       setView("otp");
       setTimer(60);
       setIsResendDisabled(true);
+      alert("Account created! Please check your email for a verification code to complete sign in.");
     } catch (err: any) {
       alert(err.message || "Sign up failed.");
     } finally {

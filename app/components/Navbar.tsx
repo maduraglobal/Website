@@ -207,7 +207,27 @@ export default function Navbar() {
               </Link>
             </div>
 
-            <div className="flex items-center gap-2 md:gap-4 ml-auto shrink-0">
+            <div className="flex items-center gap-2 md:gap-4 ml-auto shrink-0 flex-1 justify-center max-w-md">
+              {/* Desktop Search Bar */}
+              <div className="hidden md:flex relative w-full group max-w-[400px]">
+                <input
+                  type="text"
+                  placeholder="Search destinations, tours..."
+                  onClick={() => setIsSearchOverlayOpen(true)}
+                  readOnly
+                  className="w-full h-10 pl-10 pr-10 rounded-full border border-gray-200 bg-gray-50/50 text-[13px] outline-none group-hover:border-[#191974] group-hover:bg-white transition-all cursor-pointer font-medium text-gray-400"
+                />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-hover:text-[#191974]" />
+                <button 
+                  onClick={(e) => { e.stopPropagation(); setIsSearchOverlayOpen(true); }}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#191974]"
+                >
+                  <Mic className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 md:gap-4 shrink-0">
 
               <div className="hidden xl:relative xl:items-center xl:flex">
                 <button
