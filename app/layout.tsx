@@ -6,6 +6,7 @@ import BookingModal, { BookingProvider } from "./components/BookingModal";
 import ScrollToTop from "./components/ScrollToTop";
 import NewsletterPopup from "./components/NewsletterPopup";
 import FloatingEnquiry from "./components/FloatingEnquiry";
+import { CountryProvider } from "@/context/CountryContext";
 
 export const metadata: Metadata = {
   title: "Madura Travel | Explore the World",
@@ -21,15 +22,17 @@ export default function RootLayout({
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
         <ScrollToTop />
-        <BookingProvider>
-          <Navbar />
-          <main className="flex-1 pt-[114px] md:pt-[74px]">
-            {children}
-          </main>
-          <Footer />
-          <NewsletterPopup />
-          <FloatingEnquiry />
-        </BookingProvider>
+        <CountryProvider>
+          <BookingProvider>
+            <Navbar />
+            <main className="flex-1 pt-[114px] md:pt-[74px]">
+              {children}
+            </main>
+            <Footer />
+            <NewsletterPopup />
+            <FloatingEnquiry />
+          </BookingProvider>
+        </CountryProvider>
       </body>
     </html>
   );

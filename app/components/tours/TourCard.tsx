@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { formatRegionalPrice } from '../../../config/country';
+import { useCountry } from '@/context/CountryContext';
 import TourInclusions from './TourInclusions';
 import FallbackImage from '../FallbackImage';
 import {
@@ -23,10 +24,11 @@ import { createClient } from '@/utils/supabase/client';
 interface TourCardProps {
   tour: any;
   destinationSlug: string;
-  region: string;
+  region?: string;
 }
 
 export default function TourCard({ tour, destinationSlug, region }: TourCardProps) {
+  const { formatPrice: globalFormatPrice } = useCountry();
   const [isHovered, setIsHovered] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [isHighlightsOpen, setIsHighlightsOpen] = useState(false);
@@ -80,9 +82,7 @@ export default function TourCard({ tour, destinationSlug, region }: TourCardProp
 
   // Format price based on region using central configuration
   const formatPrice = (p: number) => {
-    if (tour.currency === "AUD") return `A$${p.toLocaleString()}`;
-    if (tour.currency === "USD") return `$${p.toLocaleString()}`;
-    return formatRegionalPrice(p, region);
+    return globalFormatPrice(p);
   };
 
   const pVal = tour.price || tour.base_price_inr || 45000;

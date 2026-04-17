@@ -9,7 +9,7 @@ export async function GET() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('destinations')
-    .select('*, parent:parent_id(name)')
+    .select('*')
     .order('name');
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

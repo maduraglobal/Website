@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams, useRouter } from 'next/navigation';
-import { formatRegionalPrice } from '@/config/country';
+import { formatRegionalPrice, getCountryConfig } from '@/config/country';
 import {
   Check, MapPin, Calendar, Users, ShieldCheck, CreditCard,
   ArrowLeft, ChevronLeft, ArrowRight, Baby, User, UserCheck, Plus, Minus
@@ -124,10 +124,124 @@ export default function BookingPage() {
     if (step < 3) { window.scrollTo({ top: 0, behavior: 'smooth' }); setStep(s => (s + 1) as BookingStep); }
   };
 
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
   const initiatePayment = async () => {
     setLoading(true);
-    try { await new Promise(r => setTimeout(r, 2000)); setIsSuccess(true); }
-    catch (err) { console.error(err); }
+    const config = getCountryConfig(region);
+    
+    try {
+      // 0. Create a pending booking first
+      const bookingRes = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tour_name: tourName,
+          departure_city: selectedCity,
+          departure_date: selectedDate,
+          total_price: totalPrice,
+          currency: config.currencyCode,
+          status: 'pending',
+          lead_passenger: lead,
+          travelers: travelers,
+          region: region
+        })
+      });
+
+      const bookingData = await bookingRes.json();
+      if (!bookingRes.ok) throw new Error(bookingData.error || 'Failed to create booking record');
+      const bookingId = bookingData.id;
+
+      if (config.paymentGateway === 'razorpay') {
+        // 1. Create Order
+        const orderRes = await fetch('/api/payments/razorpay/order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: totalPrice,
+            currency: 'INR',
+            receipt: `rcpt_${bookingId}`
+          })
+        });
+
+        const orderData = await orderRes.json();
+        
+        if (!orderRes.ok) throw new Error(orderData.error || 'Failed to create order');
+
+        // 2. Load Script
+        const isLoaded = await loadRazorpayScript();
+        if (!isLoaded) throw new Error('Razorpay SDK failed to load');
+
+        // 3. Open Modal
+        const options = {
+          key: orderData.key_id,
+          amount: orderData.amount,
+          currency: orderData.currency,
+          name: 'Madura Travels',
+          description: tourName,
+          order_id: orderData.order_id,
+          handler: async (response: any) => {
+            // Verify payment
+            const verifyRes = await fetch('/api/payments/razorpay/verify', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                ...response,
+                booking_id: bookingId
+              })
+            });
+
+            const verifyData = await verifyRes.json();
+            if (verifyData.success) {
+              setIsSuccess(true);
+            } else {
+              alert('Payment verification failed');
+            }
+          },
+          prefill: {
+            name: `${lead.firstName} ${lead.lastName}`,
+            email: lead.email,
+            contact: lead.phone
+          },
+          theme: { color: '#191974' }
+        };
+
+        const rzp = new (window as any).Razorpay(options);
+        rzp.open();
+
+      } else if (config.paymentGateway === 'stripe') {
+        // 1. Create Stripe Session
+        const sessionRes = await fetch('/api/payments/stripe/session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: totalPrice,
+            currency: config.currencyCode,
+            tourName: tourName,
+            bookingId: bookingId,
+            region: region
+          })
+        });
+
+        const sessionData = await sessionRes.json();
+        if (!sessionRes.ok) throw new Error(sessionData.error || 'Failed to create Stripe session');
+
+        // 2. Redirect to Stripe Checkout
+        window.location.href = sessionData.url;
+      }
+    }
+    catch (err: any) { 
+      console.error(err); 
+      alert(err.message || 'Something went wrong with payment');
+    }
     finally { setLoading(false); }
   };
 

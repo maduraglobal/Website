@@ -4,8 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { countryConfigs } from "../../config/country";
 import LoginPopup from "./LoginPopup";
+import CountrySelector from "./CountrySelector";
+import { useCountry } from "@/context/CountryContext";
 import { Globe, ShieldCheck, LogOut, Search, X, Clock, Phone, ChevronDown, Mail, MapPin, ChevronRight, Menu, User, Mic } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from '@/utils/supabase/client';
@@ -59,7 +60,6 @@ export default function Navbar() {
   const [sidebarDestRegion, setSidebarDestRegion] = useState<DestinationKey>("India");
   const [isSearchOverlayOpen, setIsSearchOverlayOpen] = useState(false);
   const [isContactDropdownOpen, setIsContactDropdownOpen] = useState(false);
-  const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [contactCountry, setContactCountry] = useState({ code: '+91', flag: '🇮🇳', phone: '+91 90929 49494' });
@@ -69,7 +69,6 @@ export default function Navbar() {
   const supabase = React.useMemo(() => createClient(), []);
 
   const currentRegionCode = (pathname?.split('/')[1] || 'en-in').toLowerCase();
-  const activeCountryConfig = countryConfigs[currentRegionCode] || countryConfigs['en-in'];
 
   const filteredResults = allDestinations.filter((item) =>
     item.toLowerCase().includes(query.toLowerCase())
@@ -110,17 +109,6 @@ export default function Navbar() {
     } catch (e) {
       console.error('Logout error:', e);
       window.location.replace(`/${currentRegionCode}`);
-    }
-  };
-
-  const switchRegion = (newRegion: string) => {
-    if (!pathname) return;
-    const segments = pathname.split('/');
-    if (['en-in', 'en-au', 'en-us'].includes(segments[1])) {
-      segments[1] = newRegion;
-      router.push(segments.join('/'));
-    } else {
-      router.push(`/${newRegion}${pathname === '/' ? '' : pathname}`);
     }
   };
 
@@ -270,59 +258,8 @@ export default function Navbar() {
                 </button>
               )}
 
-              <div className="hidden md:block relative z-150">
-                <button
-                  suppressHydrationWarning
-                  onClick={() => setIsCountryDropdownOpen(!isCountryDropdownOpen)}
-                  className="flex items-center gap-1.5 sm:gap-3 border border-gray-100 p-1.5 sm:px-3 sm:py-1.5 rounded-lg font-bold text-[13px] hover:border-gray-200 bg-white transition-all cursor-pointer"
-                >
-                  <div className="flex items-center gap-1.5 border-r border-gray-100 pr-2">
-                    <Globe className="w-4 h-4 text-[#191974]" />
-                    <span className="text-[12px] text-[#191974] hidden lg:inline">{activeCountryConfig.language}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <img
-                      src={getFlagURL(activeCountryConfig.id)}
-                      alt={`${activeCountryConfig.name} flag`}
-                      className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
-                    />
-                    <div className="hidden lg:flex flex-col leading-none">
-                      <span className="text-[12px] text-[#191974]">{activeCountryConfig.name}</span>
-                      <span className="text-[9px] font-bold text-gray-400">{activeCountryConfig.currencySymbol} {activeCountryConfig.currencyCode}</span>
-                    </div>
-                  </div>
-                  <ChevronDown className={`w-3 h-3 transition-transform ${isCountryDropdownOpen ? 'rotate-180' : ''}`} />
-                </button>
-
-                <AnimatePresence>
-                  {isCountryDropdownOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute top-full right-0 mt-2 w-[280px] bg-white shadow-2xl rounded-xl border border-gray-100 z-200 overflow-hidden"
-                    >
-                      <div className="p-2 flex flex-col gap-1">
-                        {Object.values(countryConfigs).map((config) => (
-                          <div
-                            key={config.id}
-                            onClick={() => { switchRegion(config.id); setIsCountryDropdownOpen(false); }}
-                            className={`flex items-center justify-between px-3 py-2.5 rounded-lg transition-all cursor-pointer ${activeCountryConfig.id === config.id ? 'bg-[#191974]/5 border-[#191974]/10' : 'hover:bg-gray-50 border border-transparent'}`}
-                          >
-                            <div className="flex items-center gap-3">
-                              <img src={getFlagURL(config.id)} alt={config.name} className="w-6 h-4 object-cover rounded-sm shadow-sm" />
-                              <div className="flex flex-col">
-                                <span className="text-[12px] text-[#191974]">{config.name}</span>
-                                <span className="text-[10px] font-bold text-[#ee2229]">{config.language}</span>
-                              </div>
-                            </div>
-                            {activeCountryConfig.id === config.id && <div className="w-2 h-2 rounded-full bg-[#ee2229]" />}
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+              <div className="hidden md:block">
+                <CountrySelector />
               </div>
 
               <button
@@ -449,49 +386,8 @@ export default function Navbar() {
 
 
 
-                <div className="relative">
-                  <button
-                    suppressHydrationWarning
-                    onClick={() => toggleSection('country')}
-                    className="flex w-full items-center justify-between border border-gray-200 px-4 py-2.5 rounded-xl font-bold text-[13px] hover:border-gray-300 bg-white shadow-sm transition-all cursor-pointer"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2 border-r border-gray-100 pr-3">
-                        <Globe className="w-4 h-4 text-[#191974]" />
-                        <span className="text-[13px] text-[#191974]">{activeCountryConfig.language}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <img
-                          src={getFlagURL(activeCountryConfig.id)}
-                          alt={`${activeCountryConfig.name} flag`}
-                          className="w-5 h-3.5 object-cover rounded-sm shadow-sm"
-                        />
-                        <span className="text-[13px] text-[#191974]">{activeCountryConfig.name}</span>
-                      </div>
-                    </div>
-                    <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${expandedSection === 'country' ? 'rotate-180' : ''}`} />
-                  </button>
-
-                  {expandedSection === 'country' && (
-                    <div className="mt-2 flex flex-col gap-1 w-full bg-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] rounded-xl border border-gray-100 overflow-hidden">
-                      {Object.values(countryConfigs).map((config) => (
-                        <div
-                          key={config.id}
-                          onClick={() => { switchRegion(config.id); setSidebarOpen(false); }}
-                          className={`flex items-center justify-between px-4 py-3 transition-all cursor-pointer ${activeCountryConfig.id === config.id ? 'bg-[#191974]/5 border-l-[3px] border-[#191974]' : 'hover:bg-gray-50 border-l-[3px] border-transparent'}`}
-                        >
-                          <div className="flex items-center gap-3">
-                            <img src={getFlagURL(config.id)} alt={config.name} className="w-6 h-4 object-cover rounded-sm shadow-sm" />
-                            <div className="flex flex-col leading-tight">
-                              <span className="text-[13px] font-bold text-[#191974]">{config.name}</span>
-                              <span className="text-[11px] font-medium text-[#ee2229]">{config.language}</span>
-                            </div>
-                          </div>
-                          {activeCountryConfig.id === config.id && <div className="w-2 h-2 rounded-full bg-[#191974]" />}
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                <div className="mt-4">
+                  <CountrySelector />
                 </div>
               </div>
             </div>

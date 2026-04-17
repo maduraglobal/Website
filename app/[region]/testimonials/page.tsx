@@ -17,7 +17,7 @@ const CELEBRITY_TESTIMONIALS = [
     name: "Mr. Napoleon",
     role: "Cine Actor & Politician",
     quote: "Mr. Sriharan Balan and his exceptional team provided seamless service, taking on the monumental task of organizing my son’s wedding in Tokyo, Japan, in November 2024, with absolute ease. Every guest was treated like a VIP from start to finish.",
-    image: "/celebrity/Nepolean.jpg", // placeholder
+    image: "/celebrity/nepoleon.jpg", // placeholder
     badge: "Tokyo Wedding 2024"
   },
   {
