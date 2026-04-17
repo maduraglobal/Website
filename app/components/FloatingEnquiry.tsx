@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { MessageSquare, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import PhonePrefixSelector from './ui/PhonePrefixSelector';
 
 export default function FloatingEnquiry() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,19 +14,15 @@ export default function FloatingEnquiry() {
     nationality: '',
     enquiryType: 'Air Ticket'
   });
-  const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Close with Escape key & Listen for global 'openEnquiry' event
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setIsOpen(false);
     };
     const handleOpen = () => setIsOpen(true);
-
     window.addEventListener('keydown', handleEsc);
     window.addEventListener('openEnquiry', handleOpen);
-
     return () => {
       window.removeEventListener('keydown', handleEsc);
       window.removeEventListener('openEnquiry', handleOpen);
@@ -38,20 +33,9 @@ export default function FloatingEnquiry() {
     const newErrors: Record<string, string> = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
     if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) newErrors.email = 'Valid email is required';
-    if (!formData.phone.match(/^\d{7,15}$/)) newErrors.phone = 'Valid phone is required';
-
+    if (!formData.phone.match(/^\d{10,15}$/)) newErrors.phone = 'Enter a valid phone number (10–15 digits)';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
-
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let val = e.target.value;
-    if (val.startsWith(selectedCountryCode)) {
-      val = val.slice(selectedCountryCode.length);
-    } else if (selectedCountryCode.startsWith('+') && val.startsWith(selectedCountryCode.slice(1))) {
-      val = val.slice(selectedCountryCode.length - 1);
-    }
-    setFormData({ ...formData, phone: val.replace(/\D/g, '') });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,7 +48,7 @@ export default function FloatingEnquiry() {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          phone: `${selectedCountryCode}${formData.phone}`,
+          phone: formData.phone,
           tour_id: formData.enquiryType || 'General Enquiry',
           message: `Travel Date: ${formData.travelDate}, Nationality: ${formData.nationality}`
         })
@@ -132,28 +116,23 @@ export default function FloatingEnquiry() {
                       />
                       {errors.name && <p className="text-[10px] text-red-500 font-bold ml-1">{errors.name}</p>}
                     </div>
-                    {/* Phone */}
+
+                    {/* Phone — clean single input, no country selector */}
                     <div className="flex flex-col gap-1.5">
                       <label className="text-[12px] font-bold text-gray-500 uppercase tracking-wider ml-1">Phone</label>
-                      <div className={`flex h-12 bg-gray-50 border ${errors.phone ? 'border-red-500' : 'border-gray-200'} rounded-xl focus-within:border-[#ee2229] focus-within:ring-1 focus-within:ring-[#ee2229] focus-within:bg-white transition-all`}>
-                        <PhonePrefixSelector
-                          value={selectedCountryCode}
-                          onChange={(code: string) => setSelectedCountryCode(code)}
-                          variant="simple"
-                          className="w-[105px] shrink-0 border-r border-gray-200 rounded-l-xl border-t-0 border-b-0 border-l-0 hover:bg-gray-100/50 h-full"
-                        />
-                        <input
-                          type="tel"
-                          placeholder="90000 00000"
-                          required
-                          value={formData.phone}
-                          onChange={(e) => {
-                            handlePhoneChange(e);
-                            if (errors.phone) setErrors(prev => ({ ...prev, phone: '' }));
-                          }}
-                          className="flex-1 px-4 bg-transparent border-none outline-none text-[14px] font-medium placeholder:text-gray-400 h-full w-full min-w-0"
-                        />
-                      </div>
+                      <input
+                        type="tel"
+                        inputMode="numeric"
+                        placeholder="Enter phone number"
+                        required
+                        value={formData.phone}
+                        maxLength={15}
+                        onChange={(e) => {
+                          setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '').slice(0, 15) });
+                          if (errors.phone) setErrors(prev => ({ ...prev, phone: '' }));
+                        }}
+                        className={`w-full h-12 px-4 text-[14px] font-medium placeholder:text-gray-400 bg-gray-50 border ${errors.phone ? 'border-red-500' : 'border-gray-200'} outline-none focus:border-[#ee2229] focus:ring-1 focus:ring-[#ee2229] rounded-xl focus:bg-white transition-all`}
+                      />
                       {errors.phone && <p className="text-[10px] text-red-500 font-bold ml-1">{errors.phone}</p>}
                     </div>
                   </div>
@@ -175,6 +154,7 @@ export default function FloatingEnquiry() {
                       />
                       {errors.email && <p className="text-[10px] text-red-500 font-bold ml-1">{errors.email}</p>}
                     </div>
+
                     {/* Date of Travel */}
                     <div className="flex flex-col gap-1.5">
                       <label className="text-[12px] font-bold text-gray-500 uppercase tracking-wider ml-1">Date of Travel</label>
@@ -221,7 +201,7 @@ export default function FloatingEnquiry() {
                     </div>
                   </div>
 
-                  {/* Submit Button */}
+                  {/* Submit */}
                   <div className="pt-4">
                     <button
                       type="submit"

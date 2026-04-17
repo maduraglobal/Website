@@ -7,7 +7,7 @@ import {
   Check, MapPin, Calendar, Users, ShieldCheck, CreditCard,
   ArrowLeft, ChevronLeft, ArrowRight, Baby, User, UserCheck, Plus, Minus
 } from 'lucide-react';
-import PhonePrefixSelector, { cleanPhoneInput } from '@/app/components/ui/PhonePrefixSelector';
+
 
 type BookingStep = 1 | 2 | 3;
 type TravelerType = 'adult' | 'child' | 'infant';
@@ -59,7 +59,7 @@ export default function BookingPage() {
   const [step, setStep] = useState<BookingStep>(1);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
+
 
   // Traveler counts
   const [adults, setAdults] = useState(2);
@@ -87,7 +87,7 @@ export default function BookingPage() {
 
   const handleLeadChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    const finalValue = name === 'phone' ? cleanPhoneInput(value, selectedCountryCode) : value;
+    const finalValue = name === 'phone' ? value.replace(/\D/g, '').slice(0, 15) : value;
     setLead(prev => ({ ...prev, [name]: finalValue }));
   };
 
@@ -362,19 +362,17 @@ export default function BookingPage() {
                     ))}
                     <div className="space-y-2">
                       <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">Mobile Number</label>
-                      <div className="flex bg-gray-50 border border-gray-100 rounded-xl overflow-hidden focus-within:border-[#ee2229] focus-within:bg-white transition-all">
-                        <PhonePrefixSelector
-                          value={selectedCountryCode}
-                          onChange={(code: string) => setSelectedCountryCode(code)}
-                          variant="sidebar"
-                        />
-                        <input
-                          required type="tel"
-                          name="phone" value={lead.phone} onChange={handleLeadChange}
-                          placeholder="e.g. 9000000000"
-                          className="flex-1 bg-transparent px-4 py-3.5 outline-none font-semibold text-[#191974] text-sm"
-                        />
-                      </div>
+                      <input
+                        required
+                        type="tel"
+                        inputMode="numeric"
+                        name="phone"
+                        value={lead.phone}
+                        onChange={handleLeadChange}
+                        placeholder="Enter phone number"
+                        maxLength={15}
+                        className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm"
+                      />
                     </div>
                     <div className="space-y-2 md:col-span-2">
                       <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">Full Address</label>

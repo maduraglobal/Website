@@ -17,6 +17,7 @@ import { Users, Globe, Award, Star as StarIcon, ChevronLeft, ChevronRight, Headi
 import TourInclusions from "../components/tours/TourInclusions";
 import TourCard from "../components/tours/TourCard";
 import VerticalTourCard from "../components/tours/VerticalTourCard";
+import GoogleReviews from "../components/visa/GoogleReviews";
 import { getDestinations } from "@/utils/crm";
 import { Skeleton, TourCardSkeleton } from "../components/ui/Skeleton";
 
@@ -485,6 +486,21 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
               <button suppressHydrationWarning onClick={handleNextOffer} className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-[#ee2229] hover:border-[#ee2229] transition-all cursor-pointer"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg></button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Dynamic Google Reviews Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16 space-y-4">
+            <p className="text-[#ee2229] font-bold text-[12px] uppercase tracking-[0.2em] animate-pulse">Social Proof & Trust</p>
+            <h2 className="text-[42px] font-bold text-[#191974] tracking-tight">Trusted by 1 Million+ Travelers</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto font-medium leading-relaxed">
+              Don't just take our word for it. See why families and business travelers trust Madura Travel for their global journeys.
+            </p>
+          </div>
+
+          <GoogleReviews />
         </div>
       </section>
 

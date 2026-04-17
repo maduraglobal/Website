@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { destinations, getDynamicDestinationDetails } from '@/app/data/visaData';
 import { getCountryConfig, formatRegionalPrice } from '@/config/country';
 import VisaCard from '@/app/components/visa/VisaCard';
+import GoogleReviews from '@/app/components/visa/GoogleReviews';
 
 // Experts Data
 const experts = [
@@ -212,6 +213,21 @@ export default function VisaServicesPage() {
 
       3. MEET OUR VISA EXPERTS
 
+
+      {/* 3. GOOGLE REVIEWS SECTION */}
+      <section className="py-24 px-4 bg-gray-50/50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 space-y-4">
+            <p className="text-[#ee2229] font-bold text-[12px] uppercase tracking-[0.2em] animate-pulse">Social Proof & Trust</p>
+            <h2 className="text-[42px] font-bold text-[#191974] tracking-tight">Real Feedback from Real Travelers</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto font-medium leading-relaxed">
+              Don't just take our word for it. See why thousands of families and business travelers trust Madura Travel for their visa needs worldwide.
+            </p>
+          </div>
+
+          <GoogleReviews />
+        </div>
+      </section>
 
       {/* 4. HOW IT WORKS */}
 

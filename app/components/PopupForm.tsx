@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
-import PhonePrefixSelector, { cleanPhoneInput } from './ui/PhonePrefixSelector';
+
 
 export default function PopupForm() {
   const [isVisible, setIsVisible] = useState(false);
@@ -12,8 +12,7 @@ export default function PopupForm() {
     email: '',
     phone: '',
   });
-  const [selectedCountry, setSelectedCountry] = useState({ code: '+91', flag: '🇮🇳', name: 'India' });
-  const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
+
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -34,10 +33,8 @@ export default function PopupForm() {
       newErrors.email = "Invalid email address";
     }
 
-    // Phone validation - must include country code
-    const phoneRegex = /^\+?\d{1,4}\s?\d{7,14}$/;
-    if (!phoneRegex.test(formData.phone)) {
-      newErrors.phone = "Include country code (e.g. +91...)";
+    if (!/^\d{10,15}$/.test(formData.phone)) {
+      newErrors.phone = "Enter a valid phone number (10–15 digits)";
     }
 
     setErrors(newErrors);
@@ -55,7 +52,7 @@ export default function PopupForm() {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          phone: `${selectedCountry.code}${formData.phone}`,
+          phone: formData.phone,
           tour_id: 'Newsletter / Popup Subscription',
           message: 'From popup form'
         })
@@ -153,18 +150,16 @@ export default function PopupForm() {
                   {errors.email && <p className="text-[10px] text-red-500 font-bold mt-1 px-2">{errors.email}</p>}
                 </div>
 
-                <div className="flex gap-2">
-                  <PhonePrefixSelector 
-                    value={selectedCountry.code} 
-                    onChange={(v) => setSelectedCountry({ ...selectedCountry, code: v })} 
-                  />
+                <div className="relative group">
                   <input
                     required
                     type="tel"
+                    inputMode="numeric"
                     placeholder="Mobile No.*"
-                    className={`flex-1 border-2 rounded-2xl px-5 py-4 text-[15px] outline-none transition-all group-hover:border-gray-200 ${errors.phone ? 'border-red-500' : 'border-gray-100 focus:border-[#ee2229]'}`}
+                    maxLength={15}
+                    className={`w-full border-2 rounded-2xl px-5 py-4 text-[15px] outline-none transition-all group-hover:border-gray-200 ${errors.phone ? 'border-red-500' : 'border-gray-100 focus:border-[#ee2229]'}`}
                     onChange={(e) => {
-                      setFormData({ ...formData, phone: cleanPhoneInput(e.target.value, selectedCountry.code) });
+                      setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '').slice(0, 15) });
                       if (errors.phone) setErrors(prev => ({ ...prev, phone: '' }));
                     }}
                   />

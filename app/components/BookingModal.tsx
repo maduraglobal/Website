@@ -6,7 +6,6 @@ import { X, Calendar, Users, Phone, Mail, User, Send, CheckCircle, Info, Plus, C
 import { usePathname } from 'next/navigation';
 import { formatRegionalPrice, getCountryConfig } from '@/config/country';
 import BookingDetailsForm from './tours/BookingDetailsForm';
-import PhonePrefixSelector from './ui/PhonePrefixSelector';
 
 // ─── Context ────────────────────────────────────────────────────────────────
 
@@ -40,9 +39,7 @@ export const BookingProvider = ({ children }: { children: React.ReactNode }) => 
   const pathname = usePathname();
 
   const openBooking = (data?: BookingData) => {
-    // Safety check: Don't open the modal if we are already on the dedicated booking page
     if (pathname?.includes('/booking')) return;
-
     setBookingData(data ?? {
       packageName: 'Custom Holiday Package',
       discountedPrice: '0',
@@ -53,27 +50,19 @@ export const BookingProvider = ({ children }: { children: React.ReactNode }) => 
 
   const closeBooking = () => setIsOpen(false);
 
-  // Auto-close modal when navigating to /booking page
   useEffect(() => {
     if (pathname?.includes('/booking') && isOpen) {
       setIsOpen(false);
     }
   }, [pathname, isOpen]);
 
-  // Listen for class-based triggers, text-based triggers, and window event (openPopup)
   useEffect(() => {
-    const TRIGGER_TEXTS = ['book now', 'book online', 'confirm booking', 'explore tours', 'apply now', 'quick enquiry'];
-
     const handleGlobalClick = (e: MouseEvent) => {
       // ALL click interception is DISABLED.
-      // Booking buttons now navigate to the dedicated /booking page via router.push or Link.
     };
-
     const handleOpenEvent = () => openBooking();
-
     document.addEventListener('click', handleGlobalClick);
     window.addEventListener('openPopup', handleOpenEvent);
-
     return () => {
       document.removeEventListener('click', handleGlobalClick);
       window.removeEventListener('openPopup', handleOpenEvent);
@@ -113,7 +102,6 @@ const BookingModal = () => {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [selectedCountryCode, setSelectedCountryCode] = useState(region === 'en-au' ? '+61' : region === 'en-us' ? '+1' : '+91');
 
   useEffect(() => {
     if (isOpen) {
@@ -128,10 +116,9 @@ const BookingModal = () => {
     if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
     if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
     if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) newErrors.email = 'Valid email is required';
-    if (!formData.phone.match(/^\+?[\d\s-]{10,}$/)) newErrors.phone = 'Valid phone is required';
+    if (!formData.phone.match(/^\d{10,15}$/)) newErrors.phone = 'Enter a valid phone number (10–15 digits)';
     if (!formData.state) newErrors.state = 'State is required';
     if (!formData.gender) newErrors.gender = 'Gender is required';
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -139,10 +126,8 @@ const BookingModal = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
-
     setIsLoading(true);
-    // Include the country code in the final payload
-    console.log('Final Phone:', selectedCountryCode + formData.phone);
+    console.log('Phone submitted:', formData.phone);
     setTimeout(() => {
       setIsLoading(false);
       setIsSubmitted(true);
@@ -155,7 +140,7 @@ const BookingModal = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    const finalValue = name === 'phone' ? value.replace(/\D/g, '') : value;
+    const finalValue = name === 'phone' ? value.replace(/\D/g, '').slice(0, 15) : value;
     setFormData(prev => ({ ...prev, [name]: finalValue }));
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
   };
@@ -176,7 +161,7 @@ const BookingModal = () => {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className={`relative w-full ${bookingData?.isDetailed ? 'max-w-4xl' : 'max-w-2xl'} bg-white rounded-[2.5rem]  overflow-hidden overflow-y-auto max-h-[95vh] font-inter`}
+            className={`relative w-full ${bookingData?.isDetailed ? 'max-w-4xl' : 'max-w-2xl'} bg-white rounded-[2.5rem] overflow-hidden overflow-y-auto max-h-[95vh] font-inter`}
           >
             <button
               onClick={closeBooking}
@@ -195,9 +180,7 @@ const BookingModal = () => {
               </div>
             ) : bookingData?.isDetailed ? (
               <div className="p-0">
-                <BookingDetailsForm
-                  onCountUpdate={() => { }}
-                />
+                <BookingDetailsForm onCountUpdate={() => { }} />
               </div>
             ) : (
               <div className="p-8 md:p-12">
@@ -216,7 +199,7 @@ const BookingModal = () => {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
-                    {/* First Name */}
+                    {/* Full Name */}
                     <div className="relative">
                       <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Full Name*</label>
                       <input
@@ -227,6 +210,7 @@ const BookingModal = () => {
                         placeholder="Enter full name"
                         className={`w-full px-5 py-3.5 rounded-xl border outline-none transition-all text-[15px] font-medium ${errors.firstName ? 'border-red-500 bg-red-50/20' : 'border-gray-200 focus:border-[#191974]'}`}
                       />
+                      {errors.firstName && <p className="text-[10px] text-red-500 font-bold mt-1 px-1">{errors.firstName}</p>}
                     </div>
 
                     {/* Email */}
@@ -240,26 +224,23 @@ const BookingModal = () => {
                         placeholder="example@mail.com"
                         className={`w-full px-5 py-3.5 rounded-xl border outline-none transition-all text-[15px] font-medium ${errors.email ? 'border-red-500 bg-red-50/20' : 'border-gray-200 focus:border-[#191974]'}`}
                       />
+                      {errors.email && <p className="text-[10px] text-red-500 font-bold mt-1 px-1">{errors.email}</p>}
                     </div>
 
-                    {/* Mobile Number */}
+                    {/* Mobile Number — clean single input, no country selector */}
                     <div className="relative">
                       <label className="absolute -top-2.5 left-3 bg-white px-2 text-[11px] text-gray-400 font-bold z-10 uppercase tracking-wider">Mobile No.*</label>
-                      <div className={`flex rounded-xl border transition-all ${errors.phone ? 'border-red-500' : 'border-gray-200 focus-within:border-[#191974]'}`}>
-                        <PhonePrefixSelector 
-                          value={selectedCountryCode}
-                          onChange={(code: string) => setSelectedCountryCode(code)}
-                          variant="outline"
-                        />
-                        <input
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          type="tel"
-                          placeholder="Your Mobile Number"
-                          className="w-full px-4 py-3.5 outline-none text-[15px] font-medium"
-                        />
-                      </div>
+                      <input
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        type="tel"
+                        inputMode="numeric"
+                        placeholder="Enter phone number"
+                        maxLength={15}
+                        className={`w-full px-5 py-3.5 rounded-xl border outline-none transition-all text-[15px] font-medium ${errors.phone ? 'border-red-500 bg-red-50/20' : 'border-gray-200 focus:border-[#191974]'}`}
+                      />
+                      {errors.phone && <p className="text-[10px] text-red-500 font-bold mt-1 px-1">{errors.phone}</p>}
                     </div>
 
                     {/* State */}
@@ -278,6 +259,7 @@ const BookingModal = () => {
                         <option value="Tamil Nadu">Tamil Nadu</option>
                       </select>
                       <ChevronDown className="absolute right-4 top-4 w-4 h-4 text-gray-400 pointer-events-none" />
+                      {errors.state && <p className="text-[10px] text-red-500 font-bold mt-1 px-1">{errors.state}</p>}
                     </div>
                   </div>
 
@@ -290,16 +272,17 @@ const BookingModal = () => {
                       className="w-full px-5 py-4 rounded-xl border border-gray-200 outline-none focus:border-[#191974] transition-all text-[15px] font-medium resize-none"
                     ></textarea>
                   </div>
+
                   <div className="pt-4">
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full bg-[#191974] text-white py-5 rounded-2xl font-bold text-[16px] hover:bg-[#ee2229] transition-all   active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 group"
+                      className="w-full bg-[#191974] text-white py-5 rounded-2xl font-bold text-[16px] hover:bg-[#ee2229] transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 group"
                     >
-                      {isLoading ? "Processing..." : "Submit Enquiry"}
+                      {isLoading ? 'Processing...' : 'Submit Enquiry'}
                       <Send className={`w-5 h-5 transition-transform group-hover:translate-x-1 ${isLoading ? 'animate-pulse' : ''}`} />
                     </button>
-                    <p className="text-center text-gray-400 text-[11px] mt-4 uppercase  font-bold">Your information is secure with us</p>
+                    <p className="text-center text-gray-400 text-[11px] mt-4 uppercase font-bold">Your information is secure with us</p>
                   </div>
                 </form>
               </div>

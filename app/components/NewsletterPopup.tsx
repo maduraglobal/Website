@@ -4,22 +4,17 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, User, Phone, Percent } from 'lucide-react';
 import Image from 'next/image';
-import PhonePrefixSelector, { cleanPhoneInput } from './ui/PhonePrefixSelector';
 
 export default function NewsletterPopup() {
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
 
   useEffect(() => {
-    // Show popup after 5 seconds if not closed before
     const hasSeenPopup = localStorage.getItem('madura_newsletter_seen');
     if (!hasSeenPopup) {
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 5000);
+      const timer = setTimeout(() => setIsOpen(true), 5000);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -31,7 +26,6 @@ export default function NewsletterPopup() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle subscription logic here
     console.log('Subscribed:', { name, email, phone });
     handleClose();
     alert('Thank you for subscribing!');
@@ -42,7 +36,7 @@ export default function NewsletterPopup() {
       {isOpen && (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
           {/* Backdrop */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -63,16 +57,16 @@ export default function NewsletterPopup() {
             </div>
 
             {/* Close Button */}
-            <button 
+            <button
               onClick={handleClose}
-              className="absolute top-4 right-4 z-20 p-2 bg-white/80 hover:bg-white rounded-full transition-colors "
+              className="absolute top-4 right-4 z-20 p-2 bg-white/80 hover:bg-white rounded-full transition-colors"
             >
               <X className="w-5 h-5 text-gray-500" />
             </button>
 
             {/* Top Illustration */}
             <div className="relative h-[220px] w-full bg-[#f8f9fc] rounded-t-[32px] overflow-hidden">
-              <Image 
+              <Image
                 src="/travel_pop_up_banner_1776235630243.png"
                 alt="Travel Illustration"
                 fill
@@ -88,16 +82,17 @@ export default function NewsletterPopup() {
                   <span className="text-[#ee2229]">9,44,008 happy guests</span>
                 </h3>
                 <p className="text-[13px] text-gray-500 leading-relaxed font-medium">
-                  Get the latest travel deals, new tour announcements, travel ideas & a whole lot more.
+                  Get the latest travel deals, new tour announcements, travel ideas &amp; a whole lot more.
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Name */}
                 <div className="relative group">
                   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#191974] transition-colors">
                     <User className="w-4 h-4" />
                   </div>
-                  <input 
+                  <input
                     required
                     type="text"
                     placeholder="Full Name*"
@@ -107,11 +102,12 @@ export default function NewsletterPopup() {
                   />
                 </div>
 
+                {/* Email */}
                 <div className="relative group">
                   <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#191974] transition-colors">
                     <Mail className="w-4 h-4" />
                   </div>
-                  <input 
+                  <input
                     required
                     type="email"
                     placeholder="Email ID*"
@@ -121,28 +117,26 @@ export default function NewsletterPopup() {
                   />
                 </div>
 
+                {/* Phone — single clean input */}
                 <div className="relative group">
-                  <div className="flex bg-gray-50 border-b-2 border-transparent focus-within:border-[#191974] focus-within:bg-white rounded-xl transition-all">
-                    <PhonePrefixSelector 
-                      value={selectedCountryCode}
-                      onChange={(code: string) => setSelectedCountryCode(code)}
-                      variant="simple"
-                      className="w-[85px] shrink-0"
-                    />
-                    <input 
-                      required
-                      type="tel"
-                      placeholder="Mobile No.*"
-                      value={phone}
-                      onChange={(e) => setPhone(cleanPhoneInput(e.target.value, selectedCountryCode))}
-                      className="flex-1 bg-transparent outline-none px-4 py-4 font-semibold text-[#191974] text-[14px]"
-                    />
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#191974] transition-colors">
+                    <Phone className="w-4 h-4" />
                   </div>
+                  <input
+                    required
+                    type="tel"
+                    inputMode="numeric"
+                    placeholder="Mobile No.*"
+                    value={phone}
+                    maxLength={15}
+                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 15))}
+                    className="w-full bg-gray-50 border-b-2 border-transparent focus:border-[#191974] focus:bg-white outline-none pl-11 pr-4 py-4 rounded-xl font-semibold text-[#191974] text-[14px] transition-all"
+                  />
                 </div>
 
-                <button 
+                <button
                   type="submit"
-                  className="w-full bg-yellow-400 hover:bg-yellow-500 text-[#191974] font-bold py-4 rounded-xl   active:scale-[0.98] transition-all text-[15px] mt-2 uppercase tracking-wider"
+                  className="w-full bg-yellow-400 hover:bg-yellow-500 text-[#191974] font-bold py-4 rounded-xl active:scale-[0.98] transition-all text-[15px] mt-2 uppercase tracking-wider"
                 >
                   Subscribe
                 </button>

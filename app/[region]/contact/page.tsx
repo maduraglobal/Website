@@ -5,12 +5,12 @@ import { motion } from 'framer-motion';
 import CorporateOffice from '../../components/CorporateOffice';
 import BranchLocations from '../../components/BranchLocations';
 import { Mail, Phone, MapPin, Clock, MessageSquare, Send } from 'lucide-react';
-import PhonePrefixSelector, { cleanPhoneInput } from '../../components/ui/PhonePrefixSelector';
+
 import { useState } from 'react';
 
 export default function ContactPage({ params }: { params: Promise<{ region: string }> }) {
   const { region } = use(params);
-  const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -28,7 +28,7 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          phone: `${selectedCountryCode}${formData.phone}`,
+          phone: formData.phone,
           tour_id: formData.tour_id,
           message: formData.message
         })
@@ -116,15 +116,16 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
             </div>
             <div className="space-y-2">
               <label className="text-[12px]  text-[#191974]  tracking-widest ml-1">Mobile Number</label>
-              <div className="flex bg-gray-50 border border-gray-200 rounded-2xl focus-within:border-2 focus-within:border-[#ee2229] transition-all">
-                <PhonePrefixSelector 
-                  value={selectedCountryCode}
-                  onChange={(code: string) => setSelectedCountryCode(code)}
-                  variant="simple"
-                  className="w-[105px] shrink-0 border-r border-gray-200 rounded-l-2xl border-t-0 border-b-0 border-l-0 hover:bg-gray-100"
-                />
-                <input required type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: cleanPhoneInput(e.target.value, selectedCountryCode)})} placeholder="00000 00000" className="flex-1 px-4 py-4 bg-transparent outline-none" />
-              </div>
+              <input
+                required
+                type="tel"
+                inputMode="numeric"
+                value={formData.phone}
+                onChange={e => setFormData({...formData, phone: e.target.value.replace(/\D/g, '').slice(0, 15)})}
+                placeholder="Enter phone number"
+                maxLength={15}
+                className="w-full px-6 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#ee2229] outline-none transition-all"
+              />
             </div>
             <div className="space-y-2">
               <label className="text-[12px]  text-[#191974]  tracking-widest ml-1">Tour Interest</label>

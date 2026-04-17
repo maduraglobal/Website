@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Quote, ChevronRight, MessageSquare, Award, Users, ShieldCheck, Heart } from 'lucide-react';
 import Image from 'next/image';
+import GoogleReviews from '@/app/components/visa/GoogleReviews';
 
 const CELEBRITY_TESTIMONIALS = [
   {
@@ -212,65 +213,18 @@ export default function TestimonialPage() {
         </div>
       </section>
 
-      {/* Customer Wall of Love */}
-      <section className="py-12 bg-[#f8faff] rounded-t-[40px] md:rounded-t-[80px]">
+      {/* Customer Wall of Love (Dynamic Google Reviews) */}
+      <section className="py-24 bg-[#f8faff] rounded-t-[40px] md:rounded-t-[80px]">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-8">
-            <h4 className="text-3xl md:text-5xl font-extrabold text-[#191974] mb-6">Real Stories, Real Smiles</h4>
-            <div className="flex items-center justify-center gap-2 mb-4">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
-              ))}
-              <span className="text-[#191974] font-bold ml-2">4.8 Rating on Google</span>
-            </div>
+          <div className="text-center mb-16 space-y-4">
+            <p className="text-[#ee2229] font-bold text-[12px] uppercase tracking-[0.2em] animate-pulse">Social Proof & Trust</p>
+            <h2 className="text-[42px] font-bold text-[#191974] tracking-tight">Real Feedback from Real Travelers</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto font-medium leading-relaxed">
+              Madura Travel Service has earned the trust of thousands globally. Here is the latest feedback directly from our Google business profile.
+            </p>
           </div>
 
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
-            {CUSTOMER_REVIEWS.map((review, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="break-inside-avoid bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all group"
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex gap-1">
-                    {[...Array(review.rating)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                    ))}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <img
-                      src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"
-                      alt="Google"
-                      className="h-3 opacity-30 group-hover:opacity-100 transition-opacity"
-                    />
-                  </div>
-                </div>
-                <p className="text-[15px] text-gray-700 leading-relaxed mb-6 font-medium italic">
-                  "{review.text}"
-                </p>
-                <div className="flex items-center justify-between pt-4 border-t border-gray-50">
-                  <div>
-                    <h5 className="text-[14px] font-bold text-[#191974]">{review.name}</h5>
-                    <p className="text-[11px] text-gray-400">{review.platform}</p>
-                  </div>
-                  <span className="text-[11px] text-gray-300 font-bold uppercase tracking-widest">{review.date}</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-3 text-center">
-            <a
-              href="https://www.google.com/search?rlz=1C1UEAD_en-GBIN1074IN1074&sca_esv=4074d84388868a32&sxsrf=ANbL-n7NB8oHNs9RDxuAZ_sbB77eTnoQkw:1776333679915&si=AL3DRZHrmvnFAVQPOO2Bzhf8AX9KZZ6raUI_dT7DG_z0kV2_x0MpVVn9OA5hG89nwRSIi5PHQo7yfEknDvepDRnjGaWelQUElaca8ATNAojLYehobbGeXz_azHFLjMxRm-QxYhB9fwkonn654d_Hzxt03onm7QPx4g%3D%3D&q=Madura+Travel+Service+%28P%29+Ltd+Reviews&sa=X&ved=2ahUKEwi-ufnPjvKTAxX32DgGHYyqLPgQ0bkNegQIIhAH&biw=1536&bih=730&dpr=1.25"
-              className="inline-flex items-center gap-2 bg-[#191974] text-white px-4 py-1.5 text-sm rounded-full hover:bg-[#ee2229] transition-all shadow-md hover:-translate-y-0.5"
-            >
-              View Reviews
-              <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </a>
-          </div>
+          <GoogleReviews />
         </div>
       </section>
 

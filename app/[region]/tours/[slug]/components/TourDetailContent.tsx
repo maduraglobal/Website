@@ -20,7 +20,7 @@ import { formatRegionalPrice } from '@/config/country';
 import TourMap from '@/app/components/tours/TourMap';
 import { createClient } from '@/utils/supabase/client';
 import { Pencil } from 'lucide-react';
-import PhonePrefixSelector from '@/app/components/ui/PhonePrefixSelector';
+
 
 
 interface TourDetailContentProps {
@@ -843,9 +843,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                     <Shield className="w-3.5 h-3.5 text-green-500" />
                     <span>Verified Agent</span>
                   </div>
-                </div>
-              </div> */}
-
+                </div> */}
               {/* Request Call Back Card */}
               <div className="bg-[#f8faff] rounded-3xl border border-blue-100 shadow-sm p-8 space-y-6 font-inter">
                 <div>
@@ -862,21 +860,16 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   </div>
 
                   <div className="relative">
-                    <div className="flex rounded-xl border border-gray-200 bg-white overflow-hidden focus-within:border-[#ee2229] transition-all relative">
-                      <PhonePrefixSelector
-                        value={selectedCountryCode}
-                        onChange={(code: string) => setSelectedCountryCode(code)}
-                        variant="sidebar"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Mobile No.*"
-                        className="flex-1 px-4 py-4 text-[14px] outline-none placeholder:text-gray-400"
-                      />
-                    </div>
+                    <input
+                      type="tel"
+                      inputMode="numeric"
+                      placeholder="Mobile No.*"
+                      maxLength={15}
+                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-4 text-[14px] outline-none focus:border-[#ee2229] transition-all placeholder:text-gray-400"
+                    />
                   </div>
 
-                  <button onClick={handleEnquire} className="w-full bg-[#ee2229] text-white py-4 rounded-xl font-bold text-[15px] hover:bg-[#ee2229] transition-all shadow-lg  active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
+                  <button onClick={handleEnquire} className="w-full bg-[#ee2229] text-white py-4 rounded-xl font-bold text-[15px] hover:bg-[#ee2229] transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
                     <Phone className="w-5 h-5" />
                     Request Call Back
                   </button>

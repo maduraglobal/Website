@@ -22,6 +22,7 @@ import { getDynamicDestinationDetails, VisaDestination } from '@/app/data/visaDa
 import { getCountryConfig, formatRegionalPrice } from '@/config/country';
 
 import { useSearchParams } from 'next/navigation';
+import GoogleReviews from '@/app/components/visa/GoogleReviews';
 
 // Removed hardcoded sourceAwareData in favor of getDynamicDestinationDetails
 
@@ -86,7 +87,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
   const attractions = currentData.attractions;
 
   // STICKY TABS
-  const tabs = ["Types Of Visas", "Documents", "Process", "Why Choose Us", "Sample Visa", "FAQs"];
+  const tabs = ["Types Of Visas", "Documents", "Process", "Why Choose Us", "Reviews", "Sample Visa", "FAQs"];
 
   return (
     <div className="min-h-screen bg-white font-inter text-black text-[14px]">
@@ -588,45 +589,17 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
       </div>
 
 
-      {/* ===== TESTIMONIALS SECTION ===== */}
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-24">
+      {/* ===== GOOGLE REVIEWS SECTION ===== */}
+      <div id="reviews" className="max-w-7xl mx-auto px-4 lg:px-8 py-24 mb-10">
         <div className="text-center mb-16 space-y-4">
-          <p className="text-[#ee2229] font-bold text-[12px]">Real Experiences</p>
-          <h2 className="text-[42px] font-bold text-[#191974] tracking-tight">Trust by 10,000+ Travellers</h2>
-          <div className="flex items-center justify-center gap-1">
-            {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}
-            <span className="ml-2 font-bold text-[#191974]">4.9/5 Average Rating</span>
-          </div>
+          <p className="text-[#ee2229] font-bold text-[12px] uppercase tracking-[0.2em]">Social Proof & Trust</p>
+          <h2 className="text-[42px] font-bold text-[#191974] tracking-tight">Real Feedback from Real Travelers</h2>
+          <p className="text-gray-500 max-w-2xl mx-auto font-medium leading-relaxed">
+            Don't just take our word for it. See why thousands of families and business travelers trust Madura Travel for their visa needs worldwide.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { name: "Rahul Sharma", role: "Business Traveller", text: "Got my Dubai visa in less than 24 hours. The process was completely digital and seamless. Highly recommended!", img: "https://i.pravatar.cc/150?u=1" },
-            { name: "Priya Patel", role: "Family Vacation", text: "Madura Travel made our Thailand application so easy. Added 4 family members in one go and everything was perfect.", img: "https://i.pravatar.cc/150?u=2" },
-            { name: "James Wilson", role: "Solo Explorer", text: "Transparent pricing and excellent support. The direct flight tracking feature is a game changer for visa planning.", img: "https://i.pravatar.cc/150?u=3" }
-          ].map((item, idx) => (
-            <div key={idx} className="bg-white rounded-[32px] p-8 shadow-xl shadow-[#191974]/5 border border-gray-50 flex flex-col h-full transform hover:-translate-y-2 transition-all duration-300">
-              <div className="flex items-center gap-4 mb-6">
-                <img src={item.img} className="w-14 h-14 rounded-2xl object-cover shadow-md" alt={item.name} />
-                <div>
-                  <h4 className="font-bold text-[#191974]">{item.name}</h4>
-                  <p className="text-[12px] text-gray-400 font-medium">{item.role}</p>
-                </div>
-              </div>
-              <div className="flex gap-1 mb-4">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />)}
-              </div>
-              <p className="text-gray-600 leading-relaxed text-[15px] italic font-medium flex-1">"{item.text}"</p>
-              <div className="mt-6 pt-6 border-t border-gray-50 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-green-500" />
-                  <span className="text-[11px] font-bold text-gray-400 uppercase">Verified Application</span>
-                </div>
-                <span className="text-[10px] font-bold text-gray-400">2 days ago</span>
-              </div>
-            </div>
-          ))}
-        </div>
+        <GoogleReviews />
       </div>
 
 

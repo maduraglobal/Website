@@ -12,7 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 import { getDynamicDestinationDetails } from '@/app/data/visaData';
 import { getCountryConfig, formatRegionalPrice } from '@/config/country';
-import PhonePrefixSelector from '@/app/components/ui/PhonePrefixSelector';
+
 
 // --- TYPES ---
 type VisStep = 'details' | 'documents' | 'review' | 'payment';
@@ -211,19 +211,15 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
 
                       <div className="flex flex-col gap-2">
                         <label className="text-[12px] font-bold text-gray-500 uppercase tracking-wider ml-1">Phone Number*</label>
-                        <div className="flex gap-2">
-                          <PhonePrefixSelector
-                            value={t.countryCode}
-                            onChange={(v: string) => handleTravelerChange(t.id, 'countryCode', v)}
-                          />
-                          <input
-                            type="tel"
-                            value={t.phone}
-                            onChange={(e) => handleTravelerChange(t.id, 'phone', e.target.value)}
-                            placeholder="90000 00000"
-                            className={`flex-1 bg-white border ${errors[`t-${t.id}-phone`] ? 'border-red-500' : 'border-gray-200'} focus:border-2 focus:border-[#191974] px-5 py-4 rounded-xl outline-none transition-all font-semibold text-[14px] placeholder:text-gray-300`}
-                          />
-                        </div>
+                        <input
+                          type="tel"
+                          inputMode="numeric"
+                          value={t.phone}
+                          maxLength={15}
+                          onChange={(e) => handleTravelerChange(t.id, 'phone', e.target.value.replace(/\D/g, '').slice(0, 15))}
+                          placeholder="Enter phone number"
+                          className={`w-full bg-white border ${errors[`t-${t.id}-phone`] ? 'border-red-500' : 'border-gray-200'} focus:border-2 focus:border-[#191974] px-5 py-4 rounded-xl outline-none transition-all font-semibold text-[14px] placeholder:text-gray-300`}
+                        />
                         {errors[`t-${t.id}-phone`] && <p className="text-[11px] text-red-500 font-bold px-1 mt-0.5">{errors[`t-${t.id}-phone`]}</p>}
                       </div>
                     </div>
