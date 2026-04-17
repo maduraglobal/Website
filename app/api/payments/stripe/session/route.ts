@@ -31,6 +31,16 @@ export async function POST(request: Request) {
       },
     });
 
+    // Update booking status to payment_initiated
+    const { createClient } = await import('@/utils/supabase/server');
+    const supabase = await createClient();
+    await supabase
+      .from('bookings')
+      .update({ status: 'payment_initiated' })
+      .eq('id', bookingId);
+
+    console.log(`Booking ${bookingId} -> payment_initiated (Stripe)`);
+
     return NextResponse.json({ url: session.url });
   } catch (error: any) {
     console.error('Stripe Session Error:', error);

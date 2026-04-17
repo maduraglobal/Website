@@ -139,18 +139,37 @@ export default function BookingPage() {
     const config = getCountryConfig(region);
     
     try {
-      // 0. Create a pending booking first
+      // 1. Create a Lead first
+      const leadRes = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: lead.firstName,
+          lastName: lead.lastName,
+          email: lead.email,
+          phone: lead.phone,
+          address: lead.address,
+          gender: lead.gender,
+          dob: lead.dob
+        })
+      });
+
+      const leadData = await leadRes.json();
+      if (!leadRes.ok) throw new Error(leadData.error || 'Failed to create lead record');
+      const leadId = leadData.id;
+
+      // 2. Create a pending booking linked to the lead
       const bookingRes = await fetch('/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          lead_id: leadId,
           tour_name: tourName,
           departure_city: selectedCity,
           departure_date: selectedDate,
           total_price: totalPrice,
           currency: config.currencyCode,
           status: 'pending',
-          lead_passenger: lead,
           travelers: travelers,
           region: region
         })

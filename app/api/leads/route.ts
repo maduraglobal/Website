@@ -16,9 +16,22 @@ export async function POST(request: Request) {
   const supabase = await createClient();
   const body = await request.json();
 
+  // Basic validation
+  if (!body.email || !body.firstName) {
+    return NextResponse.json({ error: 'Name and email are required for lead creation' }, { status: 400 });
+  }
+
   const { data, error } = await supabase
     .from('leads')
-    .insert([body])
+    .insert([{
+      name: `${body.firstName} ${body.lastName}`,
+      email: body.email,
+      phone: body.phone,
+      address: body.address,
+      gender: body.gender,
+      dob: body.dob,
+      source: 'Booking Flow'
+    }])
     .select()
     .single();
 

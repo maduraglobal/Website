@@ -33,10 +33,59 @@ export async function POST(request: Request) {
 
   const { data, error } = await supabase
     .from('bookings')
-    .insert([body])
+    .insert([{
+      lead_id: body.lead_id,
+      tour_name: body.tour_name,
+      departure_city: body.departure_city,
+      departure_date: body.departure_date,
+      total_price: body.total_price,
+      currency: body.currency,
+      status: 'pending', // Initial state
+      travelers: body.travelers,
+      region: body.region
+    }])
     .select()
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  
+  // Transition log (simplified as system log)
+  console.log(`Booking Created: ${data.id} [pending]`);
+  
   return NextResponse.json(data, { status: 201 });
+}
+
+/**
+ * PATCH /api/bookings - Update booking status (State Machine)
+ */
+export async function PATCH(request: Request) {
+  const supabase = await createClient();
+  const { id, status, payment_id } = await request.json();
+
+  if (!id || !status) {
+    return NextResponse.json({ error: 'ID and status are required' }, { status: 400 });
+  }
+
+  // Validate status transition (simplified)
+  const validStates = ['pending', 'payment_initiated', 'confirmed', 'failed', 'cancelled'];
+  if (!validStates.includes(status)) {
+    return NextResponse.json({ error: 'Invalid status' }, { status: 400 });
+  }
+
+  const { data, error } = await supabase
+    .from('bookings')
+    .update({ 
+      status, 
+      payment_id: payment_id || undefined,
+      updated_at: new Date().toISOString() 
+    })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  
+  console.log(`Booking Transition: ${id} -> ${status}`);
+  
+  return NextResponse.json(data);
 }

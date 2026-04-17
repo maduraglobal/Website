@@ -56,24 +56,26 @@ export default function DestinationsPanel() {
   const getChildren = (parentId: string) => destinations.filter(d => d.parent_id === parentId);
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-700">
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div>
-          <h1 className="text-[32px] font-bold text-[#191974] mb-2 tracking-tight">Geographic Hierarchy</h1>
-          <p className="text-gray-500 font-medium italic">Mapping global regions and child destinations for optimized content routing.</p>
+          <h1 className="text-3xl font-bold text-[#191974] mb-2 flex items-center gap-3">
+             <Globe className="w-8 h-8 text-[#ee2229]" />
+             Geographic Hierarchy
+          </h1>
+          <p className="text-gray-500 font-medium">Mapping global regions and child destinations for optimized content routing.</p>
         </div>
         <div className="flex gap-3">
           <button 
             onClick={fetchDestinations}
-            className="w-10 h-10 bg-white border border-gray-100 text-gray-400 hover:text-[#ee2229] rounded-xl flex items-center justify-center transition-all shadow-sm"
+            className="w-12 h-12 bg-white border border-gray-200 text-gray-400 hover:text-[#ee2229] rounded-xl flex items-center justify-center transition-all shadow-sm"
           >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
           </button>
           <button 
             onClick={() => router.push('/admin/destinations/new')}
             className="bg-[#191974] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-xl flex items-center gap-2 hover:bg-[#ee2229] transition-all"
           >
-            <Globe className="w-4 h-4" />
+            <Plus className="w-5 h-5" />
             Add Region/City
           </button>
         </div>

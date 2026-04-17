@@ -262,10 +262,13 @@ export default function TestimonialPage() {
             ))}
           </div>
 
-          <div className="mt-10 text-center">
-            <a href='https://www.google.com/search?rlz=1C1UEAD_en-GBIN1074IN1074&sca_esv=4074d84388868a32&sxsrf=ANbL-n7NB8oHNs9RDxuAZ_sbB77eTnoQkw:1776333679915&si=AL3DRZHrmvnFAVQPOO2Bzhf8AX9KZZ6raUI_dT7DG_z0kV2_x0MpVVn9OA5hG89nwRSIi5PHQo7yfEknDvepDRnjGaWelQUElaca8ATNAojLYehobbGeXz_azHFLjMxRm-QxYhB9fwkonn654d_Hzxt03onm7QPx4g%3D%3D&q=Madura+Travel+Service+%28P%29+Ltd+Reviews&sa=X&ved=2ahUKEwi-ufnPjvKTAxX32DgGHYyqLPgQ0bkNegQIIhAH&biw=1536&bih=730&dpr=1.25' className="bg-[#191974] text-white px-10 py-5 rounded-full font-bold text-[15px] hover:bg-[#ee2229] transition-all shadow-xl hover:-translate-y-1 flex items-center mx-auto gap-3 group">
-              View More Reviews on Google
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          <div className="mt-3 text-center">
+            <a
+              href="https://www.google.com/search?rlz=1C1UEAD_en-GBIN1074IN1074&sca_esv=4074d84388868a32&sxsrf=ANbL-n7NB8oHNs9RDxuAZ_sbB77eTnoQkw:1776333679915&si=AL3DRZHrmvnFAVQPOO2Bzhf8AX9KZZ6raUI_dT7DG_z0kV2_x0MpVVn9OA5hG89nwRSIi5PHQo7yfEknDvepDRnjGaWelQUElaca8ATNAojLYehobbGeXz_azHFLjMxRm-QxYhB9fwkonn654d_Hzxt03onm7QPx4g%3D%3D&q=Madura+Travel+Service+%28P%29+Ltd+Reviews&sa=X&ved=2ahUKEwi-ufnPjvKTAxX32DgGHYyqLPgQ0bkNegQIIhAH&biw=1536&bih=730&dpr=1.25"
+              className="inline-flex items-center gap-2 bg-[#191974] text-white px-4 py-1.5 text-sm rounded-full hover:bg-[#ee2229] transition-all shadow-md hover:-translate-y-0.5"
+            >
+              View Reviews
+              <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </a>
           </div>
         </div>

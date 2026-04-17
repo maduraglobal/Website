@@ -29,7 +29,7 @@ export async function POST(request: Request) {
       console.log(`Payment successful for booking: ${bookingId}`);
       
       const supabase = await createClient();
-      const { error } = await supabase
+      await supabase
         .from('bookings')
         .update({ 
           status: 'confirmed', 
@@ -38,9 +38,23 @@ export async function POST(request: Request) {
         })
         .eq('id', bookingId);
       
-      if (error) {
-        console.error('Database Update Error (Stripe Webhook):', error);
-      }
+      break;
+
+    case 'checkout.session.async_payment_failed':
+    case 'payment_intent.payment_failed':
+      const failedSession = event.data.object as any;
+      const failedBookingId = failedSession.metadata?.bookingId;
+      
+      console.log(`Payment failed for booking: ${failedBookingId}`);
+      
+      const supabaseFail = await createClient();
+      await supabaseFail
+        .from('bookings')
+        .update({ 
+          status: 'failed', 
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', failedBookingId);
       
       break;
     default:

@@ -18,6 +18,18 @@ export async function POST(request: Request) {
 
     const order = await razorpay.orders.create(options);
 
+    // Update booking status to payment_initiated
+    const bookingId = receipt?.replace('rcpt_', '');
+    if (bookingId) {
+       const { createClient } = await import('@/utils/supabase/server');
+       const supabase = await createClient();
+       await supabase
+         .from('bookings')
+         .update({ status: 'payment_initiated' })
+         .eq('id', bookingId);
+       console.log(`Booking ${bookingId} -> payment_initiated (Razorpay)`);
+    }
+
     return NextResponse.json({
       order_id: order.id,
       amount: order.amount,
