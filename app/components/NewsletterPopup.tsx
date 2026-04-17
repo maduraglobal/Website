@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, User, Phone, Percent } from 'lucide-react';
 import Image from 'next/image';
-import PhonePrefixSelector from './ui/PhonePrefixSelector';
+import PhonePrefixSelector, { cleanPhoneInput } from './ui/PhonePrefixSelector';
 
 export default function NewsletterPopup() {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +55,7 @@ export default function NewsletterPopup() {
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative w-full max-w-[440px] bg-white rounded-[32px] overflow-hidden "
+            className="relative w-full max-w-[440px] bg-white rounded-[32px]"
           >
             {/* Discount Badge */}
             <div className="absolute top-4 left-4 z-20 w-12 h-12 bg-[#191974]/10 rounded-2xl flex items-center justify-center rotate-[-15deg]">
@@ -71,7 +71,7 @@ export default function NewsletterPopup() {
             </button>
 
             {/* Top Illustration */}
-            <div className="relative h-[220px] w-full bg-[#f8f9fc]">
+            <div className="relative h-[220px] w-full bg-[#f8f9fc] rounded-t-[32px] overflow-hidden">
               <Image 
                 src="/travel_pop_up_banner_1776235630243.png"
                 alt="Travel Illustration"
@@ -134,7 +134,7 @@ export default function NewsletterPopup() {
                       type="tel"
                       placeholder="Mobile No.*"
                       value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      onChange={(e) => setPhone(cleanPhoneInput(e.target.value, selectedCountryCode))}
                       className="flex-1 bg-transparent outline-none px-4 py-4 font-semibold text-[#191974] text-[14px]"
                     />
                   </div>

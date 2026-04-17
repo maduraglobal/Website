@@ -795,8 +795,8 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
                   </div>
                   <h4 className="text-xl font-bold mb-3">Not what you're looking for?</h4>
                   <p className="text-sm text-white/70 mb-8 font-medium leading-relaxed">Our experts can craft a personalized itinerary just for you.</p>
-                  
-                  <Link 
+
+                  <Link
                     href={`/${region}/customized-holidays`}
                     className="inline-flex items-center gap-2 bg-[#ee2229] text-white px-6 py-3 rounded-xl font-bold text-[12px] uppercase tracking-widest hover:bg-white hover:text-[#191974] transition-all"
                   >
@@ -887,7 +887,7 @@ export default function TourDetailContent({ tour, itinerary, region }: TourDetai
         </div>
 
         {isMapOpen && (
-          <div className="fixed inset-0 z-100 flex flex-col items-center justify-center p-4 md:p-12 pt-16 md:pt-12">
+          <div className="fixed top-[114px] md:top-[74px] left-0 right-0 bottom-0 z-10000 flex flex-col items-center justify-center p-4 md:p-12 overflow-hidden">
             <div
               className="absolute inset-0 bg-[#0a0a1a]/95 backdrop-blur-xl"
               onClick={() => setIsMapOpen(false)}

@@ -5,12 +5,44 @@ import { motion } from 'framer-motion';
 import CorporateOffice from '../../components/CorporateOffice';
 import BranchLocations from '../../components/BranchLocations';
 import { Mail, Phone, MapPin, Clock, MessageSquare, Send } from 'lucide-react';
-import PhonePrefixSelector from '../../components/ui/PhonePrefixSelector';
+import PhonePrefixSelector, { cleanPhoneInput } from '../../components/ui/PhonePrefixSelector';
 import { useState } from 'react';
 
 export default function ContactPage({ params }: { params: Promise<{ region: string }> }) {
   const { region } = use(params);
   const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    tour_id: 'General Holiday',
+    message: ''
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: `${selectedCountryCode}${formData.phone}`,
+          tour_id: formData.tour_id,
+          message: formData.message
+        })
+      });
+      if (response.ok) {
+        alert("Enquiry submitted successfully! Our expert will contact you soon.");
+        setFormData({ name: '', email: '', phone: '', tour_id: 'General Holiday', message: '' });
+      } else {
+        alert("Failed to submit enquiry. Please try again.");
+      }
+    } catch (err) {
+      alert("Error occurred. Please check your connection.");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -73,30 +105,30 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
             <p className="text-gray-500  text-[18px]">Fill out the form below and a travel specialist will contact you shortly.</p>
           </div>
 
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className="text-[12px]  text-[#191974]  tracking-widest ml-1">Full Name</label>
-              <input type="text" placeholder="Your Name" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#ee2229] outline-none transition-all " />
+              <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="Your Name" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#ee2229] outline-none transition-all " />
             </div>
             <div className="space-y-2">
               <label className="text-[12px]  text-[#191974]  tracking-widest ml-1">Email Address</label>
-              <input type="email" placeholder="email@example.com" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#ee2229] outline-none transition-all " />
+              <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="email@example.com" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#ee2229] outline-none transition-all " />
             </div>
             <div className="space-y-2">
               <label className="text-[12px]  text-[#191974]  tracking-widest ml-1">Mobile Number</label>
-              <div className="flex bg-gray-50 border border-gray-200 rounded-2xl focus-within:border-[#ee2229] transition-all overflow-hidden">
+              <div className="flex bg-gray-50 border border-gray-200 rounded-2xl focus-within:border-2 focus-within:border-[#ee2229] transition-all">
                 <PhonePrefixSelector 
                   value={selectedCountryCode}
                   onChange={(code: string) => setSelectedCountryCode(code)}
                   variant="simple"
-                  className="w-[85px] shrink-0"
+                  className="w-[105px] shrink-0 border-r border-gray-200 rounded-l-2xl border-t-0 border-b-0 border-l-0 hover:bg-gray-100"
                 />
-                <input type="tel" placeholder="00000 00000" className="flex-1 px-4 py-4 bg-transparent outline-none" />
+                <input required type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: cleanPhoneInput(e.target.value, selectedCountryCode)})} placeholder="00000 00000" className="flex-1 px-4 py-4 bg-transparent outline-none" />
               </div>
             </div>
             <div className="space-y-2">
               <label className="text-[12px]  text-[#191974]  tracking-widest ml-1">Tour Interest</label>
-              <select className="w-full px-6 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#ee2229] outline-none transition-all appearance-none cursor-pointer text-[#191974] font-medium">
+              <select value={formData.tour_id} onChange={e => setFormData({...formData, tour_id: e.target.value})} className="w-full px-6 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#ee2229] outline-none transition-all appearance-none cursor-pointer text-[#191974] font-medium">
                 <option>General Holiday</option>
                 <option>Visa Assistance</option>
                 <option>Corporate Travel</option>
@@ -105,10 +137,10 @@ export default function ContactPage({ params }: { params: Promise<{ region: stri
             </div>
             <div className="md:col-span-2 space-y-2">
               <label className="text-[12px]  text-[#191974]  tracking-widest ml-1">Your Message</label>
-              <textarea rows={5} placeholder="How can we help you?" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#ee2229] outline-none transition-all resize-none"></textarea>
+              <textarea required value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} rows={5} placeholder="How can we help you?" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:border-[#ee2229] outline-none transition-all resize-none"></textarea>
             </div>
             <div className="md:col-span-2 pt-4">
-              <button className="w-full bg-[#191974] hover:bg-[#ee2229] text-white  py-5 rounded-2xl  tracking-[0.2em] transition-all flex items-center justify-center gap-3 group  ">
+              <button type="submit" className="w-full bg-[#191974] hover:bg-[#ee2229] text-white  py-5 rounded-2xl  tracking-[0.2em] transition-all flex items-center justify-center gap-3 group  ">
                 Send Enquiry
                 <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </button>

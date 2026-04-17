@@ -12,53 +12,18 @@ import {
 const scrollToId = (id: string) => {
   const element = document.getElementById(id);
   if (element) {
-    const yOffset = -120;
+    const yOffset = typeof window !== 'undefined' && window.innerWidth < 1024 ? -220 : -160;
     const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
     window.scrollTo({ top: y, behavior: 'smooth' });
   }
 };
 
-import { getDestinationBySlug, VisaDestination } from '@/app/data/visaData';
+import { getDynamicDestinationDetails, VisaDestination } from '@/app/data/visaData';
 import { getCountryConfig, formatRegionalPrice } from '@/config/country';
 
 import { useSearchParams } from 'next/navigation';
 
-const sourceAwareData: Record<string, Record<string, any>> = {
-  "United Arab Emirates": {
-    "india": {
-      startingPrice: "180",
-      partner: "Official India Visa Agent in UAE",
-      heroImg: "https://images.unsplash.com/photo-1524492707947-2f10a7b4dd30?auto=format&fit=crop&q=80&w=1200",
-      visaTypes: [
-        { name: "Tourist E-Visa (30 Days)", pop: true, pTime: "3-5 days", stay: "30 days", valid: "30 days", entry: "Double", fees: "180" },
-        { name: "Business E-Visa", pop: false, pTime: "3-5 days", stay: "60 days", valid: "1 year", entry: "Multiple", fees: "350" }
-      ],
-      docs: [
-        "Color scan of Passport (First & Last page)",
-        "Recent passport size photo (White background)",
-        "UAE Residence Visa Copy",
-        "Emirates ID Copy (Front & Back)"
-      ]
-    }
-  },
-  "Dubai (UAE)": {
-    "india": {
-      startingPrice: "180",
-      partner: "Official India Visa Agent in UAE",
-      heroImg: "https://images.unsplash.com/photo-1524492707947-2f10a7b4dd30?auto=format&fit=crop&q=80&w=1200",
-      visaTypes: [
-        { name: "Tourist E-Visa (30 Days)", pop: true, pTime: "3-5 days", stay: "30 days", valid: "30 days", entry: "Double", fees: "180" },
-        { name: "Business E-Visa", pop: false, pTime: "3-5 days", stay: "60 days", valid: "1 year", entry: "Multiple", fees: "350" }
-      ],
-      docs: [
-        "Color scan of Passport (First & Last page)",
-        "Recent passport size photo (White background)",
-        "UAE Residence Visa Copy",
-        "Emirates ID Copy (Front & Back)"
-      ]
-    }
-  }
-};
+// Removed hardcoded sourceAwareData in favor of getDynamicDestinationDetails
 
 export default function DynamicVisaDetailPage({ params }: { params: Promise<{ region: string, slug: string }> }) {
   const resolvedParams = use(params);
@@ -69,31 +34,21 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
   const urlCitizen = searchParams.get('citizen');
   const citizenOf = urlCitizen || countryConfig.name;
 
-  const destination = getDestinationBySlug(slug);
+  const destination = getDynamicDestinationDetails(slug, citizenOf);
   const destName = destination ? destination.name : (slug ? slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, ' ') : "Dubai");
 
   // Get current country data with source-awareness
-  const getSourceAwareData = () => {
-    let base = destination ? { ...destination, heroImg: destination.image } : {
-      startingPrice: "4,500",
-      partner: "Authorised Visa Agent",
-      heroImg: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=1200",
-      visaTypes: [{ name: "Tourist Visa", pop: true, pTime: "5-7 days", stay: "30 days", valid: "90 days", entry: "Single", fees: "4,500" }],
-      docs: ["Photo", "Passport"],
-      attractions: [{ title: "Popular Landmarks", desc: "Explore the most iconic sites and cultural heritage of this beautiful destination." }],
-      embassy: "Contact our support for the latest embassy address and submission details.",
-      type: "E-VISA",
-      sampleVisaImg: "/images/sample-visa.png"
-    };
-
-    const sourceData = sourceAwareData[citizenOf]?.[slug.toLowerCase()];
-    if (sourceData) {
-      return { ...base, ...sourceData };
-    }
-    return base;
+  const currentData = destination ? { ...destination, heroImg: destination.image } : {
+    startingPrice: "4,500",
+    partner: "Authorised Visa Agent",
+    heroImg: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=1200",
+    visaTypes: [{ name: "Tourist Visa", pop: true, pTime: "5-7 days", stay: "30 days", valid: "90 days", entry: "Single", fees: "4,500" }],
+    docs: ["Photo", "Passport"],
+    attractions: [{ title: "Popular Landmarks", desc: "Explore the most iconic sites and cultural heritage of this beautiful destination." }],
+    embassy: "Contact our support for the latest embassy address and submission details.",
+    type: "E-VISA",
+    sampleVisaImg: "/images/sample-visa.png"
   };
-
-  const currentData = getSourceAwareData();
 
   // State for interactive elements
   const [activeTab, setActiveTab] = useState("Types Of Visas");
@@ -137,7 +92,7 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
     <div className="min-h-screen bg-white font-inter text-black text-[14px]">
 
       {/* ===== HERO SECTION ===== */}
-      <section className="w-full bg-[#191974] text-white py-12 px-4 relative overflow-hidden">
+      <section className="w-full bg-[#191974] text-white pt-6 md:pt-16 pb-12 px-4 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Breadcrumb */}
           <div className="text-[12px] font-bold mb-8 flex items-center gap-2 tracking-widest opacity-80">
@@ -190,8 +145,8 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
         <div className="absolute top-0 right-0 bottom-0 w-1/2 opacity-30 pointer-events-none" style={{ backgroundImage: `url('${currentData.heroImg}')`, backgroundSize: 'cover', backgroundPosition: 'center', maskImage: 'linear-gradient(to right, transparent, black)' }}></div>
       </section>
 
-      {/* ===== STICKY NAV BAR ===== */}
-      <div className="sticky top-[158px] md:top-[74px] z-40 bg-white border-b border-gray-100 shadow-sm overflow-x-auto no-scrollbar">
+      {/* ===== STICKY NAV BAR (SECONDARY MENU) ===== */}
+      <div className="sticky top-[114px] md:top-[74px] z-40 bg-white border-b border-gray-100 overflow-x-auto no-scrollbar w-full">
         <div className="max-w-7xl mx-auto px-4 flex gap-8 items-center min-w-max">
           {tabs.map((tab) => (
             <button
@@ -325,16 +280,16 @@ export default function DynamicVisaDetailPage({ params }: { params: Promise<{ re
           </a>
 
           {/* 4. Documents Required */}
-          <div id="documents" className="space-y-8">
+          <div id="documents" className="space-y-6">
             <h2 className="text-[26px] font-bold text-[#191974]">Documentation Checklist</h2>
 
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 gap-2.5">
               {currentData.docs.map((doc: string, i: number) => (
-                <div key={i} className="flex items-center gap-5 bg-white border border-gray-100 p-6 rounded-2xl hover:border-red-100 transition-all shadow-sm group">
-                  <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-[#191974]  pointer-events-none group-hover:bg-[#ee2229] group-hover:text-white transition-colors">
+                <div key={i} className="flex items-center gap-4 bg-white border border-gray-100 p-3 md:px-5 md:py-4 rounded-[16px] hover:border-red-100 transition-colors group">
+                  <div className="w-8 h-8 shrink-0 rounded-full bg-blue-50/50 flex items-center justify-center text-[#191974] font-bold text-[13px] pointer-events-none group-hover:bg-[#ee2229] group-hover:text-white transition-colors">
                     {i + 1}
                   </div>
-                  <span className="text-[15px] font-bold text-[#191974]">{doc}</span>
+                  <span className="text-[14px] md:text-[15px] font-semibold text-[#191974]">{doc}</span>
                 </div>
               ))}
             </div>

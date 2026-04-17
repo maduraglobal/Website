@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
-import PhonePrefixSelector from './ui/PhonePrefixSelector';
+import PhonePrefixSelector, { cleanPhoneInput } from './ui/PhonePrefixSelector';
 
 export default function PopupForm() {
   const [isVisible, setIsVisible] = useState(false);
@@ -44,11 +44,31 @@ export default function PopupForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
-    console.log('Popup form submitted:', formData);
-    handleClose();
+    
+    try {
+      const response = await fetch('/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: `${selectedCountry.code}${formData.phone}`,
+          tour_id: 'Newsletter / Popup Subscription',
+          message: 'From popup form'
+        })
+      });
+      if (response.ok) {
+        alert("Enquiry submitted successfully! Our expert will contact you soon.");
+        handleClose();
+      } else {
+        alert("Failed to submit enquiry. Please try again.");
+      }
+    } catch (err) {
+      alert("Error occurred. Please check your connection.");
+    }
   };
 
   return (
@@ -69,7 +89,7 @@ export default function PopupForm() {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative w-full max-w-[850px] bg-white rounded-3xl overflow-hidden  flex flex-col md:flex-row min-h-[500px]"
+            className="relative w-full max-w-[850px] bg-white rounded-3xl flex flex-col md:flex-row min-h-[500px]"
           >
             {/* Close Button */}
             <button
@@ -80,7 +100,7 @@ export default function PopupForm() {
             </button>
 
             {/* Left Image Side */}
-            <div className="hidden md:flex md:w-[45%] bg-[#f8f9fa] relative items-center justify-center p-8 overflow-hidden">
+            <div className="hidden md:flex md:w-[45%] bg-[#f8f9fa] relative items-center justify-center p-8 overflow-hidden rounded-l-3xl">
               {/* Decorative background for the image */}
               <div className="absolute inset-0 opacity-10">
                 <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&q=80&w=800" alt="Travel" className="w-full h-full object-cover grayscale" />
@@ -144,7 +164,7 @@ export default function PopupForm() {
                     placeholder="Mobile No.*"
                     className={`flex-1 border-2 rounded-2xl px-5 py-4 text-[15px] outline-none transition-all group-hover:border-gray-200 ${errors.phone ? 'border-red-500' : 'border-gray-100 focus:border-[#ee2229]'}`}
                     onChange={(e) => {
-                      setFormData({ ...formData, phone: e.target.value });
+                      setFormData({ ...formData, phone: cleanPhoneInput(e.target.value, selectedCountry.code) });
                       if (errors.phone) setErrors(prev => ({ ...prev, phone: '' }));
                     }}
                   />

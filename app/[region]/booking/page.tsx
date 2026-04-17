@@ -7,6 +7,7 @@ import {
   Check, MapPin, Calendar, Users, ShieldCheck, CreditCard,
   ArrowLeft, ChevronLeft, ArrowRight, Baby, User, UserCheck, Plus, Minus
 } from 'lucide-react';
+import PhonePrefixSelector, { cleanPhoneInput } from '@/app/components/ui/PhonePrefixSelector';
 
 type BookingStep = 1 | 2 | 3;
 type TravelerType = 'adult' | 'child' | 'infant';
@@ -58,6 +59,7 @@ export default function BookingPage() {
   const [step, setStep] = useState<BookingStep>(1);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
 
   // Traveler counts
   const [adults, setAdults] = useState(2);
@@ -73,7 +75,8 @@ export default function BookingPage() {
   // Rebuild traveler list whenever counts change
   useEffect(() => {
     const newList: Traveler[] = [];
-    for (let i = 0; i < adults; i++) newList.push(createTraveler('adult', i + 1));
+    // The first adult is the Lead Passenger. Remaining adults are co-travelers.
+    for (let i = 1; i < adults; i++) newList.push(createTraveler('adult', i + 1));
     for (let i = 0; i < children; i++) newList.push(createTraveler('child', i + 1));
     for (let i = 0; i < infants; i++) newList.push(createTraveler('infant', i + 1));
     setTravelers(newList);
@@ -83,7 +86,9 @@ export default function BookingPage() {
   const totalPrice = price * (adults + children);
 
   const handleLeadChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setLead(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    const finalValue = name === 'phone' ? cleanPhoneInput(value, selectedCountryCode) : value;
+    setLead(prev => ({ ...prev, [name]: finalValue }));
   };
 
   const handleTravelerChange = (id: string, field: keyof Traveler, value: string) => {
@@ -211,17 +216,33 @@ export default function BookingPage() {
                     <p className="text-sm text-gray-400 mt-1">Primary contact for this booking (as per passport).</p>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {[['firstName', 'First Name', 'E.g. Rahul'], ['lastName', 'Last Name', 'E.g. Sharma'], ['email', 'Email Address', 'rahul@email.com'], ['phone', 'Mobile Number', '+91 90000 00000']].map(([name, label, ph]) => (
+                    {[['firstName', 'First Name', 'E.g. Rahul'], ['lastName', 'Last Name', 'E.g. Sharma'], ['email', 'Email Address', 'rahul@email.com']].map(([name, label, ph]) => (
                       <div key={name} className="space-y-2">
                         <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">{label}</label>
                         <input
-                          required type={name === 'email' ? 'email' : name === 'phone' ? 'tel' : 'text'}
+                          required type={name === 'email' ? 'email' : 'text'}
                           name={name} value={(lead as any)[name]} onChange={handleLeadChange}
                           placeholder={ph}
                           className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm"
                         />
                       </div>
                     ))}
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">Mobile Number</label>
+                      <div className="flex bg-gray-50 border border-gray-100 rounded-xl overflow-hidden focus-within:border-[#ee2229] focus-within:bg-white transition-all">
+                        <PhonePrefixSelector
+                          value={selectedCountryCode}
+                          onChange={(code: string) => setSelectedCountryCode(code)}
+                          variant="sidebar"
+                        />
+                        <input
+                          required type="tel"
+                          name="phone" value={lead.phone} onChange={handleLeadChange}
+                          placeholder="e.g. 9000000000"
+                          className="flex-1 bg-transparent px-4 py-3.5 outline-none font-semibold text-[#191974] text-sm"
+                        />
+                      </div>
+                    </div>
                     <div className="space-y-2 md:col-span-2">
                       <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">Full Address</label>
                       <input required type="text" name="address" value={lead.address} onChange={handleLeadChange} placeholder="Street, City, State, Country"
@@ -242,6 +263,14 @@ export default function BookingPage() {
                             <option>Other</option>
                         </select>
                     </div>
+                    <div className="space-y-2 md:col-span-2">
+                      <label className="text-[10px] font-bold text-[#191974]/50 uppercase tracking-widest">Passport Number (Optional)</label>
+                      <input type="text" name="passportNo" value={(lead as any).passportNo || ''}
+                        onChange={handleLeadChange}
+                        placeholder="e.g. A1234567"
+                        className="w-full bg-gray-50 border border-gray-100 focus:border-[#ee2229] focus:bg-white px-4 py-3.5 rounded-xl outline-none transition-all font-semibold text-[#191974] text-sm"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -258,8 +287,8 @@ export default function BookingPage() {
       {/* Removed traveler summary badges */}
                 </div>
 
-                {/* Co-Traveler Details - Shown only if more than 1 traveler */}
-                {travelers.length > 1 && (
+                {/* Co-Traveler Details - Shown only if there are co-travelers */}
+                {travelers.length > 0 && (
                   <div className="bg-white rounded-3xl border border-gray-100  p-8 space-y-8">
                     <div>
                       <h2 className="text-xl font-bold text-[#191974]">Co-Traveler Details</h2>
@@ -273,7 +302,7 @@ export default function BookingPage() {
                             {typeIcon[t.type]}
                           </div>
                           <div>
-                            <p className="font-bold text-[#191974] text-[15px]">{typeLabel[t.type]} {travelers.filter(x => x.type === t.type).indexOf(t) + 1}</p>
+                            <p className="font-bold text-[#191974] text-[15px]">{typeLabel[t.type]} {travelers.filter(x => x.type === t.type).indexOf(t) + (t.type === 'adult' ? 2 : 1)}</p>
                             <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
                               {t.type === 'adult' ? '12+ yrs' : t.type === 'child' ? '2–11 yrs' : 'Under 2 yrs'}
                             </p>

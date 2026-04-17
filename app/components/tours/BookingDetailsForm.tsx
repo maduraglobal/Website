@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Info, Plus, ChevronDown, Calendar, Smartphone } from 'lucide-react';
-import PhonePrefixSelector from '../ui/PhonePrefixSelector';
+import PhonePrefixSelector, { cleanPhoneInput } from '../ui/PhonePrefixSelector';
 
 interface TravelerFormData {
   firstName: string;
@@ -155,7 +155,7 @@ export default function BookingDetailsForm({ onCountUpdate }: BookingDetailsForm
               type="tel" 
               value={formData.mobile} 
               onChange={e => {
-                setFormData({...formData, mobile: e.target.value});
+                setFormData({...formData, mobile: cleanPhoneInput(e.target.value, selectedCountryCode)});
                 if (errors.mobile) setErrors(prev => ({...prev, mobile: ''}));
               }}
               className="w-full px-4 py-4 outline-none text-[15px] font-medium" 

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Search, ChevronLeft, ChevronRight, Star, MapPin, CheckCircle2, ShieldCheck, Globe, Building2, Map, Users, CreditCard } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-import { destinations } from '@/app/data/visaData';
+import { destinations, getDynamicDestinationDetails } from '@/app/data/visaData';
 import { getCountryConfig, formatRegionalPrice } from '@/config/country';
 import VisaCard from '@/app/components/visa/VisaCard';
 
@@ -34,56 +34,7 @@ const allCountries = [
   "Uganda", "Ukraine", "United Arab Emirates", "Dubai (UAE)", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
 ];
 
-const sourceAwareData: Record<string, Record<string, any>> = {
-  "United Arab Emirates": {
-    "India": {
-      name: "India",
-      slug: "india",
-      price: "180",
-      image: "https://images.unsplash.com/photo-1524492707947-2f10a7b4dd30?auto=format&fit=crop&q=80&w=1200",
-      type: "E-VISA",
-      valid: "30 DAYS",
-      docs: ["Passport Copy", "Photo", "UAE Residence Visa"],
-      flag: "in",
-      continent: "Asia",
-      startingPrice: "180",
-      partner: "Official India Visa Agent in UAE",
-      visaTypes: [
-        { name: "Tourist E-Visa (30 Days)", pop: true, pTime: "3-5 days", stay: "30 days", valid: "30 days", entry: "Double", fees: "180" },
-        { name: "Business E-Visa", pop: false, pTime: "3-5 days", stay: "60 days", valid: "1 year", entry: "Multiple", fees: "350" }
-      ],
-      attractions: [
-        { title: "Taj Mahal", desc: "The iconic ivory-white marble mausoleum in Agra." },
-        { title: "Red Fort", desc: "Historical fortification in the city of Delhi." }
-      ],
-      embassy: "Embassy of India, Abu Dhabi, UAE"
-    }
-  },
-  "Dubai (UAE)": {
-    "India": {
-      name: "India",
-      slug: "india",
-      price: "180",
-      image: "https://images.unsplash.com/photo-1524492707947-2f10a7b4dd30?auto=format&fit=crop&q=80&w=1200",
-      type: "E-VISA",
-      valid: "30 DAYS",
-      docs: ["Passport Copy", "Photo", "UAE Residence Visa"],
-      flag: "in",
-      continent: "Asia",
-      startingPrice: "180",
-      partner: "Official India Visa Agent in UAE",
-      visaTypes: [
-        { name: "Tourist E-Visa (30 Days)", pop: true, pTime: "3-5 days", stay: "30 days", valid: "30 days", entry: "Double", fees: "180" },
-        { name: "Business E-Visa", pop: false, pTime: "3-5 days", stay: "60 days", valid: "1 year", entry: "Multiple", fees: "350" }
-      ],
-      attractions: [
-        { title: "Taj Mahal", desc: "The iconic ivory-white marble mausoleum in Agra." },
-        { title: "Red Fort", desc: "Historical fortification in the city of Delhi." }
-      ],
-      embassy: "Embassy of India, Abu Dhabi, UAE"
-    }
-  }
-};
+// Removed hardcoded sourceAwareData in favor of getDynamicDestinationDetails from visaData
 
 export default function VisaServicesPage() {
   const params = useParams();
@@ -100,23 +51,7 @@ export default function VisaServicesPage() {
 
   // Logic for accurate data based on source
   const getDisplayDestinations = () => {
-    let baseDestinations = [...destinations];
-
-    // Check if we have source-aware accurate data for the selected citizen country
-    const sourceData = sourceAwareData[citizenOf];
-    if (sourceData) {
-      // If we have specific requirements for this citizen context, inject them
-      Object.entries(sourceData).forEach(([destName, data]) => {
-        const index = baseDestinations.findIndex(d => d.name === destName);
-        if (index !== -1) {
-          baseDestinations[index] = { ...baseDestinations[index], ...data };
-        } else {
-          baseDestinations.push(data as any);
-        }
-      });
-    }
-
-    return baseDestinations.filter(dest => {
+    return destinations.map(dest => getDynamicDestinationDetails(dest.slug, citizenOf) || dest).filter(dest => {
       const matchesSearch = dest.name.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesContinent = activeContinent === "All" || dest.continent === activeContinent;
       return matchesSearch && matchesContinent;
@@ -134,8 +69,8 @@ export default function VisaServicesPage() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* 1. HERO SECTION */}
-      <section className="bg-[#191974] pt-24 pb-16 px-4 relative overflow-hidden flex-1">
-        <div className="max-w-6xl mx-auto text-center relative z-10 pt-10">
+      <section className="bg-[#191974] pt-12 md:pt-20 pb-16 px-4 relative overflow-hidden flex-1">
+        <div className="max-w-6xl mx-auto text-center relative z-10 pt-4 md:pt-8">
           <motion.h5
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

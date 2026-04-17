@@ -24,7 +24,7 @@ export async function getToursFromDB(params: { country?: string; destination?: s
   let { data: rawTours, error } = await query;
   if (error) {
     console.error('getToursFromDB error:', error);
-    throw error;
+    return [];
   }
 
   let filteredTours = rawTours || [];
@@ -92,7 +92,7 @@ export async function getDestinationsFromDB(): Promise<Destination[]> {
   const { data, error } = await supabase.from('destinations').select('*').order('name');
   if (error) {
     console.error('getDestinationsFromDB error:', error);
-    throw error;
+    return [];
   }
 
   return (data || []).map((d: any) => ({

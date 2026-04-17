@@ -16,6 +16,98 @@ export interface VisaDestination {
   sampleVisaImg?: string;
 }
 
+export function getDestinationBySlug(slug: string): VisaDestination | null {
+  return destinations.find(d => d.slug === slug || d.name.toLowerCase() === slug.toLowerCase()) || null;
+}
+
+export function getDynamicDestinationDetails(slug: string, citizenOf: string): VisaDestination | null {
+  const base = getDestinationBySlug(slug);
+  if (!base) return null;
+
+  // Real world nationality overrides for required docs & visas
+  const nationalityOverrides: Record<string, Record<string, Partial<VisaDestination>>> = {
+    "dubai": {
+      "India": {
+        type: "E-VISA",
+        valid: "60 DAYS",
+        docs: ["Passport Front", "Passport Back", "Photograph", "Pan Card"],
+      },
+      "United States": {
+        type: "VISA ON ARRIVAL",
+        price: "0",
+        startingPrice: "0",
+        valid: "30 DAYS",
+        docs: ["Passport"],
+      },
+      "United Kingdom": {
+        type: "VISA ON ARRIVAL",
+        price: "0",
+        startingPrice: "0",
+        valid: "30 DAYS",
+        docs: ["Passport"],
+      }
+    },
+    "united-states": {
+       "India": {
+          type: "B1/B2 STICKER",
+          valid: "10 YEARS",
+          docs: ["Passport", "DS-160 Confirmation", "Appointment Letter", "Photograph", "Bank Statement"],
+       },
+       "United Arab Emirates": {
+          type: "B1/B2 STICKER",
+          docs: ["Passport", "Emirates ID", "DS-160 Confirmation", "NOC from Employer"],
+       },
+       "United Kingdom": {
+          type: "ESTA",
+          price: "2,000",
+          valid: "2 YEARS",
+          docs: ["Passport Valid for 6 Months"],
+          visaTypes: [{ name: "ESTA (Visa Waiver)", pop: true, pTime: "72 hours", stay: "90 days", valid: "2 years", entry: "Multiple", fees: "2,000" }]
+       }
+    },
+    "united-kingdom": {
+       "India": {
+          docs: ["Passport", "VAF1A Form", "Bank Statements (6 months)", "ITR (3 years)", "Accommodation Proof"],
+       },
+       "United Arab Emirates": {
+           type: "ETA",
+           price: "1,000",
+           docs: ["Passport", "Emirates ID"],
+           visaTypes: [{ name: "Electronic Travel Authorisation", pop: true, pTime: "3 days", stay: "6 months", valid: "2 years", entry: "Multiple", fees: "1,000" }]
+       },
+       "United States": {
+           type: "VISA FREE",
+           price: "0",
+           docs: ["Passport"],
+           visaTypes: [{ name: "Visa Exempt", pop: true, pTime: "Instant", stay: "6 months", valid: "N/A", entry: "Multiple", fees: "0" }]
+       }
+    },
+    "vietnam": {
+       "India": {
+           type: "E-VISA",
+           docs: ["Passport Front", "Photograph"],
+       },
+       "United Kingdom": {
+           type: "VISA FREE",
+           price: "0",
+           docs: ["Passport"],
+           visaTypes: [{ name: "Visa Exempt", pop: true, pTime: "Instant", stay: "45 days", valid: "N/A", entry: "Multiple", fees: "0" }]
+       }
+    }
+  };
+
+  // Allow matches for exact name or standard
+  let citizenKey = citizenOf;
+  if (citizenOf === "Dubai (UAE)") citizenKey = "United Arab Emirates";
+
+  const overrides = nationalityOverrides[base.slug]?.[citizenKey] || {};
+  
+  return {
+    ...base,
+    ...overrides
+  };
+}
+
 export const destinations: VisaDestination[] = [
   {
     name: "Vietnam", slug: "vietnam", price: "2,100", 
@@ -993,8 +1085,3 @@ export const destinations: VisaDestination[] = [
     embassy: "61, Poorvi Marg, Vasant Vihar, New Delhi – 110 057, India"
   }
 ];
-
-export const getDestinationBySlug = (slug: string) => {
-  const s = slug.toLowerCase();
-  return destinations.find(d => d.slug === s) || destinations.find(d => d.name.toLowerCase() === s);
-};

@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import { getDestinationBySlug } from '@/app/data/visaData';
+import { getDynamicDestinationDetails } from '@/app/data/visaData';
 import { getCountryConfig, formatRegionalPrice } from '@/config/country';
 import PhonePrefixSelector from '@/app/components/ui/PhonePrefixSelector';
 
@@ -38,7 +38,7 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
   const countryConfig = getCountryConfig(region);
   const citizen = searchParams.get('citizen') || countryConfig.name;
 
-  const destination = getDestinationBySlug(slug);
+  const destination = getDynamicDestinationDetails(slug, citizen);
   const destName = destination ? destination.name : (slug ? slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, ' ') : "Thailand");
 
   // --- STATE ---
@@ -165,7 +165,7 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
                       {isPast ? <CheckCircle2 className="w-3.5 h-3.5" /> : s}
                     </div>
                   </div>
-                  {idx < 3 && <div className={`w-2 md:w-4 h-[1px] ${currentIndex > idx ? 'bg-green-500' : 'bg-gray-200'}`} />}
+                  {idx < 3 && <div className={`w-2 md:w-4 h-1px ${currentIndex > idx ? 'bg-green-500' : 'bg-gray-200'}`} />}
                 </React.Fragment>
               );
             })}
@@ -208,13 +208,13 @@ function VisaApplyContent({ params }: { params: Promise<{ region: string, slug: 
                         />
                       </div>
                       <InputBox label="Email ID*" type="email" placeholder="john@email.com" value={t.email} onChange={(v) => handleTravelerChange(t.id, 'email', v)} error={errors[`t-${t.id}-email`]} />
-                      
+
                       <div className="flex flex-col gap-2">
                         <label className="text-[12px] font-bold text-gray-500 uppercase tracking-wider ml-1">Phone Number*</label>
                         <div className="flex gap-2">
-                          <PhonePrefixSelector 
-                            value={t.countryCode} 
-                            onChange={(v: string) => handleTravelerChange(t.id, 'countryCode', v)} 
+                          <PhonePrefixSelector
+                            value={t.countryCode}
+                            onChange={(v: string) => handleTravelerChange(t.id, 'countryCode', v)}
                           />
                           <input
                             type="tel"

@@ -181,7 +181,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
   return (
     <div className="flex flex-col min-h-screen bg-background text-[#171717] text-[14px]">
       {/* HERO SECTION - Tighter Height */}
-      <section className="relative w-full h-[70vh] flex flex-col pt-4 md:pt-6 pb-4 overflow-visible">
+      <section className="relative w-full h-[70vh] flex flex-col md:pt-6 pb-4 overflow-visible">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img

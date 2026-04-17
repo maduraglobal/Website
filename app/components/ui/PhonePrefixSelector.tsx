@@ -39,6 +39,16 @@ const countries: CountryInfo[] = [
   { code: "+82", flag: "🇰🇷", name: "South Korea" },
 ];
 
+export const cleanPhoneInput = (val: string, code: string) => {
+  let cleaned = val;
+  if (cleaned.startsWith(code)) {
+    cleaned = cleaned.slice(code.length);
+  } else if (code.startsWith('+') && cleaned.startsWith(code.slice(1))) {
+    cleaned = cleaned.slice(code.length - 1);
+  }
+  return cleaned.replace(/\D/g, '');
+};
+
 interface PhonePrefixSelectorProps {
   value: string;
   onChange: (code: string) => void;

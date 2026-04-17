@@ -16,6 +16,7 @@ export default function FloatingEnquiry() {
     enquiryType: 'Air Ticket'
   });
   const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Close with Escape key & Listen for global 'openEnquiry' event
   useEffect(() => {
@@ -33,10 +34,51 @@ export default function FloatingEnquiry() {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) newErrors.email = 'Valid email is required';
+    if (!formData.phone.match(/^\d{7,15}$/)) newErrors.phone = 'Valid phone is required';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value;
+    if (val.startsWith(selectedCountryCode)) {
+      val = val.slice(selectedCountryCode.length);
+    } else if (selectedCountryCode.startsWith('+') && val.startsWith(selectedCountryCode.slice(1))) {
+      val = val.slice(selectedCountryCode.length - 1);
+    }
+    setFormData({ ...formData, phone: val.replace(/\D/g, '') });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    setIsOpen(false);
+    if (!validateForm()) return;
+    try {
+      const response = await fetch('/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: `${selectedCountryCode}${formData.phone}`,
+          tour_id: formData.enquiryType || 'General Enquiry',
+          message: `Travel Date: ${formData.travelDate}, Nationality: ${formData.nationality}`
+        })
+      });
+      if (response.ok) {
+        alert("Enquiry submitted successfully! Our expert will contact you soon.");
+        setIsOpen(false);
+        setFormData({ name: '', phone: '', email: '', travelDate: '', nationality: '', enquiryType: 'Air Ticket' });
+      } else {
+        alert("Failed to submit enquiry. Please try again.");
+      }
+    } catch (err) {
+      alert("Error occurred. Please check your connection.");
+    }
   };
 
   return (
@@ -57,110 +99,117 @@ export default function FloatingEnquiry() {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
               transition={{ type: "spring", duration: 0.3 }}
-              className="relative w-full max-w-[360px] my-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col"
+              className="relative w-full max-w-[480px] my-auto bg-white rounded-2xl shadow-2xl flex flex-col"
             >
-              <div className="p-4">
+              <div className="p-6 md:p-8">
                 {/* Header */}
-                <div className="flex items-center justify-between pb-2 border-b border-gray-100 mb-3">
-                  <h2 className="text-[15px] font-bold text-gray-900">Planning Your Dream Trip?</h2>
+                <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-6">
+                  <h2 className="text-[18px] md:text-[20px] font-bold text-[#191974]">Planning Your Dream Trip?</h2>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="p-1 text-gray-500 hover:bg-gray-100 rounded-full transition-colors"
+                    className="p-2 text-gray-400 hover:text-[#191974] hover:bg-gray-100 rounded-full transition-colors"
                   >
-                    <X className="w-4 h-4" />
+                    <X className="w-5 h-5" />
                   </button>
                 </div>
 
                 {/* Form */}
-                <form onSubmit={handleSubmit} className="space-y-2.5">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {/* Name */}
-                    <div className="flex flex-col gap-0.5">
-                      <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-tight ml-0.5">Name</label>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[12px] font-bold text-gray-500 uppercase tracking-wider ml-1">Name</label>
                       <input
                         type="text"
-                        placeholder="Name"
+                        placeholder="John Doe"
                         required
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-3 text-[12px] placeholder:text-gray-400 bg-gray-50 border border-gray-200 outline-none focus:border-[#191974] rounded focus:bg-white transition-all"
-                        style={{ height: '34px' }}
+                        onChange={(e) => {
+                          setFormData({ ...formData, name: e.target.value });
+                          if (errors.name) setErrors(prev => ({ ...prev, name: '' }));
+                        }}
+                        className={`w-full h-12 px-4 text-[14px] font-medium placeholder:text-gray-400 bg-gray-50 border ${errors.name ? 'border-red-500' : 'border-gray-200'} outline-none focus:border-[#ee2229] focus:ring-1 focus:ring-[#ee2229] rounded-xl focus:bg-white transition-all`}
                       />
+                      {errors.name && <p className="text-[10px] text-red-500 font-bold ml-1">{errors.name}</p>}
                     </div>
                     {/* Phone */}
-                    <div className="flex flex-col gap-0.5">
-                      <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-tight ml-0.5">Phone</label>
-                      <div className="flex bg-gray-50 border border-gray-200 rounded focus-within:border-[#191974] focus-within:bg-white transition-all overflow-hidden" style={{ height: '34px' }}>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[12px] font-bold text-gray-500 uppercase tracking-wider ml-1">Phone</label>
+                      <div className={`flex h-12 bg-gray-50 border ${errors.phone ? 'border-red-500' : 'border-gray-200'} rounded-xl focus-within:border-[#ee2229] focus-within:ring-1 focus-within:ring-[#ee2229] focus-within:bg-white transition-all`}>
                         <PhonePrefixSelector
                           value={selectedCountryCode}
                           onChange={(code: string) => setSelectedCountryCode(code)}
                           variant="simple"
-                          className="w-[85px] shrink-0"
+                          className="w-[105px] shrink-0 border-r border-gray-200 rounded-l-xl border-t-0 border-b-0 border-l-0 hover:bg-gray-100/50 h-full"
                         />
                         <input
                           type="tel"
-                          placeholder="Phone"
+                          placeholder="90000 00000"
                           required
                           value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="flex-1 px-1 bg-transparent border-none outline-none text-[12px] placeholder:text-gray-400 font-medium"
+                          onChange={(e) => {
+                            handlePhoneChange(e);
+                            if (errors.phone) setErrors(prev => ({ ...prev, phone: '' }));
+                          }}
+                          className="flex-1 px-4 bg-transparent border-none outline-none text-[14px] font-medium placeholder:text-gray-400 h-full w-full min-w-0"
                         />
                       </div>
+                      {errors.phone && <p className="text-[10px] text-red-500 font-bold ml-1">{errors.phone}</p>}
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {/* Email */}
-                    <div className="flex flex-col gap-0.5">
-                      <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-tight ml-0.5">Email</label>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[12px] font-bold text-gray-500 uppercase tracking-wider ml-1">Email</label>
                       <input
                         type="email"
-                        placeholder="Email"
+                        placeholder="john@example.com"
                         required
                         value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-3 text-[12px] placeholder:text-gray-400 bg-gray-50 border border-gray-200 outline-none focus:border-[#191974] rounded focus:bg-white transition-all"
-                        style={{ height: '34px' }}
+                        onChange={(e) => {
+                          setFormData({ ...formData, email: e.target.value });
+                          if (errors.email) setErrors(prev => ({ ...prev, email: '' }));
+                        }}
+                        className={`w-full h-12 px-4 text-[14px] font-medium placeholder:text-gray-400 bg-gray-50 border ${errors.email ? 'border-red-500' : 'border-gray-200'} outline-none focus:border-[#ee2229] focus:ring-1 focus:ring-[#ee2229] rounded-xl focus:bg-white transition-all`}
                       />
+                      {errors.email && <p className="text-[10px] text-red-500 font-bold ml-1">{errors.email}</p>}
                     </div>
                     {/* Date of Travel */}
-                    <div className="flex flex-col gap-0.5">
-                      <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-tight ml-0.5">Date of Travel</label>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[12px] font-bold text-gray-500 uppercase tracking-wider ml-1">Date of Travel</label>
                       <input
                         type="date"
                         required
                         value={formData.travelDate}
                         onChange={(e) => setFormData({ ...formData, travelDate: e.target.value })}
-                        className="w-full px-3 text-[12px] text-gray-700 bg-gray-50 border border-gray-200 outline-none focus:border-[#191974] rounded focus:bg-white transition-all"
-                        style={{ height: '34px' }}
+                        className="w-full h-12 px-4 text-[14px] font-medium text-[#191974] bg-gray-50 border border-gray-200 outline-none focus:border-[#ee2229] focus:ring-1 focus:ring-[#ee2229] rounded-xl focus:bg-white transition-all"
                       />
                     </div>
                   </div>
 
                   {/* Nationality */}
-                  <div className="flex flex-col gap-0.5">
-                    <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-tight ml-0.5">Nationality</label>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[12px] font-bold text-gray-500 uppercase tracking-wider ml-1">Nationality</label>
                     <input
                       type="text"
-                      placeholder="Nationality"
+                      placeholder="e.g. Indian, American, UAE Resident"
                       required
                       value={formData.nationality}
                       onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
-                      className="w-full px-3 text-[12px] placeholder:text-gray-400 bg-gray-50 border border-gray-200 outline-none focus:border-[#191974] rounded focus:bg-white transition-all"
-                      style={{ height: '34px' }}
+                      className="w-full h-12 px-4 text-[14px] font-medium placeholder:text-gray-400 bg-gray-50 border border-gray-200 outline-none focus:border-[#ee2229] focus:ring-1 focus:ring-[#ee2229] rounded-xl focus:bg-white transition-all"
                     />
                   </div>
 
                   {/* Type of Enquiry */}
-                  <div className="flex flex-col gap-0.5 relative">
-                    <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-tight ml-0.5">Type of Enquiry?</label>
+                  <div className="flex flex-col gap-1.5 relative">
+                    <label className="text-[12px] font-bold text-gray-500 uppercase tracking-wider ml-1">Type of Enquiry?</label>
                     <div className="relative">
                       <select
                         required
                         value={formData.enquiryType}
                         onChange={(e) => setFormData({ ...formData, enquiryType: e.target.value })}
-                        className="w-full px-3 text-[12px] text-gray-900 bg-gray-50 border border-gray-200 outline-none focus:border-[#191974] rounded appearance-none cursor-pointer focus:bg-white transition-all"
-                        style={{ height: '34px' }}
+                        className="w-full h-12 px-4 pr-10 text-[14px] font-medium text-[#191974] bg-gray-50 border border-gray-200 outline-none focus:border-[#ee2229] focus:ring-1 focus:ring-[#ee2229] rounded-xl appearance-none cursor-pointer focus:bg-white transition-all"
                       >
                         <option value="Air Ticket">Air Ticket</option>
                         <option value="Visa">Visa</option>
@@ -168,18 +217,17 @@ export default function FloatingEnquiry() {
                         <option value="Hotel Booking">Hotel Booking</option>
                         <option value="Other">Other</option>
                       </select>
-                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" />
+                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
                     </div>
                   </div>
 
                   {/* Submit Button */}
-                  <div className="pt-2">
+                  <div className="pt-4">
                     <button
                       type="submit"
-                      className="w-full bg-[#191974] text-white font-bold text-[13px] rounded-lg hover:bg-blue-900 transition-colors shadow-sm active:scale-[0.98]"
-                      style={{ height: '38px' }}
+                      className="w-full h-14 bg-[#ee2229] hover:bg-[#191974] text-white font-bold text-[15px] uppercase tracking-widest rounded-xl transition-colors shadow-lg active:scale-[0.98]"
                     >
-                      Submit
+                      Send Enquiry
                     </button>
                   </div>
                 </form>
