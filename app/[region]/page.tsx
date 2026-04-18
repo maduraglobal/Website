@@ -293,7 +293,7 @@ export default function Home({ params }: { params: Promise<{ region: string }> }
                   suppressHydrationWarning
                   value={searchMonth}
                   onChange={(e) => setSearchMonth(e.target.value)}
-                  className="w-full text-[14px]  text-gray-900 outline-none bg-transparent appearance-none cursor-pointer"
+                  className="w-full text-[14px]  text-gray-400 outline-none bg-transparent appearance-none cursor-pointer"
                 >
                   <option value="">Any Month</option>
                   {["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].map(m => (
